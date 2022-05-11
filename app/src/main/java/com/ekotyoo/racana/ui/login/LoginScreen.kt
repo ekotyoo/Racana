@@ -13,6 +13,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -23,106 +25,140 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.REditText
 import com.ekotyoo.racana.core.composables.RFilledButton
 import com.ekotyoo.racana.core.theme.RacanaTheme
 
 @Composable
-fun LoginContent() {
-    Surface(
-        modifier = Modifier
-            .fillMaxSize(),
-        color = MaterialTheme.colors.background
+fun LoginScreen(
+    viewModel: LoginViewModel = viewModel()
+) {
+    val state by viewModel.state.collectAsState()
+
+    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
+        LoginContent(
+            emailValue = state.emailTextFieldValue,
+            passwordValue = state.passwordTextFieldValue,
+            onEmailEmailTextFieldChange = viewModel::onEmailTextFieldValueChange,
+            onPasswordTextFieldChange = viewModel::onPasswordTextFieldValueChange,
+            onLoginButtonClicked = viewModel::onLoginButtonClicked
+        )
+    }
+}
+
+@Composable
+fun LoginContent(
+    emailValue: String,
+    passwordValue: String,
+    onEmailEmailTextFieldChange: (String) -> Unit,
+    onPasswordTextFieldChange: (String) -> Unit,
+    onLoginButtonClicked: () -> Unit
+) {
+    Column(
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 32.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 32.dp)
-        ) {
-            Text(
-                text = stringResource(id = R.string.welcome),
-                style = MaterialTheme.typography.h5
-            )
-            Spacer(modifier = Modifier.size(size = 32.dp))
-            Image(
-                modifier = Modifier
-                    .size(215.dp)
-                    .align(Alignment.CenterHorizontally),
-                alignment = Alignment.Center,
-                painter = painterResource(id = R.drawable.login_illustration),
-                contentDescription = ""
-            )
-            Text(
-                text = stringResource(id = R.string.login),
-                style = MaterialTheme.typography.h6
-            )
-            Spacer(modifier = Modifier.size(size = 32.dp))
-            REditText(
-                modifier = Modifier.fillMaxWidth(),
-                value = "",
-                placeholderString = stringResource(id = R.string.email),
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Email,
-                        contentDescription = "",
-                    )
-                },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                onValueChange = {}
-            )
-            Spacer(modifier = Modifier.size(size = 16.dp))
-            REditText(
-                modifier = Modifier.fillMaxWidth(),
-                value = "",
-                placeholderString = stringResource(id = R.string.password),
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Lock,
-                        contentDescription = "",
-                    )
-                },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                visualTransformation = PasswordVisualTransformation(),
-                onValueChange = {}
-            )
-            Spacer(modifier = Modifier.size(size = 32.dp))
-            RFilledButton(
-                onClick = { /*TODO*/ },
-                placeholderString = stringResource(id = R.string.login)
-            )
-            Spacer(modifier = Modifier.size(size = 16.dp))
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(id = R.string.forgot_password),
-                textAlign = TextAlign.Center
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Text(text = stringResource(id = R.string.dont_have_an_account))
-                Spacer(modifier = Modifier.width(2.dp))
-                Text(
-                    text = stringResource(id = R.string.register),
-                    style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.SemiBold)
+        Text(
+            text = stringResource(id = R.string.welcome),
+            style = MaterialTheme.typography.h5
+        )
+        Spacer(modifier = Modifier.size(size = 32.dp))
+        Image(
+            modifier = Modifier
+                .size(215.dp)
+                .align(Alignment.CenterHorizontally),
+            alignment = Alignment.Center,
+            painter = painterResource(id = R.drawable.login_illustration),
+            contentDescription = ""
+        )
+        Text(
+            text = stringResource(id = R.string.login),
+            style = MaterialTheme.typography.h6
+        )
+        Spacer(modifier = Modifier.size(size = 32.dp))
+        REditText(
+            modifier = Modifier.fillMaxWidth(),
+            value = emailValue,
+            placeholderString = stringResource(id = R.string.email),
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Email,
+                    contentDescription = "",
                 )
-            }
+            },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+            onValueChange = onEmailEmailTextFieldChange
+        )
+        Spacer(modifier = Modifier.size(size = 16.dp))
+        REditText(
+            modifier = Modifier.fillMaxWidth(),
+            value = passwordValue,
+            placeholderString = stringResource(id = R.string.password),
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Lock,
+                    contentDescription = "",
+                )
+            },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            visualTransformation = PasswordVisualTransformation(),
+            onValueChange = onPasswordTextFieldChange
+        )
+        Spacer(modifier = Modifier.size(size = 32.dp))
+        RFilledButton(
+            onClick = onLoginButtonClicked,
+            placeholderString = stringResource(id = R.string.login)
+        )
+        Spacer(modifier = Modifier.size(size = 16.dp))
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = stringResource(id = R.string.forgot_password),
+            textAlign = TextAlign.Center
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(text = stringResource(id = R.string.dont_have_an_account))
+            Spacer(modifier = Modifier.width(2.dp))
+            Text(
+                text = stringResource(id = R.string.register),
+                style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.SemiBold)
+            )
         }
     }
 }
 
-@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_NO)
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_NO, name = "Light Mode Preview")
 @Composable
 fun LightModePreview() {
     RacanaTheme {
-        LoginContent()
+        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
+            LoginContent(
+                emailValue = "",
+                passwordValue = "",
+                onLoginButtonClicked = {},
+                onPasswordTextFieldChange = {},
+                onEmailEmailTextFieldChange = {}
+            )
+        }
     }
 }
 
-@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES, name = "Dark Mode Preview")
 @Composable
 fun DarkModePreview() {
     RacanaTheme {
-        LoginContent()
+        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
+            LoginContent(
+                emailValue = "",
+                passwordValue = "",
+                onLoginButtonClicked = {},
+                onPasswordTextFieldChange = {},
+                onEmailEmailTextFieldChange = {}
+            )
+        }
     }
 }
