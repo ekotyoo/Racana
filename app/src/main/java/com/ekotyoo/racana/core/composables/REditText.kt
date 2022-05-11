@@ -1,0 +1,36 @@
+package com.ekotyoo.racana.core.composables
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.dp
+
+@Composable
+fun REditText(
+    modifier: Modifier = Modifier,
+    value: String,
+    placeholderString: String,
+    leadingIcon: @Composable (() -> Unit)?,
+    keyboardOptions: KeyboardOptions = KeyboardOptions(),
+    onValueChange: (String) -> Unit,
+    visualTransformation: VisualTransformation = VisualTransformation.None
+) {
+    OutlinedTextField(
+        singleLine = true,
+        leadingIcon = leadingIcon,
+        modifier = modifier
+            .border(2.dp, MaterialTheme.colors.primary, MaterialTheme.shapes.small)
+            .background(MaterialTheme.colors.primary.copy(alpha = .05f)),
+        value = value,
+        keyboardOptions = keyboardOptions,
+        onValueChange = onValueChange,
+        visualTransformation = visualTransformation,
+        placeholder = { Text(text = placeholderString) }
+    )
+}
