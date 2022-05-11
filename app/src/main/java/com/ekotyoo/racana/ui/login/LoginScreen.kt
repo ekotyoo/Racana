@@ -3,6 +3,7 @@ package com.ekotyoo.racana.ui.login
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
@@ -13,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -30,9 +32,11 @@ import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.REditText
 import com.ekotyoo.racana.core.composables.RFilledButton
 import com.ekotyoo.racana.core.theme.RacanaTheme
+import com.ekotyoo.racana.ui.destinations.HomeScreenDestination
+import com.ekotyoo.racana.ui.destinations.RegisterScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.ramcosta.composedestinations.spec.DestinationStyle
+import kotlinx.coroutines.flow.collect
 
 @Destination(start = true)
 @Composable
@@ -42,13 +46,27 @@ fun LoginScreen(
 ) {
     val state by viewModel.state.collectAsState()
 
+    LaunchedEffect(Unit) {
+        viewModel.eventChannel.collect { event ->
+            when (event) {
+                LoginScreenEvent.LoginSuccess -> {
+                    navigator.navigate(HomeScreenDestination)
+                }
+                LoginScreenEvent.NavigateToRegisterScreen -> {
+                    navigator.navigate(RegisterScreenDestination)
+                }
+            }
+        }
+    }
+
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
         LoginContent(
             emailValue = state.emailTextFieldValue,
             passwordValue = state.passwordTextFieldValue,
             onEmailEmailTextFieldChange = viewModel::onEmailTextFieldValueChange,
             onPasswordTextFieldChange = viewModel::onPasswordTextFieldValueChange,
-            onLoginButtonClicked = viewModel::onLoginButtonClicked
+            onLoginButtonClicked = viewModel::onLoginButtonClicked,
+            onRegisterTextClicked = viewModel::onRegisterTextClicked,
         )
     }
 }
@@ -59,7 +77,8 @@ fun LoginContent(
     passwordValue: String,
     onEmailEmailTextFieldChange: (String) -> Unit,
     onPasswordTextFieldChange: (String) -> Unit,
-    onLoginButtonClicked: () -> Unit
+    onLoginButtonClicked: () -> Unit,
+    onRegisterTextClicked: () -> Unit,
 ) {
     Column(
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 32.dp)
@@ -129,6 +148,7 @@ fun LoginContent(
             Text(text = stringResource(id = R.string.dont_have_an_account))
             Spacer(modifier = Modifier.width(2.dp))
             Text(
+                modifier = Modifier.clickable { onRegisterTextClicked() },
                 text = stringResource(id = R.string.register),
                 style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.SemiBold)
             )
@@ -146,7 +166,8 @@ fun LightModePreview() {
                 passwordValue = "",
                 onLoginButtonClicked = {},
                 onPasswordTextFieldChange = {},
-                onEmailEmailTextFieldChange = {}
+                onEmailEmailTextFieldChange = {},
+                onRegisterTextClicked = {}
             )
         }
     }
@@ -162,7 +183,8 @@ fun DarkModePreview() {
                 passwordValue = "",
                 onLoginButtonClicked = {},
                 onPasswordTextFieldChange = {},
-                onEmailEmailTextFieldChange = {}
+                onEmailEmailTextFieldChange = {},
+                onRegisterTextClicked = {}
             )
         }
     }
