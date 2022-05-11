@@ -28,13 +28,17 @@ import com.ekotyoo.racana.core.composables.REditText
 import com.ekotyoo.racana.core.composables.RFilledButton
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.ui.login.LoginScreen
+import com.ekotyoo.racana.ui.login.NavGraphs
+import com.ramcosta.composedestinations.DestinationsNavHost
+import com.ramcosta.composedestinations.annotation.NavGraph
+import com.ramcosta.composedestinations.spec.NavGraphSpec
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             RacanaTheme {
-                LoginScreen()
+                DestinationsNavHost(navGraph = NavGraphs.root)
             }
         }
     }

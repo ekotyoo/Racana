@@ -30,9 +30,14 @@ import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.REditText
 import com.ekotyoo.racana.core.composables.RFilledButton
 import com.ekotyoo.racana.core.theme.RacanaTheme
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.spec.DestinationStyle
 
+@Destination(start = true)
 @Composable
 fun LoginScreen(
+    navigator: DestinationsNavigator,
     viewModel: LoginViewModel = viewModel()
 ) {
     val state by viewModel.state.collectAsState()
