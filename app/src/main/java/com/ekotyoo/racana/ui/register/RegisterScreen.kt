@@ -11,14 +11,12 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -29,16 +27,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ekotyoo.racana.core.theme.RacanaTheme
-import com.ramcosta.composedestinations.annotation.Destination
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.REditText
 import com.ekotyoo.racana.core.composables.RFilledButton
+import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.ui.destinations.HomeScreenDestination
 import com.ekotyoo.racana.ui.destinations.LoginScreenDestination
+import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import kotlinx.coroutines.flow.collect
 
 @Destination
 @Composable
@@ -60,7 +57,6 @@ fun RegisterScreen(
             }
         }
     }
-
 
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
         RegisterContent(
@@ -193,7 +189,7 @@ fun RegisterContent(
             Spacer(modifier = Modifier.width(2.dp))
             Text(
                 modifier = Modifier.clickable { onLoginTextClicked() },
-                text = stringResource(id = R.string.register),
+                text = stringResource(id = R.string.login),
                 style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.SemiBold)
             )
         }
