@@ -1,10 +1,18 @@
 <resources>
     <string name="app_name">Racana</string>
+
+    <string name="name">Nama</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="login">Login</string>
+    <string name="password_confirmation">Konfirmasi Password</string>
+
+    <string name="login">Masuk</string>
     <string name="welcome">Selamat Datang</string>
     <string name="forgot_password">Lupa Password?</string>
     <string name="dont_have_an_account">Tidak punya akun?</string>
-    <string name="register">Register</string>
+    <string name="already_have_account">Sudah punya akun?</string>
+    <string name="register">Buat Akun</string>
+    <string name="create_account">Buat Akun Baru!</string>
+
+
 </resources>
