@@ -21,6 +21,8 @@ class RegisterViewModel : ViewModel() {
 
     fun onNameTextFieldValueChange(value: String) {
         _state.value = _state.value.copy(nameTextFieldValue = value)
+        if (value[0] == ' ')
+            _state.value = _state.value.copy(nameErrorMessage = START_WHITESPACE)
     }
 
     fun onEmailTextFieldValueChange(value: String) {
@@ -55,13 +57,23 @@ class RegisterViewModel : ViewModel() {
             _eventChannel.send(RegisterScreenEvent.NavigateToLoginScreen)
         }
     }
+
+    companion object {
+        const val START_WHITESPACE = "start_whitespace"
+        const val DOUBLE_WHITESPACE = "double_whitespace"
+        const val NON_ALPHABET = "non_alphabet"
+    }
 }
 
 data class RegisterScreenState(
     val nameTextFieldValue: String = "",
     val emailTextFieldValue: String = "",
     val passwordTextFieldValue: String = "",
-    val confirmPasswordTextFieldValue: String = ""
+    val confirmPasswordTextFieldValue: String = "",
+    val nameErrorMessage: String? = "",
+    val emailErrorMessage: String? = "",
+    val passwordErrorMessage: String? = "",
+    val confirmPasswordErrorMessage: String? = ""
 )
 
 sealed class RegisterScreenEvent {

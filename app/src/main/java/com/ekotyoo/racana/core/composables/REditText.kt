@@ -7,8 +7,10 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -21,7 +23,8 @@ fun REditText(
     leadingIcon: @Composable (() -> Unit)?,
     keyboardOptions: KeyboardOptions = KeyboardOptions(),
     onValueChange: (String) -> Unit,
-    visualTransformation: VisualTransformation = VisualTransformation.None
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    isError: Boolean = false
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -29,7 +32,11 @@ fun REditText(
         singleLine = true,
         leadingIcon = leadingIcon,
         modifier = modifier
-            .border(2.dp, MaterialTheme.colors.primary, MaterialTheme.shapes.small)
+            .border(
+                width = 2.dp,
+                color = if (isError) MaterialTheme.colors.error else MaterialTheme.colors.primary,
+                shape = MaterialTheme.shapes.small
+            )
             .background(MaterialTheme.colors.primary.copy(alpha = .05f)),
         value = value,
         keyboardOptions = keyboardOptions,
@@ -38,6 +45,7 @@ fun REditText(
         }),
         onValueChange = onValueChange,
         visualTransformation = visualTransformation,
-        placeholder = { Text(text = placeholderString) }
+        placeholder = { Text(text = placeholderString) },
+        isError = isError
     )
 }

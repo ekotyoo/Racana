@@ -64,6 +64,10 @@ fun RegisterScreen(
             state.emailTextFieldValue,
             state.passwordTextFieldValue,
             state.confirmPasswordTextFieldValue,
+            state.nameErrorMessage,
+            state.emailErrorMessage,
+            state.passwordErrorMessage,
+            state.confirmPasswordErrorMessage,
             viewModel::onNameTextFieldValueChange,
             viewModel::onEmailTextFieldValueChange,
             viewModel::onPasswordTextFieldValueChange,
@@ -80,6 +84,12 @@ fun RegisterContent(
     emailValue: String,
     passwordValue: String,
     confirmPasswordValue: String,
+
+    nameErrorMessage: String?,
+    emailErrorMessage: String?,
+    passwordErrorMessage: String?,
+    confirmPasswordErrorMessage: String?,
+
     onNameTextFieldChange: (String) -> Unit,
     onEmailTextFieldChange: (String) -> Unit,
     onPasswordTextFieldChange: (String) -> Unit,
@@ -94,7 +104,7 @@ fun RegisterContent(
             text = stringResource(id = R.string.create_account),
             style = MaterialTheme.typography.h5
         )
-        Spacer(modifier = Modifier.size(size = 32.dp))
+        Spacer(modifier = Modifier.size(size = 28.dp))
         Image(
             modifier = Modifier
                 .size(215.dp)
@@ -107,9 +117,10 @@ fun RegisterContent(
             text = stringResource(id = R.string.register),
             style = MaterialTheme.typography.h6
         )
-        Spacer(modifier = Modifier.size(size = 32.dp))
+        Spacer(modifier = Modifier.size(size = 28.dp))
 
         //Name
+        val isNameError = true //!nameErrorMessage.isNullOrEmpty()
         REditText(
             modifier = Modifier.fillMaxWidth(),
             value = nameValue,
@@ -120,11 +131,33 @@ fun RegisterContent(
                     contentDescription = ""
                 )
             },
-            onValueChange = onNameTextFieldChange
+            onValueChange = onNameTextFieldChange,
+            isError = isNameError
         )
-        Spacer(modifier = Modifier.size(size = 16.dp))
+        if (isNameError) {
+            val errorMessage =
+                when (nameErrorMessage) {
+                    RegisterViewModel.START_WHITESPACE ->
+                        stringResource(id = R.string.name_not_started_with_whitespace)
+                    RegisterViewModel.DOUBLE_WHITESPACE ->
+                        stringResource(id = R.string.name_cannot_containt_double_space)
+                    RegisterViewModel.NON_ALPHABET ->
+                        stringResource(id = R.string.name_cannot_containt_non_alphabetic_character)
+                    else ->
+                        stringResource(id = R.string.name_not_valid)
+                }
+            Text(
+                text = errorMessage,
+                color = MaterialTheme.colors.error,
+                style = MaterialTheme.typography.caption,
+                modifier = Modifier.padding(start = 16.dp, bottom = 4.dp)
+            )
+        } else {
+            Spacer(modifier = Modifier.size(size = 20.dp))
+        }
 
         //Email
+        val isEmailError = !emailErrorMessage.isNullOrEmpty()
         REditText(
             modifier = Modifier.fillMaxWidth(),
             value = emailValue,
@@ -136,11 +169,22 @@ fun RegisterContent(
                 )
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            onValueChange = onEmailTextFieldChange
+            onValueChange = onEmailTextFieldChange,
+            isError = isEmailError
         )
-        Spacer(modifier = Modifier.size(size = 16.dp))
+        if (isEmailError) {
+            Text(
+                text = stringResource(id = R.string.email_not_valid),
+                color = MaterialTheme.colors.error,
+                style = MaterialTheme.typography.caption,
+                modifier = Modifier.padding(start = 16.dp, bottom = 4.dp)
+            )
+        }else {
+            Spacer(modifier = Modifier.size(size = 20.dp))
+        }
 
         //Password
+        val isPasswordError = !passwordErrorMessage.isNullOrEmpty()
         REditText(
             modifier = Modifier.fillMaxWidth(),
             value = passwordValue,
@@ -153,11 +197,22 @@ fun RegisterContent(
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             visualTransformation = PasswordVisualTransformation(),
-            onValueChange = onPasswordTextFieldChange
+            onValueChange = onPasswordTextFieldChange,
+            isError = isPasswordError
         )
-        Spacer(modifier = Modifier.size(size = 16.dp))
+        if (isPasswordError) {
+            Text(
+                text = stringResource(id = R.string.password_less_eight),
+                color = MaterialTheme.colors.error,
+                style = MaterialTheme.typography.caption,
+                modifier = Modifier.padding(start = 16.dp, bottom = 4.dp)
+            )
+        } else {
+            Spacer(modifier = Modifier.size(size = 20.dp))
+        }
 
         //Confirm Password
+        val isConfirmPasswordError = !confirmPasswordErrorMessage.isNullOrEmpty()
         REditText(
             modifier = Modifier.fillMaxWidth(),
             value = confirmPasswordValue,
@@ -170,9 +225,19 @@ fun RegisterContent(
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             visualTransformation = PasswordVisualTransformation(),
-            onValueChange = onConfirmPasswordTextFieldChange
+            onValueChange = onConfirmPasswordTextFieldChange,
+            isError = isConfirmPasswordError
         )
-        Spacer(modifier = Modifier.size(size = 32.dp))
+        if (isNameError) {
+            Text(
+                text = stringResource(id = R.string.password_not_same),
+                color = MaterialTheme.colors.error,
+                style = MaterialTheme.typography.caption,
+                modifier = Modifier.padding(start = 16.dp, bottom = 16.dp)
+            )
+        } else {
+            Spacer(modifier = Modifier.size(size = 32.dp))
+        }
 
         //Register Button
         RFilledButton(
@@ -205,7 +270,7 @@ fun RegisterContent(
 fun LightModePreview() {
     RacanaTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-            RegisterContent("", "", "", "", {}, {}, {}, {}, {}, {})
+            RegisterContent("", "", "", "","", "", "", "" , {}, {}, {}, {}, {}, {})
         }
     }
 }
@@ -219,7 +284,7 @@ fun LightModePreview() {
 fun DarkModePreview() {
     RacanaTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-            RegisterContent("", "", "", "", {}, {}, {}, {}, {}, {})
+            RegisterContent("", "", "", "","", "", "", "" , {}, {}, {}, {}, {}, {})
         }
     }
 }
