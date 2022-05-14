@@ -1,5 +1,6 @@
 package com.ekotyoo.racana.ui.login
 
+import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.Channel
@@ -23,10 +24,24 @@ class LoginViewModel : ViewModel() {
 
     fun onEmailTextFieldValueChange(value: String) {
         _state.value = _state.value.copy(emailTextFieldValue = value)
+        val errorMessage = if (value.isNotEmpty()) {
+            when {
+                !Patterns.EMAIL_ADDRESS.matcher(value).matches() -> "error"
+                else -> null
+            }
+        } else null
+        _state.value = _state.value.copy(emailErrorMessage = errorMessage)
     }
 
     fun onPasswordTextFieldValueChange(value: String) {
         _state.value = _state.value.copy(passwordTextFieldValue = value)
+        val errorMessage = if (value.isNotEmpty()) {
+            when {
+                value.length < 8 -> "error"
+                else -> null
+            }
+        } else null
+        _state.value = _state.value.copy(passwordErrorMessage = errorMessage)
     }
 
     fun onLoginButtonClicked() {
@@ -47,9 +62,11 @@ class LoginViewModel : ViewModel() {
 data class LoginScreenState(
     val emailTextFieldValue: String = "",
     val passwordTextFieldValue: String = "",
+    val emailErrorMessage: String? = "",
+    val passwordErrorMessage: String? = ""
 )
 
 sealed class LoginScreenEvent {
     object LoginSuccess : LoginScreenEvent()
-    object NavigateToRegisterScreen: LoginScreenEvent()
+    object NavigateToRegisterScreen : LoginScreenEvent()
 }

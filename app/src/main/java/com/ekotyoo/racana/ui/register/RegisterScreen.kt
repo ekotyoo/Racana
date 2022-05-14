@@ -1,10 +1,13 @@
 package com.ekotyoo.racana.ui.register
 
 import android.content.res.Configuration
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -23,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,10 +36,13 @@ import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.REditText
 import com.ekotyoo.racana.core.composables.RFilledButton
 import com.ekotyoo.racana.core.theme.RacanaTheme
+import com.ekotyoo.racana.ui.NavGraphs
 import com.ekotyoo.racana.ui.destinations.HomeScreenDestination
 import com.ekotyoo.racana.ui.destinations.LoginScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.popUpTo
+import com.ramcosta.composedestinations.utils.startDestination
 
 @Destination
 @Composable
@@ -52,7 +59,10 @@ fun RegisterScreen(
                     navigator.navigate(HomeScreenDestination)
                 }
                 RegisterScreenEvent.NavigateToLoginScreen -> {
-                    navigator.navigate(LoginScreenDestination)
+                    navigator.navigate(LoginScreenDestination) {
+                        popUpTo(NavGraphs.root.startDestination)
+                        launchSingleTop = true
+                    }
                 }
             }
         }
@@ -64,6 +74,10 @@ fun RegisterScreen(
             state.emailTextFieldValue,
             state.passwordTextFieldValue,
             state.confirmPasswordTextFieldValue,
+            state.nameErrorMessage,
+            state.emailErrorMessage,
+            state.passwordErrorMessage,
+            state.confirmPasswordErrorMessage,
             viewModel::onNameTextFieldValueChange,
             viewModel::onEmailTextFieldValueChange,
             viewModel::onPasswordTextFieldValueChange,
@@ -80,6 +94,10 @@ fun RegisterContent(
     emailValue: String,
     passwordValue: String,
     confirmPasswordValue: String,
+    nameErrorMessage: String?,
+    emailErrorMessage: String?,
+    passwordErrorMessage: String?,
+    confirmPasswordErrorMessage: String?,
     onNameTextFieldChange: (String) -> Unit,
     onEmailTextFieldChange: (String) -> Unit,
     onPasswordTextFieldChange: (String) -> Unit,
@@ -87,29 +105,37 @@ fun RegisterContent(
     onRegisterButtonClicked: () -> Unit,
     onLoginTextClicked: () -> Unit
 ) {
+    val scrollState = rememberScrollState()
     Column(
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 32.dp)
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .verticalScroll(
+                scrollState,
+                enabled = true
+            )
     ) {
+        Spacer(modifier = Modifier.size(size = 32.dp))
         Text(
             text = stringResource(id = R.string.create_account),
             style = MaterialTheme.typography.h5
         )
-        Spacer(modifier = Modifier.size(size = 32.dp))
+        Spacer(modifier = Modifier.size(size = 28.dp))
         Image(
             modifier = Modifier
                 .size(215.dp)
                 .align(CenterHorizontally),
             alignment = Center,
             painter = painterResource(id = R.drawable.register_illustration),
-            contentDescription = ""
+            contentDescription = null
         )
         Text(
             text = stringResource(id = R.string.register),
             style = MaterialTheme.typography.h6
         )
-        Spacer(modifier = Modifier.size(size = 32.dp))
+        Spacer(modifier = Modifier.size(size = 28.dp))
 
         //Name
+        val isNameError = !nameErrorMessage.isNullOrEmpty()
         REditText(
             modifier = Modifier.fillMaxWidth(),
             value = nameValue,
@@ -117,14 +143,36 @@ fun RegisterContent(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Person,
-                    contentDescription = ""
+                    contentDescription = null
                 )
             },
-            onValueChange = onNameTextFieldChange
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            onValueChange = onNameTextFieldChange,
+            isError = isNameError
         )
+        AnimatedVisibility(isNameError) {
+            val errorMessage =
+                when (nameErrorMessage) {
+                    RegisterViewModel.START_WHITESPACE ->
+                        stringResource(id = R.string.name_not_started_with_whitespace)
+                    RegisterViewModel.DOUBLE_WHITESPACE ->
+                        stringResource(id = R.string.name_cannot_containt_double_space)
+                    RegisterViewModel.NON_ALPHABET ->
+                        stringResource(id = R.string.name_cannot_containt_non_alphabetic_character)
+                    else ->
+                        stringResource(id = R.string.name_not_valid)
+                }
+            Text(
+                text = errorMessage,
+                color = MaterialTheme.colors.error,
+                style = MaterialTheme.typography.caption,
+                modifier = Modifier.padding(start = 16.dp, bottom = 4.dp)
+            )
+        }
         Spacer(modifier = Modifier.size(size = 16.dp))
 
         //Email
+        val isEmailError = !emailErrorMessage.isNullOrEmpty()
         REditText(
             modifier = Modifier.fillMaxWidth(),
             value = emailValue,
@@ -132,15 +180,28 @@ fun RegisterContent(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Email,
-                    contentDescription = ""
+                    contentDescription = null
                 )
             },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            onValueChange = onEmailTextFieldChange
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next
+            ),
+            onValueChange = onEmailTextFieldChange,
+            isError = isEmailError
         )
+        AnimatedVisibility(isEmailError) {
+            Text(
+                text = stringResource(id = R.string.email_not_valid),
+                color = MaterialTheme.colors.error,
+                style = MaterialTheme.typography.caption,
+                modifier = Modifier.padding(start = 16.dp)
+            )
+        }
         Spacer(modifier = Modifier.size(size = 16.dp))
 
         //Password
+        val isPasswordError = !passwordErrorMessage.isNullOrEmpty()
         REditText(
             modifier = Modifier.fillMaxWidth(),
             value = passwordValue,
@@ -148,16 +209,30 @@ fun RegisterContent(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Lock,
-                    contentDescription = "",
+                    contentDescription = null
                 )
             },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Next
+            ),
             visualTransformation = PasswordVisualTransformation(),
-            onValueChange = onPasswordTextFieldChange
+            onValueChange = onPasswordTextFieldChange,
+            isError = isPasswordError
         )
+        AnimatedVisibility(isPasswordError) {
+            Text(
+                text = stringResource(id = R.string.password_less_eight),
+                color = MaterialTheme.colors.error,
+                style = MaterialTheme.typography.caption,
+                modifier = Modifier.padding(start = 16.dp)
+            )
+        }
         Spacer(modifier = Modifier.size(size = 16.dp))
 
+
         //Confirm Password
+        val isConfirmPasswordError = !confirmPasswordErrorMessage.isNullOrEmpty()
         REditText(
             modifier = Modifier.fillMaxWidth(),
             value = confirmPasswordValue,
@@ -165,22 +240,39 @@ fun RegisterContent(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Lock,
-                    contentDescription = "",
+                    contentDescription = null
                 )
             },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done
+            ),
             visualTransformation = PasswordVisualTransformation(),
-            onValueChange = onConfirmPasswordTextFieldChange
+            onValueChange = onConfirmPasswordTextFieldChange,
+            isError = isConfirmPasswordError
         )
+        AnimatedVisibility(isConfirmPasswordError) {
+            Text(
+                text = stringResource(id = R.string.password_not_same),
+                color = MaterialTheme.colors.error,
+                style = MaterialTheme.typography.caption,
+                modifier = Modifier.padding(start = 16.dp, bottom = 16.dp)
+            )
+        }
         Spacer(modifier = Modifier.size(size = 32.dp))
 
+
         //Register Button
+        val buttonEnabled =
+            !(isNameError || isEmailError || isPasswordError || isConfirmPasswordError || nameValue.isBlank() || emailValue.isBlank() || passwordValue.isBlank() || confirmPasswordValue.isBlank())
         RFilledButton(
             onClick = onRegisterButtonClicked,
-            placeholderString = stringResource(id = R.string.register)
+            placeholderString = stringResource(id = R.string.register),
+            enabled = buttonEnabled
         )
-        Spacer(modifier = Modifier.size(size = 16.dp))
+        Spacer(modifier = Modifier.weight(1f))
 
+        //Login Option
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
@@ -193,33 +285,39 @@ fun RegisterContent(
                 style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.SemiBold)
             )
         }
+        Spacer(modifier = Modifier.size(size = 32.dp))
     }
 }
 
 @Preview(
+    name = "Light Mode Preview",
     showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-    name = "Light Mode Preview"
+    uiMode = Configuration.UI_MODE_NIGHT_NO
 )
-@Composable
-fun LightModePreview() {
-    RacanaTheme {
-        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-            RegisterContent("", "", "", "", {}, {}, {}, {}, {}, {})
-        }
-    }
-}
-
 @Preview(
+    name = "Dark Mode Preview",
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES,
-    name = "Dark Mode Preview"
 )
 @Composable
-fun DarkModePreview() {
+fun RegisterScreenPreview() {
     RacanaTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-            RegisterContent("", "", "", "", {}, {}, {}, {}, {}, {})
+            RegisterContent(
+                nameValue = "",
+                emailValue = "",
+                passwordValue = "",
+                confirmPasswordValue = "",
+                nameErrorMessage = "",
+                emailErrorMessage = "",
+                passwordErrorMessage = "",
+                confirmPasswordErrorMessage = "",
+                {},
+                {},
+                {},
+                {},
+                {},
+                {})
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.ekotyoo.racana.core.composables
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.text.KeyboardActions
@@ -19,25 +20,43 @@ fun REditText(
     value: String,
     placeholderString: String,
     leadingIcon: @Composable (() -> Unit)?,
+    trailingIcon: @Composable (() -> Unit)? = {},
     keyboardOptions: KeyboardOptions = KeyboardOptions(),
     onValueChange: (String) -> Unit,
-    visualTransformation: VisualTransformation = VisualTransformation.None
+    onSearch: () -> Unit = {},
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    isError: Boolean = false
 ) {
     val focusManager = LocalFocusManager.current
+    val color =
+        animateColorAsState(targetValue = if (isError) MaterialTheme.colors.error else MaterialTheme.colors.primary)
 
     OutlinedTextField(
         singleLine = true,
         leadingIcon = leadingIcon,
+        trailingIcon = trailingIcon,
         modifier = modifier
-            .border(2.dp, MaterialTheme.colors.primary, MaterialTheme.shapes.small)
+            .border(
+                width = 2.dp,
+                color = color.value,
+                shape = MaterialTheme.shapes.small
+            )
             .background(MaterialTheme.colors.primary.copy(alpha = .05f)),
         value = value,
+        textStyle = MaterialTheme.typography.body1,
         keyboardOptions = keyboardOptions,
-        keyboardActions = KeyboardActions(onDone = {
-            focusManager.clearFocus()
-        }),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                focusManager.clearFocus()
+            },
+            onSearch = {
+                focusManager.clearFocus()
+                onSearch()
+            }
+        ),
         onValueChange = onValueChange,
         visualTransformation = visualTransformation,
-        placeholder = { Text(text = placeholderString) }
+        placeholder = { Text(text = placeholderString, style = MaterialTheme.typography.body1) },
+        isError = isError
     )
 }
