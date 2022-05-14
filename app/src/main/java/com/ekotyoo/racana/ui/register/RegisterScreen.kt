@@ -107,12 +107,13 @@ fun RegisterContent(
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 32.dp)
+            .padding(horizontal = 16.dp)
             .verticalScroll(
                 scrollState,
                 enabled = true
             )
     ) {
+        Spacer(modifier = Modifier.size(size = 32.dp))
         Text(
             text = stringResource(id = R.string.create_account),
             style = MaterialTheme.typography.h5
@@ -226,9 +227,9 @@ fun RegisterContent(
                 style = MaterialTheme.typography.caption,
                 modifier = Modifier.padding(start = 16.dp)
             )
-        } else {
-            Spacer(modifier = Modifier.size(size = 20.dp))
         }
+        Spacer(modifier = Modifier.size(size = 16.dp))
+
 
         //Confirm Password
         val isConfirmPasswordError = !confirmPasswordErrorMessage.isNullOrEmpty()
@@ -257,9 +258,9 @@ fun RegisterContent(
                 style = MaterialTheme.typography.caption,
                 modifier = Modifier.padding(start = 16.dp, bottom = 16.dp)
             )
-        } else {
-            Spacer(modifier = Modifier.size(size = 32.dp))
         }
+        Spacer(modifier = Modifier.size(size = 32.dp))
+
 
         //Register Button
         val buttonEnabled =
@@ -269,7 +270,7 @@ fun RegisterContent(
             placeholderString = stringResource(id = R.string.register),
             enabled = buttonEnabled
         )
-        Spacer(modifier = Modifier.size(size = 16.dp))
+        Spacer(modifier = Modifier.weight(1f))
 
         //Login Option
         Row(
@@ -284,6 +285,7 @@ fun RegisterContent(
                 style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.SemiBold)
             )
         }
+        Spacer(modifier = Modifier.size(size = 32.dp))
     }
 }
 

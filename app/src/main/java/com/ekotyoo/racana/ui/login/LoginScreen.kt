@@ -97,12 +97,13 @@ fun LoginContent(
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 32.dp)
+            .padding(horizontal = 16.dp)
             .verticalScroll(
                 scrollState,
                 enabled = true
             )
     ) {
+        Spacer(modifier = Modifier.size(size = 32.dp))
         Text(
             text = stringResource(id = R.string.welcome),
             style = MaterialTheme.typography.h5
@@ -205,6 +206,7 @@ fun LoginContent(
                 style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.SemiBold)
             )
         }
+        Spacer(modifier = Modifier.size(size = 32.dp))
     }
 }
 
