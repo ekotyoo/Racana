@@ -24,26 +24,24 @@ class LoginViewModel : ViewModel() {
 
     fun onEmailTextFieldValueChange(value: String) {
         _state.value = _state.value.copy(emailTextFieldValue = value)
-        if (value.isNotEmpty()) {
-            if (!Patterns.EMAIL_ADDRESS.matcher(value).matches())
-                _state.value = _state.value.copy(emailErrorMessage = "error")
-            else
-                _state.value = _state.value.copy(emailErrorMessage = null)
-        }
-        else
-            _state.value = _state.value.copy(emailErrorMessage = null)
+        val errorMessage = if (value.isNotEmpty()) {
+            when {
+                !Patterns.EMAIL_ADDRESS.matcher(value).matches() -> "error"
+                else -> null
+            }
+        } else null
+        _state.value = _state.value.copy(emailErrorMessage = errorMessage)
     }
 
     fun onPasswordTextFieldValueChange(value: String) {
         _state.value = _state.value.copy(passwordTextFieldValue = value)
-        if (value.isNotEmpty()) {
-            if (value.length < 8)
-                _state.value = _state.value.copy(passwordErrorMessage = "error")
-            else
-                _state.value = _state.value.copy(passwordErrorMessage = null)
-        }
-        else
-            _state.value = _state.value.copy(passwordErrorMessage = null)
+        val errorMessage = if (value.isNotEmpty()) {
+            when {
+                value.length < 8 -> "error"
+                else -> null
+            }
+        } else null
+        _state.value = _state.value.copy(passwordErrorMessage = errorMessage)
     }
 
     fun onLoginButtonClicked() {
@@ -70,5 +68,5 @@ data class LoginScreenState(
 
 sealed class LoginScreenEvent {
     object LoginSuccess : LoginScreenEvent()
-    object NavigateToRegisterScreen: LoginScreenEvent()
+    object NavigateToRegisterScreen : LoginScreenEvent()
 }

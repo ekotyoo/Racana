@@ -1,8 +1,6 @@
 package com.ekotyoo.racana.ui.register
 
-import android.os.Build
 import android.util.Patterns
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.Channel
@@ -18,62 +16,60 @@ class RegisterViewModel : ViewModel() {
     private val _eventChannel = Channel<RegisterScreenEvent>()
     val eventChannel = _eventChannel.receiveAsFlow()
 
-    private suspend fun register(name: String, email: String, password: String, confirmPassword: String) {
+    private suspend fun register(
+        name: String,
+        email: String,
+        password: String,
+        confirmPassword: String
+    ) {
+        // TODO: Implement register functionality
         _eventChannel.send(RegisterScreenEvent.RegisterSuccess)
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     fun onNameTextFieldValueChange(value: String) {
         _state.value = _state.value.copy(nameTextFieldValue = value)
-        if (value.isNotEmpty()) {
-            if (value[0] == ' ')
-                _state.value = _state.value.copy(nameErrorMessage = START_WHITESPACE)
-            else if (value.contains("  "))
-                _state.value = _state.value.copy(nameErrorMessage = DOUBLE_WHITESPACE)
-            else if (!value.matches("^[a-zA-Z ]*$".toRegex()))
-                _state.value = _state.value.copy(nameErrorMessage = NON_ALPHABET)
-            else
-                _state.value = _state.value.copy(nameErrorMessage = null)
-        }
-        else
-            _state.value = _state.value.copy(nameErrorMessage = null)
-        
+        val errorMessage = if (value.isNotEmpty()) {
+            when {
+                value[0] == ' ' -> START_WHITESPACE
+                value.contains("  ") -> DOUBLE_WHITESPACE
+                !value.matches("^[a-zA-Z ]*$".toRegex()) -> NON_ALPHABET
+                else -> null
+            }
+        } else null
+        _state.value = _state.value.copy(nameErrorMessage = errorMessage)
     }
 
     fun onEmailTextFieldValueChange(value: String) {
         _state.value = _state.value.copy(emailTextFieldValue = value)
-        if (value.isNotEmpty()) {
-            if (!Patterns.EMAIL_ADDRESS.matcher(value).matches())
-                _state.value = _state.value.copy(emailErrorMessage = "error")
-            else
-                _state.value = _state.value.copy(emailErrorMessage = null)
-        }
-        else
-            _state.value = _state.value.copy(emailErrorMessage = null)
+        val errorMessage = if (value.isNotEmpty()) {
+            when {
+                !Patterns.EMAIL_ADDRESS.matcher(value).matches() -> "error"
+                else -> null
+            }
+        } else null
+        _state.value = _state.value.copy(emailErrorMessage = errorMessage)
     }
 
     fun onPasswordTextFieldValueChange(value: String) {
         _state.value = _state.value.copy(passwordTextFieldValue = value)
-        if (value.isNotEmpty()) {
-            if (value.length < 8)
-                _state.value = _state.value.copy(passwordErrorMessage = "error")
-            else
-                _state.value = _state.value.copy(passwordErrorMessage = null)
-        }
-        else
-            _state.value = _state.value.copy(passwordErrorMessage = null)
+        val errorMessage = if (value.isNotEmpty()) {
+            when {
+                value.length < 8 -> "error"
+                else -> null
+            }
+        } else null
+        _state.value = _state.value.copy(passwordErrorMessage = errorMessage)
     }
 
     fun onConfirmPasswordTextFieldValueChange(value: String) {
         _state.value = _state.value.copy(confirmPasswordTextFieldValue = value)
-        if (value.isNotEmpty()) {
-            if (value != _state.value.passwordTextFieldValue)
-                _state.value = _state.value.copy(confirmPasswordErrorMessage = "error")
-            else
-                _state.value = _state.value.copy(confirmPasswordErrorMessage = null)
-        }
-        else
-            _state.value = _state.value.copy(confirmPasswordErrorMessage = null)
+        val errorMessage = if (value.isNotEmpty()) {
+            when {
+                value != _state.value.passwordTextFieldValue -> "error"
+                else -> null
+            }
+        } else null
+        _state.value = _state.value.copy(confirmPasswordErrorMessage = errorMessage)
     }
 
     fun onRegisterButtonClicked() {

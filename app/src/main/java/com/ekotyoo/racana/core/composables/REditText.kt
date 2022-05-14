@@ -37,13 +37,14 @@ fun REditText(
             )
             .background(MaterialTheme.colors.primary.copy(alpha = .05f)),
         value = value,
+        textStyle = MaterialTheme.typography.body1,
         keyboardOptions = keyboardOptions,
         keyboardActions = KeyboardActions(onDone = {
             focusManager.clearFocus()
         }),
         onValueChange = onValueChange,
         visualTransformation = visualTransformation,
-        placeholder = { Text(text = placeholderString) },
+        placeholder = { Text(text = placeholderString, style = MaterialTheme.typography.body1) },
         isError = isError
     )
 }

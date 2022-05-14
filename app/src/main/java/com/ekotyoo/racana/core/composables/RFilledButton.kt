@@ -12,14 +12,16 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun RFilledButton(
     modifier: Modifier = Modifier,
+    placeholderString: String,
+    enabled: Boolean = true,
     onClick: () -> Unit,
-    placeholderString: String
 ) {
     Button(
         onClick = onClick,
         modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.small,
-        contentPadding = PaddingValues(16.dp)
+        contentPadding = PaddingValues(16.dp),
+        enabled = enabled
     ) {
         Text(text = placeholderString)
     }

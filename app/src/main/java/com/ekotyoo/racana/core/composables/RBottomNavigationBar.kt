@@ -49,9 +49,11 @@ fun RBottomNavigationBar(
                     imageVector = destination.icon,
                     contentDescription = null,
                     onClick = {
-                        bottomAppBarNavController.navigate(destination.direction) {
-                            bottomAppBarNavController.popBackStack()
-                            launchSingleTop = true
+                        if (currentDestination != destination.direction) {
+                            bottomAppBarNavController.navigate(destination.direction) {
+                                bottomAppBarNavController.popBackStack()
+                                launchSingleTop = true
+                            }
                         }
                     }
                 )

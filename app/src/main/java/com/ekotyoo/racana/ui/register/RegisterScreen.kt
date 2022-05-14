@@ -4,7 +4,9 @@ import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -23,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,10 +35,13 @@ import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.REditText
 import com.ekotyoo.racana.core.composables.RFilledButton
 import com.ekotyoo.racana.core.theme.RacanaTheme
+import com.ekotyoo.racana.ui.NavGraphs
 import com.ekotyoo.racana.ui.destinations.HomeScreenDestination
 import com.ekotyoo.racana.ui.destinations.LoginScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.popUpTo
+import com.ramcosta.composedestinations.utils.startDestination
 
 @Destination
 @Composable
@@ -52,7 +58,10 @@ fun RegisterScreen(
                     navigator.navigate(HomeScreenDestination)
                 }
                 RegisterScreenEvent.NavigateToLoginScreen -> {
-                    navigator.navigate(LoginScreenDestination)
+                    navigator.navigate(LoginScreenDestination) {
+                        popUpTo(NavGraphs.root.startDestination)
+                        launchSingleTop = true
+                    }
                 }
             }
         }
@@ -84,12 +93,10 @@ fun RegisterContent(
     emailValue: String,
     passwordValue: String,
     confirmPasswordValue: String,
-
     nameErrorMessage: String?,
     emailErrorMessage: String?,
     passwordErrorMessage: String?,
     confirmPasswordErrorMessage: String?,
-
     onNameTextFieldChange: (String) -> Unit,
     onEmailTextFieldChange: (String) -> Unit,
     onPasswordTextFieldChange: (String) -> Unit,
@@ -97,8 +104,14 @@ fun RegisterContent(
     onRegisterButtonClicked: () -> Unit,
     onLoginTextClicked: () -> Unit
 ) {
+    val scrollState = rememberScrollState()
     Column(
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 32.dp)
+        modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 32.dp)
+            .verticalScroll(
+                scrollState,
+                enabled = true
+            )
     ) {
         Text(
             text = stringResource(id = R.string.create_account),
@@ -111,7 +124,7 @@ fun RegisterContent(
                 .align(CenterHorizontally),
             alignment = Center,
             painter = painterResource(id = R.drawable.register_illustration),
-            contentDescription = ""
+            contentDescription = null
         )
         Text(
             text = stringResource(id = R.string.register),
@@ -128,9 +141,10 @@ fun RegisterContent(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Person,
-                    contentDescription = ""
+                    contentDescription = null
                 )
             },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             onValueChange = onNameTextFieldChange,
             isError = isNameError
         )
@@ -165,10 +179,13 @@ fun RegisterContent(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Email,
-                    contentDescription = ""
+                    contentDescription = null
                 )
             },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next
+            ),
             onValueChange = onEmailTextFieldChange,
             isError = isEmailError
         )
@@ -177,11 +194,10 @@ fun RegisterContent(
                 text = stringResource(id = R.string.email_not_valid),
                 color = MaterialTheme.colors.error,
                 style = MaterialTheme.typography.caption,
-                modifier = Modifier.padding(start = 16.dp, bottom = 4.dp)
+                modifier = Modifier.padding(start = 16.dp)
             )
-        }else {
-            Spacer(modifier = Modifier.size(size = 20.dp))
         }
+        Spacer(modifier = Modifier.size(size = 16.dp))
 
         //Password
         val isPasswordError = !passwordErrorMessage.isNullOrEmpty()
@@ -192,10 +208,13 @@ fun RegisterContent(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Lock,
-                    contentDescription = "",
+                    contentDescription = null
                 )
             },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Next
+            ),
             visualTransformation = PasswordVisualTransformation(),
             onValueChange = onPasswordTextFieldChange,
             isError = isPasswordError
@@ -205,7 +224,7 @@ fun RegisterContent(
                 text = stringResource(id = R.string.password_less_eight),
                 color = MaterialTheme.colors.error,
                 style = MaterialTheme.typography.caption,
-                modifier = Modifier.padding(start = 16.dp, bottom = 4.dp)
+                modifier = Modifier.padding(start = 16.dp)
             )
         } else {
             Spacer(modifier = Modifier.size(size = 20.dp))
@@ -220,10 +239,13 @@ fun RegisterContent(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Lock,
-                    contentDescription = "",
+                    contentDescription = null
                 )
             },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done
+            ),
             visualTransformation = PasswordVisualTransformation(),
             onValueChange = onConfirmPasswordTextFieldChange,
             isError = isConfirmPasswordError
@@ -240,9 +262,12 @@ fun RegisterContent(
         }
 
         //Register Button
+        val buttonEnabled =
+            !(isNameError || isEmailError || isPasswordError || isConfirmPasswordError || nameValue.isBlank() || emailValue.isBlank() || passwordValue.isBlank() || confirmPasswordValue.isBlank())
         RFilledButton(
             onClick = onRegisterButtonClicked,
-            placeholderString = stringResource(id = R.string.register)
+            placeholderString = stringResource(id = R.string.register),
+            enabled = buttonEnabled
         )
         Spacer(modifier = Modifier.size(size = 16.dp))
 
@@ -263,29 +288,34 @@ fun RegisterContent(
 }
 
 @Preview(
+    name = "Light Mode Preview",
     showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-    name = "Light Mode Preview"
+    uiMode = Configuration.UI_MODE_NIGHT_NO
 )
-@Composable
-fun LightModePreview() {
-    RacanaTheme {
-        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-            RegisterContent("", "", "", "","", "", "", "" , {}, {}, {}, {}, {}, {})
-        }
-    }
-}
-
 @Preview(
+    name = "Dark Mode Preview",
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES,
-    name = "Dark Mode Preview"
 )
 @Composable
-fun DarkModePreview() {
+fun RegisterScreenPreview() {
     RacanaTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-            RegisterContent("", "", "", "","", "", "", "" , {}, {}, {}, {}, {}, {})
+            RegisterContent(
+                nameValue = "",
+                emailValue = "",
+                passwordValue = "",
+                confirmPasswordValue = "",
+                nameErrorMessage = "",
+                emailErrorMessage = "",
+                passwordErrorMessage = "",
+                confirmPasswordErrorMessage = "",
+                {},
+                {},
+                {},
+                {},
+                {},
+                {})
         }
     }
 }
