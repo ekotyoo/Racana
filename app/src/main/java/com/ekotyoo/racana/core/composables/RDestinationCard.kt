@@ -2,6 +2,7 @@ package com.ekotyoo.racana.core.composables
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -28,13 +29,18 @@ import com.ekotyoo.racana.core.theme.RacanaTheme
 @OptIn(ExperimentalTextApi::class)
 @Composable
 fun RDestinationCard(
+    modifier: Modifier = Modifier,
     imageUrl: String,
+    onClick: () -> Unit
 ) {
     Card(
-        elevation = 10.dp
+        modifier = modifier,
+        elevation = 10.dp,
     ) {
         Column(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier
+                .padding(8.dp)
+                .clickable(onClick = onClick),
         ) {
             Image(
                 modifier = Modifier
@@ -96,7 +102,7 @@ fun RDestinationCard(
 @Composable
 fun RDestinationCardPreview() {
     RacanaTheme {
-        RDestinationCard(dummy_image)
+        RDestinationCard(imageUrl = dummy_image, onClick = {})
     }
 }
 
