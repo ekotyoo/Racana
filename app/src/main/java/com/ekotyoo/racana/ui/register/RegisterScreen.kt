@@ -120,7 +120,7 @@ fun RegisterContent(
         Spacer(modifier = Modifier.size(size = 28.dp))
 
         //Name
-        val isNameError = true //!nameErrorMessage.isNullOrEmpty()
+        val isNameError = !nameErrorMessage.isNullOrEmpty()
         REditText(
             modifier = Modifier.fillMaxWidth(),
             value = nameValue,
@@ -228,7 +228,7 @@ fun RegisterContent(
             onValueChange = onConfirmPasswordTextFieldChange,
             isError = isConfirmPasswordError
         )
-        if (isNameError) {
+        if (isConfirmPasswordError) {
             Text(
                 text = stringResource(id = R.string.password_not_same),
                 color = MaterialTheme.colors.error,
@@ -246,6 +246,7 @@ fun RegisterContent(
         )
         Spacer(modifier = Modifier.size(size = 16.dp))
 
+        //Login Option
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center

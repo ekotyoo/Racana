@@ -64,6 +64,8 @@ fun LoginScreen(
         LoginContent(
             emailValue = state.emailTextFieldValue,
             passwordValue = state.passwordTextFieldValue,
+            emailErrorMessage = state.emailErrorMessage,
+            passwordErrorMessage = state.passwordErrorMessage,
             onEmailEmailTextFieldChange = viewModel::onEmailTextFieldValueChange,
             onPasswordTextFieldChange = viewModel::onPasswordTextFieldValueChange,
             onLoginButtonClicked = viewModel::onLoginButtonClicked,
@@ -76,6 +78,10 @@ fun LoginScreen(
 fun LoginContent(
     emailValue: String,
     passwordValue: String,
+
+    emailErrorMessage: String?,
+    passwordErrorMessage: String?,
+
     onEmailEmailTextFieldChange: (String) -> Unit,
     onPasswordTextFieldChange: (String) -> Unit,
     onLoginButtonClicked: () -> Unit,
@@ -102,6 +108,9 @@ fun LoginContent(
             style = MaterialTheme.typography.h6
         )
         Spacer(modifier = Modifier.size(size = 32.dp))
+
+        //Email
+        val isEmailError = !emailErrorMessage.isNullOrEmpty()
         REditText(
             modifier = Modifier.fillMaxWidth(),
             value = emailValue,
@@ -113,9 +122,22 @@ fun LoginContent(
                 )
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            onValueChange = onEmailEmailTextFieldChange
+            onValueChange = onEmailEmailTextFieldChange,
+            isError = isEmailError
         )
-        Spacer(modifier = Modifier.size(size = 16.dp))
+        if (isEmailError) {
+            Text(
+                text = stringResource(id = R.string.email_not_valid),
+                color = MaterialTheme.colors.error,
+                style = MaterialTheme.typography.caption,
+                modifier = Modifier.padding(start = 16.dp, bottom = 4.dp)
+            )
+        }else {
+            Spacer(modifier = Modifier.size(size = 20.dp))
+        }
+
+        //Password
+        val isPasswordError = !passwordErrorMessage.isNullOrEmpty()
         REditText(
             modifier = Modifier.fillMaxWidth(),
             value = passwordValue,
@@ -128,20 +150,36 @@ fun LoginContent(
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             visualTransformation = PasswordVisualTransformation(),
-            onValueChange = onPasswordTextFieldChange
+            onValueChange = onPasswordTextFieldChange,
+            isError = isPasswordError
         )
-        Spacer(modifier = Modifier.size(size = 32.dp))
+        if (isPasswordError) {
+            Text(
+                text = stringResource(id = R.string.password_less_eight),
+                color = MaterialTheme.colors.error,
+                style = MaterialTheme.typography.caption,
+                modifier = Modifier.padding(start = 16.dp, bottom = 4.dp)
+            )
+        } else {
+            Spacer(modifier = Modifier.size(size = 32.dp))
+        }
+
+        //Login Button
         RFilledButton(
             onClick = onLoginButtonClicked,
             placeholderString = stringResource(id = R.string.login)
         )
         Spacer(modifier = Modifier.size(size = 16.dp))
+
+        //Forgot PW
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(id = R.string.forgot_password),
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.weight(1f))
+
+        //Register Option
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
@@ -165,6 +203,8 @@ fun LightModePreview() {
             LoginContent(
                 emailValue = "",
                 passwordValue = "",
+                emailErrorMessage = "",
+                passwordErrorMessage = "",
                 onLoginButtonClicked = {},
                 onPasswordTextFieldChange = {},
                 onEmailEmailTextFieldChange = {},
@@ -182,6 +222,8 @@ fun DarkModePreview() {
             LoginContent(
                 emailValue = "",
                 passwordValue = "",
+                emailErrorMessage = "",
+                passwordErrorMessage = "",
                 onLoginButtonClicked = {},
                 onPasswordTextFieldChange = {},
                 onEmailEmailTextFieldChange = {},
