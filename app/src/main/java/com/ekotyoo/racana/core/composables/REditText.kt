@@ -19,8 +19,10 @@ fun REditText(
     value: String,
     placeholderString: String,
     leadingIcon: @Composable (() -> Unit)?,
+    trailingIcon: @Composable (() -> Unit)? = {},
     keyboardOptions: KeyboardOptions = KeyboardOptions(),
     onValueChange: (String) -> Unit,
+    onSearch: () -> Unit = {},
     visualTransformation: VisualTransformation = VisualTransformation.None,
     isError: Boolean = false
 ) {
@@ -29,6 +31,7 @@ fun REditText(
     OutlinedTextField(
         singleLine = true,
         leadingIcon = leadingIcon,
+        trailingIcon = trailingIcon,
         modifier = modifier
             .border(
                 width = 2.dp,
@@ -39,9 +42,15 @@ fun REditText(
         value = value,
         textStyle = MaterialTheme.typography.body1,
         keyboardOptions = keyboardOptions,
-        keyboardActions = KeyboardActions(onDone = {
-            focusManager.clearFocus()
-        }),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                focusManager.clearFocus()
+            },
+            onSearch = {
+                focusManager.clearFocus()
+                onSearch()
+            }
+        ),
         onValueChange = onValueChange,
         visualTransformation = visualTransformation,
         placeholder = { Text(text = placeholderString, style = MaterialTheme.typography.body1) },

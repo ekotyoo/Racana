@@ -13,9 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.style.LineHeightStyle
@@ -23,7 +21,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.skydoves.landscapist.coil.CoilImage
-import com.ekotyoo.racana.R
 
 @OptIn(ExperimentalTextApi::class)
 @Composable
@@ -35,22 +32,20 @@ fun RDestinationCard(
     onClick: () -> Unit
 ) {
     Card(
-        modifier = modifier,
+        modifier = modifier.size(width = 156.dp, height = 179.dp),
         elevation = 10.dp,
     ) {
         Column(
             modifier = Modifier
-                .height(179.dp)
                 .clickable(onClick = onClick)
                 .padding(8.dp)
         ) {
             CoilImage(
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxSize()
-                    .clip(MaterialTheme.shapes.medium),
+                    .clip(MaterialTheme.shapes.medium)
+                    .fillMaxWidth(),
                 imageModel = imageUrl,
-                placeHolder = ImageBitmap.imageResource(R.drawable.dummy_image),
                 contentScale = ContentScale.Crop,
                 contentDescription = null,
             )
