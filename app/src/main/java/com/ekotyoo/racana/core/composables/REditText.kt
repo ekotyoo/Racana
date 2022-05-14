@@ -1,5 +1,6 @@
 package com.ekotyoo.racana.core.composables
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.text.KeyboardActions
@@ -27,6 +28,8 @@ fun REditText(
     isError: Boolean = false
 ) {
     val focusManager = LocalFocusManager.current
+    val color =
+        animateColorAsState(targetValue = if (isError) MaterialTheme.colors.error else MaterialTheme.colors.primary)
 
     OutlinedTextField(
         singleLine = true,
@@ -35,7 +38,7 @@ fun REditText(
         modifier = modifier
             .border(
                 width = 2.dp,
-                color = if (isError) MaterialTheme.colors.error else MaterialTheme.colors.primary,
+                color = color.value,
                 shape = MaterialTheme.shapes.small
             )
             .background(MaterialTheme.colors.primary.copy(alpha = .05f)),

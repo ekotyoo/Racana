@@ -50,7 +50,11 @@ fun RDestinationCard(
                 contentDescription = null,
             )
             Spacer(Modifier.height(8.dp))
-            Text(text = name, style = MaterialTheme.typography.body1)
+            Text(
+                text = name,
+                style = MaterialTheme.typography.body1,
+                color = MaterialTheme.colors.onSurface
+            )
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {

@@ -2,6 +2,7 @@ package com.ekotyoo.racana.ui.login
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -139,7 +140,7 @@ fun LoginContent(
             onValueChange = onEmailEmailTextFieldChange,
             isError = isEmailError
         )
-        if (isEmailError) {
+        AnimatedVisibility(isEmailError) {
             Text(
                 text = stringResource(id = R.string.email_not_valid),
                 color = MaterialTheme.colors.error,
@@ -166,12 +167,12 @@ fun LoginContent(
             onValueChange = onPasswordTextFieldChange,
             isError = isPasswordError
         )
-        if (isPasswordError) {
+        AnimatedVisibility(isPasswordError) {
             Text(
-                text = stringResource(id = R.string.password_less_eight),
-                color = MaterialTheme.colors.error,
-                style = MaterialTheme.typography.caption,
-                modifier = Modifier.padding(start = 16.dp)
+                    text = stringResource(id = R.string.password_less_eight),
+                    color = MaterialTheme.colors.error,
+                    style = MaterialTheme.typography.caption,
+                    modifier = Modifier.padding(start = 16.dp)
             )
         }
         Spacer(modifier = Modifier.size(size = 32.dp))

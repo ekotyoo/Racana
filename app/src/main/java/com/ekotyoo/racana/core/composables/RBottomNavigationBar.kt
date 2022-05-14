@@ -1,6 +1,7 @@
 package com.ekotyoo.racana.core.composables
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
@@ -85,7 +86,11 @@ fun RBottomAppBarIcon(
         ) else modifier,
         onClick = onClick
     ) {
-        Icon(imageVector, contentDescription = contentDescription)
+        Icon(
+            imageVector,
+            contentDescription = contentDescription,
+            tint = if (isSelected && isSystemInDarkTheme()) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface
+        )
     }
 }
 

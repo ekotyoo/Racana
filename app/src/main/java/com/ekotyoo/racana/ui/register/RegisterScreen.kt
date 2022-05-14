@@ -1,6 +1,7 @@
 package com.ekotyoo.racana.ui.register
 
 import android.content.res.Configuration
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -149,7 +150,7 @@ fun RegisterContent(
             onValueChange = onNameTextFieldChange,
             isError = isNameError
         )
-        if (isNameError) {
+        AnimatedVisibility(isNameError) {
             val errorMessage =
                 when (nameErrorMessage) {
                     RegisterViewModel.START_WHITESPACE ->
@@ -167,9 +168,8 @@ fun RegisterContent(
                 style = MaterialTheme.typography.caption,
                 modifier = Modifier.padding(start = 16.dp, bottom = 4.dp)
             )
-        } else {
-            Spacer(modifier = Modifier.size(size = 20.dp))
         }
+        Spacer(modifier = Modifier.size(size = 16.dp))
 
         //Email
         val isEmailError = !emailErrorMessage.isNullOrEmpty()
@@ -190,7 +190,7 @@ fun RegisterContent(
             onValueChange = onEmailTextFieldChange,
             isError = isEmailError
         )
-        if (isEmailError) {
+        AnimatedVisibility(isEmailError) {
             Text(
                 text = stringResource(id = R.string.email_not_valid),
                 color = MaterialTheme.colors.error,
@@ -220,7 +220,7 @@ fun RegisterContent(
             onValueChange = onPasswordTextFieldChange,
             isError = isPasswordError
         )
-        if (isPasswordError) {
+        AnimatedVisibility(isPasswordError) {
             Text(
                 text = stringResource(id = R.string.password_less_eight),
                 color = MaterialTheme.colors.error,
@@ -251,7 +251,7 @@ fun RegisterContent(
             onValueChange = onConfirmPasswordTextFieldChange,
             isError = isConfirmPasswordError
         )
-        if (isConfirmPasswordError) {
+        AnimatedVisibility(isConfirmPasswordError) {
             Text(
                 text = stringResource(id = R.string.password_not_same),
                 color = MaterialTheme.colors.error,
