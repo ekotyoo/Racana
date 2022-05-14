@@ -10,13 +10,14 @@ private val DarkColorPalette = darkColors(
     primary = ROrange,
     primaryVariant = RDarkOrange,
     secondary = RLightOrange,
-    background = RDarkBlue
+    background = RDarkBlue,
+    surface = RDarkBlueSurface
 )
 
 private val LightColorPalette = lightColors(
     primary = ROrange,
     primaryVariant = RDarkOrange,
-    secondary = RLightOrange
+    secondary = RLightOrange,
 )
 
 @Composable

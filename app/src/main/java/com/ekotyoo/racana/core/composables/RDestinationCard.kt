@@ -1,7 +1,6 @@
 package com.ekotyoo.racana.core.composables
 
 import android.content.res.Configuration
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
@@ -14,23 +13,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.theme.RacanaTheme
+import com.skydoves.landscapist.coil.CoilImage
+import com.ekotyoo.racana.R
 
 @OptIn(ExperimentalTextApi::class)
 @Composable
 fun RDestinationCard(
     modifier: Modifier = Modifier,
+    name: String,
     imageUrl: String,
+    location: String,
     onClick: () -> Unit
 ) {
     Card(
@@ -39,24 +40,22 @@ fun RDestinationCard(
     ) {
         Column(
             modifier = Modifier
+                .height(179.dp)
+                .clickable(onClick = onClick)
                 .padding(8.dp)
-                .clickable(onClick = onClick),
         ) {
-            Image(
+            CoilImage(
                 modifier = Modifier
                     .weight(1f)
+                    .fillMaxSize()
                     .clip(MaterialTheme.shapes.medium),
-                painter = rememberAsyncImagePainter(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(imageUrl)
-                        .placeholder(R.drawable.dummy_image)
-                        .build()
-                ),
+                imageModel = imageUrl,
+                placeHolder = ImageBitmap.imageResource(R.drawable.dummy_image),
                 contentScale = ContentScale.Crop,
                 contentDescription = null,
             )
             Spacer(Modifier.height(8.dp))
-            Text(text = "Candi Bali", style = MaterialTheme.typography.body1)
+            Text(text = name, style = MaterialTheme.typography.body1)
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -68,7 +67,7 @@ fun RDestinationCard(
                 )
                 Spacer(Modifier.width(4.dp))
                 Text(
-                    text = "Bali",
+                    text = location,
                     style = MaterialTheme.typography.body2.copy(
                         platformStyle = PlatformTextStyle(
                             includeFontPadding = false
@@ -102,7 +101,11 @@ fun RDestinationCard(
 @Composable
 fun RDestinationCardPreview() {
     RacanaTheme {
-        RDestinationCard(imageUrl = dummy_image, onClick = {})
+        RDestinationCard(
+            name = "Candi Bali",
+            location = "Bali",
+            imageUrl = dummy_image,
+            onClick = {})
     }
 }
 
