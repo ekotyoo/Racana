@@ -2,12 +2,15 @@ package com.ekotyoo.racana.ui.home.main
 
 import androidx.lifecycle.ViewModel
 import com.ekotyoo.racana.ui.login.LoginScreenEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import javax.inject.Inject
 
-class MainViewModel : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor() : ViewModel() {
 
     private val _state = MutableStateFlow(MainScreenState(destinations = getDummyDestination()))
     val state: StateFlow<MainScreenState> = _state

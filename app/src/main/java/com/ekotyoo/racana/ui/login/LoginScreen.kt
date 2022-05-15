@@ -31,7 +31,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.REditText
 import com.ekotyoo.racana.core.composables.RFilledButton
@@ -50,7 +50,7 @@ import com.ramcosta.composedestinations.utils.startDestination
 @Composable
 fun LoginScreen(
     navigator: DestinationsNavigator,
-    viewModel: LoginViewModel = viewModel()
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -136,7 +136,10 @@ fun LoginContent(
                     contentDescription = "",
                 )
             },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Next),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next
+            ),
             onValueChange = onEmailEmailTextFieldChange,
             isError = isEmailError
         )
@@ -162,23 +165,27 @@ fun LoginContent(
                     contentDescription = "",
                 )
             },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done
+            ),
             visualTransformation = PasswordVisualTransformation(),
             onValueChange = onPasswordTextFieldChange,
             isError = isPasswordError
         )
         AnimatedVisibility(isPasswordError) {
             Text(
-                    text = stringResource(id = R.string.password_less_eight),
-                    color = MaterialTheme.colors.error,
-                    style = MaterialTheme.typography.caption,
-                    modifier = Modifier.padding(start = 16.dp)
+                text = stringResource(id = R.string.password_less_eight),
+                color = MaterialTheme.colors.error,
+                style = MaterialTheme.typography.caption,
+                modifier = Modifier.padding(start = 16.dp)
             )
         }
         Spacer(modifier = Modifier.size(size = 32.dp))
 
         //Login Button
-        val buttonEnabled = !(isPasswordError || isEmailError || emailValue.isBlank() || passwordValue.isBlank())
+        val buttonEnabled =
+            !(isPasswordError || isEmailError || emailValue.isBlank() || passwordValue.isBlank())
         RFilledButton(
             onClick = onLoginButtonClicked,
             placeholderString = stringResource(id = R.string.login),

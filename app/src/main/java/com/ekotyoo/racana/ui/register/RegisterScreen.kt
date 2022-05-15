@@ -31,7 +31,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.REditText
 import com.ekotyoo.racana.core.composables.RFilledButton
@@ -48,7 +48,7 @@ import com.ramcosta.composedestinations.utils.startDestination
 @Composable
 fun RegisterScreen(
     navigator: DestinationsNavigator,
-    viewModel: RegisterViewModel = viewModel()
+    viewModel: RegisterViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
 
