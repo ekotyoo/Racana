@@ -10,11 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 
 @Composable
 fun RCircularProgressOverlay(visible: Boolean, modifier: Modifier = Modifier) {
     AnimatedVisibility(visible, modifier) {
-        Box {
+        Box(modifier = Modifier.pointerInput(Unit) {}) {
             Spacer(
                 modifier = Modifier
                     .fillMaxSize()

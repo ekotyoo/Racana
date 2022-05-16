@@ -15,7 +15,7 @@ class AuthRepository @Inject constructor(
     private val authApi: AuthApi,
     private val userPreferencesDataStore: UserPreferencesDataStore
 ) {
-    val userData = userPreferencesDataStore.getUserData()
+    val userData = userPreferencesDataStore.userData
 
     suspend fun login(email: String, password: String): Result<UserModel> {
         try {
@@ -35,10 +35,10 @@ class AuthRepository @Inject constructor(
                 Result.Error("Login Failed", null)
             }
         } catch (e: IOException) {
-            Timber.d("Error: " + e.message)
+            Timber.d("IOException: " + e.message)
             return Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
         } catch (e: HttpException) {
-            Timber.d("Error: " + e.message)
+            Timber.d("HttpException: " + e.message)
             return Result.Error("Email atau Password harus sesuai.", null)
         }
     }
