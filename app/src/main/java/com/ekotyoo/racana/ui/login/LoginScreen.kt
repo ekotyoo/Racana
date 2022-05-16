@@ -31,17 +31,14 @@ import com.ekotyoo.racana.core.composables.RCircularProgressOverlay
 import com.ekotyoo.racana.core.composables.REditText
 import com.ekotyoo.racana.core.composables.RFilledButton
 import com.ekotyoo.racana.core.theme.RacanaTheme
-import com.ekotyoo.racana.ui.NavGraphs
 import com.ekotyoo.racana.ui.destinations.HomeScreenDestination
+import com.ekotyoo.racana.ui.destinations.LoginScreenDestination
 import com.ekotyoo.racana.ui.destinations.RegisterScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
-import com.ramcosta.composedestinations.utils.startDestination
 
-@RootNavGraph(start = true)
-@Destination()
+@Destination
 @Composable
 fun LoginScreen(
     navigator: DestinationsNavigator,
@@ -55,7 +52,7 @@ fun LoginScreen(
             when (event) {
                 is LoginScreenEvent.LoginSuccess -> {
                     navigator.navigate(HomeScreenDestination) {
-                        popUpTo(NavGraphs.root.startDestination) {
+                        popUpTo(LoginScreenDestination) {
                             inclusive = true
                         }
                         launchSingleTop = true
@@ -66,7 +63,7 @@ fun LoginScreen(
                 }
                 is LoginScreenEvent.NavigateToRegisterScreen -> {
                     navigator.navigate(RegisterScreenDestination) {
-                        popUpTo(NavGraphs.root.startDestination)
+                        popUpTo(LoginScreenDestination)
                         launchSingleTop = true
                     }
                 }

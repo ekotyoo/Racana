@@ -10,8 +10,10 @@ import com.ekotyoo.racana.core.composables.RBottomNavigationBar
 import com.ekotyoo.racana.ui.NavGraphs
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
+@RootNavGraph(start = true)
 @Destination
 @Composable
 fun HomeScreen(
