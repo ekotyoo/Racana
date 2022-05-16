@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
+import com.ekotyoo.racana.core.composables.RCircularProgressOverlay
 import com.ekotyoo.racana.core.composables.REditText
 import com.ekotyoo.racana.core.composables.RFilledButton
 import com.ekotyoo.racana.core.theme.RacanaTheme
@@ -58,7 +59,12 @@ fun LoginScreen(
         viewModel.eventChannel.collect { event ->
             when (event) {
                 LoginScreenEvent.LoginSuccess -> {
-                    navigator.navigate(HomeScreenDestination)
+                    navigator.navigate(HomeScreenDestination) {
+                        popUpTo(NavGraphs.root.startDestination) {
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                    }
                 }
                 LoginScreenEvent.NavigateToRegisterScreen -> {
                     navigator.navigate(RegisterScreenDestination) {
@@ -71,16 +77,24 @@ fun LoginScreen(
     }
 
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-        LoginContent(
-            emailValue = state.emailTextFieldValue,
-            passwordValue = state.passwordTextFieldValue,
-            emailErrorMessage = state.emailErrorMessage,
-            passwordErrorMessage = state.passwordErrorMessage,
-            onEmailEmailTextFieldChange = viewModel::onEmailTextFieldValueChange,
-            onPasswordTextFieldChange = viewModel::onPasswordTextFieldValueChange,
-            onLoginButtonClicked = viewModel::onLoginButtonClicked,
-            onRegisterTextClicked = viewModel::onRegisterTextClicked,
-        )
+        Box(
+            Modifier.fillMaxSize()
+        ) {
+            LoginContent(
+                emailValue = state.emailTextFieldValue,
+                passwordValue = state.passwordTextFieldValue,
+                emailErrorMessage = state.emailErrorMessage,
+                passwordErrorMessage = state.passwordErrorMessage,
+                onEmailEmailTextFieldChange = viewModel::onEmailTextFieldValueChange,
+                onPasswordTextFieldChange = viewModel::onPasswordTextFieldValueChange,
+                onLoginButtonClicked = viewModel::onLoginButtonClicked,
+                onRegisterTextClicked = viewModel::onRegisterTextClicked,
+            )
+            RCircularProgressOverlay(
+                modifier = Modifier.align(Alignment.Center),
+                visible = state.isLoading
+            )
+        }
     }
 }
 
@@ -98,6 +112,7 @@ fun LoginContent(
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
+            .fillMaxSize()
             .padding(horizontal = 16.dp)
             .verticalScroll(
                 scrollState,

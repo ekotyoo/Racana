@@ -3,16 +3,20 @@ package com.ekotyoo.racana.ui.login
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ekotyoo.racana.data.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor() : ViewModel() {
+class LoginViewModel @Inject constructor(
+    private val authRepository: AuthRepository
+) : ViewModel() {
 
     private val _state = MutableStateFlow(LoginScreenState())
     val state: StateFlow<LoginScreenState> = _state
@@ -20,9 +24,16 @@ class LoginViewModel @Inject constructor() : ViewModel() {
     private val _eventChannel = Channel<LoginScreenEvent>()
     val eventChannel = _eventChannel.receiveAsFlow()
 
-    private suspend fun login(email: String, password: String) {
-        // TODO: Implement login functionality
-        _eventChannel.send(LoginScreenEvent.LoginSuccess)
+    private fun login(email: String, password: String) {
+        _state.value = _state.value.copy(isLoading = true)
+        viewModelScope.launch {
+            authRepository.login(email, password)
+            authRepository.userData.collect {
+                _eventChannel.send(LoginScreenEvent.LoginSuccess)
+                Timber.d(it.toString())
+            }
+            _state.value = _state.value.copy(isLoading = false)
+        }
     }
 
     fun onEmailTextFieldValueChange(value: String) {
@@ -50,9 +61,7 @@ class LoginViewModel @Inject constructor() : ViewModel() {
     fun onLoginButtonClicked() {
         val email = state.value.emailTextFieldValue
         val password = state.value.passwordTextFieldValue
-        viewModelScope.launch {
-            login(email, password)
-        }
+        login(email, password)
     }
 
     fun onRegisterTextClicked() {
@@ -63,6 +72,7 @@ class LoginViewModel @Inject constructor() : ViewModel() {
 }
 
 data class LoginScreenState(
+    val isLoading: Boolean = false,
     val emailTextFieldValue: String = "",
     val passwordTextFieldValue: String = "",
     val emailErrorMessage: String? = "",
