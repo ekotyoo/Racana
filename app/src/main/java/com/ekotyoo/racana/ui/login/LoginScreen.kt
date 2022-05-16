@@ -9,17 +9,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -54,11 +48,12 @@ fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
         viewModel.eventChannel.collect { event ->
             when (event) {
-                LoginScreenEvent.LoginSuccess -> {
+                is LoginScreenEvent.LoginSuccess -> {
                     navigator.navigate(HomeScreenDestination) {
                         popUpTo(NavGraphs.root.startDestination) {
                             inclusive = true
@@ -66,7 +61,10 @@ fun LoginScreen(
                         launchSingleTop = true
                     }
                 }
-                LoginScreenEvent.NavigateToRegisterScreen -> {
+                is LoginScreenEvent.LoginFailed -> {
+                    snackbarHostState.showSnackbar(event.message)
+                }
+                is LoginScreenEvent.NavigateToRegisterScreen -> {
                     navigator.navigate(RegisterScreenDestination) {
                         popUpTo(NavGraphs.root.startDestination)
                         launchSingleTop = true
@@ -90,6 +88,7 @@ fun LoginScreen(
                 onLoginButtonClicked = viewModel::onLoginButtonClicked,
                 onRegisterTextClicked = viewModel::onRegisterTextClicked,
             )
+            SnackbarHost(hostState = snackbarHostState)
             RCircularProgressOverlay(
                 modifier = Modifier.align(Alignment.Center),
                 visible = state.isLoading

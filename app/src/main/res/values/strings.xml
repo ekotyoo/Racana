@@ -26,4 +26,5 @@
     <string name="password_not_same">Password harus sama</string>
     <string name="travel_destination">Destinasi Wisata</string>
     <string name="see_all">Lihat Semua</string>
+    <string name="login_failed">Login gagal!</string>
 </resources>

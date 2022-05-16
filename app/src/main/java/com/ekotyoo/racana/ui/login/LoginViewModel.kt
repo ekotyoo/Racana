@@ -3,6 +3,7 @@ package com.ekotyoo.racana.ui.login
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ekotyoo.racana.data.Result
 import com.ekotyoo.racana.data.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -27,10 +28,9 @@ class LoginViewModel @Inject constructor(
     private fun login(email: String, password: String) {
         _state.value = _state.value.copy(isLoading = true)
         viewModelScope.launch {
-            authRepository.login(email, password)
-            authRepository.userData.collect {
-                _eventChannel.send(LoginScreenEvent.LoginSuccess)
-                Timber.d(it.toString())
+            when(val result = authRepository.login(email, password)) {
+                is Result.Success -> _eventChannel.send(LoginScreenEvent.LoginSuccess)
+                is Result.Error -> _eventChannel.send(LoginScreenEvent.LoginFailed(result.message))
             }
             _state.value = _state.value.copy(isLoading = false)
         }
@@ -81,5 +81,6 @@ data class LoginScreenState(
 
 sealed class LoginScreenEvent {
     object LoginSuccess : LoginScreenEvent()
+    data class LoginFailed(val message: String): LoginScreenEvent()
     object NavigateToRegisterScreen : LoginScreenEvent()
 }
