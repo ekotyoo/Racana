@@ -10,9 +10,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -228,9 +226,9 @@ fun RegisterContent(
             },
             trailingIcon = {
                 IconButton(onClick = onHideShowPasswordToggled) {
-                    Image(
-                        painter = painterResource(id = if (isPasswordObscured) R.drawable.ic_visibility else R.drawable.ic_visibility_off),
-                        contentDescription = null,
+                    Icon(
+                        imageVector = if (isPasswordObscured) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                        contentDescription = null
                     )
                 }
             },
@@ -300,13 +298,14 @@ fun RegisterScreenPreview() {
                 nameErrorMessage = "",
                 emailErrorMessage = "",
                 passwordErrorMessage = "",
-                true,
-                {},
-                {},
-                {},
-                {},
-                {},
-                {})
+                isPasswordObscured =true,
+                onNameTextFieldChange = {},
+                onEmailTextFieldChange = {},
+                onPasswordTextFieldChange = {},
+                onHideShowPasswordToggled = {},
+                onRegisterButtonClicked = {},
+                onLoginTextClicked = {}
+            )
         }
     }
 }

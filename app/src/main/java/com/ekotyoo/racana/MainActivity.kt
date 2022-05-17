@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
@@ -12,6 +14,7 @@ import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.ui.NavGraphs
 import com.ekotyoo.racana.ui.destinations.HomeScreenDestination
 import com.ekotyoo.racana.ui.destinations.LoginScreenDestination
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.navigation.navigate
 import com.ramcosta.composedestinations.navigation.popUpTo
@@ -32,6 +35,17 @@ class MainActivity : ComponentActivity() {
             val mainNavController = rememberNavController()
 
             RacanaTheme {
+                val systemUiController = rememberSystemUiController()
+                val useDarkIcons = MaterialTheme.colors.isLight
+                val backgroundColor = MaterialTheme.colors.background
+
+                SideEffect {
+                    systemUiController.setStatusBarColor(
+                        color = backgroundColor,
+                        darkIcons = useDarkIcons
+                    )
+                }
+
                 LaunchedEffect(Unit) {
                     viewModel.eventChannel.collect { event ->
                         when (event) {

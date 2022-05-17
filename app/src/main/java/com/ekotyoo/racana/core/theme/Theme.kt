@@ -26,16 +26,6 @@ private val LightColorPalette = lightColors(
 
 @Composable
 fun RacanaTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    val systemUiController = rememberSystemUiController()
-    val useDarkIcons = MaterialTheme.colors.isLight
-
-    SideEffect {
-        systemUiController.setStatusBarColor(
-            color = Color.Transparent,
-            darkIcons = useDarkIcons
-        )
-    }
-
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {
