@@ -8,18 +8,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -29,20 +23,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
+import com.ekotyoo.racana.core.composables.RCircularProgressOverlay
 import com.ekotyoo.racana.core.composables.REditText
 import com.ekotyoo.racana.core.composables.RFilledButton
 import com.ekotyoo.racana.core.theme.RacanaTheme
-import com.ekotyoo.racana.ui.NavGraphs
-import com.ekotyoo.racana.ui.destinations.HomeScreenDestination
 import com.ekotyoo.racana.ui.destinations.LoginScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
-import com.ramcosta.composedestinations.utils.startDestination
 
 @Destination
 @Composable
@@ -51,16 +44,28 @@ fun RegisterScreen(
     viewModel: RegisterViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
         viewModel.eventChannel.collect { event ->
             when (event) {
-                RegisterScreenEvent.RegisterSuccess -> {
-                    navigator.navigate(HomeScreenDestination)
-                }
-                RegisterScreenEvent.NavigateToLoginScreen -> {
+                is RegisterScreenEvent.RegisterSuccess -> {
+                    snackbarHostState.showSnackbar("Akun berhasil dibuat!")
                     navigator.navigate(LoginScreenDestination) {
-                        popUpTo(NavGraphs.root.startDestination)
+                        popUpTo(LoginScreenDestination) {
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                    }
+                }
+                is RegisterScreenEvent.RegisterFailed -> {
+                    snackbarHostState.showSnackbar(event.message)
+                }
+                is RegisterScreenEvent.NavigateToLoginScreen -> {
+                    navigator.navigate(LoginScreenDestination) {
+                        popUpTo(LoginScreenDestination) {
+                            inclusive = true
+                        }
                         launchSingleTop = true
                     }
                 }
@@ -69,22 +74,31 @@ fun RegisterScreen(
     }
 
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-        RegisterContent(
-            state.nameTextFieldValue,
-            state.emailTextFieldValue,
-            state.passwordTextFieldValue,
-            state.confirmPasswordTextFieldValue,
-            state.nameErrorMessage,
-            state.emailErrorMessage,
-            state.passwordErrorMessage,
-            state.confirmPasswordErrorMessage,
-            viewModel::onNameTextFieldValueChange,
-            viewModel::onEmailTextFieldValueChange,
-            viewModel::onPasswordTextFieldValueChange,
-            viewModel::onConfirmPasswordTextFieldValueChange,
-            viewModel::onRegisterButtonClicked,
-            viewModel::onLoginTextClicked
-        )
+        Box(
+            Modifier.fillMaxSize()
+        ) {
+            RegisterContent(
+                state.nameTextFieldValue,
+                state.emailTextFieldValue,
+                state.passwordTextFieldValue,
+                state.nameErrorMessage,
+                state.emailErrorMessage,
+                state.passwordErrorMessage,
+                state.isPasswordObscured,
+                viewModel::onNameTextFieldValueChange,
+                viewModel::onEmailTextFieldValueChange,
+                viewModel::onPasswordTextFieldValueChange,
+                viewModel::onHideShowPasswordToggled,
+                viewModel::onRegisterButtonClicked,
+                viewModel::onLoginTextClicked
+            )
+            SnackbarHost(hostState = snackbarHostState)
+            RCircularProgressOverlay(
+                modifier = Modifier.align(Center),
+                visible = state.isLoading
+            )
+        }
+
     }
 }
 
@@ -93,21 +107,21 @@ fun RegisterContent(
     nameValue: String,
     emailValue: String,
     passwordValue: String,
-    confirmPasswordValue: String,
     nameErrorMessage: String?,
     emailErrorMessage: String?,
     passwordErrorMessage: String?,
-    confirmPasswordErrorMessage: String?,
+    isPasswordObscured: Boolean,
     onNameTextFieldChange: (String) -> Unit,
     onEmailTextFieldChange: (String) -> Unit,
     onPasswordTextFieldChange: (String) -> Unit,
-    onConfirmPasswordTextFieldChange: (String) -> Unit,
+    onHideShowPasswordToggled: () -> Unit,
     onRegisterButtonClicked: () -> Unit,
     onLoginTextClicked: () -> Unit
 ) {
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
+            .fillMaxSize()
             .padding(horizontal = 16.dp)
             .verticalScroll(
                 scrollState,
@@ -212,11 +226,19 @@ fun RegisterContent(
                     contentDescription = null
                 )
             },
+            trailingIcon = {
+                IconButton(onClick = onHideShowPasswordToggled) {
+                    Image(
+                        painter = painterResource(id = if (isPasswordObscured) R.drawable.ic_visibility else R.drawable.ic_visibility_off),
+                        contentDescription = null,
+                    )
+                }
+            },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Next
+                imeAction = ImeAction.Done
             ),
-            visualTransformation = PasswordVisualTransformation(),
+            visualTransformation = if (isPasswordObscured) PasswordVisualTransformation() else VisualTransformation.None,
             onValueChange = onPasswordTextFieldChange,
             isError = isPasswordError
         )
@@ -228,43 +250,11 @@ fun RegisterContent(
                 modifier = Modifier.padding(start = 16.dp)
             )
         }
-        Spacer(modifier = Modifier.size(size = 16.dp))
-
-
-        //Confirm Password
-        val isConfirmPasswordError = !confirmPasswordErrorMessage.isNullOrEmpty()
-        REditText(
-            modifier = Modifier.fillMaxWidth(),
-            value = confirmPasswordValue,
-            placeholderString = stringResource(id = R.string.password_confirmation),
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Lock,
-                    contentDescription = null
-                )
-            },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Done
-            ),
-            visualTransformation = PasswordVisualTransformation(),
-            onValueChange = onConfirmPasswordTextFieldChange,
-            isError = isConfirmPasswordError
-        )
-        AnimatedVisibility(isConfirmPasswordError) {
-            Text(
-                text = stringResource(id = R.string.password_not_same),
-                color = MaterialTheme.colors.error,
-                style = MaterialTheme.typography.caption,
-                modifier = Modifier.padding(start = 16.dp, bottom = 16.dp)
-            )
-        }
         Spacer(modifier = Modifier.size(size = 32.dp))
-
 
         //Register Button
         val buttonEnabled =
-            !(isNameError || isEmailError || isPasswordError || isConfirmPasswordError || nameValue.isBlank() || emailValue.isBlank() || passwordValue.isBlank() || confirmPasswordValue.isBlank())
+            !(isNameError || isEmailError || isPasswordError || nameValue.isBlank() || emailValue.isBlank() || passwordValue.isBlank())
         RFilledButton(
             onClick = onRegisterButtonClicked,
             placeholderString = stringResource(id = R.string.register),
@@ -307,11 +297,10 @@ fun RegisterScreenPreview() {
                 nameValue = "",
                 emailValue = "",
                 passwordValue = "",
-                confirmPasswordValue = "",
                 nameErrorMessage = "",
                 emailErrorMessage = "",
                 passwordErrorMessage = "",
-                confirmPasswordErrorMessage = "",
+                true,
                 {},
                 {},
                 {},

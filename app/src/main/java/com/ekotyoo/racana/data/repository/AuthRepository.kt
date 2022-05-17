@@ -42,4 +42,29 @@ class AuthRepository @Inject constructor(
             return Result.Error("Email atau Password harus sesuai.", null)
         }
     }
+
+    suspend fun register(name: String, email: String, password: String): Result<UserModel> {
+        try {
+            val response = authApi.register(name, email, password)
+            val body = response.body()
+            return if (response.isSuccessful && body != null) {
+                val user = UserModel(
+                    body.user.id,
+                    body.user.name,
+                    body.user.email,
+                    ""
+                )
+                Timber.d("Success: $body")
+                Result.Success(user)
+            } else {
+                Result.Error("Register Failed", null)
+            }
+        } catch (e: IOException) {
+            Timber.d("IOException: " + e.message)
+            return Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        } catch (e: HttpException) {
+            Timber.d("HttpException: " + e.message)
+            return Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        }
+    }
 }
