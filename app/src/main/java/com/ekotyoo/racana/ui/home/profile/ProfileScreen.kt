@@ -8,7 +8,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -18,9 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.BottomNavGraph
 import com.ekotyoo.racana.core.composables.ROutlinedButton
 import com.ekotyoo.racana.core.composables.RTopAppBar
@@ -70,29 +75,29 @@ fun ProfileContent(
     onMyPlanButtonCLicked: () -> Unit,
     onFavoriteDestinationButtonCLicked: () -> Unit,
     onSettingsButtonCLicked: () -> Unit,
-    onLogOutCuttonClicked: () -> Unit
-    ) {
+    onLogOutButtonClicked: () -> Unit
+) {
     Scaffold(
         topBar = {
-            RTopAppBar(title = "Profile", isBackButtonAvailable = false)
+            RTopAppBar(title = stringResource(id = R.string.profile))
         },
         content = {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(start = 16.dp, end = 16.dp, bottom = 32.dp),
+                    .padding(horizontal = 16.dp, vertical = 32.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
                 CoilImage(
-                    contentDescription = "",
+                    contentDescription = null,
                     modifier = Modifier
-                        .padding(top = 7.dp, bottom = 37.dp)
-                        .size(119.dp)
+                        .size(120.dp)
                         .clip(CircleShape),
                     contentScale = ContentScale.Crop,
                     imageModel = profilePictureUrl
                 )
+                Spacer(Modifier.height(16.dp))
                 Text(
                     text = nameTextFieldValue,
                     style = MaterialTheme.typography.subtitle1
@@ -103,24 +108,24 @@ fun ProfileContent(
                     modifier = Modifier.padding(bottom = 32.dp)
                 )
                 ProfileButton(
-                    text = "My Plan",
+                    text = stringResource(id = R.string.my_plan),
                     icon = Icons.Default.List,
                     onClick = onMyPlanButtonCLicked
                 )
                 ProfileButton(
-                    text = "Destinasi Favorit",
+                    text = stringResource(id = R.string.favorite_destination),
                     icon = Icons.Default.Favorite,
                     onClick = onFavoriteDestinationButtonCLicked
                 )
                 ProfileButton(
-                    text = "Pengaturan",
+                    text = stringResource(id = R.string.settings),
                     icon = Icons.Default.Settings,
                     onClick = onSettingsButtonCLicked
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 ROutlinedButton(
-                    placeholderString = "Keluar",
-                    onClick = onLogOutCuttonClicked
+                    placeholderString = stringResource(id = R.string.logout),
+                    onClick = onLogOutButtonClicked
                 )
             }
         }
@@ -129,54 +134,53 @@ fun ProfileContent(
 
 @Composable
 fun ProfileButton(
+    modifier: Modifier = Modifier,
     text: String,
     icon: ImageVector,
     onClick: () -> Unit
 ) {
-    Column {
-
+    Column(modifier) {
         Row(
             modifier = Modifier
-                .clickable { onClick }
-                .width(254.dp),
+                .clip(MaterialTheme.shapes.small)
+                .clickable(onClick = onClick)
+                .padding(8.dp)
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 imageVector = icon,
-                contentDescription = "",
+                contentDescription = null,
                 modifier = Modifier
-                    .padding(end = 8.dp)
+                    .padding(end = 16.dp)
                     .size(36.dp)
                     .border(
                         width = 2.dp,
                         color = MaterialTheme.colors.primary,
                         shape = MaterialTheme.shapes.small
                     )
-                    .padding(6.dp)
-                    .background(
-                        color = MaterialTheme.colors.primaryVariant.copy(0.05f)
-                    ),
+                    .padding(4.dp),
                 tint = MaterialTheme.colors.primary
             )
             Text(
                 text = text,
-                style = MaterialTheme.typography.body2
+                style = MaterialTheme.typography.body1
             )
             Spacer(modifier = Modifier.weight(1f))
             Icon(
-                imageVector = Icons.Default.ArrowForward,
-                contentDescription = "",
+                imageVector = Icons.Rounded.ChevronRight,
+                contentDescription = null,
                 modifier = Modifier
                     .size(36.dp)
                     .background(
                         color = MaterialTheme.colors.primary,
                         shape = MaterialTheme.shapes.small
                     )
-                    .padding(10.dp),
+                    .padding(4.dp),
                 tint = MaterialTheme.colors.onPrimary,
             )
         }
-        Spacer(modifier = Modifier.size(20.dp))
+        Spacer(Modifier.height(8.dp))
     }
 }
 

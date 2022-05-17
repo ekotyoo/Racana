@@ -4,6 +4,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.*
+import androidx.compose.material.ButtonDefaults.elevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -16,7 +17,6 @@ fun ROutlinedButton(
     onClick: () -> Unit
 ) {
     Button(
-        onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
             .border(
@@ -24,9 +24,11 @@ fun ROutlinedButton(
                 color = MaterialTheme.colors.primary,
                 shape = MaterialTheme.shapes.small
             ),
+        onClick = onClick,
         shape = MaterialTheme.shapes.small,
         contentPadding = PaddingValues(16.dp),
         enabled = enabled,
+        elevation = elevation(0.dp, 0.dp, 0.dp, 0.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.background)
     ) {
         Text(
