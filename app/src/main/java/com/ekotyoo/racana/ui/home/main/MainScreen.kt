@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.BottomNavGraph
 import com.ekotyoo.racana.core.composables.RDestinationCard
@@ -32,7 +32,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @BottomNavGraph(start = true)
 @Destination
 @Composable
-fun MainScreen(navigator: DestinationsNavigator, viewModel: MainViewModel = viewModel()) {
+fun MainScreen(navigator: DestinationsNavigator, viewModel: MainViewModel = hiltViewModel()) {
     val state by viewModel.state.collectAsState()
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
         MainContent(

@@ -3,27 +3,39 @@ package com.ekotyoo.racana.ui.register
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ekotyoo.racana.data.Result
+import com.ekotyoo.racana.data.repository.AuthRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RegisterViewModel : ViewModel() {
+@HiltViewModel
+class RegisterViewModel @Inject constructor(
+    private val authRepository: AuthRepository
+) : ViewModel() {
     private val _state = MutableStateFlow(RegisterScreenState())
     val state: StateFlow<RegisterScreenState> = _state
 
     private val _eventChannel = Channel<RegisterScreenEvent>()
     val eventChannel = _eventChannel.receiveAsFlow()
 
-    private suspend fun register(
+    private fun register(
         name: String,
         email: String,
         password: String,
-        confirmPassword: String
     ) {
-        // TODO: Implement register functionality
-        _eventChannel.send(RegisterScreenEvent.RegisterSuccess)
+        _state.value = _state.value.copy(isLoading = true)
+        viewModelScope.launch {
+            when (val result = authRepository.register(name, email, password)) {
+                is Result.Success -> _eventChannel.send(RegisterScreenEvent.RegisterSuccess)
+                is Result.Error -> _eventChannel.send(RegisterScreenEvent.RegisterFailed(result.message))
+            }
+            _state.value = _state.value.copy(isLoading = false)
+        }
     }
 
     fun onNameTextFieldValueChange(value: String) {
@@ -61,30 +73,20 @@ class RegisterViewModel : ViewModel() {
         _state.value = _state.value.copy(passwordErrorMessage = errorMessage)
     }
 
-    fun onConfirmPasswordTextFieldValueChange(value: String) {
-        _state.value = _state.value.copy(confirmPasswordTextFieldValue = value)
-        val errorMessage = if (value.isNotEmpty()) {
-            when {
-                value != _state.value.passwordTextFieldValue -> "error"
-                else -> null
-            }
-        } else null
-        _state.value = _state.value.copy(confirmPasswordErrorMessage = errorMessage)
+    fun onHideShowPasswordToggled() {
+        _state.value = _state.value.copy(isPasswordObscured = !_state.value.isPasswordObscured)
     }
 
     fun onRegisterButtonClicked() {
         val name = state.value.nameTextFieldValue
         val email = state.value.emailTextFieldValue
         val password = state.value.passwordTextFieldValue
-        val confirmPassword = state.value.confirmPasswordTextFieldValue
-        viewModelScope.launch {
-            register(
-                name,
-                email,
-                password,
-                confirmPassword
-            )
-        }
+
+        register(
+            name,
+            email,
+            password,
+        )
     }
 
     fun onLoginTextClicked() {
@@ -101,17 +103,18 @@ class RegisterViewModel : ViewModel() {
 }
 
 data class RegisterScreenState(
+    val isLoading: Boolean = false,
+    val isPasswordObscured: Boolean = true,
     val nameTextFieldValue: String = "",
     val emailTextFieldValue: String = "",
     val passwordTextFieldValue: String = "",
-    val confirmPasswordTextFieldValue: String = "",
     val nameErrorMessage: String? = "",
     val emailErrorMessage: String? = "",
     val passwordErrorMessage: String? = "",
-    val confirmPasswordErrorMessage: String? = ""
 )
 
 sealed class RegisterScreenEvent {
     object RegisterSuccess : RegisterScreenEvent()
+    data class RegisterFailed(val message: String) : RegisterScreenEvent()
     object NavigateToLoginScreen : RegisterScreenEvent()
 }

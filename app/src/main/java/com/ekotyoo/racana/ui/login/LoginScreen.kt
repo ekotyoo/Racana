@@ -9,17 +9,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -31,38 +25,45 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
+import com.ekotyoo.racana.core.composables.RCircularProgressOverlay
 import com.ekotyoo.racana.core.composables.REditText
 import com.ekotyoo.racana.core.composables.RFilledButton
 import com.ekotyoo.racana.core.theme.RacanaTheme
-import com.ekotyoo.racana.ui.NavGraphs
 import com.ekotyoo.racana.ui.destinations.HomeScreenDestination
+import com.ekotyoo.racana.ui.destinations.LoginScreenDestination
 import com.ekotyoo.racana.ui.destinations.RegisterScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
-import com.ramcosta.composedestinations.utils.startDestination
 
-@RootNavGraph(start = true)
-@Destination()
+@Destination
 @Composable
 fun LoginScreen(
     navigator: DestinationsNavigator,
-    viewModel: LoginViewModel = viewModel()
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
         viewModel.eventChannel.collect { event ->
             when (event) {
-                LoginScreenEvent.LoginSuccess -> {
-                    navigator.navigate(HomeScreenDestination)
+                is LoginScreenEvent.LoginSuccess -> {
+                    navigator.navigate(HomeScreenDestination) {
+                        popUpTo(LoginScreenDestination) {
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                    }
                 }
-                LoginScreenEvent.NavigateToRegisterScreen -> {
+                is LoginScreenEvent.LoginFailed -> {
+                    snackbarHostState.showSnackbar(event.message)
+                }
+                is LoginScreenEvent.NavigateToRegisterScreen -> {
                     navigator.navigate(RegisterScreenDestination) {
-                        popUpTo(NavGraphs.root.startDestination)
+                        popUpTo(LoginScreenDestination)
                         launchSingleTop = true
                     }
                 }
@@ -71,16 +72,25 @@ fun LoginScreen(
     }
 
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-        LoginContent(
-            emailValue = state.emailTextFieldValue,
-            passwordValue = state.passwordTextFieldValue,
-            emailErrorMessage = state.emailErrorMessage,
-            passwordErrorMessage = state.passwordErrorMessage,
-            onEmailEmailTextFieldChange = viewModel::onEmailTextFieldValueChange,
-            onPasswordTextFieldChange = viewModel::onPasswordTextFieldValueChange,
-            onLoginButtonClicked = viewModel::onLoginButtonClicked,
-            onRegisterTextClicked = viewModel::onRegisterTextClicked,
-        )
+        Box(
+            Modifier.fillMaxSize()
+        ) {
+            LoginContent(
+                emailValue = state.emailTextFieldValue,
+                passwordValue = state.passwordTextFieldValue,
+                emailErrorMessage = state.emailErrorMessage,
+                passwordErrorMessage = state.passwordErrorMessage,
+                onEmailEmailTextFieldChange = viewModel::onEmailTextFieldValueChange,
+                onPasswordTextFieldChange = viewModel::onPasswordTextFieldValueChange,
+                onLoginButtonClicked = viewModel::onLoginButtonClicked,
+                onRegisterTextClicked = viewModel::onRegisterTextClicked,
+            )
+            SnackbarHost(hostState = snackbarHostState)
+            RCircularProgressOverlay(
+                modifier = Modifier.align(Alignment.Center),
+                visible = state.isLoading
+            )
+        }
     }
 }
 
@@ -98,6 +108,7 @@ fun LoginContent(
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
+            .fillMaxSize()
             .padding(horizontal = 16.dp)
             .verticalScroll(
                 scrollState,
@@ -136,7 +147,10 @@ fun LoginContent(
                     contentDescription = "",
                 )
             },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Next),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next
+            ),
             onValueChange = onEmailEmailTextFieldChange,
             isError = isEmailError
         )
@@ -162,23 +176,27 @@ fun LoginContent(
                     contentDescription = "",
                 )
             },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done
+            ),
             visualTransformation = PasswordVisualTransformation(),
             onValueChange = onPasswordTextFieldChange,
             isError = isPasswordError
         )
         AnimatedVisibility(isPasswordError) {
             Text(
-                    text = stringResource(id = R.string.password_less_eight),
-                    color = MaterialTheme.colors.error,
-                    style = MaterialTheme.typography.caption,
-                    modifier = Modifier.padding(start = 16.dp)
+                text = stringResource(id = R.string.password_less_eight),
+                color = MaterialTheme.colors.error,
+                style = MaterialTheme.typography.caption,
+                modifier = Modifier.padding(start = 16.dp)
             )
         }
         Spacer(modifier = Modifier.size(size = 32.dp))
 
         //Login Button
-        val buttonEnabled = !(isPasswordError || isEmailError || emailValue.isBlank() || passwordValue.isBlank())
+        val buttonEnabled =
+            !(isPasswordError || isEmailError || emailValue.isBlank() || passwordValue.isBlank())
         RFilledButton(
             onClick = onLoginButtonClicked,
             placeholderString = stringResource(id = R.string.login),

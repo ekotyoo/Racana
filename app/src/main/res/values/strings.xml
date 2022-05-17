@@ -26,4 +26,10 @@
     <string name="password_not_same">Password harus sama</string>
     <string name="travel_destination">Destinasi Wisata</string>
     <string name="see_all">Lihat Semua</string>
+    <string name="login_failed">Login gagal!</string>
+    <string name="profile">Profil</string>
+    <string name="my_plan">Rencana Saya</string>
+    <string name="favorite_destination">Destinasi Favorit</string>
+    <string name="settings">Pengaturan</string>
+    <string name="logout">Keluar</string>
 </resources>

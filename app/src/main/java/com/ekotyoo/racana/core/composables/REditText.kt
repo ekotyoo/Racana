@@ -37,7 +37,7 @@ fun REditText(
         trailingIcon = trailingIcon,
         modifier = modifier
             .border(
-                width = 2.dp,
+                width = 1.5.dp,
                 color = color.value,
                 shape = MaterialTheme.shapes.small
             )
