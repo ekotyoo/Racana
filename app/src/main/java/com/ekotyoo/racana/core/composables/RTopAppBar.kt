@@ -33,8 +33,7 @@ fun RTopAppBar(
         title = {
             Text(
                 text = title,
-                style = MaterialTheme.typography.subtitle1,
-                color = MaterialTheme.colors.onSurface
+                style = MaterialTheme.typography.h5,
             )
         },
         navigationIcon = {

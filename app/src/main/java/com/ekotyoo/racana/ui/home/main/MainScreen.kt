@@ -94,12 +94,12 @@ fun MainContent(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = stringResource(id = R.string.travel_destination),
-                        style = MaterialTheme.typography.subtitle1
+                        text = stringResource(id = R.string.top_destination),
+                        style = MaterialTheme.typography.h6
                     )
                     Text(
                         text = stringResource(id = R.string.see_all),
-                        style = MaterialTheme.typography.body2
+                        style = MaterialTheme.typography.body1
                     )
                 }
             },

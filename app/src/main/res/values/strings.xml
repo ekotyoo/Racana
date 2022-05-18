@@ -24,7 +24,7 @@
     <string name="password_less_eight">Password kurang dari 8 karakter</string>
 
     <string name="password_not_same">Password harus sama</string>
-    <string name="travel_destination">Destinasi Wisata</string>
+    <string name="top_destination">Top Destinasi</string>
     <string name="see_all">Lihat Semua</string>
     <string name="login_failed">Login gagal!</string>
     <string name="profile">Profil</string>

@@ -21,7 +21,7 @@ fun ROutlinedButton(
             .fillMaxWidth()
             .border(
                 width = 2.dp,
-                color = MaterialTheme.colors.primary,
+                color = MaterialTheme.colors.secondary,
                 shape = MaterialTheme.shapes.small
             ),
         onClick = onClick,
@@ -33,7 +33,8 @@ fun ROutlinedButton(
     ) {
         Text(
             text = placeholderString,
-            color = MaterialTheme.colors.primary
+            color = MaterialTheme.colors.secondary
+
         )
     }
 }

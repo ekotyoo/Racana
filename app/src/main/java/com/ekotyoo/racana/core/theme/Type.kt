@@ -13,6 +13,11 @@ val poppinsFamily = FontFamily(
     Font(R.font.poppins_regular, FontWeight.Normal),
     Font(R.font.poppins_semibold, FontWeight.SemiBold),
 )
+
+val balooFamily = FontFamily(
+    Font(R.font.baloo_bold, FontWeight.Bold)
+)
+
 // Set of Material typography styles to start with
 val Typography = Typography(
     body1 = TextStyle(
@@ -26,23 +31,28 @@ val Typography = Typography(
         fontSize = 12.sp
     ),
     button = TextStyle(
-        fontFamily = poppinsFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 14.sp
+        fontFamily = balooFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 16.sp
     ),
     subtitle1 = TextStyle(
         fontFamily = poppinsFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 16.sp
     ),
-    h5 = TextStyle(
+    subtitle2 = TextStyle(
         fontFamily = poppinsFamily,
         fontWeight = FontWeight.SemiBold,
+        fontSize = 14.sp
+    ),
+    h5 = TextStyle(
+        fontFamily = balooFamily,
+        fontWeight = FontWeight.Bold,
         fontSize = 24.sp
     ),
     h6 = TextStyle(
-        fontFamily = poppinsFamily,
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 20.sp
+        fontFamily = balooFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp,
     ),
 )

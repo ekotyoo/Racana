@@ -1,7 +1,6 @@
 package com.ekotyoo.racana.core.composables
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
@@ -41,7 +40,7 @@ fun RBottomNavigationBar(
 
     BottomAppBar(
         modifier = modifier,
-        containerColor = MaterialTheme.colors.secondary,
+        containerColor = MaterialTheme.colors.surface,
         icons = {
             BottomBarDestination.values().forEach { destination ->
                 RBottomAppBarIcon(
@@ -65,7 +64,11 @@ fun RBottomNavigationBar(
                 containerColor = MaterialTheme.colors.primary,
                 onClick = { }
             ) {
-                Icon(Icons.Filled.Add, contentDescription = null)
+                Icon(
+                    Icons.Filled.Add,
+                    contentDescription = null,
+                    tint = MaterialTheme.colors.onPrimary
+                )
             }
         }
     )
@@ -89,7 +92,7 @@ fun RBottomAppBarIcon(
         Icon(
             imageVector,
             contentDescription = contentDescription,
-            tint = if (isSelected && isSystemInDarkTheme()) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface
+            tint = if (isSelected) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface
         )
     }
 }
