@@ -34,6 +34,7 @@ fun ROutlinedButton(
         Text(
             text = placeholderString,
             color = MaterialTheme.colors.secondary
+
         )
     }
 }
