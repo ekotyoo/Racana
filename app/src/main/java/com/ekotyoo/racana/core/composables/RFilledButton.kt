@@ -23,6 +23,6 @@ fun RFilledButton(
         contentPadding = PaddingValues(16.dp),
         enabled = enabled
     ) {
-        Text(text = placeholderString)
+        Text(text = placeholderString, style = MaterialTheme.typography.button)
     }
 }

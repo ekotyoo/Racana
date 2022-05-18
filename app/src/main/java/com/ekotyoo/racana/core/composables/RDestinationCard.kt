@@ -3,13 +3,12 @@ package com.ekotyoo.racana.core.composables
 import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,32 +51,32 @@ fun RDestinationCard(
             Spacer(Modifier.height(8.dp))
             Text(
                 text = name,
-                style = MaterialTheme.typography.body1,
-                color = MaterialTheme.colors.onSurface
+                style = MaterialTheme.typography.subtitle2,
             )
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    modifier = Modifier.size(16.dp),
-                    imageVector = Icons.Rounded.Place,
-                    tint = MaterialTheme.colors.onSurface.copy(alpha = .7f),
-                    contentDescription = null
-                )
-                Spacer(Modifier.width(4.dp))
-                Text(
-                    text = location,
-                    style = MaterialTheme.typography.body2.copy(
-                        platformStyle = PlatformTextStyle(
-                            includeFontPadding = false
+            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        modifier = Modifier.size(16.dp),
+                        imageVector = Icons.Rounded.Place,
+                        contentDescription = null,
+                        tint = MaterialTheme.colors.primary
+                    )
+                    Spacer(Modifier.width(4.dp))
+                    Text(
+                        text = location,
+                        style = MaterialTheme.typography.body2.copy(
+                            platformStyle = PlatformTextStyle(
+                                includeFontPadding = false
+                            ),
+                            lineHeightStyle = LineHeightStyle(
+                                alignment = LineHeightStyle.Alignment.Center,
+                                trim = LineHeightStyle.Trim.None
+                            )
                         ),
-                        lineHeightStyle = LineHeightStyle(
-                            alignment = LineHeightStyle.Alignment.Center,
-                            trim = LineHeightStyle.Trim.None
-                        )
-                    ),
-                    color = MaterialTheme.colors.onSurface.copy(alpha = .5f)
-                )
+                    )
+                }
             }
         }
     }
