@@ -7,6 +7,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('C:\\Users\\ekepr\\Documents\\keystore.jks')
+            storePassword 'koplak.com'
+            keyPassword 'koplak.com'
+            keyAlias 'key0'
+        }
+    }
     compileSdk 32
 
     defaultConfig {
@@ -24,8 +32,9 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable false
         }
     }
     compileOptions {

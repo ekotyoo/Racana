@@ -46,7 +46,6 @@ fun MainScreen(navigator: DestinationsNavigator, viewModel: MainViewModel = hilt
     val appBarExpanded = derivedStateOf {
         lazyListState.firstVisibleItemIndex == 0
     }
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {

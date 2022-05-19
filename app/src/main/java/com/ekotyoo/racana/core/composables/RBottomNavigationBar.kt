@@ -7,6 +7,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.FloatingActionButton
@@ -19,13 +20,16 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ekotyoo.racana.ui.NavGraphs
 import com.ekotyoo.racana.ui.appCurrentDestinationAsState
+import com.ekotyoo.racana.ui.destinations.HomeScreenDestination
 import com.ekotyoo.racana.ui.destinations.MainScreenDestination
 import com.ekotyoo.racana.ui.destinations.ProfileScreenDestination
+import com.ekotyoo.racana.ui.destinations.TourPlanListScreenDestination
 import com.ekotyoo.racana.ui.startAppDestination
 import com.ramcosta.composedestinations.annotation.NavGraph
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.navigate
+import com.ramcosta.composedestinations.navigation.popUpTo
 import com.ramcosta.composedestinations.spec.DirectionDestinationSpec
 
 @Composable
@@ -44,14 +48,14 @@ fun RBottomNavigationBar(
         icons = {
             BottomBarDestination.values().forEach { destination ->
                 RBottomAppBarIcon(
-                    modifier = Modifier.padding(horizontal = 16.dp),
+                    modifier = Modifier.padding(horizontal = 8.dp),
                     isSelected = currentDestination == destination.direction,
                     imageVector = destination.icon,
                     contentDescription = null,
                     onClick = {
                         if (currentDestination != destination.direction) {
                             bottomAppBarNavController.navigate(destination.direction) {
-                                bottomAppBarNavController.popBackStack()
+                                popUpTo(HomeScreenDestination)
                                 launchSingleTop = true
                             }
                         }
@@ -108,5 +112,6 @@ enum class BottomBarDestination(
     val icon: ImageVector,
 ) {
     MainScreen(MainScreenDestination, Icons.Filled.Home),
-    ProfileScreen(ProfileScreenDestination, Icons.Filled.Person),
+    TourPlanListScreen(TourPlanListScreenDestination, Icons.Filled.List),
+    ProfileScreen(ProfileScreenDestination, Icons.Filled.Person)
 }
