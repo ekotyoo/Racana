@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
+import com.ekotyoo.racana.ui.NavigationTransition
 import com.ekotyoo.racana.core.composables.RCircularProgressOverlay
 import com.ekotyoo.racana.core.composables.REditText
 import com.ekotyoo.racana.core.composables.RFilledButton
@@ -38,7 +39,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
 
-@Destination
+@Destination(style = NavigationTransition::class)
 @Composable
 fun LoginScreen(
     navigator: DestinationsNavigator,

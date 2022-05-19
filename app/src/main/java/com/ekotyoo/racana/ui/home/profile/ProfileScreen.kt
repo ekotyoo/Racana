@@ -1,6 +1,7 @@
 package com.ekotyoo.racana.ui.home.profile
 
 import android.content.res.Configuration
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -26,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
+import com.ekotyoo.racana.ui.NavigationTransition
 import com.ekotyoo.racana.core.composables.BottomNavGraph
 import com.ekotyoo.racana.core.composables.ROutlinedButton
 import com.ekotyoo.racana.core.composables.RTopAppBar
@@ -35,9 +37,9 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
 
 @BottomNavGraph
-@Destination
+@Destination(style = NavigationTransition::class)
 @Composable
-fun ProfileScreen(
+fun AnimatedVisibilityScope.ProfileScreen(
     navigator: DestinationsNavigator,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {

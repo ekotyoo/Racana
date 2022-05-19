@@ -1,20 +1,21 @@
 package com.ekotyoo.racana.ui.home.dashboard
 
 import android.content.res.Configuration
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Icon
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
+import com.ekotyoo.racana.ui.NavigationTransition
 import com.ekotyoo.racana.core.composables.BottomNavGraph
 import com.ekotyoo.racana.core.composables.RDestinationCard
 import com.ekotyoo.racana.core.composables.RIconButton
@@ -37,18 +39,26 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
 
 @BottomNavGraph(start = true)
-@Destination
+@Destination(style = NavigationTransition::class)
 @Composable
-fun MainScreen(navigator: DestinationsNavigator, viewModel: MainViewModel = hiltViewModel()) {
+fun AnimatedVisibilityScope.MainScreen(navigator: DestinationsNavigator, viewModel: MainViewModel = hiltViewModel()) {
     val state by viewModel.state.collectAsState()
+    val lazyListState = rememberLazyListState()
+    val appBarExpanded = derivedStateOf {
+        lazyListState.firstVisibleItemIndex == 0
+    }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            HomeAppBar {}
+            HomeAppBar(
+                expanded = appBarExpanded.value
+            ) {}
         }
     ) {
         MainContent(
             destinations = state.destinations,
+            lazyListState = lazyListState
         )
     }
 }
@@ -56,40 +66,49 @@ fun MainScreen(navigator: DestinationsNavigator, viewModel: MainViewModel = hilt
 @Composable
 fun MainContent(
     destinations: List<TravelDestination>,
+    lazyListState: LazyListState
 ) {
-    Column(
-        modifier = Modifier.verticalScroll(rememberScrollState(), true)
+    LazyColumn(
+        state = lazyListState,
     ) {
-        HomeHeader()
-        Spacer(Modifier.height(16.dp))
-        HomeSection(
-            title = stringResource(id = R.string.top_destination)
-        ) {
-            DestinationRow(destinations = destinations, onItemClick = {})
+        item {
+            HomeHeader()
+            Spacer(Modifier.height(16.dp))
         }
-        Spacer(Modifier.height(16.dp))
-        HomeSection(
-            title = stringResource(id = R.string.traveler_stories),
-        ) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.padding(horizontal = 16.dp)
+        item {
+            HomeSection(
+                title = stringResource(id = R.string.top_destination)
             ) {
-                repeat(4) {
-                    RImageCard(
-                        imageUrl = "https://picsum.photos/200/300",
-                        title = "Lorem Ipsum Dolor",
-                        description = "Lorem ipsum dolor dolr asdf das",
-                        onClick = {}
-                    )
+                DestinationRow(destinations = destinations, onItemClick = {})
+            }
+            Spacer(Modifier.height(16.dp))
+        }
+        item {
+            HomeSection(
+                title = stringResource(id = R.string.traveler_stories),
+            ) {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                ) {
+                    repeat(4) {
+                        RImageCard(
+                            imageUrl = "https://picsum.photos/200/300",
+                            title = "Lorem Ipsum Dolor",
+                            description = "Lorem ipsum dolor dolr asdf das",
+                            onClick = {}
+                        )
+                    }
                 }
             }
         }
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun HomeAppBar(
+    expanded: Boolean = false,
     onSearchClicked: () -> Unit
 ) {
     Row(
@@ -97,19 +116,36 @@ fun HomeAppBar(
             .background(MaterialTheme.colors.primary)
             .fillMaxWidth()
             .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        Column {
-            Text(
-                text = "Hi, John",
-                style = MaterialTheme.typography.h5,
-                color = MaterialTheme.colors.onPrimary
-            )
-            Text(
-                text = stringResource(id = R.string.enjoy_your_tour),
-                style = MaterialTheme.typography.subtitle1,
-                color = MaterialTheme.colors.onPrimary
-            )
+        AnimatedContent(targetState = expanded) { target ->
+            if (target) {
+                Column {
+                    Text(
+                        text = "Hi, John",
+                        style = MaterialTheme.typography.h5,
+                        color = MaterialTheme.colors.onPrimary
+                    )
+                    Text(
+                        text = stringResource(id = R.string.enjoy_your_tour),
+                        style = MaterialTheme.typography.body1,
+                        color = MaterialTheme.colors.onPrimary
+                    )
+                }
+            } else {
+                Column {
+                    Text(
+                        text = stringResource(id = R.string.racana),
+                        style = MaterialTheme.typography.h5,
+                        color = MaterialTheme.colors.onPrimary
+                    )
+                    Text(
+                        text = stringResource(id = R.string.your_tour_friend),
+                        style = MaterialTheme.typography.body1,
+                        color = MaterialTheme.colors.onPrimary
+                    )
+                }
+            }
         }
         RIconButton(
             imageVector = Icons.Rounded.Search,
@@ -304,7 +340,7 @@ fun CurrentTourPlanCardPreview() {
 fun MainScreenPreview() {
     RacanaTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-            MainContent(getDummyDestination())
+            MainContent(getDummyDestination(), rememberLazyListState())
         }
     }
 }
