@@ -147,7 +147,8 @@ fun HomeAppBar(
         }
         RIconButton(
             imageVector = Icons.Rounded.Search,
-            onClick = onSearchClicked
+            onClick = onSearchClicked,
+            contentDescription = stringResource(id = R.string.search_button)
         )
     }
 }

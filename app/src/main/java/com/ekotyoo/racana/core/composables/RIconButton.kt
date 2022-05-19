@@ -20,7 +20,9 @@ import com.ekotyoo.racana.core.theme.RacanaTheme
 @Composable
 fun RIconButton(
     modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
     imageVector: ImageVector,
+    contentDescription: String?,
     onClick: () -> Unit
 ) {
     IconButton(
@@ -30,8 +32,9 @@ fun RIconButton(
         onClick = onClick
     ) {
         Icon(
+            modifier = iconModifier,
             painter = rememberVectorPainter(image = imageVector),
-            contentDescription = stringResource(id = R.string.search_button),
+            contentDescription = contentDescription,
             tint = MaterialTheme.colors.onSecondary
         )
     }
@@ -48,6 +51,6 @@ fun RIconButton(
 @Composable
 fun RIconButtonPreview() {
     RacanaTheme {
-        RIconButton(imageVector = Icons.Rounded.Search) {}
+        RIconButton(imageVector = Icons.Rounded.Search, contentDescription =  null) {}
     }
 }

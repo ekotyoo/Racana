@@ -1,9 +1,9 @@
-package com.ekotyoo.racana.ui.tour_plan_list
+package com.ekotyoo.racana.ui.home.create_tour_plan
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class TourPlanListViewModel @Inject constructor() : ViewModel() {
+class CreateTourPlanViewModel @Inject constructor() : ViewModel() {
 }

@@ -20,10 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ekotyoo.racana.ui.NavGraphs
 import com.ekotyoo.racana.ui.appCurrentDestinationAsState
-import com.ekotyoo.racana.ui.destinations.HomeScreenDestination
-import com.ekotyoo.racana.ui.destinations.MainScreenDestination
-import com.ekotyoo.racana.ui.destinations.ProfileScreenDestination
-import com.ekotyoo.racana.ui.destinations.TourPlanListScreenDestination
+import com.ekotyoo.racana.ui.destinations.*
 import com.ekotyoo.racana.ui.startAppDestination
 import com.ramcosta.composedestinations.annotation.NavGraph
 import com.ramcosta.composedestinations.annotation.RootNavGraph
@@ -55,7 +52,7 @@ fun RBottomNavigationBar(
                     onClick = {
                         if (currentDestination != destination.direction) {
                             bottomAppBarNavController.navigate(destination.direction) {
-                                popUpTo(HomeScreenDestination)
+                                popUpTo(MainScreenDestination)
                                 launchSingleTop = true
                             }
                         }
@@ -66,7 +63,9 @@ fun RBottomNavigationBar(
         floatingActionButton = {
             FloatingActionButton(
                 containerColor = MaterialTheme.colors.primary,
-                onClick = { }
+                onClick = {
+                    navigator.navigate(CreateTourPlanScreenDestination)
+                }
             ) {
                 Icon(
                     Icons.Filled.Add,

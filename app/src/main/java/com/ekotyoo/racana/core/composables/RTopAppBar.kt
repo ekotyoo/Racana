@@ -16,8 +16,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.theme.RacanaTheme
 
 @Composable
@@ -38,21 +40,12 @@ fun RTopAppBar(
         },
         navigationIcon = {
             if (isBackButtonAvailable) {
-                IconButton(
-                    onClick = onBackButtonCLicked,
-                    modifier = Modifier
-                        .background(
-                            color = MaterialTheme.colors.primary,
-                            shape = MaterialTheme.shapes.small
-                        )
-                ) {
-                    Icon(
-                        modifier = Modifier.size(36.dp),
-                        painter = rememberVectorPainter(Icons.Rounded.ChevronLeft),
-                        tint = MaterialTheme.colors.onPrimary,
-                        contentDescription = null
-                    )
-                }
+                RIconButton(
+                    iconModifier = Modifier.size(36.dp),
+                    imageVector = Icons.Rounded.ChevronLeft,
+                    contentDescription = stringResource(id = R.string.back_button),
+                    onClick = onBackButtonCLicked
+                )
             }
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
