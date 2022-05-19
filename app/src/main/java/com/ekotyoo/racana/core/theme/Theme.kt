@@ -5,16 +5,14 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
-    primary = RacanaViolet,
-    secondary = RacanaYellow,
-    onPrimary = RacanaWhite,
-    onSecondary = RacanaBlack,
+    primary = RacanaYellow,
+    secondary = RacanaGray,
     background = RacanaBlack,
     surface = RacanaBlack,
     error = RacanaRed,
+    onPrimary = RacanaBlack
 )
 
 private val LightColorPalette = lightColors(
