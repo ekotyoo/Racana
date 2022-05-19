@@ -36,8 +36,8 @@ class MainActivity : ComponentActivity() {
 
             RacanaTheme {
                 val systemUiController = rememberSystemUiController()
-                val useDarkIcons = MaterialTheme.colors.isLight
-                val backgroundColor = MaterialTheme.colors.background
+                val useDarkIcons = false
+                val backgroundColor = MaterialTheme.colors.primary
 
                 SideEffect {
                     systemUiController.setStatusBarColor(

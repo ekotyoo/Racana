@@ -1,4 +1,4 @@
-package com.ekotyoo.racana.ui.home.main
+package com.ekotyoo.racana.ui.home.dashboard
 
 import androidx.lifecycle.ViewModel
 import com.ekotyoo.racana.ui.login.LoginScreenEvent
@@ -17,18 +17,6 @@ class MainViewModel @Inject constructor() : ViewModel() {
 
     private val _eventChannel = Channel<LoginScreenEvent>()
     val eventChannel = _eventChannel.receiveAsFlow()
-
-    fun onSearchTextFieldValueChange(value: String) {
-        _state.value = _state.value.copy(searchTextFieldValue = value)
-    }
-
-    fun onClearSearchTextField() {
-        _state.value = _state.value.copy(searchTextFieldValue = "")
-    }
-
-    fun onSearch() {
-        // TODO: Implement search functionality
-    }
 }
 
 fun getDummyDestination() =

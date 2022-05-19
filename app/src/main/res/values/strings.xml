@@ -32,4 +32,8 @@
     <string name="favorite_destination">Destinasi Favorit</string>
     <string name="settings">Pengaturan</string>
     <string name="logout">Keluar</string>
+    <string name="current_tour">Tour Saat Ini</string>
+    <string name="enjoy_your_tour">Nikmati Tour Kamu!</string>
+    <string name="search_button">Tombol Cari</string>
+    <string name="traveler_stories">Cerita Traveler</string>
 </resources>

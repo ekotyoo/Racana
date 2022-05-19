@@ -18,6 +18,7 @@ import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.skydoves.landscapist.coil.CoilImage
 
@@ -46,6 +47,7 @@ fun RDestinationCard(
                     .fillMaxWidth(),
                 imageModel = imageUrl,
                 contentScale = ContentScale.Crop,
+                previewPlaceholder = R.drawable.ic_launcher_background,
                 contentDescription = null,
             )
             Spacer(Modifier.height(8.dp))
