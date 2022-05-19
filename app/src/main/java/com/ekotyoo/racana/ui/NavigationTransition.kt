@@ -7,7 +7,7 @@ import com.ramcosta.composedestinations.spec.DestinationStyle
 @OptIn(ExperimentalAnimationApi::class)
 object NavigationTransition : DestinationStyle.Animated {
     override fun AnimatedContentScope<NavBackStackEntry>.enterTransition(): EnterTransition {
-        return expandVertically() + fadeIn()
+        return expandIn(clip = false) + fadeIn()
     }
 
     override fun AnimatedContentScope<NavBackStackEntry>.exitTransition(): ExitTransition {
@@ -19,6 +19,6 @@ object NavigationTransition : DestinationStyle.Animated {
     }
 
     override fun AnimatedContentScope<NavBackStackEntry>.popExitTransition(): ExitTransition {
-        return shrinkVertically() + fadeOut()
+        return shrinkOut(clip = false) + fadeOut()
     }
 }

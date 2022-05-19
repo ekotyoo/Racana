@@ -73,7 +73,7 @@ class MainActivity : ComponentActivity() {
                 DestinationsNavHost(navGraph = NavGraphs.root,
                     navController = mainNavController,
                     engine = rememberAnimatedNavHostEngine(
-                        navHostContentAlignment = Alignment.TopCenter,
+                        navHostContentAlignment = Alignment.BottomCenter,
                         rootDefaultAnimations = RootNavGraphDefaultAnimations.ACCOMPANIST_FADING,
                         defaultAnimationsForNestedNavGraph = mapOf(
                             NavGraphs.root to NestedNavGraphDefaultAnimations(

@@ -65,7 +65,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1"
 
     // Raam Costa Compose Destination
-    implementation 'io.github.raamcosta.compose-destinations:core:1.5.5-beta'
     ksp 'io.github.raamcosta.compose-destinations:ksp:1.5.5-beta'
     implementation 'io.github.raamcosta.compose-destinations:animations-core:1.5.5-beta'
 

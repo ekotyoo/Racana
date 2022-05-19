@@ -47,7 +47,7 @@ fun HomeScreen(
             navGraph = NavGraphs.bottom,
             navController = bottomAppBarNavController,
             engine = rememberAnimatedNavHostEngine(
-                navHostContentAlignment = Alignment.TopCenter,
+                navHostContentAlignment = Alignment.BottomCenter,
                 rootDefaultAnimations = RootNavGraphDefaultAnimations.ACCOMPANIST_FADING,
                 defaultAnimationsForNestedNavGraph = mapOf(
                     NavGraphs.bottom to NestedNavGraphDefaultAnimations(

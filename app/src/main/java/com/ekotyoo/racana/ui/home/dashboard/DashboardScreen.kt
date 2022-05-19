@@ -2,7 +2,6 @@ package com.ekotyoo.racana.ui.home.dashboard
 
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -28,12 +27,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
-import com.ekotyoo.racana.ui.NavigationTransition
 import com.ekotyoo.racana.core.composables.BottomNavGraph
 import com.ekotyoo.racana.core.composables.RDestinationCard
 import com.ekotyoo.racana.core.composables.RIconButton
 import com.ekotyoo.racana.core.composables.RImageCard
 import com.ekotyoo.racana.core.theme.RacanaTheme
+import com.ekotyoo.racana.ui.NavigationTransition
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
@@ -41,7 +40,7 @@ import com.skydoves.landscapist.coil.CoilImage
 @BottomNavGraph(start = true)
 @Destination(style = NavigationTransition::class)
 @Composable
-fun AnimatedVisibilityScope.MainScreen(navigator: DestinationsNavigator, viewModel: MainViewModel = hiltViewModel()) {
+fun MainScreen(navigator: DestinationsNavigator, viewModel: MainViewModel = hiltViewModel()) {
     val state by viewModel.state.collectAsState()
     val lazyListState = rememberLazyListState()
     val appBarExpanded = derivedStateOf {
