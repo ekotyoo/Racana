@@ -1,7 +1,10 @@
 package com.ekotyoo.racana.core.composables
 
+import androidx.compose.animation.*
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
@@ -14,13 +17,17 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ekotyoo.racana.ui.NavGraphs
 import com.ekotyoo.racana.ui.appCurrentDestinationAsState
-import com.ekotyoo.racana.ui.destinations.*
+import com.ekotyoo.racana.ui.destinations.CreateTourPlanScreenDestination
+import com.ekotyoo.racana.ui.destinations.MainScreenDestination
+import com.ekotyoo.racana.ui.destinations.ProfileScreenDestination
+import com.ekotyoo.racana.ui.destinations.TourPlanListScreenDestination
 import com.ekotyoo.racana.ui.startAppDestination
 import com.ramcosta.composedestinations.annotation.NavGraph
 import com.ramcosta.composedestinations.annotation.RootNavGraph
@@ -77,6 +84,7 @@ fun RBottomNavigationBar(
     )
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun RBottomAppBarIcon(
     modifier: Modifier = Modifier,
@@ -85,18 +93,32 @@ fun RBottomAppBarIcon(
     contentDescription: String?,
     onClick: () -> Unit
 ) {
-    IconButton(
-        modifier = if (isSelected) modifier.background(
-            color = MaterialTheme.colors.primary,
-            shape = CircleShape
-        ) else modifier,
-        onClick = onClick
-    ) {
-        Icon(
-            imageVector,
-            contentDescription = contentDescription,
-            tint = if (isSelected) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface
-        )
+    val color = animateColorAsState(targetValue = if (isSelected) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface)
+
+    Box(modifier.size(50.dp), contentAlignment = Alignment.Center) {
+        AnimatedVisibility(
+            visible = isSelected,
+            enter = scaleIn(animationSpec = spring(Spring.DampingRatioMediumBouncy)) + fadeIn(),
+            exit = scaleOut() + fadeOut(),
+        ) {
+            Spacer(
+                modifier = Modifier
+                    .background(
+                        color = MaterialTheme.colors.primary,
+                        shape = CircleShape
+                    )
+                    .fillMaxSize()
+            )
+        }
+        IconButton(
+            onClick = onClick
+        ) {
+            Icon(
+                imageVector,
+                contentDescription = contentDescription,
+                tint = color.value
+            )
+        }
     }
 }
 
