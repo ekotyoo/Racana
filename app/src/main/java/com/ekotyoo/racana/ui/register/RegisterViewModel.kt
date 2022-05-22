@@ -10,6 +10,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,18 +29,18 @@ class RegisterViewModel @Inject constructor(
         email: String,
         password: String,
     ) {
-        _state.value = _state.value.copy(isLoading = true)
+        _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
             when (val result = authRepository.register(name, email, password)) {
                 is Result.Success -> _eventChannel.send(RegisterScreenEvent.RegisterSuccess)
                 is Result.Error -> _eventChannel.send(RegisterScreenEvent.RegisterFailed(result.message))
             }
-            _state.value = _state.value.copy(isLoading = false)
+            _state.update { it.copy(isLoading = false) }
         }
     }
 
     fun onNameTextFieldValueChange(value: String) {
-        _state.value = _state.value.copy(nameTextFieldValue = value)
+        _state.update { it.copy(nameTextFieldValue = value) }
         val errorMessage = if (value.isNotEmpty()) {
             when {
                 value[0] == ' ' -> START_WHITESPACE
@@ -48,33 +49,33 @@ class RegisterViewModel @Inject constructor(
                 else -> null
             }
         } else null
-        _state.value = _state.value.copy(nameErrorMessage = errorMessage)
+        _state.update { it.copy(nameErrorMessage = errorMessage) }
     }
 
     fun onEmailTextFieldValueChange(value: String) {
-        _state.value = _state.value.copy(emailTextFieldValue = value)
+        _state.update { it.copy(emailTextFieldValue = value) }
         val errorMessage = if (value.isNotEmpty()) {
             when {
                 !Patterns.EMAIL_ADDRESS.matcher(value).matches() -> "error"
                 else -> null
             }
         } else null
-        _state.value = _state.value.copy(emailErrorMessage = errorMessage)
+        _state.update { it.copy(emailErrorMessage = errorMessage) }
     }
 
     fun onPasswordTextFieldValueChange(value: String) {
-        _state.value = _state.value.copy(passwordTextFieldValue = value)
+        _state.update { it.copy(passwordTextFieldValue = value) }
         val errorMessage = if (value.isNotEmpty()) {
             when {
                 value.length < 8 -> "error"
                 else -> null
             }
         } else null
-        _state.value = _state.value.copy(passwordErrorMessage = errorMessage)
+        _state.update { it.copy(passwordErrorMessage = errorMessage) }
     }
 
     fun onHideShowPasswordToggled() {
-        _state.value = _state.value.copy(isPasswordObscured = !_state.value.isPasswordObscured)
+        _state.update { it.copy(isPasswordObscured = !_state.value.isPasswordObscured) }
     }
 
     fun onRegisterButtonClicked() {

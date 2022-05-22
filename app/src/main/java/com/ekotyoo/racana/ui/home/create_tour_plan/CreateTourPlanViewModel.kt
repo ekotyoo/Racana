@@ -11,6 +11,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
@@ -30,7 +31,7 @@ class CreateTourPlanViewModel @Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                _state.value = _state.value.copy(cities = AssetLoader.getCityProvince(context))
+                _state.update { it.copy(cities = AssetLoader.getCityProvince(context)) }
             } catch (e: IOException) {
                 Timber.d(e.message)
             }
@@ -38,16 +39,16 @@ class CreateTourPlanViewModel @Inject constructor(
     }
 
     fun onCitiesTextFieldValueChange(value: String) {
-        _state.value = _state.value.copy(cityTextFieldValue = value)
+        _state.update { it.copy(cityTextFieldValue = value) }
         searchCity(value)
     }
 
     fun onCityTextFieldCleared() {
-        _state.value = _state.value.copy(cityTextFieldValue = "")
+        _state.update { it.copy(cityTextFieldValue = "") }
     }
 
     fun onCitySelected(city: String) {
-        _state.value = _state.value.copy(selectedCity = city, citiesResult = emptyList())
+        _state.update { it.copy(selectedCity = city, citiesResult = emptyList()) }
         onCityTextFieldCleared()
     }
 
@@ -58,22 +59,22 @@ class CreateTourPlanViewModel @Inject constructor(
         } catch (e: NumberFormatException) {
             e.printStackTrace()
         }
-        _state.value = _state.value.copy(totalBudgetTextFieldValue = total)
+        _state.update { it.copy(totalBudgetTextFieldValue = total) }
     }
 
     fun onDestinationIncrement(value: Int) {
-        _state.value = _state.value.copy(totalDestinationValue = value + 1)
+        _state.update { it.copy(totalDestinationValue = value + 1) }
     }
 
     fun onDestinationDecrement(value: Int) {
-        _state.value = _state.value.copy(totalDestinationValue = value - 1)
+        _state.update { it.copy(totalDestinationValue = value - 1) }
     }
 
     private fun searchCity(query: String) {
         val result = _state.value.cities.filter {
             it.first.contains(query, ignoreCase = true)
         }
-        _state.value = _state.value.copy(citiesResult = result)
+        _state.update { it.copy(citiesResult = result) }
     }
 }
 

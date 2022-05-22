@@ -10,6 +10,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,7 +26,7 @@ class LoginViewModel @Inject constructor(
     val eventChannel = _eventChannel.receiveAsFlow()
 
     private fun login(email: String, password: String) {
-        _state.value = _state.value.copy(isLoading = true)
+        _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
             when(val result = authRepository.login(email, password)) {
                 is Result.Success -> _eventChannel.send(LoginScreenEvent.LoginSuccess)
@@ -36,25 +37,25 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onEmailTextFieldValueChange(value: String) {
-        _state.value = _state.value.copy(emailTextFieldValue = value)
+        _state.update { it.copy(emailTextFieldValue = value) }
         val errorMessage = if (value.isNotEmpty()) {
             when {
                 !Patterns.EMAIL_ADDRESS.matcher(value).matches() -> "error"
                 else -> null
             }
         } else null
-        _state.value = _state.value.copy(emailErrorMessage = errorMessage)
+        _state.update { it.copy(emailErrorMessage = errorMessage) }
     }
 
     fun onPasswordTextFieldValueChange(value: String) {
-        _state.value = _state.value.copy(passwordTextFieldValue = value)
+        _state.update { it.copy(passwordTextFieldValue = value) }
         val errorMessage = if (value.isNotEmpty()) {
             when {
                 value.length < 8 -> "error"
                 else -> null
             }
         } else null
-        _state.value = _state.value.copy(passwordErrorMessage = errorMessage)
+        _state.update { it.copy(passwordErrorMessage = errorMessage) }
     }
 
     fun onLoginButtonClicked() {
