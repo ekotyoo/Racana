@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ekotyoo.racana.core.utils.Result
 import com.ekotyoo.racana.data.repository.AuthRepository
+import com.ekotyoo.racana.ui.login.model.LoginEvent
+import com.ekotyoo.racana.ui.login.model.LoginState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,18 +21,18 @@ class LoginViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(LoginScreenState())
-    val state: StateFlow<LoginScreenState> = _state
+    private val _state = MutableStateFlow(LoginState())
+    val state: StateFlow<LoginState> = _state
 
-    private val _eventChannel = Channel<LoginScreenEvent>()
+    private val _eventChannel = Channel<LoginEvent>()
     val eventChannel = _eventChannel.receiveAsFlow()
 
     private fun login(email: String, password: String) {
         _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-            when(val result = authRepository.login(email, password)) {
-                is Result.Success -> _eventChannel.send(LoginScreenEvent.LoginSuccess)
-                is Result.Error -> _eventChannel.send(LoginScreenEvent.LoginFailed(result.message))
+            when (val result = authRepository.login(email, password)) {
+                is Result.Success -> _eventChannel.send(LoginEvent.LoginSuccess)
+                is Result.Error -> _eventChannel.send(LoginEvent.LoginFailed(result.message))
             }
             _state.value = _state.value.copy(isLoading = false)
         }
@@ -66,21 +68,7 @@ class LoginViewModel @Inject constructor(
 
     fun onRegisterTextClicked() {
         viewModelScope.launch {
-            _eventChannel.send(LoginScreenEvent.NavigateToRegisterScreen)
+            _eventChannel.send(LoginEvent.NavigateToRegisterScreen)
         }
     }
-}
-
-data class LoginScreenState(
-    val isLoading: Boolean = false,
-    val emailTextFieldValue: String = "",
-    val passwordTextFieldValue: String = "",
-    val emailErrorMessage: String? = "",
-    val passwordErrorMessage: String? = ""
-)
-
-sealed class LoginScreenEvent {
-    object LoginSuccess : LoginScreenEvent()
-    data class LoginFailed(val message: String): LoginScreenEvent()
-    object NavigateToRegisterScreen : LoginScreenEvent()
 }

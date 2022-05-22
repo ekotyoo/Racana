@@ -37,10 +37,12 @@ import com.ekotyoo.racana.core.composables.RFilledButton
 import com.ekotyoo.racana.core.composables.RFilledEditText
 import com.ekotyoo.racana.core.composables.RIconButton
 import com.ekotyoo.racana.core.composables.RTopAppBar
+import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaBlack
 import com.ekotyoo.racana.core.theme.RacanaGray
 import com.ekotyoo.racana.core.theme.RacanaTheme
-import com.ekotyoo.racana.ui.NavigationTransition
+import com.ekotyoo.racana.ui.home.create_tour_plan.model.DestinationCategory
+import com.ekotyoo.racana.ui.home.create_tour_plan.model.getCategories
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
@@ -52,15 +54,6 @@ fun CreateTourPlanScreen(
     viewModel: CreateTourPlanViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.collectAsState()
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    LaunchedEffect(Unit) {
-        viewModel.eventChannel.collect { event ->
-            when (event) {
-                is CreateTourPlanScreenEvent.Test -> snackbarHostState.showSnackbar(event.message)
-            }
-        }
-    }
 
     CreateTourPlanContent(
         onBackButtonClicked = { navigator.popBackStack() },

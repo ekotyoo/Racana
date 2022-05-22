@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ekotyoo.racana.core.utils.AssetLoader
+import com.ekotyoo.racana.ui.home.create_tour_plan.model.CreateTourPlanEvent
+import com.ekotyoo.racana.ui.home.create_tour_plan.model.CreateTourPlanState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +27,7 @@ class CreateTourPlanViewModel @Inject constructor(
     private val _state = MutableStateFlow(CreateTourPlanState())
     val state: StateFlow<CreateTourPlanState> = _state
 
-    private val _eventChannel = Channel<CreateTourPlanScreenEvent>()
+    private val _eventChannel = Channel<CreateTourPlanEvent>()
     val eventChannel = _eventChannel.receiveAsFlow()
 
     init {
@@ -76,49 +78,4 @@ class CreateTourPlanViewModel @Inject constructor(
         }
         _state.update { it.copy(citiesResult = result) }
     }
-}
-
-data class CreateTourPlanState(
-    val categories: List<DestinationCategory> = getCategories(),
-    val cities: List<Pair<String, String>> = emptyList(),
-    val citiesResult: List<Pair<String, String>> = emptyList(),
-    val cityTextFieldValue: String = "",
-    val totalBudgetTextFieldValue: Int = 0,
-    val totalDestinationValue: Int = 0,
-    val selectedCity: String = ""
-)
-
-sealed class CreateTourPlanScreenEvent {
-    data class Test(val message: String) : CreateTourPlanScreenEvent()
-}
-
-data class DestinationCategory(
-    val id: String,
-    val title: String,
-    val imageUrl: String,
-)
-
-fun getCategories(): List<DestinationCategory> {
-    return listOf(
-        DestinationCategory(
-            "1",
-            "Pantai",
-            "https://cdn.pixabay.com/photo/2014/08/15/11/29/beach-418742_960_720.jpg"
-        ),
-        DestinationCategory(
-            "2",
-            "Lembah",
-            "https://cdn.pixabay.com/photo/2019/07/14/10/48/vineyards-4336787_960_720.jpg"
-        ),
-        DestinationCategory(
-            "3",
-            "Gunung",
-            "https://cdn.pixabay.com/photo/2021/08/08/20/37/mountains-6531903_960_720.jpg"
-        ),
-        DestinationCategory(
-            "4",
-            "Hutan",
-            "https://cdn.pixabay.com/photo/2019/02/17/22/50/jungle-4003374_960_720.jpg"
-        )
-    )
 }

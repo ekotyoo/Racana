@@ -1,7 +1,6 @@
 package com.ekotyoo.racana.core.utils
 
 import android.content.Context
-import com.ekotyoo.racana.data.datasource.local.CityWithProvince
 import com.ekotyoo.racana.data.datasource.local.CityWithProvinceItem
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

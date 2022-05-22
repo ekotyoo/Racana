@@ -32,7 +32,9 @@ import com.ekotyoo.racana.core.composables.RDestinationCard
 import com.ekotyoo.racana.core.composables.RIconButton
 import com.ekotyoo.racana.core.composables.RImageCard
 import com.ekotyoo.racana.core.theme.RacanaTheme
-import com.ekotyoo.racana.ui.NavigationTransition
+import com.ekotyoo.racana.core.navigation.NavigationTransition
+import com.ekotyoo.racana.ui.home.dashboard.model.TravelDestination
+import com.ekotyoo.racana.ui.home.dashboard.model.getDummyDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
@@ -40,7 +42,10 @@ import com.skydoves.landscapist.coil.CoilImage
 @BottomNavGraph(start = true)
 @Destination(style = NavigationTransition::class)
 @Composable
-fun MainScreen(navigator: DestinationsNavigator, viewModel: MainViewModel = hiltViewModel()) {
+fun DashboardScreen(
+    navigator: DestinationsNavigator,
+    viewModel: DashboardViewModel = hiltViewModel()
+) {
     val state by viewModel.state.collectAsState()
     val lazyListState = rememberLazyListState()
     val appBarExpanded = derivedStateOf {
@@ -49,12 +54,12 @@ fun MainScreen(navigator: DestinationsNavigator, viewModel: MainViewModel = hilt
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            HomeAppBar(
+            DashboardAppBar(
                 expanded = appBarExpanded.value
             ) {}
         }
     ) {
-        MainContent(
+        DashboardContent(
             destinations = state.destinations,
             lazyListState = lazyListState
         )
@@ -62,7 +67,7 @@ fun MainScreen(navigator: DestinationsNavigator, viewModel: MainViewModel = hilt
 }
 
 @Composable
-fun MainContent(
+fun DashboardContent(
     destinations: List<TravelDestination>,
     lazyListState: LazyListState
 ) {
@@ -70,11 +75,11 @@ fun MainContent(
         state = lazyListState,
     ) {
         item {
-            HomeHeader()
+            DashboardHeader()
             Spacer(Modifier.height(16.dp))
         }
         item {
-            HomeSection(
+            DashboardSection(
                 title = stringResource(id = R.string.top_destination)
             ) {
                 DestinationRow(destinations = destinations, onItemClick = {})
@@ -82,7 +87,7 @@ fun MainContent(
             Spacer(Modifier.height(16.dp))
         }
         item {
-            HomeSection(
+            DashboardSection(
                 title = stringResource(id = R.string.traveler_stories),
             ) {
                 Column(
@@ -105,7 +110,7 @@ fun MainContent(
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun HomeAppBar(
+fun DashboardAppBar(
     expanded: Boolean = false,
     onSearchClicked: () -> Unit
 ) {
@@ -154,7 +159,7 @@ fun HomeAppBar(
 }
 
 @Composable
-fun HomeHeader() {
+fun DashboardHeader() {
     Box(
         modifier = Modifier
             .background(MaterialTheme.colors.primary)
@@ -181,7 +186,7 @@ fun HomeHeader() {
 }
 
 @Composable
-fun HomeSection(
+fun DashboardSection(
     modifier: Modifier = Modifier,
     title: String,
     seeAllVisible: Boolean = true,
@@ -339,13 +344,7 @@ fun CurrentTourPlanCardPreview() {
 fun MainScreenPreview() {
     RacanaTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-            MainContent(getDummyDestination(), rememberLazyListState())
+            DashboardContent(getDummyDestination(), rememberLazyListState())
         }
     }
 }
-
-data class TravelDestination(
-    val name: String,
-    val imageUrl: String,
-    val location: String
-)

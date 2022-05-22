@@ -1,4 +1,4 @@
-package com.ekotyoo.racana.ui
+package com.ekotyoo.racana.core.navigation
 
 import androidx.compose.animation.*
 import androidx.navigation.NavBackStackEntry

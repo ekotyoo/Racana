@@ -1,4 +1,4 @@
-package com.ekotyoo.racana
+package com.ekotyoo.racana.application
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -27,14 +27,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
-import com.ekotyoo.racana.ui.NavigationTransition
 import com.ekotyoo.racana.core.composables.RCircularProgressOverlay
 import com.ekotyoo.racana.core.composables.REditText
 import com.ekotyoo.racana.core.composables.RFilledButton
 import com.ekotyoo.racana.core.theme.RacanaTheme
+import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.ui.destinations.HomeScreenDestination
 import com.ekotyoo.racana.ui.destinations.LoginScreenDestination
 import com.ekotyoo.racana.ui.destinations.RegisterScreenDestination
+import com.ekotyoo.racana.ui.login.model.LoginEvent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
@@ -51,7 +52,7 @@ fun LoginScreen(
     LaunchedEffect(Unit) {
         viewModel.eventChannel.collect { event ->
             when (event) {
-                is LoginScreenEvent.LoginSuccess -> {
+                is LoginEvent.LoginSuccess -> {
                     navigator.navigate(HomeScreenDestination) {
                         popUpTo(LoginScreenDestination) {
                             inclusive = true
@@ -59,10 +60,10 @@ fun LoginScreen(
                         launchSingleTop = true
                     }
                 }
-                is LoginScreenEvent.LoginFailed -> {
+                is LoginEvent.LoginFailed -> {
                     snackbarHostState.showSnackbar(event.message)
                 }
-                is LoginScreenEvent.NavigateToRegisterScreen -> {
+                is LoginEvent.NavigateToRegisterScreen -> {
                     navigator.navigate(RegisterScreenDestination) {
                         popUpTo(LoginScreenDestination)
                         launchSingleTop = true

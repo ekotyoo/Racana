@@ -1,4 +1,4 @@
-package com.ekotyoo.racana
+package com.ekotyoo.racana.application
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -81,7 +81,8 @@ class MainActivity : ComponentActivity() {
                                 exitTransition = { fadeOut(animationSpec = tween(2000)) }
                             ),
                         )
-                    ))
+                    )
+                )
             }
         }
     }

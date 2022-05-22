@@ -25,7 +25,7 @@ import androidx.navigation.NavController
 import com.ekotyoo.racana.ui.NavGraphs
 import com.ekotyoo.racana.ui.appCurrentDestinationAsState
 import com.ekotyoo.racana.ui.destinations.CreateTourPlanScreenDestination
-import com.ekotyoo.racana.ui.destinations.MainScreenDestination
+import com.ekotyoo.racana.ui.destinations.DashboardScreenDestination
 import com.ekotyoo.racana.ui.destinations.ProfileScreenDestination
 import com.ekotyoo.racana.ui.destinations.TourPlanListScreenDestination
 import com.ekotyoo.racana.ui.startAppDestination
@@ -59,7 +59,7 @@ fun RBottomNavigationBar(
                     onClick = {
                         if (currentDestination != destination.direction) {
                             bottomAppBarNavController.navigate(destination.direction) {
-                                popUpTo(MainScreenDestination)
+                                popUpTo(DashboardScreenDestination)
                                 launchSingleTop = true
                             }
                         }
@@ -93,7 +93,8 @@ fun RBottomAppBarIcon(
     contentDescription: String?,
     onClick: () -> Unit
 ) {
-    val color = animateColorAsState(targetValue = if (isSelected) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface)
+    val color =
+        animateColorAsState(targetValue = if (isSelected) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface)
 
     Box(modifier.size(50.dp), contentAlignment = Alignment.Center) {
         AnimatedVisibility(
@@ -132,7 +133,7 @@ enum class BottomBarDestination(
     val direction: DirectionDestinationSpec,
     val icon: ImageVector,
 ) {
-    MainScreen(MainScreenDestination, Icons.Filled.Home),
+    MainScreen(DashboardScreenDestination, Icons.Filled.Home),
     TourPlanListScreen(TourPlanListScreenDestination, Icons.Filled.List),
     ProfileScreen(ProfileScreenDestination, Icons.Filled.Person)
 }

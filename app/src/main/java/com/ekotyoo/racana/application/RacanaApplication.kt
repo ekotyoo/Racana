@@ -1,6 +1,7 @@
-package com.ekotyoo.racana
+package com.ekotyoo.racana.application
 
 import android.app.Application
+import com.ekotyoo.racana.BuildConfig
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber.*
 import timber.log.Timber.Forest.plant

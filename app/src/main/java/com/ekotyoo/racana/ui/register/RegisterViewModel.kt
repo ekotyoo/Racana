@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ekotyoo.racana.core.utils.Result
 import com.ekotyoo.racana.data.repository.AuthRepository
+import com.ekotyoo.racana.ui.register.model.RegisterEvent
+import com.ekotyoo.racana.ui.register.model.RegisterState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,10 +20,10 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : ViewModel() {
-    private val _state = MutableStateFlow(RegisterScreenState())
-    val state: StateFlow<RegisterScreenState> = _state
+    private val _state = MutableStateFlow(RegisterState())
+    val state: StateFlow<RegisterState> = _state
 
-    private val _eventChannel = Channel<RegisterScreenEvent>()
+    private val _eventChannel = Channel<RegisterEvent>()
     val eventChannel = _eventChannel.receiveAsFlow()
 
     private fun register(
@@ -32,8 +34,8 @@ class RegisterViewModel @Inject constructor(
         _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
             when (val result = authRepository.register(name, email, password)) {
-                is Result.Success -> _eventChannel.send(RegisterScreenEvent.RegisterSuccess)
-                is Result.Error -> _eventChannel.send(RegisterScreenEvent.RegisterFailed(result.message))
+                is Result.Success -> _eventChannel.send(RegisterEvent.RegisterSuccess)
+                is Result.Error -> _eventChannel.send(RegisterEvent.RegisterFailed(result.message))
             }
             _state.update { it.copy(isLoading = false) }
         }
@@ -92,7 +94,7 @@ class RegisterViewModel @Inject constructor(
 
     fun onLoginTextClicked() {
         viewModelScope.launch {
-            _eventChannel.send(RegisterScreenEvent.NavigateToLoginScreen)
+            _eventChannel.send(RegisterEvent.NavigateToLoginScreen)
         }
     }
 
@@ -101,21 +103,4 @@ class RegisterViewModel @Inject constructor(
         const val DOUBLE_WHITESPACE = "double_whitespace"
         const val NON_ALPHABET = "non_alphabet"
     }
-}
-
-data class RegisterScreenState(
-    val isLoading: Boolean = false,
-    val isPasswordObscured: Boolean = true,
-    val nameTextFieldValue: String = "",
-    val emailTextFieldValue: String = "",
-    val passwordTextFieldValue: String = "",
-    val nameErrorMessage: String? = "",
-    val emailErrorMessage: String? = "",
-    val passwordErrorMessage: String? = "",
-)
-
-sealed class RegisterScreenEvent {
-    object RegisterSuccess : RegisterScreenEvent()
-    data class RegisterFailed(val message: String) : RegisterScreenEvent()
-    object NavigateToLoginScreen : RegisterScreenEvent()
 }

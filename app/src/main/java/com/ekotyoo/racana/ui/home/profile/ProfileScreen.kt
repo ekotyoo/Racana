@@ -30,7 +30,7 @@ import com.ekotyoo.racana.core.composables.BottomNavGraph
 import com.ekotyoo.racana.core.composables.ROutlinedButton
 import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.theme.RacanaTheme
-import com.ekotyoo.racana.ui.NavigationTransition
+import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
@@ -44,14 +44,6 @@ fun ProfileScreen(
 ) {
 
     val state by viewModel.state.collectAsState()
-
-    LaunchedEffect(Unit) {
-        viewModel.eventChannel.collect { event ->
-            when (event) {
-
-            }
-        }
-    }
 
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
         ProfileContent(

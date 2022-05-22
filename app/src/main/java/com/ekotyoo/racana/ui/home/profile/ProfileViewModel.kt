@@ -2,6 +2,8 @@ package com.ekotyoo.racana.ui.home.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ekotyoo.racana.ui.home.profile.model.ProfileEvent
+import com.ekotyoo.racana.ui.home.profile.model.ProfileState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,10 +14,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor() : ViewModel() {
-    private val _state = MutableStateFlow(ProfileScreenState())
-    val state: StateFlow<ProfileScreenState> = _state
+    private val _state = MutableStateFlow(ProfileState())
+    val state: StateFlow<ProfileState> = _state
 
-    private val _eventChannel = Channel<ProfileScreenEvent>()
+    private val _eventChannel = Channel<ProfileEvent>()
     val eventChannel = _eventChannel.receiveAsFlow()
 
     //Assign Dummy Data
@@ -30,40 +32,25 @@ class ProfileViewModel @Inject constructor() : ViewModel() {
 
     fun onMyPlanButtonClicked() {
         viewModelScope.launch {
-            _eventChannel.send(ProfileScreenEvent.NavigateToMyPlan)
+            _eventChannel.send(ProfileEvent.NavigateToMyPlan)
         }
     }
 
     fun onFavoriteDestinationButtonClicked() {
         viewModelScope.launch {
-            _eventChannel.send(ProfileScreenEvent.NavigateToFavoriteDestination)
+            _eventChannel.send(ProfileEvent.NavigateToFavoriteDestination)
         }
     }
 
     fun onSettingsButtonClicked() {
         viewModelScope.launch {
-            _eventChannel.send(ProfileScreenEvent.NavigateToSettings)
+            _eventChannel.send(ProfileEvent.NavigateToSettings)
         }
     }
 
     fun onLogOutButtonClicked() {
         viewModelScope.launch {
-            _eventChannel.send(ProfileScreenEvent.LogOut)
+            _eventChannel.send(ProfileEvent.LogOut)
         }
     }
-}
-
-data class ProfileScreenState(
-    val profilePictureUrl: String ="",
-    val nameTextFieldValue: String = "",
-    val emailTextFieldValue: String = "",
-    val isPremium: Boolean = false
-)
-
-sealed class ProfileScreenEvent {
-    object NavigateToMyPlan : ProfileScreenEvent()
-    object NavigateToFavoriteDestination: ProfileScreenEvent()
-    object NavigateToSettings: ProfileScreenEvent()
-    object LogOut : ProfileScreenEvent()
-    object BackButtonPressed : ProfileScreenEvent()
 }
