@@ -41,4 +41,6 @@
     <string name="tour_plan_list">Daftar Tour</string>
     <string name="create_tour">Buat Tour</string>
     <string name="back_button">Tombol Kembali</string>
+    <string name="increment">Tambah</string>
+    <string name="decrement">Kurang</string>
 </resources>

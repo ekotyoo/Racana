@@ -4,7 +4,7 @@ import com.ekotyoo.racana.data.datasource.local.UserPreferencesDataStore
 import com.ekotyoo.racana.data.datasource.remote.AuthApi
 import com.ekotyoo.racana.data.model.UserModel
 import dagger.hilt.android.scopes.ViewModelScoped
-import com.ekotyoo.racana.data.Result
+import com.ekotyoo.racana.core.utils.Result
 import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException

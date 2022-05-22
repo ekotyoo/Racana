@@ -1,4 +1,4 @@
-package com.ekotyoo.racana.data
+package com.ekotyoo.racana.core.utils
 
 sealed class Result<out T> {
     data class Success<out R>(val value: R): Result<R>()
