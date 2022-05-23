@@ -30,6 +30,7 @@ android {
         }
     }
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -62,6 +63,9 @@ android {
 }
 
 dependencies {
+    // To use java.time.* in API level < 26
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+
     // Compose Lifecycle ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1"
 
@@ -106,6 +110,9 @@ dependencies {
 
     // Material Icon Extended
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
+
+    // Compose Calendar
+    implementation "io.github.boguszpawlowski.composecalendar:composecalendar:0.5.1"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation "androidx.compose.ui:ui:$compose_version"

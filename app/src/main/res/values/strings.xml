@@ -43,4 +43,11 @@
     <string name="back_button">Tombol Kembali</string>
     <string name="increment">Tambah</string>
     <string name="decrement">Kurang</string>
+    <string name="pick_a_date">Pilih Tanggal</string>
+    <string name="start">Mulai</string>
+    <string name="end">Berakhir</string>
+    <string name="total_budget">Total Budget</string>
+    <string name="total_destination">Total Destinasi</string>
+    <string name="destination_category">Kategori Destinasi</string>
+    <string name="save">Simpan</string>
 </resources>

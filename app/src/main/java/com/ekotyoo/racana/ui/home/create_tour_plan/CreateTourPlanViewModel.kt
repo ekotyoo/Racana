@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,6 +37,16 @@ class CreateTourPlanViewModel @Inject constructor(
                 _state.update { it.copy(cities = AssetLoader.getCityProvince(context)) }
             } catch (e: IOException) {
                 Timber.d(e.message)
+            }
+        }
+    }
+
+    fun onDateSelected(dates: List<LocalDate>) {
+        if (dates.isNotEmpty()) {
+            val startDate = dates.first()
+            val endDate = dates.last()
+            _state.update {
+                it.copy(selectedStartDate = startDate, selectedEndDate = endDate)
             }
         }
     }
