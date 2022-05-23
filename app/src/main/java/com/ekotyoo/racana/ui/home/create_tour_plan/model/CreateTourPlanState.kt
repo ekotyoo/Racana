@@ -27,6 +27,6 @@ data class CreateTourPlanState(
         }
 
     companion object {
-        private val DATE_FORMAT = DateTimeFormatter.ofPattern("MMM dd")
+        private val DATE_FORMAT = DateTimeFormatter.ofPattern("dd MMM yy")
     }
 }

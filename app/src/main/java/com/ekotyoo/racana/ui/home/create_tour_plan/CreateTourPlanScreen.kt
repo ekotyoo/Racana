@@ -138,7 +138,10 @@ fun CreateTourPlanContent(
                             .height(56.dp)
                             .padding(16.dp)
                     ) {
-                        Text(text = selectedCity)
+                        val selectedCityEmpty = derivedStateOf {
+                            selectedCity.isEmpty()
+                        }
+                        Text(text = if (selectedCityEmpty.value) "---Pilih Kota---" else selectedCity)
                         AnimatedContent(
                             modifier = Modifier.align(Alignment.CenterEnd),
                             targetState = citiesDropdownVisible
@@ -209,8 +212,11 @@ fun CreateTourPlanContent(
                         modifier = Modifier.weight(.1f, false),
                         title = stringResource(id = R.string.start)
                     ) {
+                        val startDateEmpty = derivedStateOf {
+                            startDateValue.isEmpty()
+                        }
                         RFilledEditText(
-                            value = startDateValue,
+                            value = if (startDateEmpty.value) "--" else startDateValue,
                             readOnly = true,
                             placeholderString = "",
                             leadingIcon = null,
@@ -221,8 +227,11 @@ fun CreateTourPlanContent(
                         modifier = Modifier.weight(.1f, false),
                         title = stringResource(id = R.string.end)
                     ) {
+                        val endDateEmpty = derivedStateOf {
+                            endDateValue.isEmpty()
+                        }
                         RFilledEditText(
-                            value = endDateValue,
+                            value = if (endDateEmpty.value) "--" else endDateValue,
                             readOnly = true,
                             placeholderString = "",
                             leadingIcon = null,
