@@ -1,11 +1,11 @@
-package com.ekotyoo.racana.ui.home.profile
+package com.ekotyoo.racana.ui.main.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ekotyoo.racana.core.utils.Result
 import com.ekotyoo.racana.data.repository.AuthRepository
-import com.ekotyoo.racana.ui.home.profile.model.ProfileEvent
-import com.ekotyoo.racana.ui.home.profile.model.ProfileState
+import com.ekotyoo.racana.ui.main.profile.model.ProfileEvent
+import com.ekotyoo.racana.ui.main.profile.model.ProfileState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow

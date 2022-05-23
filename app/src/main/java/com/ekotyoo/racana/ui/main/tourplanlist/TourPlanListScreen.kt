@@ -1,4 +1,4 @@
-package com.ekotyoo.racana.ui.home.tour_plan_list
+package com.ekotyoo.racana.ui.main.tourplanlist
 
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text

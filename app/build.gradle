@@ -4,6 +4,7 @@ plugins {
     id 'com.google.devtools.ksp' version '1.6.10-1.0.4'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -26,7 +27,6 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            debuggable false
         }
     }
     compileOptions {

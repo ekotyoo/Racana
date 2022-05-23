@@ -1,4 +1,4 @@
-package com.ekotyoo.racana.ui.home.dashboard.model
+package com.ekotyoo.racana.ui.main.dashboard.model
 
 import com.ekotyoo.racana.data.model.UserModel
 

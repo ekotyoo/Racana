@@ -53,21 +53,11 @@ fun RTopAppBar(
         ),
         actions = {
             if (actionIcon != null) {
-                IconButton(
-                    onClick = onActionsButtonClicked,
-                    modifier = Modifier
-                        .background(
-                            color = MaterialTheme.colors.primary,
-                            shape = MaterialTheme.shapes.small
-                        )
-                        .size(36.dp)
-                ) {
-                    Icon(
-                        painter = rememberVectorPainter(actionIcon),
-                        tint = MaterialTheme.colors.onPrimary,
-                        contentDescription = ""
-                    )
-                }
+                RIconButton(
+                    imageVector = actionIcon,
+                    contentDescription = null,
+                    onClick = onActionsButtonClicked
+                )
             }
         }
     )

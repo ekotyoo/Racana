@@ -1,4 +1,4 @@
-package com.ekotyoo.racana.ui.home.create_tour_plan
+package com.ekotyoo.racana.ui.main.createtourplan
 
 import android.content.res.Configuration
 import androidx.compose.animation.*
@@ -39,8 +39,9 @@ import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaBlack
 import com.ekotyoo.racana.core.theme.RacanaGray
 import com.ekotyoo.racana.core.theme.RacanaTheme
-import com.ekotyoo.racana.ui.home.create_tour_plan.model.CreateTourPlanEvent
-import com.ekotyoo.racana.ui.home.create_tour_plan.model.CreateTourPlanState
+import com.ekotyoo.racana.ui.destinations.TourPlanScreenDestination
+import com.ekotyoo.racana.ui.main.createtourplan.model.CreateTourPlanEvent
+import com.ekotyoo.racana.ui.main.createtourplan.model.CreateTourPlanState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
@@ -60,7 +61,7 @@ fun CreateTourPlanScreen(
         viewModel.eventChannel.collect { event ->
             when (event) {
                 is CreateTourPlanEvent.CreateTourPlanSuccess -> {
-                    navigator.popBackStack()
+                    navigator.navigate(TourPlanScreenDestination)
                 }
                 is CreateTourPlanEvent.SomeFieldsAreEmpty -> {
                     snackbarHostState.showSnackbar("Mohon masukkan data yang valid.")

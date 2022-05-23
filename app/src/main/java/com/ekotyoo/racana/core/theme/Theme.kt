@@ -12,7 +12,7 @@ private val DarkColorPalette = darkColors(
     background = RacanaBlack,
     surface = RacanaBlack,
     error = RacanaRed,
-    onPrimary = RacanaBlack
+    onPrimary = RacanaWhite
 )
 
 private val LightColorPalette = lightColors(

@@ -39,7 +39,7 @@ import com.ramcosta.composedestinations.spec.DirectionDestinationSpec
 @Composable
 fun RBottomNavigationBar(
     modifier: Modifier = Modifier,
-    navigator: DestinationsNavigator,
+    rootNavigator: DestinationsNavigator,
     bottomAppBarNavController: NavController
 ) {
     val currentDestination =
@@ -71,7 +71,7 @@ fun RBottomNavigationBar(
             FloatingActionButton(
                 containerColor = MaterialTheme.colors.primary,
                 onClick = {
-                    navigator.navigate(CreateTourPlanScreenDestination)
+                    rootNavigator.navigate(CreateTourPlanScreenDestination)
                 }
             ) {
                 Icon(

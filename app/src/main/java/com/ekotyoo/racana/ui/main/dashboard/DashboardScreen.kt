@@ -1,4 +1,4 @@
-package com.ekotyoo.racana.ui.home.dashboard
+package com.ekotyoo.racana.ui.main.dashboard
 
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedContent
@@ -33,9 +33,8 @@ import com.ekotyoo.racana.core.composables.RIconButton
 import com.ekotyoo.racana.core.composables.RImageCard
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.core.navigation.NavigationTransition
-import com.ekotyoo.racana.data.model.UserModel
-import com.ekotyoo.racana.ui.home.dashboard.model.TravelDestination
-import com.ekotyoo.racana.ui.home.dashboard.model.getDummyDestination
+import com.ekotyoo.racana.ui.main.dashboard.model.TravelDestination
+import com.ekotyoo.racana.ui.main.dashboard.model.getDummyDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage

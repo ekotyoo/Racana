@@ -1,4 +1,4 @@
-package com.ekotyoo.racana.ui.home.create_tour_plan.model
+package com.ekotyoo.racana.ui.main.createtourplan.model
 
 data class DestinationCategory(
     val id: String,

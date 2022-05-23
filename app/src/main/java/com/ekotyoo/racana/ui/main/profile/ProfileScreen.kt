@@ -1,4 +1,4 @@
-package com.ekotyoo.racana.ui.home.profile
+package com.ekotyoo.racana.ui.main.profile
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
@@ -28,8 +28,10 @@ import com.ekotyoo.racana.core.composables.ROutlinedButton
 import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaTheme
-import com.ekotyoo.racana.ui.destinations.DashboardScreenDestination
-import com.ekotyoo.racana.ui.home.profile.model.ProfileEvent
+import com.ekotyoo.racana.ui.destinations.LoginScreenDestination
+import com.ekotyoo.racana.ui.destinations.MainScreenDestination
+import com.ekotyoo.racana.ui.main.RootNavigator
+import com.ekotyoo.racana.ui.main.profile.model.ProfileEvent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
@@ -40,6 +42,7 @@ import com.skydoves.landscapist.coil.CoilImage
 @Composable
 fun ProfileScreen(
     navigator: DestinationsNavigator,
+    rootNavigator: RootNavigator,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
@@ -50,10 +53,11 @@ fun ProfileScreen(
             when (event) {
                 ProfileEvent.LogOutFailed -> snackbarHostState.showSnackbar("Terjadi kesalahan, coba lagi nanti!")
                 ProfileEvent.LogOutSuccess -> {
-                    navigator.navigate(DashboardScreenDestination) {
-                        popUpTo(DashboardScreenDestination) {
+                    rootNavigator.value.navigate(LoginScreenDestination) {
+                        popUpTo(MainScreenDestination) {
                             inclusive = true
                         }
+                        launchSingleTop = true
                     }
                 }
                 ProfileEvent.NavigateToFavoriteDestination -> {}

@@ -1,4 +1,4 @@
-package com.ekotyoo.racana.ui.home
+package com.ekotyoo.racana.ui.main
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
@@ -22,12 +22,13 @@ import com.ramcosta.composedestinations.animations.rememberAnimatedNavHostEngine
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.dependency
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialNavigationApi::class)
 @RootNavGraph(start = true)
 @Destination(style = NavigationTransition::class)
 @Composable
-fun HomeScreen(
+fun MainScreen(
     navigator: DestinationsNavigator
 ) {
     val scaffoldState = rememberScaffoldState()
@@ -37,7 +38,7 @@ fun HomeScreen(
         scaffoldState = scaffoldState,
         bottomBar = {
             RBottomNavigationBar(
-                navigator = navigator,
+                rootNavigator = navigator,
                 bottomAppBarNavController = bottomAppBarNavController
             )
         }
@@ -46,6 +47,9 @@ fun HomeScreen(
             modifier = Modifier.padding(contentPadding),
             navGraph = NavGraphs.bottom,
             navController = bottomAppBarNavController,
+            dependenciesContainerBuilder = {
+                 dependency(RootNavigator(navigator))
+            },
             engine = rememberAnimatedNavHostEngine(
                 navHostContentAlignment = Alignment.BottomCenter,
                 rootDefaultAnimations = RootNavGraphDefaultAnimations.ACCOMPANIST_FADING,
@@ -59,3 +63,5 @@ fun HomeScreen(
         )
     }
 }
+
+data class RootNavigator(val value: DestinationsNavigator)

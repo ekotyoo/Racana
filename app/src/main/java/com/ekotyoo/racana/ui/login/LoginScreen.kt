@@ -31,8 +31,8 @@ import com.ekotyoo.racana.core.composables.RFilledButton
 import com.ekotyoo.racana.core.composables.RLoadingOverlay
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaTheme
-import com.ekotyoo.racana.ui.destinations.HomeScreenDestination
 import com.ekotyoo.racana.ui.destinations.LoginScreenDestination
+import com.ekotyoo.racana.ui.destinations.MainScreenDestination
 import com.ekotyoo.racana.ui.destinations.RegisterScreenDestination
 import com.ekotyoo.racana.ui.login.model.LoginEvent
 import com.ramcosta.composedestinations.annotation.Destination
@@ -52,7 +52,7 @@ fun LoginScreen(
         viewModel.eventChannel.collect { event ->
             when (event) {
                 is LoginEvent.LoginSuccess -> {
-                    navigator.navigate(HomeScreenDestination) {
+                    navigator.navigate(MainScreenDestination) {
                         popUpTo(LoginScreenDestination) {
                             inclusive = true
                         }

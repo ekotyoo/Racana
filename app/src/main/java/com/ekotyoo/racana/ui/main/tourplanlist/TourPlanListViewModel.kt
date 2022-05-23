@@ -1,4 +1,4 @@
-package com.ekotyoo.racana.ui.home.tour_plan_list
+package com.ekotyoo.racana.ui.main.tourplanlist
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -1,11 +1,11 @@
-package com.ekotyoo.racana.ui.home.create_tour_plan
+package com.ekotyoo.racana.ui.main.createtourplan
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ekotyoo.racana.core.utils.AssetLoader
-import com.ekotyoo.racana.ui.home.create_tour_plan.model.CreateTourPlanEvent
-import com.ekotyoo.racana.ui.home.create_tour_plan.model.CreateTourPlanState
+import com.ekotyoo.racana.ui.main.createtourplan.model.CreateTourPlanEvent
+import com.ekotyoo.racana.ui.main.createtourplan.model.CreateTourPlanState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers

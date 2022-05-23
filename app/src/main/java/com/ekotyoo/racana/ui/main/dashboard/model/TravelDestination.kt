@@ -1,4 +1,4 @@
-package com.ekotyoo.racana.ui.home.dashboard.model
+package com.ekotyoo.racana.ui.main.dashboard.model
 
 data class TravelDestination(
     val name: String,

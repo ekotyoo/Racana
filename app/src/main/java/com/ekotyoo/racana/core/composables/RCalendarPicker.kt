@@ -1,4 +1,4 @@
-package com.ekotyoo.racana.ui.home.create_tour_plan
+package com.ekotyoo.racana.core.composables
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image

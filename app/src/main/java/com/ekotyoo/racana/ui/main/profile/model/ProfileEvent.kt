@@ -1,4 +1,4 @@
-package com.ekotyoo.racana.ui.home.profile.model
+package com.ekotyoo.racana.ui.main.profile.model
 
 sealed class ProfileEvent {
     object NavigateToMyPlan : ProfileEvent()
