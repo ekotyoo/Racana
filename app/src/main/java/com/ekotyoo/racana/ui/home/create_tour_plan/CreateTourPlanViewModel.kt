@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -76,11 +77,41 @@ class CreateTourPlanViewModel @Inject constructor(
     }
 
     fun onDestinationIncrement(value: Int) {
-        _state.update { it.copy(totalDestinationValue = value + 1) }
+        if (value < 10) {
+            _state.update { it.copy(totalDestinationValue = value + 1) }
+        }
     }
 
     fun onDestinationDecrement(value: Int) {
-        _state.update { it.copy(totalDestinationValue = value - 1) }
+        if (value > 0) {
+            _state.update { it.copy(totalDestinationValue = value - 1) }
+        }
+    }
+
+    fun onCategorySelected(value: Int) {
+        _state.update { it.copy(selectedCategory = value) }
+    }
+
+    fun onSubmitClicked() {
+        submitData()
+    }
+
+    private fun submitData() {
+        val stateValue = _state.value
+        if (stateValue.selectedStartDate == null || stateValue.selectedEndDate == null ||
+            stateValue.selectedCity.isEmpty() || stateValue.totalDestinationValue <= 0 ||
+            stateValue.totalBudgetTextFieldValue < 100000) {
+            viewModelScope.launch {
+                _eventChannel.send(CreateTourPlanEvent.SomeFieldsAreEmpty)
+            }
+            return
+        }
+        _state.update { it.copy(isLoading = true) }
+        viewModelScope.launch {
+            delay(2000)
+            _state.update { it.copy(isLoading = false) }
+            _eventChannel.send(CreateTourPlanEvent.CreateTourPlanSuccess)
+        }
     }
 
     private fun searchCity(query: String) {

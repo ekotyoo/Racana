@@ -33,16 +33,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
-import com.ekotyoo.racana.core.composables.RFilledButton
-import com.ekotyoo.racana.core.composables.RFilledEditText
-import com.ekotyoo.racana.core.composables.RIconButton
-import com.ekotyoo.racana.core.composables.RTopAppBar
+import com.ekotyoo.racana.core.composables.*
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaBlack
 import com.ekotyoo.racana.core.theme.RacanaGray
 import com.ekotyoo.racana.core.theme.RacanaTheme
-import com.ekotyoo.racana.ui.home.create_tour_plan.model.DestinationCategory
-import com.ekotyoo.racana.ui.home.create_tour_plan.model.getCategories
+import com.ekotyoo.racana.ui.home.create_tour_plan.model.CreateTourPlanEvent
+import com.ekotyoo.racana.ui.home.create_tour_plan.model.CreateTourPlanState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
@@ -56,6 +53,20 @@ fun CreateTourPlanScreen(
     viewModel: CreateTourPlanViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(Unit) {
+        viewModel.eventChannel.collect { event ->
+            when (event) {
+                is CreateTourPlanEvent.CreateTourPlanSuccess -> {
+                    navigator.popBackStack()
+                }
+                is CreateTourPlanEvent.SomeFieldsAreEmpty -> {
+                    snackbarHostState.showSnackbar("Mohon masukkan data yang valid.")
+                }
+            }
+        }
+    }
 
     CreateTourPlanContent(
         onBackButtonClicked = { navigator.popBackStack() },
@@ -66,18 +77,14 @@ fun CreateTourPlanScreen(
         onDestinationIncrement = viewModel::onDestinationIncrement,
         onDestinationDecrement = viewModel::onDestinationDecrement,
         onDateSelected = viewModel::onDateSelected,
-        totalDestination = state.value.totalDestinationValue,
-        cityTextFieldValue = state.value.cityTextFieldValue,
-        startDateValue = state.value.startDateFormatted,
-        endDateValue = state.value.endDateFormatted,
-        citiesResult = state.value.citiesResult,
-        selectedCity = state.value.selectedCity,
-        totalBudgetTextFieldValue = state.value.totalBudgetTextFieldValue,
-        categories = state.value.categories
+        onSubmitClicked = viewModel::onSubmitClicked,
+        onCategorySelected = viewModel::onCategorySelected,
+        state = state.value,
+        snackbarHostState = snackbarHostState
     )
 }
 
-@OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CreateTourPlanContent(
     onBackButtonClicked: () -> Unit,
@@ -88,224 +95,254 @@ fun CreateTourPlanContent(
     onDestinationIncrement: (Int) -> Unit,
     onDestinationDecrement: (Int) -> Unit,
     onDateSelected: (List<LocalDate>) -> Unit,
-    totalDestination: Int,
-    cityTextFieldValue: String,
-    startDateValue: String,
-    endDateValue: String,
-    totalBudgetTextFieldValue: Int,
-    citiesResult: List<Pair<String, String>>,
-    selectedCity: String,
-    categories: List<DestinationCategory>
+    onCategorySelected: (Int) -> Unit,
+    onSubmitClicked: () -> Unit,
+    state: CreateTourPlanState,
+    snackbarHostState: SnackbarHostState = SnackbarHostState()
 ) {
-    val focusManager = LocalFocusManager.current
     val modalBottomSheetState =
         rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     val scope = rememberCoroutineScope()
 
-    ModalBottomSheetLayout(
-        sheetState = modalBottomSheetState,
-        sheetContent = { CalendarPicker(onDateSelected) },
-        sheetBackgroundColor = MaterialTheme.colors.primary,
-    ) {
-        Scaffold(
-            topBar = {
-                RTopAppBar(
-                    isBackButtonAvailable = true,
-                    title = stringResource(id = R.string.create_tour),
-                    onBackButtonCLicked = onBackButtonClicked
-                )
-            },
+    Box(Modifier.fillMaxSize()) {
+        ModalBottomSheetLayout(
+            sheetState = modalBottomSheetState,
+            sheetContent = { CalendarPicker(onDateSelected) },
+            sheetBackgroundColor = MaterialTheme.colors.primary,
         ) {
-            Column(
-                modifier = Modifier
-                    .scrollable(rememberScrollState(), orientation = Orientation.Vertical)
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp)
+            Scaffold(
+                topBar = {
+                    RTopAppBar(
+                        isBackButtonAvailable = true,
+                        title = stringResource(id = R.string.create_tour),
+                        onBackButtonCLicked = onBackButtonClicked
+                    )
+                },
             ) {
-                CreateTourPlanSection(title = "Kota") {
-                    var citiesDropdownVisible by remember { mutableStateOf(false) }
-                    Box(
-                        modifier = Modifier
-                            .border(
-                                width = 1.5.dp,
-                                color = RacanaGray.copy(alpha = .25f),
-                                shape = MaterialTheme.shapes.small,
-                            )
-                            .clip(MaterialTheme.shapes.small)
-                            .clickable { citiesDropdownVisible = !citiesDropdownVisible }
-                            .background(RacanaGray.copy(alpha = .25f))
-                            .fillMaxWidth()
-                            .height(56.dp)
-                            .padding(16.dp)
-                    ) {
-                        val selectedCityEmpty = derivedStateOf {
-                            selectedCity.isEmpty()
-                        }
-                        Text(text = if (selectedCityEmpty.value) "---Pilih Kota---" else selectedCity)
-                        AnimatedContent(
-                            modifier = Modifier.align(Alignment.CenterEnd),
-                            targetState = citiesDropdownVisible
-                        ) { state ->
-                            when (state) {
-                                true -> Icon(
-                                    imageVector = Icons.Rounded.KeyboardArrowUp,
-                                    contentDescription = null
-                                )
-                                false -> Icon(
-                                    imageVector = Icons.Rounded.KeyboardArrowDown,
-                                    contentDescription = null
-                                )
-                            }
-                        }
+                Column(
+                    modifier = Modifier
+                        .scrollable(rememberScrollState(), orientation = Orientation.Vertical)
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp)
+                ) {
+                    // City Input
+                    CreateTourPlanSection(title = "Kota") {
+                        CityDropdown(
+                            cityResult = state.citiesResult,
+                            selectedCity = state.selectedCity,
+                            cityTextFieldValue = state.cityTextFieldValue,
+                            onCityTextFieldCleared = onCityTextFieldCleared,
+                            onCitiesTextFieldValueChange = onCitiesTextFieldValueChange,
+                            onCitySelected = onCitySelected
+                        )
                     }
-                    Spacer(Modifier.height(8.dp))
-                    AnimatedVisibility(visible = citiesDropdownVisible) {
-                        Column {
+                    Spacer(Modifier.height(16.dp))
+
+                    // Date Input
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        verticalAlignment = Alignment.Bottom
+                    ) {
+                        CreateTourPlanSection(
+                            modifier = Modifier.weight(.1f, false),
+                            title = stringResource(id = R.string.start)
+                        ) {
+                            val startDateEmpty by derivedStateOf {
+                                state.startDateFormatted.isEmpty()
+                            }
                             RFilledEditText(
-                                modifier = Modifier.fillMaxWidth(),
-                                value = cityTextFieldValue,
-                                placeholderString = "Cari Kota...",
+                                value = if (startDateEmpty) "--" else state.startDateFormatted,
+                                readOnly = true,
+                                placeholderString = "",
                                 leadingIcon = null,
-                                trailingIcon = {
-                                    if (cityTextFieldValue.isNotEmpty()) {
-                                        IconButton(onClick = onCityTextFieldCleared) {
-                                            Icon(
-                                                imageVector = Icons.Rounded.Close,
-                                                contentDescription = null
-                                            )
-                                        }
-                                    }
-                                },
-                                onValueChange = onCitiesTextFieldValueChange
+                                onValueChange = {}
                             )
-                            LazyColumn(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .heightIn(0.dp, 200.dp)
-                            ) {
-                                items(citiesResult.size) {
-                                    val (city, province) = citiesResult[it]
-                                    DropdownMenuItem(
-                                        modifier = Modifier.clip(MaterialTheme.shapes.small),
-                                        onClick = {
-                                            onCitySelected(city)
-                                            focusManager.clearFocus()
-                                            citiesDropdownVisible = false
-                                        }
-                                    ) {
-                                        Text(
-                                            text = "$city - $province",
-                                            style = MaterialTheme.typography.body1
-                                        )
-                                    }
+                        }
+                        CreateTourPlanSection(
+                            modifier = Modifier.weight(.1f, false),
+                            title = stringResource(id = R.string.end)
+                        ) {
+                            val endDateEmpty = derivedStateOf {
+                                state.endDateFormatted.isEmpty()
+                            }
+                            RFilledEditText(
+                                value = if (endDateEmpty.value) "--" else state.endDateFormatted,
+                                readOnly = true,
+                                placeholderString = "",
+                                leadingIcon = null,
+                                onValueChange = {}
+                            )
+                        }
+                        RIconButton(
+                            imageVector = Icons.Rounded.EditCalendar,
+                            contentDescription = null,
+                            onClick = {
+                                scope.launch {
+                                    modalBottomSheetState.show()
                                 }
                             }
-                        }
-                    }
-                }
-                Spacer(Modifier.height(16.dp))
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    verticalAlignment = Alignment.Bottom
-                ) {
-                    CreateTourPlanSection(
-                        modifier = Modifier.weight(.1f, false),
-                        title = stringResource(id = R.string.start)
-                    ) {
-                        val startDateEmpty = derivedStateOf {
-                            startDateValue.isEmpty()
-                        }
-                        RFilledEditText(
-                            value = if (startDateEmpty.value) "--" else startDateValue,
-                            readOnly = true,
-                            placeholderString = "",
-                            leadingIcon = null,
-                            onValueChange = {}
                         )
                     }
-                    CreateTourPlanSection(
-                        modifier = Modifier.weight(.1f, false),
-                        title = stringResource(id = R.string.end)
-                    ) {
-                        val endDateEmpty = derivedStateOf {
-                            endDateValue.isEmpty()
-                        }
-                        RFilledEditText(
-                            value = if (endDateEmpty.value) "--" else endDateValue,
-                            readOnly = true,
-                            placeholderString = "",
-                            leadingIcon = null,
-                            onValueChange = {}
-                        )
-                    }
-                    RIconButton(
-                        imageVector = Icons.Rounded.EditCalendar,
-                        contentDescription = null,
-                        onClick = {
-                            scope.launch {
-                                modalBottomSheetState.show()
-                            }
-                        }
-                    )
-                }
-                Spacer(Modifier.height(16.dp))
-                Row(
-                    Modifier.fillMaxWidth(),
-                ) {
-                    CreateTourPlanSection(
-                        modifier = Modifier.weight(1f),
-                        title = stringResource(id = R.string.total_budget)
-                    ) {
-                        RFilledEditText(
-                            value = totalBudgetTextFieldValue.toString(),
-                            placeholderString = "",
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            leadingIcon = null,
-                            onValueChange = onTotalBudgetTextFieldValueChange
-                        )
-                    }
-                    Spacer(Modifier.width(16.dp))
-                    CreateTourPlanSection(
-                        modifier = Modifier.weight(1f),
-                        title = stringResource(id = R.string.total_destination)
-                    ) {
-                        Counter(
-                            modifier = Modifier.fillMaxWidth(),
-                            value = totalDestination,
-                            onIncrement = onDestinationIncrement,
-                            onDecrement = onDestinationDecrement
-                        )
-                    }
-                }
-                Spacer(Modifier.height(16.dp))
-                CreateTourPlanSection(title = stringResource(id = R.string.destination_category)) {
-                    var selectedCategory by remember {
-                        mutableStateOf(0)
-                    }
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(2),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(16.dp),
-                        content = {
-                            items(categories.size) {
-                                val category = categories[it]
-                                CategoryCard(
-                                    imageUrl = category.imageUrl,
-                                    title = category.title,
-                                    onClick = {
-                                        selectedCategory = it
-                                    },
-                                    isChecked = selectedCategory == it
-                                )
-                            }
-                        }
-                    )
-                }
-                Spacer(Modifier.weight(1f))
-                RFilledButton(placeholderString = stringResource(id = R.string.save), onClick = {})
-                Spacer(Modifier.height(32.dp))
-            }
+                    Spacer(Modifier.height(16.dp))
 
+                    // Budget and Total Destination Input
+                    Row(
+                        Modifier.fillMaxWidth(),
+                    ) {
+                        CreateTourPlanSection(
+                            modifier = Modifier.weight(1f),
+                            title = stringResource(id = R.string.total_budget)
+                        ) {
+                            RFilledEditText(
+                                value = state.totalBudgetTextFieldValue.toString(),
+                                placeholderString = "",
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                leadingIcon = null,
+                                onValueChange = onTotalBudgetTextFieldValueChange
+                            )
+                        }
+                        Spacer(Modifier.width(16.dp))
+                        CreateTourPlanSection(
+                            modifier = Modifier.weight(1f),
+                            title = stringResource(id = R.string.total_destination)
+                        ) {
+                            Counter(
+                                modifier = Modifier.fillMaxWidth(),
+                                value = state.totalDestinationValue,
+                                onIncrement = onDestinationIncrement,
+                                onDecrement = onDestinationDecrement
+                            )
+                        }
+                    }
+                    Spacer(Modifier.height(16.dp))
+
+                    // Category Input
+                    CreateTourPlanSection(title = stringResource(id = R.string.destination_category)) {
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(2),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(16.dp),
+                            content = {
+                                items(state.categories.size) {
+                                    val category = state.categories[it]
+                                    CategoryCard(
+                                        imageUrl = category.imageUrl,
+                                        title = category.title,
+                                        onClick = {
+                                            onCategorySelected(it)
+                                        },
+                                        isChecked = state.selectedCategory == it
+                                    )
+                                }
+                            }
+                        )
+                    }
+                    Spacer(Modifier.weight(1f))
+                    RFilledButton(
+                        placeholderString = stringResource(id = R.string.save),
+                        onClick = onSubmitClicked
+                    )
+                    Spacer(Modifier.height(32.dp))
+                }
+            }
+        }
+        RCircularProgressOverlay(
+            modifier = Modifier.align(Alignment.Center),
+            visible = state.isLoading
+        )
+        SnackbarHost(hostState = snackbarHostState)
+    }
+}
+
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+fun CityDropdown(
+    cityResult: List<Pair<String, String>>,
+    selectedCity: String,
+    cityTextFieldValue: String,
+    onCityTextFieldCleared: () -> Unit,
+    onCitiesTextFieldValueChange: (String) -> Unit,
+    onCitySelected: (String) -> Unit
+) {
+    var citiesDropdownVisible by remember { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
+
+    Box(
+        modifier = Modifier
+            .border(
+                width = 1.5.dp,
+                color = RacanaGray.copy(alpha = .25f),
+                shape = MaterialTheme.shapes.small,
+            )
+            .clip(MaterialTheme.shapes.small)
+            .clickable { citiesDropdownVisible = !citiesDropdownVisible }
+            .background(RacanaGray.copy(alpha = .25f))
+            .fillMaxWidth()
+            .height(56.dp)
+            .padding(16.dp)
+    ) {
+        val selectedCityEmpty = derivedStateOf {
+            selectedCity.isEmpty()
+        }
+        Text(text = if (selectedCityEmpty.value) "--Pilih Kota--" else selectedCity)
+        AnimatedContent(
+            modifier = Modifier.align(Alignment.CenterEnd),
+            targetState = citiesDropdownVisible
+        ) { state ->
+            when (state) {
+                true -> Icon(
+                    imageVector = Icons.Rounded.KeyboardArrowUp,
+                    contentDescription = null
+                )
+                false -> Icon(
+                    imageVector = Icons.Rounded.KeyboardArrowDown,
+                    contentDescription = null
+                )
+            }
+        }
+    }
+    Spacer(Modifier.height(8.dp))
+    AnimatedVisibility(visible = citiesDropdownVisible) {
+        Column {
+            RFilledEditText(
+                modifier = Modifier.fillMaxWidth(),
+                value = cityTextFieldValue,
+                placeholderString = "Cari Kota...",
+                leadingIcon = null,
+                trailingIcon = {
+                    if (cityTextFieldValue.isNotEmpty()) {
+                        IconButton(onClick = onCityTextFieldCleared) {
+                            Icon(
+                                imageVector = Icons.Rounded.Close,
+                                contentDescription = null
+                            )
+                        }
+                    }
+                },
+                onValueChange = onCitiesTextFieldValueChange
+            )
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(0.dp, 200.dp)
+            ) {
+                items(cityResult.size) {
+                    val (city, province) = cityResult[it]
+                    DropdownMenuItem(
+                        modifier = Modifier.clip(MaterialTheme.shapes.small),
+                        onClick = {
+                            onCitySelected(city)
+                            focusManager.clearFocus()
+                            citiesDropdownVisible = false
+                        }
+                    ) {
+                        Text(
+                            text = "$city - $province",
+                            style = MaterialTheme.typography.body1
+                        )
+                    }
+                }
+            }
         }
     }
 }
@@ -408,14 +445,9 @@ fun CreateTourPlanScreenPreview() {
             onDestinationIncrement = {},
             onDestinationDecrement = {},
             onDateSelected = {},
-            totalDestination = 0,
-            cityTextFieldValue = "",
-            startDateValue = "",
-            endDateValue = "",
-            totalBudgetTextFieldValue = 0,
-            citiesResult = emptyList(),
-            selectedCity = "Jakarta",
-            categories = getCategories()
+            onCategorySelected = {},
+            onSubmitClicked = {},
+            state = CreateTourPlanState()
         )
     }
 }

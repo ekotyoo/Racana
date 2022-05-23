@@ -4,6 +4,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 data class CreateTourPlanState(
+    val isLoading: Boolean = false,
     val categories: List<DestinationCategory> = getCategories(),
     val cities: List<Pair<String, String>> = emptyList(),
     val citiesResult: List<Pair<String, String>> = emptyList(),
@@ -12,7 +13,8 @@ data class CreateTourPlanState(
     val totalDestinationValue: Int = 0,
     val selectedCity: String = "",
     val selectedStartDate: LocalDate? = null,
-    val selectedEndDate: LocalDate? = null
+    val selectedEndDate: LocalDate? = null,
+    val selectedCategory: Int = 0
 ) {
     val startDateFormatted: String
         get() {
