@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -138,40 +139,43 @@ fun CreateTourPlanContent(
                     }
                     Spacer(Modifier.height(16.dp))
 
+                    // Budget Input
+                    CreateTourPlanSection(
+                        modifier = Modifier.fillMaxWidth(),
+                        title = stringResource(id = R.string.total_budget)
+                    ) {
+                        RFilledEditText(
+                            modifier = Modifier.fillMaxWidth(),
+                            leadingIcon = {
+                                Text(
+                                    text = "Rp.",
+                                    style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Bold)
+                                )
+                            },
+                            value = state.totalBudgetTextFieldValue.toString(),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            onValueChange = onTotalBudgetTextFieldValueChange
+                        )
+                    }
+                    Spacer(Modifier.height(16.dp))
+
                     // Date Input
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.Bottom
                     ) {
                         CreateTourPlanSection(
                             modifier = Modifier.weight(.1f, false),
-                            title = stringResource(id = R.string.start)
+                            title = stringResource(id = R.string.pick_a_date)
                         ) {
                             val startDateEmpty by derivedStateOf {
                                 state.startDateFormatted.isEmpty()
                             }
-                            RFilledEditText(
-                                value = if (startDateEmpty) "--" else state.startDateFormatted,
-                                readOnly = true,
-                                placeholderString = "",
-                                leadingIcon = null,
-                                onValueChange = {}
-                            )
-                        }
-                        CreateTourPlanSection(
-                            modifier = Modifier.weight(.1f, false),
-                            title = stringResource(id = R.string.end)
-                        ) {
-                            val endDateEmpty = derivedStateOf {
+                            val endDateEmpty by derivedStateOf {
                                 state.endDateFormatted.isEmpty()
                             }
-                            RFilledEditText(
-                                value = if (endDateEmpty.value) "--" else state.endDateFormatted,
-                                readOnly = true,
-                                placeholderString = "",
-                                leadingIcon = null,
-                                onValueChange = {}
-                            )
+                            Text(text = if (startDateEmpty && endDateEmpty) "--" else state.startDateFormatted + " - " + state.endDateFormatted)
                         }
                         RIconButton(
                             imageVector = Icons.Rounded.EditCalendar,
@@ -185,34 +189,16 @@ fun CreateTourPlanContent(
                     }
                     Spacer(Modifier.height(16.dp))
 
-                    // Budget and Total Destination Input
-                    Row(
-                        Modifier.fillMaxWidth(),
+                    // Total Destination Input
+                    CreateTourPlanSection(
+                        title = stringResource(id = R.string.total_destination)
                     ) {
-                        CreateTourPlanSection(
-                            modifier = Modifier.weight(1f),
-                            title = stringResource(id = R.string.total_budget)
-                        ) {
-                            RFilledEditText(
-                                value = state.totalBudgetTextFieldValue.toString(),
-                                placeholderString = "",
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                leadingIcon = null,
-                                onValueChange = onTotalBudgetTextFieldValueChange
-                            )
-                        }
-                        Spacer(Modifier.width(16.dp))
-                        CreateTourPlanSection(
-                            modifier = Modifier.weight(1f),
-                            title = stringResource(id = R.string.total_destination)
-                        ) {
-                            Counter(
-                                modifier = Modifier.fillMaxWidth(),
-                                value = state.totalDestinationValue,
-                                onIncrement = onDestinationIncrement,
-                                onDecrement = onDestinationDecrement
-                            )
-                        }
+                        Counter(
+                            modifier = Modifier.width(160.dp),
+                            value = state.totalDestinationValue,
+                            onIncrement = onDestinationIncrement,
+                            onDecrement = onDestinationDecrement
+                        )
                     }
                     Spacer(Modifier.height(16.dp))
 
@@ -301,14 +287,23 @@ fun CityDropdown(
             }
         }
     }
-    Spacer(Modifier.height(8.dp))
-    AnimatedVisibility(visible = citiesDropdownVisible) {
+    AnimatedVisibility(
+        visible = citiesDropdownVisible,
+        enter = fadeIn() + expandVertically(expandFrom = Alignment.Top),
+        exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.Top)
+    ) {
         Column {
+            Spacer(Modifier.height(8.dp))
             RFilledEditText(
                 modifier = Modifier.fillMaxWidth(),
                 value = cityTextFieldValue,
                 placeholderString = "Cari Kota...",
-                leadingIcon = null,
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Rounded.Search,
+                        contentDescription = null
+                    )
+                },
                 trailingIcon = {
                     if (cityTextFieldValue.isNotEmpty()) {
                         IconButton(onClick = onCityTextFieldCleared) {
@@ -407,50 +402,6 @@ fun CategoryCard(
     }
 }
 
-@Composable
-fun CreateTourPlanSection(
-    modifier: Modifier = Modifier,
-    title: String,
-    content: @Composable () -> Unit
-) {
-    Column(modifier) {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.subtitle1
-        )
-        Spacer(Modifier.height(8.dp))
-        content()
-    }
-}
-
-@Preview(
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-    name = "Light Mode Preview"
-)
-@Preview(
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    name = "Dark Mode Preview"
-)
-@Composable
-fun CreateTourPlanScreenPreview() {
-    RacanaTheme {
-        CreateTourPlanContent(
-            onBackButtonClicked = {},
-            onCitiesTextFieldValueChange = {},
-            onCityTextFieldCleared = {},
-            onCitySelected = {},
-            onTotalBudgetTextFieldValueChange = {},
-            onDestinationIncrement = {},
-            onDestinationDecrement = {},
-            onDateSelected = {},
-            onCategorySelected = {},
-            onSubmitClicked = {},
-            state = CreateTourPlanState()
-        )
-    }
-}
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -507,6 +458,51 @@ fun Counter(
                 contentDescription = stringResource(id = R.string.increment)
             )
         }
+    }
+}
+
+@Composable
+fun CreateTourPlanSection(
+    modifier: Modifier = Modifier,
+    title: String,
+    content: @Composable () -> Unit
+) {
+    Column(modifier) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.subtitle1
+        )
+        Spacer(Modifier.height(8.dp))
+        content()
+    }
+}
+
+@Preview(
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    name = "Light Mode Preview"
+)
+@Preview(
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    name = "Dark Mode Preview"
+)
+@Composable
+fun CreateTourPlanScreenPreview() {
+    RacanaTheme {
+        CreateTourPlanContent(
+            onBackButtonClicked = {},
+            onCitiesTextFieldValueChange = {},
+            onCityTextFieldCleared = {},
+            onCitySelected = {},
+            onTotalBudgetTextFieldValueChange = {},
+            onDestinationIncrement = {},
+            onDestinationDecrement = {},
+            onDateSelected = {},
+            onCategorySelected = {},
+            onSubmitClicked = {},
+            state = CreateTourPlanState()
+        )
     }
 }
 
