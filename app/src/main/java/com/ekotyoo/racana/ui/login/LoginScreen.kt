@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
-import com.ekotyoo.racana.core.composables.RCircularProgressOverlay
+import com.ekotyoo.racana.core.composables.RLoadingOverlay
 import com.ekotyoo.racana.core.composables.REditText
 import com.ekotyoo.racana.core.composables.RFilledButton
 import com.ekotyoo.racana.core.theme.RacanaTheme
@@ -88,8 +88,8 @@ fun LoginScreen(
                 onRegisterTextClicked = viewModel::onRegisterTextClicked,
             )
             SnackbarHost(hostState = snackbarHostState)
-            RCircularProgressOverlay(
-                modifier = Modifier.align(Alignment.Center),
+            RLoadingOverlay(
+                modifier = Modifier.align(Alignment.BottomCenter),
                 visible = state.isLoading
             )
         }

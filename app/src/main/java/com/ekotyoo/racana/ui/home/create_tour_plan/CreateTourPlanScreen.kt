@@ -246,7 +246,7 @@ fun CreateTourPlanContent(
                 }
             }
         }
-        RCircularProgressOverlay(
+        RLoadingOverlay(
             modifier = Modifier.align(Alignment.Center),
             visible = state.isLoading
         )
