@@ -2,6 +2,7 @@ package com.ekotyoo.racana.ui.home.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ekotyoo.racana.data.repository.AuthRepository
 import com.ekotyoo.racana.ui.home.profile.model.ProfileEvent
 import com.ekotyoo.racana.ui.home.profile.model.ProfileState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -9,25 +10,28 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor() : ViewModel() {
+class ProfileViewModel @Inject constructor(
+    authRepository: AuthRepository
+) : ViewModel() {
     private val _state = MutableStateFlow(ProfileState())
     val state: StateFlow<ProfileState> = _state
 
     private val _eventChannel = Channel<ProfileEvent>()
     val eventChannel = _eventChannel.receiveAsFlow()
 
-    //Assign Dummy Data
     init {
-        _state.value = _state.value.copy(
-            profilePictureUrl = "https://picsum.photos/200/300",
-            nameTextFieldValue = "Ini Nama Pengguna",
-            emailTextFieldValue = "email.pengguna@gmail.com",
-            isPremium = true
-        )
+        viewModelScope.launch {
+            authRepository.userData.collect { user ->
+                _state.update {
+                    it.copy(user = user)
+                }
+            }
+        }
     }
 
     fun onMyPlanButtonClicked() {

@@ -33,6 +33,7 @@ import com.ekotyoo.racana.core.composables.RIconButton
 import com.ekotyoo.racana.core.composables.RImageCard
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.core.navigation.NavigationTransition
+import com.ekotyoo.racana.data.model.UserModel
 import com.ekotyoo.racana.ui.home.dashboard.model.TravelDestination
 import com.ekotyoo.racana.ui.home.dashboard.model.getDummyDestination
 import com.ramcosta.composedestinations.annotation.Destination
@@ -55,6 +56,7 @@ fun DashboardScreen(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             DashboardAppBar(
+                userName = state.user?.name,
                 expanded = appBarExpanded.value
             ) {}
         }
@@ -111,6 +113,7 @@ fun DashboardContent(
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun DashboardAppBar(
+    userName: String? = null,
     expanded: Boolean = false,
     onSearchClicked: () -> Unit
 ) {
@@ -125,7 +128,7 @@ fun DashboardAppBar(
             if (target) {
                 Column {
                     Text(
-                        text = "Hi, John",
+                        text = if (userName != null) "Hai, $userName!" else "Halo!",
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.onPrimary
                     )

@@ -13,7 +13,6 @@ import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -29,8 +28,8 @@ import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.BottomNavGraph
 import com.ekotyoo.racana.core.composables.ROutlinedButton
 import com.ekotyoo.racana.core.composables.RTopAppBar
-import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.core.navigation.NavigationTransition
+import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
@@ -47,14 +46,14 @@ fun ProfileScreen(
 
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
         ProfileContent(
-            state.profilePictureUrl,
-            state.nameTextFieldValue,
-            state.emailTextFieldValue,
-            state.isPremium,
-            viewModel::onMyPlanButtonClicked,
-            viewModel::onFavoriteDestinationButtonClicked,
-            viewModel::onSettingsButtonClicked,
-            viewModel::onLogOutButtonClicked
+            profilePictureUrl = "https://picsum.photos/200/300",
+            nameTextFieldValue = state.user?.name ?: "Unknown",
+            emailTextFieldValue = state.user?.email ?: "Unknown",
+            isPremium = state.isPremium,
+            onMyPlanButtonCLicked = viewModel::onMyPlanButtonClicked,
+            onFavoriteDestinationButtonCLicked = viewModel::onFavoriteDestinationButtonClicked,
+            onSettingsButtonCLicked = viewModel::onSettingsButtonClicked,
+            onLogOutButtonClicked = viewModel::onLogOutButtonClicked
         )
     }
 }
