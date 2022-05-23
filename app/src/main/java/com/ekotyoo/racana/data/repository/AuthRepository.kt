@@ -67,4 +67,14 @@ class AuthRepository @Inject constructor(
             return Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
         }
     }
+
+    suspend fun logout(): Result<Unit> {
+        return try {
+            userPreferencesDataStore.deleteUserData()
+            Result.Success(Unit)
+        } catch (e: IOException) {
+            Timber.d("IOException: " + e.message)
+            Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        }
+    }
 }

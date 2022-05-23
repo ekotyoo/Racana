@@ -47,6 +47,15 @@ class UserPreferencesDataStore @Inject constructor(
         }
     }
 
+    suspend fun deleteUserData() {
+        context.dataStore.edit { preferences ->
+            preferences.remove(KEY_USER_ID)
+            preferences.remove(KEY_USER_NAME)
+            preferences.remove(KEY_USER_EMAIL)
+            preferences.remove(KEY_USER_TOKEN)
+        }
+    }
+
     private companion object {
         val KEY_USER_ID = stringPreferencesKey("KEY_ID")
         val KEY_USER_NAME = stringPreferencesKey("KEY_NAME")

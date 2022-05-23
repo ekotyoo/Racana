@@ -12,9 +12,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.rounded.ChevronRight
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,8 +28,11 @@ import com.ekotyoo.racana.core.composables.ROutlinedButton
 import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaTheme
+import com.ekotyoo.racana.ui.destinations.DashboardScreenDestination
+import com.ekotyoo.racana.ui.home.profile.model.ProfileEvent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.popUpTo
 import com.skydoves.landscapist.coil.CoilImage
 
 @BottomNavGraph
@@ -41,10 +42,28 @@ fun ProfileScreen(
     navigator: DestinationsNavigator,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
-
     val state by viewModel.state.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
 
-    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
+    LaunchedEffect(Unit) {
+        viewModel.eventChannel.collect { event ->
+            when (event) {
+                ProfileEvent.LogOutFailed -> snackbarHostState.showSnackbar("Terjadi kesalahan, coba lagi nanti!")
+                ProfileEvent.LogOutSuccess -> {
+                    navigator.navigate(DashboardScreenDestination) {
+                        popUpTo(DashboardScreenDestination) {
+                            inclusive = true
+                        }
+                    }
+                }
+                ProfileEvent.NavigateToFavoriteDestination -> {}
+                ProfileEvent.NavigateToMyPlan -> {}
+                ProfileEvent.NavigateToSettings -> {}
+            }
+        }
+    }
+
+    Box(Modifier.fillMaxSize()) {
         ProfileContent(
             profilePictureUrl = "https://picsum.photos/200/300",
             nameTextFieldValue = state.user?.name ?: "Unknown",
@@ -55,6 +74,7 @@ fun ProfileScreen(
             onSettingsButtonCLicked = viewModel::onSettingsButtonClicked,
             onLogOutButtonClicked = viewModel::onLogOutButtonClicked
         )
+        SnackbarHost(hostState = snackbarHostState)
     }
 }
 

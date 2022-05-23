@@ -2,6 +2,7 @@ package com.ekotyoo.racana.ui.home.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ekotyoo.racana.core.utils.Result
 import com.ekotyoo.racana.data.repository.AuthRepository
 import com.ekotyoo.racana.ui.home.profile.model.ProfileEvent
 import com.ekotyoo.racana.ui.home.profile.model.ProfileState
@@ -16,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    authRepository: AuthRepository
+    private val authRepository: AuthRepository
 ) : ViewModel() {
     private val _state = MutableStateFlow(ProfileState())
     val state: StateFlow<ProfileState> = _state
@@ -54,7 +55,10 @@ class ProfileViewModel @Inject constructor(
 
     fun onLogOutButtonClicked() {
         viewModelScope.launch {
-            _eventChannel.send(ProfileEvent.LogOut)
+            when (authRepository.logout()) {
+                is Result.Success -> _eventChannel.send(ProfileEvent.LogOutSuccess)
+                is Result.Error -> _eventChannel.send(ProfileEvent.LogOutFailed)
+            }
         }
     }
 }
