@@ -1,6 +1,7 @@
 package com.ekotyoo.racana.ui.main.tourplanresult
 
 import android.content.res.Configuration
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -10,12 +11,15 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.BookmarkBorder
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,7 +29,9 @@ import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.RFilledButton
 import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.NavigationTransition
+import com.ekotyoo.racana.core.theme.RacanaGray
 import com.ekotyoo.racana.core.theme.RacanaTheme
+import com.ekotyoo.racana.core.theme.RacanaWhite
 import com.ekotyoo.racana.ui.main.dashboard.model.TravelDestination
 import com.ekotyoo.racana.ui.main.tourplanresult.model.DailyItem
 import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultState
@@ -91,16 +97,54 @@ fun AttractionList(
 ) {
     val items = destinationList ?: emptyList()
 
-    Row(modifier.padding(horizontal = 16.dp)) {
-        Spacer(Modifier.width(80.dp))
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(vertical = 16.dp)
-        ) {
-            items(items.size) {
-                val destination = items[it]
-                AttractionCard(imageUrl = destination.imageUrl, title = destination.name, location = destination.location)
-            }
+    LazyColumn(
+        modifier = modifier.padding(horizontal = 16.dp),
+        contentPadding = PaddingValues(vertical = 16.dp)
+    ) {
+        items(items.size) {
+            val destination = items[it]
+            AttractionCard(
+                imageUrl = destination.imageUrl,
+                title = destination.name,
+                location = destination.location,
+                isDone = destination.isDone
+            )
+        }
+    }
+}
+
+@Composable
+fun ProgressLine(modifier: Modifier = Modifier, isDone: Boolean) {
+    Canvas(
+        modifier = modifier
+            .size(96.dp)
+    ) {
+        val width = size.width
+        val height = size.height
+        val centerX = width / 2
+        val centerY = height / 2
+
+        drawLine(
+            color = RacanaGray,
+            start = Offset(x = centerX, y = 0f),
+            end = Offset(x = centerX, y = height),
+            cap = StrokeCap.Round,
+            strokeWidth = 6f,
+            pathEffect = PathEffect.dashPathEffect(floatArrayOf(16f, 16f), 16f)
+        )
+        drawCircle(
+            color = RacanaGray,
+            radius = 20f,
+            center = Offset(x = centerX, y = centerY),
+            style = Fill
+        )
+        if (!isDone) {
+            drawCircle(
+                color = RacanaWhite,
+                radius = 14f,
+                center = Offset(x = centerX, y = centerY),
+                style = Fill
+            )
         }
     }
 }
@@ -111,35 +155,40 @@ fun AttractionCard(
     modifier: Modifier = Modifier,
     imageUrl: String,
     title: String,
-    location: String
+    location: String,
+    isDone: Boolean
 ) {
-    Card(
-        modifier = modifier
-            .height(80.dp),
-        onClick = {},
-        elevation = 8.dp,
-        shape = MaterialTheme.shapes.small
-    ) {
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
+    Row {
+        ProgressLine(isDone = isDone)
+        Card(
+            modifier = modifier
+                .padding(vertical = 8.dp)
+                .height(80.dp),
+            onClick = {},
+            elevation = 8.dp,
+            shape = MaterialTheme.shapes.small
         ) {
-            CoilImage(
-                modifier = Modifier
-                    .aspectRatio(1f)
-                    .sizeIn(64.dp, 80.dp)
-                    .clip(MaterialTheme.shapes.small),
-                imageModel = imageUrl,
-                contentScale = ContentScale.Crop,
-                previewPlaceholder = R.drawable.ic_launcher_background,
-                contentDescription = null,
-            )
-            Spacer(Modifier.width(8.dp))
-            Column {
-                Text(text = title, style = MaterialTheme.typography.subtitle1)
-                Text(text = "Expense", style = MaterialTheme.typography.caption)
-                Text(text = location, style = MaterialTheme.typography.caption)
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+            ) {
+                CoilImage(
+                    modifier = Modifier
+                        .aspectRatio(1f)
+                        .sizeIn(64.dp, 80.dp)
+                        .clip(MaterialTheme.shapes.small),
+                    imageModel = imageUrl,
+                    contentScale = ContentScale.Crop,
+                    previewPlaceholder = R.drawable.ic_launcher_background,
+                    contentDescription = null,
+                )
+                Spacer(Modifier.width(8.dp))
+                Column {
+                    Text(text = title, style = MaterialTheme.typography.subtitle1)
+                    Text(text = "Expense", style = MaterialTheme.typography.caption)
+                    Text(text = location, style = MaterialTheme.typography.caption)
+                }
             }
         }
     }
@@ -188,11 +237,10 @@ fun DayHeaderContainer(
             .padding(8.dp)
     ) {
         val color =
-            if (isSelected) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface
-        CompositionLocalProvider(LocalContentAlpha provides if (isSelected) 1f else ContentAlpha.medium) {
-            Text(text = dayTitle, style = MaterialTheme.typography.subtitle1, color = color)
-            Text(text = date, style = MaterialTheme.typography.body1, color = color)
-        }
+            if (isSelected) MaterialTheme.colors.onPrimary else RacanaGray
+        Text(text = dayTitle, style = MaterialTheme.typography.subtitle1, color = color)
+        Text(text = date, style = MaterialTheme.typography.body2, color = color)
+
     }
 }
 
