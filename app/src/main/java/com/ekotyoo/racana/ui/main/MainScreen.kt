@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.ekotyoo.racana.core.composables.RBottomNavigationBar
 import com.ekotyoo.racana.core.navigation.NavigationTransition
+import com.ekotyoo.racana.core.navigation.RootNavigator
 import com.ekotyoo.racana.ui.NavGraphs
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
@@ -63,5 +64,3 @@ fun MainScreen(
         )
     }
 }
-
-data class RootNavigator(val value: DestinationsNavigator)

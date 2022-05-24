@@ -27,12 +27,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
-import com.ekotyoo.racana.core.composables.BottomNavGraph
 import com.ekotyoo.racana.core.composables.RDestinationCard
 import com.ekotyoo.racana.core.composables.RIconButton
 import com.ekotyoo.racana.core.composables.RImageCard
-import com.ekotyoo.racana.core.theme.RacanaTheme
+import com.ekotyoo.racana.core.navigation.BottomNavGraph
 import com.ekotyoo.racana.core.navigation.NavigationTransition
+import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.ui.main.dashboard.model.TravelDestination
 import com.ekotyoo.racana.ui.main.dashboard.model.getDummyDestination
 import com.ramcosta.composedestinations.annotation.Destination

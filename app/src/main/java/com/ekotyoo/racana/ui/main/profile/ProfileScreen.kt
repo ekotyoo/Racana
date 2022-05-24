@@ -23,14 +23,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
-import com.ekotyoo.racana.core.composables.BottomNavGraph
 import com.ekotyoo.racana.core.composables.ROutlinedButton
 import com.ekotyoo.racana.core.composables.RTopAppBar
+import com.ekotyoo.racana.core.navigation.BottomNavGraph
 import com.ekotyoo.racana.core.navigation.NavigationTransition
+import com.ekotyoo.racana.core.navigation.RootNavigator
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.ui.destinations.LoginScreenDestination
 import com.ekotyoo.racana.ui.destinations.MainScreenDestination
-import com.ekotyoo.racana.ui.main.RootNavigator
 import com.ekotyoo.racana.ui.main.profile.model.ProfileEvent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator

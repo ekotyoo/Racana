@@ -123,12 +123,6 @@ fun RBottomAppBarIcon(
     }
 }
 
-@RootNavGraph
-@NavGraph
-annotation class BottomNavGraph(
-    val start: Boolean = false
-)
-
 enum class BottomBarDestination(
     val direction: DirectionDestinationSpec,
     val icon: ImageVector,
