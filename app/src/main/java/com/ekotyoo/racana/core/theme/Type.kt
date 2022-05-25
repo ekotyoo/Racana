@@ -30,6 +30,11 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp
     ),
+    caption = TextStyle(
+        fontFamily = poppinsFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 10.sp
+    ),
     button = TextStyle(
         fontFamily = balooFamily,
         fontWeight = FontWeight.Bold,
