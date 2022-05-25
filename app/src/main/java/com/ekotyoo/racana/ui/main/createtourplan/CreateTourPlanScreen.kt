@@ -42,8 +42,11 @@ import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.ui.destinations.TourPlanScreenDestination
 import com.ekotyoo.racana.ui.main.createtourplan.model.CreateTourPlanEvent
 import com.ekotyoo.racana.ui.main.createtourplan.model.CreateTourPlanState
+import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultArgument
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.result.NavResult
+import com.ramcosta.composedestinations.result.ResultRecipient
 import com.skydoves.landscapist.coil.CoilImage
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -52,16 +55,42 @@ import java.time.LocalDate
 @Composable
 fun CreateTourPlanScreen(
     navigator: DestinationsNavigator,
+    resultRecipient: ResultRecipient<TourPlanScreenDestination, String?>,
     viewModel: CreateTourPlanViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.collectAsState()
+    val state by viewModel.state.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    
+    resultRecipient.onNavResult { result ->
+        when(result) {
+            is NavResult.Canceled -> {}
+            is NavResult.Value -> {
+                result.value?.let {
+                    scope.launch {
+                        snackbarHostState.showSnackbar(it)
+                    }
+                }
+            }
+        }
+    }
 
     LaunchedEffect(Unit) {
         viewModel.eventChannel.collect { event ->
             when (event) {
-                is CreateTourPlanEvent.CreateTourPlanSuccess -> {
-                    navigator.navigate(TourPlanScreenDestination)
+                is CreateTourPlanEvent.NavigateToTourPlanResult -> {
+                    navigator.navigate(
+                        TourPlanScreenDestination(
+                            TourPlanResultArgument(
+                                city = state.selectedCity,
+                                totalBudget = state.totalBudgetTextFieldValue.toLong(),
+                                startDate = state.selectedStartDate,
+                                endDate = state.selectedEndDate,
+                                totalDestination = state.totalDestinationValue,
+                                category = state.selectedCategory
+                            )
+                        )
+                    )
                 }
                 is CreateTourPlanEvent.SomeFieldsAreEmpty -> {
                     snackbarHostState.showSnackbar("Mohon masukkan data yang valid.")
@@ -81,7 +110,7 @@ fun CreateTourPlanScreen(
         onDateSelected = viewModel::onDateSelected,
         onSubmitClicked = viewModel::onSubmitClicked,
         onCategorySelected = viewModel::onCategorySelected,
-        state = state.value,
+        state = state,
         snackbarHostState = snackbarHostState
     )
 }
@@ -100,7 +129,8 @@ fun CreateTourPlanContent(
     onCategorySelected: (Int) -> Unit,
     onSubmitClicked: () -> Unit,
     state: CreateTourPlanState,
-    snackbarHostState: SnackbarHostState = SnackbarHostState()
+    snackbarHostState: SnackbarHostState = SnackbarHostState(),
+    scaffoldState: ScaffoldState = rememberScaffoldState()
 ) {
     val modalBottomSheetState =
         rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
@@ -113,6 +143,7 @@ fun CreateTourPlanContent(
             sheetBackgroundColor = MaterialTheme.colors.primary,
         ) {
             Scaffold(
+                scaffoldState = scaffoldState,
                 topBar = {
                     RTopAppBar(
                         isBackButtonAvailable = true,
@@ -502,7 +533,7 @@ fun CreateTourPlanScreenPreview() {
             onDateSelected = {},
             onCategorySelected = {},
             onSubmitClicked = {},
-            state = CreateTourPlanState()
+            state = CreateTourPlanState(),
         )
     }
 }

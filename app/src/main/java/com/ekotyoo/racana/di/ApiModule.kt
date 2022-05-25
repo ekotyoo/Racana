@@ -1,6 +1,7 @@
 package com.ekotyoo.racana.di
 
 import com.ekotyoo.racana.data.datasource.remote.AuthApi
+import com.ekotyoo.racana.data.datasource.remote.TourPlanApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,29 +33,23 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(): Retrofit =
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit
             .Builder()
             .baseUrl(BASE_URL)
-            .client(OkHttpClient())
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
     @Singleton
     @Provides
     fun provideAuthApi(retrofit: Retrofit): AuthApi = retrofit.create(AuthApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideTourPlanApi(retrofit: Retrofit): TourPlanApi =
+        retrofit.create(TourPlanApi::class.java)
 }
 
 // TODO: Change with real API Url
 private const val BASE_URL = "http:/192.168.1.13:3000/" //Mockoon server
-
-/** Login Response Example from server
- * {
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE0ODUxNDA5ODQsImlhdCI6MTQ4NTEzNzM4NCwiaXNzIjoiYWNtZS5jb20iLCJzdWIiOiIyOWFjMGMxOC0wYjRhLTQyY2YtODJmYy0wM2Q1NzAzMThhMWQiLCJhcHBsaWNhdGlvbklkIjoiNzkxMDM3MzQtOTdhYi00ZDFhLWFmMzctZTAwNmQwNWQyOTUyIiwicm9sZXMiOltdfQ.Mp0Pcwsz5VECK11Kf2ZZNF_SMKu5CgBeLN9ZOP04kZo",
-        "user": {
-            "id": "00000000-0000-0001-0000-000000000000",
-            "name": "John Malik",
-            "email": "john@mail.com"
-        }
-   }
- */

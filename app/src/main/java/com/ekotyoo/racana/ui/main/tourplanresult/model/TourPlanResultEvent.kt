@@ -1,4 +1,5 @@
 package com.ekotyoo.racana.ui.main.tourplanresult.model
 
-class TourPlanResultEvent {
+sealed class TourPlanResultEvent {
+    data class NavigateBackWithMessage(val message: String) : TourPlanResultEvent()
 }

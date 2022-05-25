@@ -11,15 +11,15 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.BookmarkBorder
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Fill
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,37 +27,58 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.RFilledButton
+import com.ekotyoo.racana.core.composables.RLoadingOverlay
 import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.NavigationTransition
+import com.ekotyoo.racana.core.navigation.RootNavigator
 import com.ekotyoo.racana.core.theme.RacanaGray
 import com.ekotyoo.racana.core.theme.RacanaTheme
-import com.ekotyoo.racana.core.theme.RacanaWhite
 import com.ekotyoo.racana.ui.main.dashboard.model.TravelDestination
-import com.ekotyoo.racana.ui.main.tourplanresult.model.DailyItem
-import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultState
-import com.ekotyoo.racana.ui.main.tourplanresult.model.getDummyTourPlan
+import com.ekotyoo.racana.ui.main.tourplanresult.model.*
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.result.ResultBackNavigator
 import com.skydoves.landscapist.coil.CoilImage
 
-@Destination(style = NavigationTransition::class)
+@Destination(
+    style = NavigationTransition::class,
+    navArgsDelegate = TourPlanResultArgument::class
+)
 @Composable
 fun TourPlanScreen(
-    viewModel: TourPlanResultViewModel = hiltViewModel()
+    resultNavigator: ResultBackNavigator<String?>,
+    viewModel: TourPlanResultViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
 
-    Scaffold(
-        topBar = {
-            RTopAppBar(
-                title = stringResource(id = R.string.detail_tour_plan),
-                isBackButtonAvailable = true,
-                actionIcon = Icons.Rounded.BookmarkBorder
+    LaunchedEffect(Unit) {
+        viewModel.eventChannel.collect { event ->
+            when(event) {
+                is TourPlanResultEvent.NavigateBackWithMessage -> {
+                    resultNavigator.navigateBack(event.message)
+                }
+            }
+        }
+    }
+
+    Box(Modifier.fillMaxSize()){
+        Scaffold(
+            topBar = {
+                RTopAppBar(
+                    title = stringResource(id = R.string.detail_tour_plan),
+                    isBackButtonAvailable = true,
+                    actionIcon = Icons.Rounded.BookmarkBorder
+                )
+            }
+        ) {
+            TourPlanContent(
+                state = state,
+                onDateSelected = viewModel::onDateSelected
             )
         }
-    ) {
-        TourPlanContent(
-            state = state,
-            onDateSelected = viewModel::onDateSelected
+        RLoadingOverlay(
+            modifier = Modifier.align(Alignment.Center),
+            visible = state.isLoading
         )
     }
 }
@@ -115,6 +136,9 @@ fun AttractionList(
 
 @Composable
 fun ProgressLine(modifier: Modifier = Modifier, isDone: Boolean) {
+    val primaryColor = if (isDone) MaterialTheme.colors.primary else RacanaGray
+    val backgroundColor = MaterialTheme.colors.background
+
     Canvas(
         modifier = modifier
             .size(96.dp)
@@ -125,25 +149,44 @@ fun ProgressLine(modifier: Modifier = Modifier, isDone: Boolean) {
         val centerY = height / 2
 
         drawLine(
-            color = RacanaGray,
+            color = primaryColor,
             start = Offset(x = centerX, y = 0f),
             end = Offset(x = centerX, y = height),
             cap = StrokeCap.Round,
             strokeWidth = 6f,
             pathEffect = PathEffect.dashPathEffect(floatArrayOf(16f, 16f), 16f)
         )
-        drawCircle(
-            color = RacanaGray,
-            radius = 20f,
-            center = Offset(x = centerX, y = centerY),
-            style = Fill
-        )
-        if (!isDone) {
+
+        if (isDone) {
+            val size = 40f
             drawCircle(
-                color = RacanaWhite,
+                color = primaryColor,
+                radius = size,
+                center = Offset(x = centerX, y = centerY),
+            )
+            drawPath(
+                color = backgroundColor,
+                style = Stroke(
+                    width = size / 4,
+                    cap = StrokeCap.Round,
+                    join = StrokeJoin.Round
+                ),
+                path = Path().apply {
+                    moveTo(centerX - (size / 2), centerY - (size / 10))
+                    lineTo(centerX - (size / 10), centerY + (size / 3))
+                    lineTo(centerX + (size / 2), centerY - (size / 3))
+                },
+            )
+        } else {
+            drawCircle(
+                color = primaryColor,
+                radius = 20f,
+                center = Offset(x = centerX, y = centerY),
+            )
+            drawCircle(
+                color = backgroundColor,
                 radius = 14f,
                 center = Offset(x = centerX, y = centerY),
-                style = Fill
             )
         }
     }
@@ -257,6 +300,8 @@ fun DayHeaderContainer(
 @Composable
 fun TourPlanScreenPreview() {
     RacanaTheme {
-        TourPlanContent(state = TourPlanResultState(getDummyTourPlan()), onDateSelected = {})
+        TourPlanContent(
+            state = TourPlanResultState(tourPlan = getDummyTourPlan()),
+            onDateSelected = {})
     }
 }
