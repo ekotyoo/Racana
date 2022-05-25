@@ -45,6 +45,8 @@ import com.ekotyoo.racana.ui.main.createtourplan.model.CreateTourPlanState
 import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultArgument
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.result.NavResult
+import com.ramcosta.composedestinations.result.ResultRecipient
 import com.skydoves.landscapist.coil.CoilImage
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -53,10 +55,25 @@ import java.time.LocalDate
 @Composable
 fun CreateTourPlanScreen(
     navigator: DestinationsNavigator,
+    resultRecipient: ResultRecipient<TourPlanScreenDestination, String?>,
     viewModel: CreateTourPlanViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    
+    resultRecipient.onNavResult { result ->
+        when(result) {
+            is NavResult.Canceled -> {}
+            is NavResult.Value -> {
+                result.value?.let {
+                    scope.launch {
+                        snackbarHostState.showSnackbar(it)
+                    }
+                }
+            }
+        }
+    }
 
     LaunchedEffect(Unit) {
         viewModel.eventChannel.collect { event ->
@@ -112,7 +129,8 @@ fun CreateTourPlanContent(
     onCategorySelected: (Int) -> Unit,
     onSubmitClicked: () -> Unit,
     state: CreateTourPlanState,
-    snackbarHostState: SnackbarHostState = SnackbarHostState()
+    snackbarHostState: SnackbarHostState = SnackbarHostState(),
+    scaffoldState: ScaffoldState = rememberScaffoldState()
 ) {
     val modalBottomSheetState =
         rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
@@ -125,6 +143,7 @@ fun CreateTourPlanContent(
             sheetBackgroundColor = MaterialTheme.colors.primary,
         ) {
             Scaffold(
+                scaffoldState = scaffoldState,
                 topBar = {
                     RTopAppBar(
                         isBackButtonAvailable = true,
@@ -514,7 +533,7 @@ fun CreateTourPlanScreenPreview() {
             onDateSelected = {},
             onCategorySelected = {},
             onSubmitClicked = {},
-            state = CreateTourPlanState()
+            state = CreateTourPlanState(),
         )
     }
 }

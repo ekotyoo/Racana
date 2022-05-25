@@ -11,6 +11,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.BookmarkBorder
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -29,14 +30,14 @@ import com.ekotyoo.racana.core.composables.RFilledButton
 import com.ekotyoo.racana.core.composables.RLoadingOverlay
 import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.NavigationTransition
+import com.ekotyoo.racana.core.navigation.RootNavigator
 import com.ekotyoo.racana.core.theme.RacanaGray
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.ui.main.dashboard.model.TravelDestination
-import com.ekotyoo.racana.ui.main.tourplanresult.model.DailyItem
-import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultArgument
-import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultState
-import com.ekotyoo.racana.ui.main.tourplanresult.model.getDummyTourPlan
+import com.ekotyoo.racana.ui.main.tourplanresult.model.*
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.result.ResultBackNavigator
 import com.skydoves.landscapist.coil.CoilImage
 
 @Destination(
@@ -45,9 +46,20 @@ import com.skydoves.landscapist.coil.CoilImage
 )
 @Composable
 fun TourPlanScreen(
+    resultNavigator: ResultBackNavigator<String?>,
     viewModel: TourPlanResultViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.eventChannel.collect { event ->
+            when(event) {
+                is TourPlanResultEvent.NavigateBackWithMessage -> {
+                    resultNavigator.navigateBack(event.message)
+                }
+            }
+        }
+    }
 
     Box(Modifier.fillMaxSize()){
         Scaffold(

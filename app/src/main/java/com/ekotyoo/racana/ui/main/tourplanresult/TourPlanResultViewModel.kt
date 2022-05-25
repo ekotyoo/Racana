@@ -6,10 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.ekotyoo.racana.core.utils.Result
 import com.ekotyoo.racana.data.repository.TourPlanRepository
 import com.ekotyoo.racana.ui.destinations.TourPlanScreenDestination
-import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultArgument
 import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultEvent
 import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultState
-import com.ekotyoo.racana.ui.main.tourplanresult.model.getDummyTourPlan
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,7 +30,7 @@ class TourPlanResultViewModel @Inject constructor(
     val eventChannel = _eventChannel.receiveAsFlow()
 
     init {
-        val args  = TourPlanScreenDestination.argsFrom(savedStateHandle)
+        val args = TourPlanScreenDestination.argsFrom(savedStateHandle)
         _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
             val result = tourPlanRepository.getTourPlan(
@@ -43,12 +41,17 @@ class TourPlanResultViewModel @Inject constructor(
                 totalDestination = args.totalDestination,
                 category = args.category
             )
-            
-            when(result) {
-                is Result.Success -> _state.update { it.copy(isLoading = false, tourPlan = result.value) }
+
+            when (result) {
+                is Result.Success -> _state.update {
+                    it.copy(
+                        isLoading = false,
+                        tourPlan = result.value
+                    )
+                }
                 is Result.Error -> {
-                    // TODO: Show error snackbar 
                     _state.update { it.copy(isLoading = false) }
+                    _eventChannel.send(TourPlanResultEvent.NavigateBackWithMessage(message = result.message))
                 }
             }
         }
