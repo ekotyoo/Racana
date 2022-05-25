@@ -1,4 +1,4 @@
-package com.ekotyoo.racana.ui.home.tour_plan_list
+package com.ekotyoo.racana.ui.home.tourplanlist
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
@@ -19,8 +19,8 @@ import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.BottomNavGraph
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaTheme
-import com.ekotyoo.racana.ui.home.tour_plan_list.model.TourPlanList
-import com.ekotyoo.racana.ui.home.tour_plan_list.model.getDummyPlan
+import com.ekotyoo.racana.ui.home.tourplanlist.model.TourPlanList
+import com.ekotyoo.racana.ui.home.tourplanlist.model.getDummyPlan
 import com.ekotyoo.racana.ui.main.tourplanlist.TourPlanListViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -69,7 +69,7 @@ fun TourPlanListContent(
                     imageUrl = plan.imageUrl,
                     date = plan.date,
                     desciption =plan.description,
-                    onClick = {}
+                    onClick = { }
                 )
             }
         }

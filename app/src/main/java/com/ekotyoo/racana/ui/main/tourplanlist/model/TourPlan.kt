@@ -1,4 +1,4 @@
-package com.ekotyoo.racana.ui.home.tour_plan_list.model
+package com.ekotyoo.racana.ui.home.tourplanlist.model
 
 import com.ekotyoo.racana.ui.main.dashboard.model.TravelDestination
 import com.ekotyoo.racana.ui.main.dashboard.model.getDummyDestination
