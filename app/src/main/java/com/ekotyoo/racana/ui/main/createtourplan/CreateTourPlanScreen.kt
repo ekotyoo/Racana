@@ -42,6 +42,7 @@ import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.ui.destinations.TourPlanScreenDestination
 import com.ekotyoo.racana.ui.main.createtourplan.model.CreateTourPlanEvent
 import com.ekotyoo.racana.ui.main.createtourplan.model.CreateTourPlanState
+import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultArgument
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
@@ -54,14 +55,25 @@ fun CreateTourPlanScreen(
     navigator: DestinationsNavigator,
     viewModel: CreateTourPlanViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.collectAsState()
+    val state by viewModel.state.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
         viewModel.eventChannel.collect { event ->
             when (event) {
-                is CreateTourPlanEvent.CreateTourPlanSuccess -> {
-                    navigator.navigate(TourPlanScreenDestination)
+                is CreateTourPlanEvent.NavigateToTourPlanResult -> {
+                    navigator.navigate(
+                        TourPlanScreenDestination(
+                            TourPlanResultArgument(
+                                city = state.selectedCity,
+                                totalBudget = state.totalBudgetTextFieldValue.toLong(),
+                                startDate = state.selectedStartDate,
+                                endDate = state.selectedEndDate,
+                                totalDestination = state.totalDestinationValue,
+                                category = state.selectedCategory
+                            )
+                        )
+                    )
                 }
                 is CreateTourPlanEvent.SomeFieldsAreEmpty -> {
                     snackbarHostState.showSnackbar("Mohon masukkan data yang valid.")
@@ -81,7 +93,7 @@ fun CreateTourPlanScreen(
         onDateSelected = viewModel::onDateSelected,
         onSubmitClicked = viewModel::onSubmitClicked,
         onCategorySelected = viewModel::onCategorySelected,
-        state = state.value,
+        state = state,
         snackbarHostState = snackbarHostState
     )
 }

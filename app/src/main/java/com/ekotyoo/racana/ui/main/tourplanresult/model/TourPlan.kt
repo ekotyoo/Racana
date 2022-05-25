@@ -6,6 +6,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 data class TourPlan(
+    val id: String? = null,
     val title: String? = null,
     val dailyList: List<DailyItem>
 )
@@ -33,5 +34,5 @@ fun getDummyTourPlan(): TourPlan {
         )
     }
 
-    return TourPlan("Tour Plan Title", dailyItemList)
+    return TourPlan(title = "Tour Plan Title", dailyList = dailyItemList)
 }

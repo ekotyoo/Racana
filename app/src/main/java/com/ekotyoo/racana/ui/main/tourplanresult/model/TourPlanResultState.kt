@@ -3,6 +3,7 @@ package com.ekotyoo.racana.ui.main.tourplanresult.model
 import com.ekotyoo.racana.ui.main.dashboard.model.TravelDestination
 
 data class TourPlanResultState(
+    val isLoading: Boolean = false,
     val tourPlan: TourPlan? = null,
     val selectedDate: Int = 0
 ) {
@@ -10,5 +11,4 @@ data class TourPlanResultState(
         get() {
             return tourPlan?.dailyList?.get(selectedDate)?.destinationList ?: emptyList()
         }
-
 }

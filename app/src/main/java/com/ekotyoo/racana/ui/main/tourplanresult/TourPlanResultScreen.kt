@@ -13,6 +13,7 @@ import androidx.compose.material.icons.rounded.BookmarkBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
@@ -25,36 +26,47 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.RFilledButton
+import com.ekotyoo.racana.core.composables.RLoadingOverlay
 import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaGray
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.ui.main.dashboard.model.TravelDestination
 import com.ekotyoo.racana.ui.main.tourplanresult.model.DailyItem
+import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultArgument
 import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultState
 import com.ekotyoo.racana.ui.main.tourplanresult.model.getDummyTourPlan
 import com.ramcosta.composedestinations.annotation.Destination
 import com.skydoves.landscapist.coil.CoilImage
 
-@Destination(style = NavigationTransition::class)
+@Destination(
+    style = NavigationTransition::class,
+    navArgsDelegate = TourPlanResultArgument::class
+)
 @Composable
 fun TourPlanScreen(
-    viewModel: TourPlanResultViewModel = hiltViewModel()
+    viewModel: TourPlanResultViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
 
-    Scaffold(
-        topBar = {
-            RTopAppBar(
-                title = stringResource(id = R.string.detail_tour_plan),
-                isBackButtonAvailable = true,
-                actionIcon = Icons.Rounded.BookmarkBorder
+    Box(Modifier.fillMaxSize()){
+        Scaffold(
+            topBar = {
+                RTopAppBar(
+                    title = stringResource(id = R.string.detail_tour_plan),
+                    isBackButtonAvailable = true,
+                    actionIcon = Icons.Rounded.BookmarkBorder
+                )
+            }
+        ) {
+            TourPlanContent(
+                state = state,
+                onDateSelected = viewModel::onDateSelected
             )
         }
-    ) {
-        TourPlanContent(
-            state = state,
-            onDateSelected = viewModel::onDateSelected
+        RLoadingOverlay(
+            modifier = Modifier.align(Alignment.Center),
+            visible = state.isLoading
         )
     }
 }
@@ -276,6 +288,8 @@ fun DayHeaderContainer(
 @Composable
 fun TourPlanScreenPreview() {
     RacanaTheme {
-        TourPlanContent(state = TourPlanResultState(getDummyTourPlan()), onDateSelected = {})
+        TourPlanContent(
+            state = TourPlanResultState(tourPlan = getDummyTourPlan()),
+            onDateSelected = {})
     }
 }

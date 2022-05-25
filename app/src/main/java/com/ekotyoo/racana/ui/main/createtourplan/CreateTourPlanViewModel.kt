@@ -106,11 +106,8 @@ class CreateTourPlanViewModel @Inject constructor(
             }
             return
         }
-        _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-            delay(2000)
-            _state.update { it.copy(isLoading = false) }
-            _eventChannel.send(CreateTourPlanEvent.CreateTourPlanSuccess)
+            _eventChannel.send(CreateTourPlanEvent.NavigateToTourPlanResult)
         }
     }
 
