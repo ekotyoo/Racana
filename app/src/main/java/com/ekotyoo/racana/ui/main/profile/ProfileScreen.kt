@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Settings
@@ -19,11 +20,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
-import com.ekotyoo.racana.core.composables.ROutlinedButton
 import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.BottomNavGraph
 import com.ekotyoo.racana.core.navigation.NavigationTransition
@@ -95,34 +96,58 @@ fun ProfileContent(
 ) {
     Scaffold(
         topBar = {
-            RTopAppBar(title = stringResource(id = R.string.profile))
+            RTopAppBar(
+                title = stringResource(id = R.string.profile),
+                topAppBarColor = MaterialTheme.colors.primary,
+                textColor = MaterialTheme.colors.onPrimary,
+                modifier = Modifier.background(color = MaterialTheme.colors.primary)
+            )
         },
         content = {
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp, vertical = 32.dp),
+                    .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
-                CoilImage(
-                    contentDescription = null,
+                Box(
                     modifier = Modifier
-                        .size(120.dp)
-                        .clip(CircleShape),
-                    contentScale = ContentScale.Crop,
-                    imageModel = profilePictureUrl
-                )
-                Spacer(Modifier.height(16.dp))
-                Text(
-                    text = nameTextFieldValue,
-                    style = MaterialTheme.typography.subtitle1
-                )
-                Text(
-                    text = emailTextFieldValue,
-                    style = MaterialTheme.typography.body2,
-                    modifier = Modifier.padding(bottom = 32.dp)
-                )
+                        .background(MaterialTheme.colors.primary)
+                        .padding(16.dp)
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Top
+                    ) {
+                        CoilImage(
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(120.dp)
+                                .clip(CircleShape),
+                            contentScale = ContentScale.Crop,
+                            imageModel = profilePictureUrl
+                        )
+                        Spacer(Modifier.height(16.dp))
+                        Text(
+                            text = nameTextFieldValue,
+                            style = MaterialTheme.typography.subtitle1,
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colors.onPrimary
+                        )
+                        Text(
+                            text = emailTextFieldValue,
+                            style = MaterialTheme.typography.body2,
+                            color = MaterialTheme.colors.onPrimary,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(bottom = 32.dp)
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(8.dp))
                 ProfileButton(
                     text = stringResource(id = R.string.my_plan),
                     icon = Icons.Default.List,
@@ -138,10 +163,12 @@ fun ProfileContent(
                     icon = Icons.Default.Settings,
                     onClick = onSettingsButtonCLicked
                 )
-                Spacer(modifier = Modifier.weight(1f))
-                ROutlinedButton(
-                    placeholderString = stringResource(id = R.string.logout),
-                    onClick = onLogOutButtonClicked
+                Divider(color = MaterialTheme.colors.onBackground.copy(0.3f))
+                ProfileButton(
+                    text = stringResource(id = R.string.logout),
+                    icon = Icons.Default.ExitToApp,
+                    onClick = onLogOutButtonClicked,
+                    isWarning = true
                 )
             }
         }
@@ -153,14 +180,19 @@ fun ProfileButton(
     modifier: Modifier = Modifier,
     text: String,
     icon: ImageVector,
+    isWarning: Boolean = false,
     onClick: () -> Unit
 ) {
+    val textAndIconColor = if (isWarning) MaterialTheme.colors.error else MaterialTheme.colors.onBackground
+    val buttonColor = if (isWarning) MaterialTheme.colors.background else MaterialTheme.colors.secondary
+    val borderColor = if (isWarning) MaterialTheme.colors.error else MaterialTheme.colors.secondary
+
     Column(modifier) {
         Row(
             modifier = Modifier
                 .clip(MaterialTheme.shapes.small)
                 .clickable(onClick = onClick)
-                .padding(8.dp)
+                .padding(16.dp, 8.dp)
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -170,17 +202,14 @@ fun ProfileButton(
                 modifier = Modifier
                     .padding(end = 16.dp)
                     .size(36.dp)
-                    .border(
-                        width = 2.dp,
-                        color = MaterialTheme.colors.primary,
-                        shape = MaterialTheme.shapes.small
-                    )
                     .padding(4.dp),
-                tint = MaterialTheme.colors.primary
+                tint = textAndIconColor
             )
             Text(
                 text = text,
-                style = MaterialTheme.typography.body1
+                style = MaterialTheme.typography.body1,
+                color = textAndIconColor
+
             )
             Spacer(modifier = Modifier.weight(1f))
             Icon(
@@ -189,11 +218,16 @@ fun ProfileButton(
                 modifier = Modifier
                     .size(36.dp)
                     .background(
-                        color = MaterialTheme.colors.primary,
+                        color = buttonColor,
+                        shape = MaterialTheme.shapes.small
+                    )
+                    .border(
+                        width = 2.dp,
+                        color = borderColor,
                         shape = MaterialTheme.shapes.small
                     )
                     .padding(4.dp),
-                tint = MaterialTheme.colors.onPrimary,
+                tint = if(isWarning) MaterialTheme.colors.error else MaterialTheme.colors.onSecondary,
             )
         }
         Spacer(Modifier.height(8.dp))
