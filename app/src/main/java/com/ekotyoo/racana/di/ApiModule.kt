@@ -33,11 +33,11 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(): Retrofit =
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit
             .Builder()
             .baseUrl(BASE_URL)
-            .client(OkHttpClient())
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
