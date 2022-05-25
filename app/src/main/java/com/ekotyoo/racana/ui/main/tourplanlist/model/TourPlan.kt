@@ -1,9 +1,9 @@
 package com.ekotyoo.racana.ui.home.tour_plan_list.model
 
-import com.ekotyoo.racana.ui.home.dashboard.model.TravelDestination
-import com.ekotyoo.racana.ui.home.dashboard.model.getDummyDestination
+import com.ekotyoo.racana.ui.main.dashboard.model.TravelDestination
+import com.ekotyoo.racana.ui.main.dashboard.model.getDummyDestination
 
-data class TourPlan(
+data class TourPlanList(
     val name: String,
     val imageUrl: String,
     val date: String,
@@ -12,10 +12,11 @@ data class TourPlan(
 )
 
 fun getDummyPlan() = List(10) {
-    TourPlan(
+    TourPlanList(
         "plan $it",
         "https://picsum.photos/200/300",
         "10 Mei 2022 - 22 Mei 2023",
     "description $it",
-    getDummyDestination())
+        getDummyDestination()
+    )
 }
