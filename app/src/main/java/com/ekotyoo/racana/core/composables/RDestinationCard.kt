@@ -109,4 +109,4 @@ fun RDestinationCardPreview() {
     }
 }
 
-const val dummy_image = ""
+const val dummy_image = "https://picsum.photos/200"

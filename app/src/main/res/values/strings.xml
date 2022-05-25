@@ -50,4 +50,6 @@
     <string name="total_destination">Total Destinasi</string>
     <string name="destination_category">Kategori Destinasi</string>
     <string name="save">Simpan</string>
+    <string name="detail_tour_plan">Detail Tour Plan</string>
+    <string name="change_tour_plan">Ganti Tour Plan</string>
 </resources>

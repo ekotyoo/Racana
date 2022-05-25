@@ -15,8 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.ui.NavGraphs
-import com.ekotyoo.racana.ui.destinations.HomeScreenDestination
 import com.ekotyoo.racana.ui.destinations.LoginScreenDestination
+import com.ekotyoo.racana.ui.destinations.MainScreenDestination
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
                         when (event) {
                             is MainActivityEvent.Unauthenticated -> {
                                 mainNavController.navigate(LoginScreenDestination) {
-                                    popUpTo(HomeScreenDestination) {
+                                    popUpTo(MainScreenDestination) {
                                         inclusive = true
                                     }
                                     launchSingleTop = true
