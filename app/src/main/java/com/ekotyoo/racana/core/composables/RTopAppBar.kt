@@ -1,21 +1,18 @@
 package com.ekotyoo.racana.core.composables
 
 import android.content.res.Configuration
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ChevronLeft
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -25,22 +22,24 @@ import com.ekotyoo.racana.core.theme.RacanaTheme
 @Composable
 fun RTopAppBar(
     title: String,
+    colors: TopAppBarColors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = MaterialTheme.colors.surface),
     isBackButtonAvailable: Boolean = false,
     onBackButtonCLicked: () -> Unit = {},
     actionIcon: ImageVector? = null,
     onActionsButtonClicked: () -> Unit = {}
 ) {
     CenterAlignedTopAppBar(
-        modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+        colors = colors,
         title = {
             Text(
                 text = title,
-                style = MaterialTheme.typography.h5,
+                style = MaterialTheme.typography.h6,
             )
         },
         navigationIcon = {
             if (isBackButtonAvailable) {
                 RIconButton(
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
                     iconModifier = Modifier.size(36.dp),
                     imageVector = Icons.Rounded.ChevronLeft,
                     contentDescription = stringResource(id = R.string.back_button),
@@ -48,12 +47,10 @@ fun RTopAppBar(
                 )
             }
         },
-        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = MaterialTheme.colors.background
-        ),
         actions = {
             if (actionIcon != null) {
                 RIconButton(
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
                     imageVector = actionIcon,
                     contentDescription = null,
                     onClick = onActionsButtonClicked
@@ -76,6 +73,6 @@ fun RTopAppBar(
 @Composable
 fun RTopAppBarPreview() {
     RacanaTheme {
-        RTopAppBar(title = "Preview", isBackButtonAvailable = true, {})
+        RTopAppBar(title = "Preview", isBackButtonAvailable = true, onBackButtonCLicked =  {})
     }
 }

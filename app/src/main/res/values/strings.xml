@@ -52,4 +52,5 @@
     <string name="save">Simpan</string>
     <string name="detail_tour_plan">Detail Tour Plan</string>
     <string name="change_tour_plan">Ganti Tour Plan</string>
+    <string name="open_map_view">Tampilan Peta</string>
 </resources>

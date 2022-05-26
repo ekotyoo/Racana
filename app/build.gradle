@@ -5,6 +5,7 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -72,6 +73,10 @@ dependencies {
     // Raam Costa Compose Destination
     ksp 'io.github.raamcosta.compose-destinations:ksp:1.5.5-beta'
     implementation 'io.github.raamcosta.compose-destinations:animations-core:1.5.5-beta'
+
+    // Maps Compose
+    implementation  "com.google.maps.android:maps-compose:2.1.1"
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
 
     // Material 3
     implementation "androidx.compose.material3:material3:1.0.0-alpha12"

@@ -41,7 +41,7 @@ class TourPlanRepository @Inject constructor(private val tourPlanApi: TourPlanAp
                     val date =
                         Instant.ofEpochMilli(item.date).atZone(ZoneId.systemDefault()).toLocalDate()
                     val destinationList =
-                        item.destinations.map { TravelDestination(it.name, it.imageUrl, it.name) }
+                        item.destinations.map { TravelDestination(it.name, it.imageUrl, it.name, it.lat, it.long) }
                     dailyList.add(
                         DailyItem(
                             number = i + 1,

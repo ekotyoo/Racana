@@ -1,13 +1,18 @@
 package com.ekotyoo.racana.ui.main.dashboard.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import kotlin.random.Random
 
+@Parcelize
 data class TravelDestination(
     val name: String,
     val imageUrl: String,
     val location: String,
+    val lat: Double? = null,
+    val lon: Double? = null,
     val isDone: Boolean = false,
-)
+) : Parcelable
 
 fun getDummyDestination(): List<TravelDestination> {
     val destinationList = mutableListOf<TravelDestination>()
@@ -16,10 +21,10 @@ fun getDummyDestination(): List<TravelDestination> {
         val randomBoolean = Random.nextBoolean()
         destinationList.add(
             TravelDestination(
-                "Name $randomNumber",
-                "https://picsum.photos/200/300",
-                "Location $randomNumber",
-                randomBoolean
+                name = "Name $randomNumber",
+                imageUrl = "https://picsum.photos/200/300",
+                location = "Location $randomNumber",
+                isDone = randomBoolean
             )
         )
     }

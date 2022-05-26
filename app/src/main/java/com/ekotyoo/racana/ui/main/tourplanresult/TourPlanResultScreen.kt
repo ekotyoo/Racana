@@ -30,10 +30,11 @@ import com.ekotyoo.racana.core.composables.RFilledButton
 import com.ekotyoo.racana.core.composables.RLoadingOverlay
 import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.NavigationTransition
-import com.ekotyoo.racana.core.navigation.RootNavigator
 import com.ekotyoo.racana.core.theme.RacanaGray
 import com.ekotyoo.racana.core.theme.RacanaTheme
+import com.ekotyoo.racana.ui.destinations.TourPlanMapScreenDestination
 import com.ekotyoo.racana.ui.main.dashboard.model.TravelDestination
+import com.ekotyoo.racana.ui.main.tourplanmap.model.TourPlanMapArgument
 import com.ekotyoo.racana.ui.main.tourplanresult.model.*
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -46,6 +47,7 @@ import com.skydoves.landscapist.coil.CoilImage
 )
 @Composable
 fun TourPlanScreen(
+    navigator: DestinationsNavigator,
     resultNavigator: ResultBackNavigator<String?>,
     viewModel: TourPlanResultViewModel = hiltViewModel(),
 ) {
@@ -53,7 +55,7 @@ fun TourPlanScreen(
 
     LaunchedEffect(Unit) {
         viewModel.eventChannel.collect { event ->
-            when(event) {
+            when (event) {
                 is TourPlanResultEvent.NavigateBackWithMessage -> {
                     resultNavigator.navigateBack(event.message)
                 }
@@ -61,7 +63,7 @@ fun TourPlanScreen(
         }
     }
 
-    Box(Modifier.fillMaxSize()){
+    Box(Modifier.fillMaxSize()) {
         Scaffold(
             topBar = {
                 RTopAppBar(
@@ -73,7 +75,12 @@ fun TourPlanScreen(
         ) {
             TourPlanContent(
                 state = state,
-                onDateSelected = viewModel::onDateSelected
+                onDateSelected = viewModel::onDateSelected,
+                onOpenMapButtonClicked = {
+                    val tourPlan = state.tourPlan
+                    val destination = TourPlanMapScreenDestination(TourPlanMapArgument(tourPlan))
+                    navigator.navigate(destination)
+                }
             )
         }
         RLoadingOverlay(
@@ -87,7 +94,8 @@ fun TourPlanScreen(
 fun TourPlanContent(
     modifier: Modifier = Modifier,
     state: TourPlanResultState,
-    onDateSelected: (Int) -> Unit
+    onDateSelected: (Int) -> Unit,
+    onOpenMapButtonClicked: () -> Unit,
 ) {
     Column(modifier.fillMaxSize()) {
         Spacer(Modifier.height(32.dp))
@@ -106,6 +114,12 @@ fun TourPlanContent(
             modifier = Modifier.padding(horizontal = 16.dp),
             placeholderString = stringResource(id = R.string.change_tour_plan),
             onClick = {}
+        )
+        Spacer(Modifier.height(16.dp))
+        RFilledButton(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            placeholderString = stringResource(id = R.string.open_map_view),
+            onClick = onOpenMapButtonClicked
         )
         Spacer(Modifier.height(32.dp))
     }
@@ -302,6 +316,8 @@ fun TourPlanScreenPreview() {
     RacanaTheme {
         TourPlanContent(
             state = TourPlanResultState(tourPlan = getDummyTourPlan()),
-            onDateSelected = {})
+            onDateSelected = {},
+            onOpenMapButtonClicked = {}
+        )
     }
 }
