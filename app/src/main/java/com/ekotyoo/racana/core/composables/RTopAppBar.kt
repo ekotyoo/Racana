@@ -8,10 +8,10 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ChevronLeft
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,19 +21,23 @@ import com.ekotyoo.racana.core.theme.RacanaTheme
 
 @Composable
 fun RTopAppBar(
+    modifier: Modifier = Modifier,
     title: String,
-    colors: TopAppBarColors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = MaterialTheme.colors.surface),
+    topAppBarColor: Color = MaterialTheme.colors.surface,
+    textColor: Color = MaterialTheme.colors.onSurface,
     isBackButtonAvailable: Boolean = false,
     onBackButtonCLicked: () -> Unit = {},
     actionIcon: ImageVector? = null,
-    onActionsButtonClicked: () -> Unit = {}
+    onActionsButtonClicked: () -> Unit = {},
 ) {
     CenterAlignedTopAppBar(
-        colors = colors,
+        modifier = modifier,
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = topAppBarColor),
         title = {
             Text(
                 text = title,
                 style = MaterialTheme.typography.h6,
+                color = textColor
             )
         },
         navigationIcon = {
@@ -58,21 +62,4 @@ fun RTopAppBar(
             }
         }
     )
-}
-
-@Preview(
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-    name = "Light Mode Preview",
-)
-@Preview(
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    name = "Dark Mode Preview",
-)
-@Composable
-fun RTopAppBarPreview() {
-    RacanaTheme {
-        RTopAppBar(title = "Preview", isBackButtonAvailable = true, onBackButtonCLicked =  {})
-    }
 }
