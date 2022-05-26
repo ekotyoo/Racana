@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,7 +24,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.RIconButton
 import com.ekotyoo.racana.core.navigation.NavigationTransition
+import com.ekotyoo.racana.core.theme.RacanaGreen
 import com.ekotyoo.racana.core.theme.RacanaTheme
+import com.ekotyoo.racana.core.utils.BitmapUtil
 import com.ekotyoo.racana.ui.main.tourplanmap.model.TourPlanMapArgument
 import com.ekotyoo.racana.ui.main.tourplanmap.model.TourPlanMapState
 import com.ekotyoo.racana.ui.main.tourplanresult.DayHeaderSection
@@ -43,7 +46,7 @@ import com.skydoves.landscapist.coil.CoilImage
 @Composable
 fun TourPlanMapScreen(
     navigator: DestinationsNavigator,
-    viewModel: TourPlanMapViewModel = hiltViewModel()
+    viewModel: TourPlanMapViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -60,13 +63,13 @@ fun TourPlanMapScreen(
 fun TourPlanMapContent(
     state: TourPlanMapState,
     onBackButtonClicked: () -> Unit,
-    onDateSelected: (Int) -> Unit
+    onDateSelected: (Int) -> Unit,
 ) {
     val destinationList = state.selectedDestinationList
     val cameraPositionState = rememberCameraPositionState {
         destinationList.first().let {
             if (it.lat != null && it.lon != null) {
-                position = CameraPosition.fromLatLngZoom(LatLng(it.lat, it.lon), 15f)
+                position = CameraPosition.fromLatLngZoom(LatLng(it.lat, it.lon), 10f)
             }
         }
     }
@@ -74,7 +77,7 @@ fun TourPlanMapContent(
     LaunchedEffect(state.selectedDate) {
         destinationList.first().let {
             if (it.lat != null && it.lon != null) {
-                cameraPositionState.move(CameraUpdateFactory.newLatLng(LatLng(it.lat, it.lon)))
+                cameraPositionState.animate(CameraUpdateFactory.newLatLng(LatLng(it.lat, it.lon)))
             }
         }
     }
@@ -87,19 +90,24 @@ fun TourPlanMapContent(
                     cameraPositionState = cameraPositionState
                 ) {
                     val points = mutableListOf<LatLng>()
-                    destinationList.forEach { destination ->
+                    destinationList.forEachIndexed { i, destination ->
                         if (destination.lat != null && destination.lon != null) {
                             val position = LatLng(destination.lat, destination.lon)
                             points.add(position)
                             Marker(
-                                state = MarkerState(position)
+                                state = MarkerState(position),
+                                icon = BitmapUtil.markerBitmapDescriptor(context = LocalContext.current,
+                                    R.drawable.map_marker,
+                                    i + 1
+                                ),
+                                title = destination.name
                             )
                         }
                     }
                     Polyline(
                         points = points,
                         width = 20f,
-                        color = MaterialTheme.colors.primary,
+                        color = RacanaGreen,
                         startCap = RoundCap(),
                         endCap = RoundCap()
                     )
