@@ -5,7 +5,8 @@ import com.ekotyoo.racana.ui.main.dashboard.model.TravelDestination
 data class TourPlanResultState(
     val isLoading: Boolean = false,
     val tourPlan: TourPlan? = null,
-    val selectedDate: Int = 0
+    val selectedDate: Int = 0,
+    val tourPlanResultArgs: TourPlanResultArgument? = null
 ) {
     val selectedDestinationList: List<TravelDestination>
         get() {

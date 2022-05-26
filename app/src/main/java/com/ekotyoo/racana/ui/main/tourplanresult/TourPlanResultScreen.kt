@@ -1,6 +1,8 @@
 package com.ekotyoo.racana.ui.main.tourplanresult
 
 import android.content.res.Configuration
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -69,6 +71,7 @@ fun TourPlanScreen(
                 RTopAppBar(
                     title = stringResource(id = R.string.detail_tour_plan),
                     isBackButtonAvailable = true,
+                    onBackButtonCLicked = { navigator.navigateUp() },
                     actionIcon = Icons.Rounded.BookmarkBorder
                 )
             }
@@ -80,7 +83,8 @@ fun TourPlanScreen(
                     val tourPlan = state.tourPlan
                     val destination = TourPlanMapScreenDestination(TourPlanMapArgument(tourPlan))
                     navigator.navigate(destination)
-                }
+                },
+                onChangePlanButtonClicked = viewModel::onChangePlanButtonClicked
             )
         }
         RLoadingOverlay(
@@ -90,12 +94,14 @@ fun TourPlanScreen(
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun TourPlanContent(
     modifier: Modifier = Modifier,
     state: TourPlanResultState,
     onDateSelected: (Int) -> Unit,
     onOpenMapButtonClicked: () -> Unit,
+    onChangePlanButtonClicked: () -> Unit
 ) {
     Column(modifier.fillMaxSize()) {
         Spacer(Modifier.height(32.dp))
@@ -105,15 +111,17 @@ fun TourPlanContent(
             onItemSelected = onDateSelected
         )
         Spacer(Modifier.height(16.dp))
-        AttractionList(
-            modifier = Modifier.weight(1f),
-            destinationList = state.selectedDestinationList
-        )
+        AnimatedContent(modifier = Modifier.weight(1f),
+            targetState = state.selectedDestinationList) { targetList ->
+            AttractionList(
+                destinationList = targetList
+            )
+        }
         Spacer(Modifier.height(16.dp))
         RFilledButton(
             modifier = Modifier.padding(horizontal = 16.dp),
             placeholderString = stringResource(id = R.string.change_tour_plan),
-            onClick = {}
+            onClick = onChangePlanButtonClicked
         )
         Spacer(Modifier.height(16.dp))
         RFilledButton(
@@ -213,7 +221,7 @@ fun AttractionCard(
     imageUrl: String,
     title: String,
     location: String,
-    isDone: Boolean
+    isDone: Boolean,
 ) {
     Row {
         ProgressLine(isDone = isDone)
@@ -255,7 +263,7 @@ fun AttractionCard(
 fun DayHeaderSection(
     dailyList: List<DailyItem>?,
     selectedDate: Int,
-    onItemSelected: (Int) -> Unit
+    onItemSelected: (Int) -> Unit,
 ) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
@@ -283,7 +291,7 @@ fun DayHeaderContainer(
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
     dayTitle: String,
-    date: String
+    date: String,
 ) {
     Column(
         modifier
@@ -317,7 +325,8 @@ fun TourPlanScreenPreview() {
         TourPlanContent(
             state = TourPlanResultState(tourPlan = getDummyTourPlan()),
             onDateSelected = {},
-            onOpenMapButtonClicked = {}
+            onOpenMapButtonClicked = {},
+            onChangePlanButtonClicked = {}
         )
     }
 }

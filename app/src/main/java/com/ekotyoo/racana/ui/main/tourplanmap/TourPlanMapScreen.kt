@@ -1,31 +1,31 @@
 package com.ekotyoo.racana.ui.main.tourplanmap
 
-import android.content.res.Configuration
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ChevronLeft
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.material.icons.rounded.Place
+import androidx.compose.material3.Icon
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.ExperimentalTextApi
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.RIconButton
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaGreen
-import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.core.utils.BitmapUtil
 import com.ekotyoo.racana.ui.main.tourplanmap.model.TourPlanMapArgument
 import com.ekotyoo.racana.ui.main.tourplanmap.model.TourPlanMapState
@@ -59,6 +59,7 @@ fun TourPlanMapScreen(
     )
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun TourPlanMapContent(
     state: TourPlanMapState,
@@ -124,13 +125,17 @@ fun TourPlanMapContent(
                         onItemSelected = onDateSelected
                     )
                     Spacer(Modifier.height(16.dp))
-                    LazyRow(
-                        contentPadding = PaddingValues(horizontal = 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp)
-                    ) {
-                        items(destinationList.size) {
-                            val item = destinationList[it]
-                            MapDestinationCard(imageUrl = item.imageUrl)
+                    AnimatedContent(targetState = destinationList) { targetList ->
+                        LazyRow(
+                            contentPadding = PaddingValues(horizontal = 16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            items(targetList.size) {
+                                val item = targetList[it]
+                                MapDestinationCard(imageUrl = item.imageUrl,
+                                    title = item.name,
+                                    location = item.location)
+                            }
                         }
                     }
                     Spacer(Modifier.height(32.dp))
@@ -147,8 +152,14 @@ fun TourPlanMapContent(
     }
 }
 
+@OptIn(ExperimentalTextApi::class)
 @Composable
-fun MapDestinationCard(modifier: Modifier = Modifier, imageUrl: String) {
+fun MapDestinationCard(
+    modifier: Modifier = Modifier,
+    imageUrl: String,
+    title: String,
+    location: String,
+) {
     Card(modifier.size(width = 320.dp, height = 140.dp)) {
         Row {
             CoilImage(
@@ -161,23 +172,37 @@ fun MapDestinationCard(modifier: Modifier = Modifier, imageUrl: String) {
                 previewPlaceholder = R.drawable.ic_launcher_background,
                 contentDescription = null,
             )
+            Spacer(Modifier.width(8.dp))
+            Column(
+                modifier = Modifier.padding(8.dp)
+            ) {
+                Text(text = title, style = MaterialTheme.typography.subtitle1)
+                CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            modifier = Modifier.size(16.dp),
+                            imageVector = Icons.Rounded.Place,
+                            contentDescription = null,
+                            tint = MaterialTheme.colors.primary
+                        )
+                        Spacer(Modifier.width(4.dp))
+                        Text(
+                            text = location,
+                            style = MaterialTheme.typography.body2.copy(
+                                platformStyle = PlatformTextStyle(
+                                    includeFontPadding = false
+                                ),
+                                lineHeightStyle = LineHeightStyle(
+                                    alignment = LineHeightStyle.Alignment.Center,
+                                    trim = LineHeightStyle.Trim.None
+                                )
+                            )
+                        )
+                    }
+                }
+            }
         }
-    }
-}
-
-@Preview(
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-    name = "Light Mode Preview"
-)
-@Preview(
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    name = "Dark Mode Preview"
-)
-@Composable
-fun MapDestinationCardPreview() {
-    RacanaTheme {
-        MapDestinationCard(imageUrl = "")
     }
 }
