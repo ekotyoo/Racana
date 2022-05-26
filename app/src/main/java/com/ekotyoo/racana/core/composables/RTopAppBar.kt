@@ -1,6 +1,5 @@
 package com.ekotyoo.racana.core.composables
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
@@ -14,10 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ekotyoo.racana.R
-import com.ekotyoo.racana.core.theme.RacanaTheme
 
 @Composable
 fun RTopAppBar(
@@ -31,7 +28,7 @@ fun RTopAppBar(
     onActionsButtonClicked: () -> Unit = {},
 ) {
     CenterAlignedTopAppBar(
-        modifier = modifier,
+        modifier = modifier.padding(horizontal = 12.dp, vertical = 8.dp),
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = topAppBarColor),
         title = {
             Text(
@@ -43,7 +40,6 @@ fun RTopAppBar(
         navigationIcon = {
             if (isBackButtonAvailable) {
                 RIconButton(
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
                     iconModifier = Modifier.size(36.dp),
                     imageVector = Icons.Rounded.ChevronLeft,
                     contentDescription = stringResource(id = R.string.back_button),
@@ -54,7 +50,6 @@ fun RTopAppBar(
         actions = {
             if (actionIcon != null) {
                 RIconButton(
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
                     imageVector = actionIcon,
                     contentDescription = null,
                     onClick = onActionsButtonClicked

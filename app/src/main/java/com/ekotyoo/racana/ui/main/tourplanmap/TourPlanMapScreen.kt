@@ -3,8 +3,10 @@ package com.ekotyoo.racana.ui.main.tourplanmap
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ChevronLeft
@@ -20,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
@@ -38,6 +41,7 @@ import com.google.maps.android.compose.*
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
+import kotlinx.coroutines.launch
 
 @Destination(
     style = NavigationTransition::class,
@@ -67,6 +71,9 @@ fun TourPlanMapContent(
     onDateSelected: (Int) -> Unit,
 ) {
     val destinationList = state.selectedDestinationList
+    val scrollState = rememberLazyListState()
+    val scope = rememberCoroutineScope()
+
     val cameraPositionState = rememberCameraPositionState {
         destinationList.first().let {
             if (it.lat != null && it.lon != null) {
@@ -76,6 +83,7 @@ fun TourPlanMapContent(
     }
 
     LaunchedEffect(state.selectedDate) {
+        scrollState.scrollToItem(0)
         destinationList.first().let {
             if (it.lat != null && it.lon != null) {
                 cameraPositionState.animate(CameraUpdateFactory.newLatLng(LatLng(it.lat, it.lon)))
@@ -101,6 +109,10 @@ fun TourPlanMapContent(
                                     R.drawable.map_marker,
                                     i + 1
                                 ),
+                                onClick = {
+                                    scope.launch { scrollState.animateScrollToItem(i) }
+                                    false
+                                },
                                 title = destination.name
                             )
                         }
@@ -127,14 +139,26 @@ fun TourPlanMapContent(
                     Spacer(Modifier.height(16.dp))
                     AnimatedContent(targetState = destinationList) { targetList ->
                         LazyRow(
+                            state = scrollState,
                             contentPadding = PaddingValues(horizontal = 16.dp),
                             horizontalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
                             items(targetList.size) {
                                 val item = targetList[it]
-                                MapDestinationCard(imageUrl = item.imageUrl,
+                                MapDestinationCard(
+                                    imageUrl = item.imageUrl,
                                     title = item.name,
-                                    location = item.location)
+                                    location = item.location,
+                                    onClick = {
+                                        if (item.lat != null && item.lon != null) {
+                                            scope.launch {
+                                                cameraPositionState.animate(CameraUpdateFactory.newLatLng(
+                                                    LatLng(item.lat, item.lon))
+                                                )
+                                            }
+                                        }
+                                    }
+                                )
                             }
                         }
                     }
@@ -159,8 +183,14 @@ fun MapDestinationCard(
     imageUrl: String,
     title: String,
     location: String,
+    onClick: () -> Unit = {},
 ) {
-    Card(modifier.size(width = 320.dp, height = 140.dp)) {
+    Card(
+        modifier = modifier
+            .size(width = 320.dp, height = 140.dp)
+            .clip(MaterialTheme.shapes.medium)
+            .clickable(onClick = onClick)
+    ) {
         Row {
             CoilImage(
                 modifier = Modifier
@@ -172,11 +202,13 @@ fun MapDestinationCard(
                 previewPlaceholder = R.drawable.ic_launcher_background,
                 contentDescription = null,
             )
-            Spacer(Modifier.width(8.dp))
             Column(
                 modifier = Modifier.padding(8.dp)
             ) {
-                Text(text = title, style = MaterialTheme.typography.subtitle1)
+                Text(text = title,
+                    style = MaterialTheme.typography.subtitle1,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1)
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically
