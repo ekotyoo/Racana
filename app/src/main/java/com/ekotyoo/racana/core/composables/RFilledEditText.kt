@@ -20,22 +20,27 @@ fun RFilledEditText(
     value: String,
     placeholderString: String = "",
     leadingIcon: @Composable (() -> Unit)? = null,
-    trailingIcon: @Composable (() -> Unit)? = {},
+    trailingIcon: @Composable (() -> Unit)? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions(),
+    keyboardActions: KeyboardActions? = null,
     onValueChange: (String) -> Unit = {},
     readOnly: Boolean = false,
+    singleLine: Boolean = true,
+    maxLines: Int = 1,
     onSearch: () -> Unit = {},
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    isError: Boolean = false
+    isError: Boolean = false,
 ) {
     val focusManager = LocalFocusManager.current
     val color =
-        animateColorAsState(targetValue = if (isError) MaterialTheme.colors.error else RacanaGray.copy(alpha = .25f))
+        animateColorAsState(targetValue = if (isError) MaterialTheme.colors.error else RacanaGray.copy(
+            alpha = .25f))
 
     OutlinedTextField(
-        singleLine = true,
+        singleLine = singleLine,
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
+        maxLines = maxLines,
         readOnly = readOnly,
         modifier = modifier
             .background(
@@ -49,7 +54,7 @@ fun RFilledEditText(
             unfocusedBorderColor = color.value
         ),
         keyboardOptions = keyboardOptions,
-        keyboardActions = KeyboardActions(
+        keyboardActions = keyboardActions ?: KeyboardActions(
             onDone = {
                 focusManager.clearFocus()
             },
@@ -61,6 +66,6 @@ fun RFilledEditText(
         onValueChange = onValueChange,
         visualTransformation = visualTransformation,
         placeholder = { Text(text = placeholderString, style = MaterialTheme.typography.body1) },
-        isError = isError
+        isError = isError,
     )
 }

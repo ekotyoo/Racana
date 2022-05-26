@@ -77,6 +77,28 @@ class TourPlanResultViewModel @Inject constructor(
         _state.update { it.copy(isLoading = false) }
     }
 
+    fun onTitleTextFieldValueChange(value: String) {
+        _state.update { it.copy(titleTextFieldValue = value) }
+        val errorMessage = if (value.isNotEmpty()) {
+            when {
+                value.length > 30 -> OVER_30_CHARS
+                else -> null
+            }
+        } else null
+        _state.update { it.copy(titleTextFieldErrorValue = errorMessage) }
+    }
+
+    fun onDescriptionTextFieldValueChange(value: String) {
+        _state.update { it.copy(descriptionTextFieldValue = value) }
+        val errorMessage = if (value.isNotEmpty()) {
+            when {
+                value.length > 200 -> OVER_200_CHARS
+                else -> null
+            }
+        } else null
+        _state.update { it.copy(descriptionTextFieldErrorValue = errorMessage) }
+    }
+
     fun onDateSelected(value: Int) {
         _state.update { it.copy(selectedDate = value) }
     }
@@ -94,5 +116,16 @@ class TourPlanResultViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    fun onSaveTourPlanSubmitted() {
+        viewModelScope.launch {
+            _eventChannel.send(TourPlanResultEvent.SaveTourPlanSuccess)
+        }
+    }
+
+    companion object {
+        const val OVER_200_CHARS = "over_200_chars"
+        const val OVER_30_CHARS = "over_30_chars"
     }
 }
