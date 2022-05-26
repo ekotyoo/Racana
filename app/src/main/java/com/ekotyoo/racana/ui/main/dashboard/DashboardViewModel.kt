@@ -2,10 +2,10 @@ package com.ekotyoo.racana.ui.main.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ekotyoo.racana.data.model.getDummyDestination
 import com.ekotyoo.racana.data.repository.AuthRepository
 import com.ekotyoo.racana.ui.main.dashboard.model.DashboardEvent
 import com.ekotyoo.racana.ui.main.dashboard.model.DashboardState
-import com.ekotyoo.racana.ui.main.dashboard.model.getDummyDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow

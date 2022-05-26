@@ -1,5 +1,5 @@
-package com.ekotyoo.racana.ui.home.tourplanlist.model
+package com.ekotyoo.racana.ui.main.tourplanlist.model
 
 data class TourPlanListState(
-    val tourPlanItem: List<TourPlanList>
+    val tourPlanItem: List<TourPlanListItem>
 )

@@ -2,9 +2,9 @@ package com.ekotyoo.racana.data.repository
 
 import com.ekotyoo.racana.core.utils.Result
 import com.ekotyoo.racana.data.datasource.remote.TourPlanApi
-import com.ekotyoo.racana.ui.main.dashboard.model.TravelDestination
-import com.ekotyoo.racana.ui.main.tourplanresult.model.DailyItem
-import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlan
+import com.ekotyoo.racana.data.model.DailyItem
+import com.ekotyoo.racana.data.model.TourPlan
+import com.ekotyoo.racana.data.model.TravelDestination
 import dagger.hilt.android.scopes.ViewModelScoped
 import retrofit2.HttpException
 import timber.log.Timber

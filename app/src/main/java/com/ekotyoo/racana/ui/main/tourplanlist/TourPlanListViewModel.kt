@@ -1,9 +1,9 @@
 package com.ekotyoo.racana.ui.main.tourplanlist
 
 import androidx.lifecycle.ViewModel
-import com.ekotyoo.racana.ui.home.tourplanlist.model.TourPlanListEvent
-import com.ekotyoo.racana.ui.home.tourplanlist.model.TourPlanListState
-import com.ekotyoo.racana.ui.home.tourplanlist.model.getDummyPlan
+import com.ekotyoo.racana.ui.main.tourplanlist.model.TourPlanListEvent
+import com.ekotyoo.racana.ui.main.tourplanlist.model.TourPlanListState
+import com.ekotyoo.racana.ui.main.tourplanlist.model.getDummyPlan
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow

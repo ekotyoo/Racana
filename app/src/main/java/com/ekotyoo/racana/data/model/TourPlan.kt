@@ -1,8 +1,6 @@
-package com.ekotyoo.racana.ui.main.tourplanresult.model
+package com.ekotyoo.racana.data.model
 
 import android.os.Parcelable
-import com.ekotyoo.racana.ui.main.dashboard.model.TravelDestination
-import com.ekotyoo.racana.ui.main.dashboard.model.getDummyDestination
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

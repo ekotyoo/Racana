@@ -1,6 +1,7 @@
 package com.ekotyoo.racana.ui.main.tourplanresult.model
 
-import com.ekotyoo.racana.ui.main.dashboard.model.TravelDestination
+import com.ekotyoo.racana.data.model.TourPlan
+import com.ekotyoo.racana.data.model.TravelDestination
 
 data class TourPlanResultState(
     val isLoading: Boolean = false,

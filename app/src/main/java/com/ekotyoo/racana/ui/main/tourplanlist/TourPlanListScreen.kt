@@ -19,8 +19,8 @@ import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.BottomNavGraph
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaTheme
-import com.ekotyoo.racana.ui.home.tourplanlist.model.TourPlanList
-import com.ekotyoo.racana.ui.home.tourplanlist.model.getDummyPlan
+import com.ekotyoo.racana.ui.main.tourplanlist.model.TourPlanListItem
+import com.ekotyoo.racana.ui.main.tourplanlist.model.getDummyPlan
 import com.ekotyoo.racana.ui.main.tourplanlist.TourPlanListViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -51,7 +51,7 @@ fun TourPlanListScreen(
 
 @Composable
 fun TourPlanListContent(
-    planList: List<TourPlanList>
+    planList: List<TourPlanListItem>
 ) {
     Scaffold(topBar = {
         RTopAppBar(title = stringResource(id = R.string.tour_plan_list))

@@ -34,8 +34,10 @@ import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaGray
 import com.ekotyoo.racana.core.theme.RacanaTheme
+import com.ekotyoo.racana.data.model.DailyItem
+import com.ekotyoo.racana.data.model.TravelDestination
+import com.ekotyoo.racana.data.model.getDummyTourPlan
 import com.ekotyoo.racana.ui.destinations.TourPlanMapScreenDestination
-import com.ekotyoo.racana.ui.main.dashboard.model.TravelDestination
 import com.ekotyoo.racana.ui.main.tourplanmap.model.TourPlanMapArgument
 import com.ekotyoo.racana.ui.main.tourplanresult.model.*
 import com.ramcosta.composedestinations.annotation.Destination
@@ -101,7 +103,7 @@ fun TourPlanContent(
     state: TourPlanResultState,
     onDateSelected: (Int) -> Unit,
     onOpenMapButtonClicked: () -> Unit,
-    onChangePlanButtonClicked: () -> Unit
+    onChangePlanButtonClicked: () -> Unit,
 ) {
     Column(modifier.fillMaxSize()) {
         Spacer(Modifier.height(32.dp))

@@ -1,4 +1,4 @@
-package com.ekotyoo.racana.ui.main.dashboard.model
+package com.ekotyoo.racana.data.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
