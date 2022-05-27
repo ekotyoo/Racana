@@ -7,6 +7,7 @@ import com.ekotyoo.racana.data.datasource.local.database.entity.TourPlanEntity
 import com.ekotyoo.racana.data.datasource.local.database.entity.TourPlanWithDateAndDestinations
 import com.ekotyoo.racana.data.model.TourPlan
 import kotlinx.coroutines.flow.Flow
+import java.time.ZoneId
 
 @Dao
 interface TourPlanDao {
@@ -19,14 +20,22 @@ interface TourPlanDao {
     suspend fun insertTourPlanWithDateAndDestinations(
         tourPlan: TourPlan,
         title: String,
-        description: String
+        description: String,
     ) {
         val tourPlanId = insertTourPlan(TourPlanEntity(title = title, description = description))
 
-        val tourPlanDateIdList = insertTourPlanDate(tourPlan.dailyList.map {
-            TourPlanDateEntity(dateMillis = it.date.toEpochDay(),
-                tourPlanId = tourPlanId)
-        })
+        val tourPlanDateIdList =
+            insertTourPlanDate(
+                tourPlan.dailyList.map {
+                    TourPlanDateEntity(
+                        dateMillis = it.date
+                            .atStartOfDay(ZoneId.systemDefault())
+                            .toInstant()
+                            .toEpochMilli(),
+                        tourPlanId = tourPlanId
+                    )
+                }
+            )
 
         tourPlanDateIdList.forEachIndexed { index, id ->
             val destinations = tourPlan.dailyList[index].destinationList.map {

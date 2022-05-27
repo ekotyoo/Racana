@@ -8,7 +8,7 @@ data class TourPlanResponse(
 	val dailyList: List<DailyListItem>,
 
 	@field:SerializedName("id")
-	val id: String
+	val id: Long
 )
 
 data class DailyListItem(
@@ -32,7 +32,7 @@ data class DestinationsItem(
 	val name: String,
 
 	@field:SerializedName("id")
-	val id: String,
+	val id: Long,
 
 	@field:SerializedName("expense")
 	val expense: Int,

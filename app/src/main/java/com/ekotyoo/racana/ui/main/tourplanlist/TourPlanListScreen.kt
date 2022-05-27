@@ -1,4 +1,4 @@
-package com.ekotyoo.racana.ui.home.tourplanlist
+package com.ekotyoo.racana.ui.main.tourplanlist
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
@@ -19,9 +19,7 @@ import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.BottomNavGraph
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaTheme
-import com.ekotyoo.racana.ui.main.tourplanlist.model.TourPlanListItem
-import com.ekotyoo.racana.ui.main.tourplanlist.model.getDummyPlan
-import com.ekotyoo.racana.ui.main.tourplanlist.TourPlanListViewModel
+import com.ekotyoo.racana.data.model.TourPlan
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -30,7 +28,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Composable
 fun TourPlanListScreen(
     navigator: DestinationsNavigator,
-    viewModel: TourPlanListViewModel = hiltViewModel()
+    viewModel: TourPlanListViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -44,14 +42,14 @@ fun TourPlanListScreen(
 
     Box(Modifier.fillMaxSize()) {
         TourPlanListContent(
-            planList = state.tourPlanItem
+            tourPlanList = state.tourPlanList
         )
     }
 }
 
 @Composable
 fun TourPlanListContent(
-    planList: List<TourPlanListItem>
+    tourPlanList: List<TourPlan>,
 ) {
     Scaffold(topBar = {
         RTopAppBar(title = stringResource(id = R.string.tour_plan_list))
@@ -59,17 +57,18 @@ fun TourPlanListContent(
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 16.dp),
+            contentPadding = PaddingValues(vertical = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            items(planList.size) { index ->
-                val plan = planList[index]
-                Spacer(modifier = Modifier.height(16.dp))
+            items(tourPlanList.size) { index ->
+                val plan = tourPlanList[index]
                 RPlanCard(
-                    name = plan.name,
+                    name = plan.title ?: "Untitled",
                     imageUrl = plan.imageUrl,
-                    date = plan.date,
-                    desciption =plan.description,
-                    onClick = { }
+                    date = plan.period,
+                    desciption = plan.description ?: "-",
+                    onClick = {}
                 )
             }
         }
@@ -89,6 +88,6 @@ fun TourPlanListContent(
 @Composable
 fun RPlanCardPreview() {
     RacanaTheme {
-        TourPlanListContent(planList = getDummyPlan())
+        TourPlanListContent(tourPlanList = emptyList())
     }
 }

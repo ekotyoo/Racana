@@ -27,8 +27,6 @@ data class CreateTourPlanState(
             if (selectedEndDate == null) return ""
             return selectedEndDate.format(DATE_FORMAT)
         }
-
-    companion object {
-        private val DATE_FORMAT = DateTimeFormatter.ofPattern("dd MMM yy")
-    }
 }
+
+val DATE_FORMAT: DateTimeFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy")
