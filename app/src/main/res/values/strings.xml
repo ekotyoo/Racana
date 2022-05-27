@@ -56,4 +56,5 @@
     <string name="title">Judul</string>
     <string name="description">Deskripsi</string>
     <string name="save_tour_plan">Simpan Tour Plan</string>
+    <string name="tour_plan_empty">Tour Plan Anda Kosong</string>
 </resources>
