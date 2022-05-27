@@ -2,15 +2,16 @@ package com.ekotyoo.racana.data.repository
 
 import com.ekotyoo.racana.core.utils.Result
 import com.ekotyoo.racana.data.datasource.local.database.TourPlanDao
+import com.ekotyoo.racana.data.datasource.local.database.entity.toModel
 import com.ekotyoo.racana.data.datasource.remote.TourPlanApi
 import com.ekotyoo.racana.data.model.DailyItem
 import com.ekotyoo.racana.data.model.TourPlan
 import com.ekotyoo.racana.data.model.TravelDestination
 import dagger.hilt.android.scopes.ViewModelScoped
+import kotlinx.coroutines.flow.map
 import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException
-import java.lang.Exception
 import java.time.Instant
 import java.time.ZoneId
 import javax.inject.Inject
@@ -20,7 +21,9 @@ class TourPlanRepository @Inject constructor(
     private val tourPlanApi: TourPlanApi,
     private val tourPlanDao: TourPlanDao,
 ) {
-    fun getSavedTourPlan() = tourPlanDao.getAllTourPlan()
+    fun getSavedTourPlan() = tourPlanDao.getAllTourPlan().map { list ->
+        list.map { it.toModel() }
+    }
 
     suspend fun saveTourPlan(tourPlan: TourPlan, title: String, description: String): Result<Unit> {
         return try {

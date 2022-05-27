@@ -7,11 +7,16 @@ import java.time.format.DateTimeFormatter
 
 @Parcelize
 data class TourPlan(
-    val id: String? = null,
+    val id: Long? = null,
     val title: String? = null,
     val description: String? = null,
     val dailyList: List<DailyItem>
-) : Parcelable
+) : Parcelable {
+    val imageUrl: String
+        get() = dailyList.first().destinationList.first().imageUrl
+    val period: String
+        get() = dailyList.first().dateFormatted + " - " + dailyList.last().dateFormatted
+}
 
 @Parcelize
 data class DailyItem(
