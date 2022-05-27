@@ -8,6 +8,7 @@ import com.ekotyoo.racana.ui.main.tourplanlist.model.TourPlanListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,4 +27,10 @@ class TourPlanListViewModel @Inject constructor(
 
     private val _eventChannel = Channel<TourPlanListEvent>()
     val eventChannel = _eventChannel.receiveAsFlow()
+
+    fun onTourPlanClicked() {
+        viewModelScope.launch {
+            _eventChannel.send(TourPlanListEvent.NavigateToTourPlanResult)
+        }
+    }
 }

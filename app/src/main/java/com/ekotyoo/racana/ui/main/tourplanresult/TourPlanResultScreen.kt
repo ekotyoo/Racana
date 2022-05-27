@@ -40,6 +40,7 @@ import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.data.model.DailyItem
 import com.ekotyoo.racana.data.model.TravelDestination
 import com.ekotyoo.racana.data.model.getDummyTourPlan
+import com.ekotyoo.racana.ui.destinations.DestinationDetailScreenDestination
 import com.ekotyoo.racana.ui.destinations.TourPlanMapScreenDestination
 import com.ekotyoo.racana.ui.main.tourplanmap.model.TourPlanMapArgument
 import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultArgument
@@ -81,6 +82,9 @@ fun TourPlanScreen(
                 is TourPlanResultEvent.SaveTourPlanError -> {
                     modalBottomSheetState.hide()
                     snackbarHostState.showSnackbar("Berhasil menyimpan tour plan")
+                }
+                is TourPlanResultEvent.NavigateToDestinationDetail -> {
+                    navigator.navigate(DestinationDetailScreenDestination)
                 }
             }
         }
@@ -125,7 +129,8 @@ fun TourPlanScreen(
                             TourPlanMapScreenDestination(TourPlanMapArgument(tourPlan))
                         navigator.navigate(destination)
                     },
-                    onChangePlanButtonClicked = viewModel::onChangePlanButtonClicked
+                    onChangePlanButtonClicked = viewModel::onChangePlanButtonClicked,
+                    onDestinationClicked = viewModel::navigateToDestinationDetail
                 )
             }
             RLoadingOverlay(
@@ -145,6 +150,7 @@ fun TourPlanContent(
     onDateSelected: (Int) -> Unit,
     onOpenMapButtonClicked: () -> Unit,
     onChangePlanButtonClicked: () -> Unit,
+    onDestinationClicked: () -> Unit
 ) {
     Column(modifier.fillMaxSize()) {
         Spacer(Modifier.height(32.dp))
@@ -157,7 +163,8 @@ fun TourPlanContent(
         AnimatedContent(modifier = Modifier.weight(1f),
             targetState = state.selectedDestinationList) { targetList ->
             AttractionList(
-                destinationList = targetList
+                destinationList = targetList,
+                onClick = onDestinationClicked
             )
         }
         Spacer(Modifier.height(16.dp))
@@ -180,6 +187,7 @@ fun TourPlanContent(
 fun AttractionList(
     modifier: Modifier = Modifier,
     destinationList: List<TravelDestination>?,
+    onClick: () -> Unit
 ) {
     val items = destinationList ?: emptyList()
 
@@ -193,7 +201,8 @@ fun AttractionList(
                 imageUrl = destination.imageUrl,
                 title = destination.name,
                 location = destination.location,
-                isDone = destination.isDone
+                isDone = destination.isDone,
+                onClick = onClick
             )
         }
     }
@@ -265,6 +274,7 @@ fun AttractionCard(
     title: String,
     location: String,
     isDone: Boolean,
+    onClick: () -> Unit
 ) {
     Row {
         ProgressLine(isDone = isDone)
@@ -272,7 +282,7 @@ fun AttractionCard(
             modifier = modifier
                 .padding(vertical = 8.dp)
                 .height(80.dp),
-            onClick = {},
+            onClick = onClick,
             elevation = 8.dp,
             shape = MaterialTheme.shapes.small
         ) {
@@ -480,7 +490,8 @@ fun TourPlanScreenPreview() {
             state = TourPlanResultState(tourPlan = getDummyTourPlan()),
             onDateSelected = {},
             onOpenMapButtonClicked = {},
-            onChangePlanButtonClicked = {}
+            onChangePlanButtonClicked = {},
+            onDestinationClicked = {}
         )
     }
 }

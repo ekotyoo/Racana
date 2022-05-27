@@ -123,6 +123,12 @@ class TourPlanResultViewModel @Inject constructor(
         saveTourPlan()
     }
 
+    fun navigateToDestinationDetail() {
+        viewModelScope.launch {
+            _eventChannel.send(TourPlanResultEvent.NavigateToDestinationDetail)
+        }
+    }
+
     private fun saveTourPlan() {
         if (_state.value.tourPlan != null) {
             val tourPlan = _state.value.tourPlan
