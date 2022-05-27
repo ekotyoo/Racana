@@ -40,13 +40,16 @@ import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.data.model.DailyItem
 import com.ekotyoo.racana.data.model.TravelDestination
 import com.ekotyoo.racana.data.model.getDummyTourPlan
+import com.ekotyoo.racana.ui.destinations.MainScreenDestination
 import com.ekotyoo.racana.ui.destinations.TourPlanMapScreenDestination
+import com.ekotyoo.racana.ui.main.Action
 import com.ekotyoo.racana.ui.main.tourplanmap.model.TourPlanMapArgument
 import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultArgument
 import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultEvent
 import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.popUpTo
 import com.ramcosta.composedestinations.result.ResultBackNavigator
 import com.skydoves.landscapist.coil.CoilImage
 import kotlinx.coroutines.launch
@@ -76,11 +79,15 @@ fun TourPlanScreen(
                 }
                 is TourPlanResultEvent.SaveTourPlanSuccess -> {
                     modalBottomSheetState.hide()
-                    snackbarHostState.showSnackbar("Berhasil menyimpan tour plan")
+                    navigator.navigate(MainScreenDestination(Action.SAVE_TOUR_PLAN_SUCCESS)) {
+                        popUpTo(MainScreenDestination) {
+                            inclusive = true
+                        }
+                    }
                 }
                 is TourPlanResultEvent.SaveTourPlanError -> {
                     modalBottomSheetState.hide()
-                    snackbarHostState.showSnackbar("Berhasil menyimpan tour plan")
+                    snackbarHostState.showSnackbar("Gagal menyimpan tour plan")
                 }
             }
         }
@@ -403,10 +410,7 @@ fun SaveTourPlanSheetContent(
                 onValueChange = onDescriptionValueChange,
                 maxLines = 5,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                keyboardActions = KeyboardActions(onDone = {
-                    focusManager.clearFocus()
-                    }
-                )
+                keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
             )
             AnimatedVisibility(isDescriptionError) {
                 Text(
