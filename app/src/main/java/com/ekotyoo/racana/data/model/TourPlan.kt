@@ -1,16 +1,16 @@
 package com.ekotyoo.racana.data.model
 
 import android.os.Parcelable
+import com.ekotyoo.racana.ui.main.createtourplan.model.DATE_FORMAT
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 @Parcelize
 data class TourPlan(
     val id: Long? = null,
     val title: String? = null,
     val description: String? = null,
-    val dailyList: List<DailyItem>
+    val dailyList: List<DailyItem>,
 ) : Parcelable {
     val imageUrl: String
         get() = dailyList.first().destinationList.first().imageUrl
@@ -22,11 +22,11 @@ data class TourPlan(
 data class DailyItem(
     val number: Int,
     val date: LocalDate,
-    val destinationList: List<TravelDestination>
+    val destinationList: List<TravelDestination>,
 ) : Parcelable {
     val dateFormatted: String
         get() {
-            return date.format(DateTimeFormatter.ofPattern("dd/MM/yy"))
+            return date.format(DATE_FORMAT)
         }
 }
 
