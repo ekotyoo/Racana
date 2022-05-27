@@ -25,9 +25,7 @@ data class DailyItem(
     val destinationList: List<TravelDestination>,
 ) : Parcelable {
     val dateFormatted: String
-        get() {
-            return date.format(DATE_FORMAT)
-        }
+        get() = date.format(DATE_FORMAT)
 }
 
 fun getDummyTourPlan(): TourPlan {

@@ -52,7 +52,7 @@ fun LoginScreen(
         viewModel.eventChannel.collect { event ->
             when (event) {
                 is LoginEvent.LoginSuccess -> {
-                    navigator.navigate(MainScreenDestination) {
+                    navigator.navigate(MainScreenDestination()) {
                         popUpTo(LoginScreenDestination) {
                             inclusive = true
                         }

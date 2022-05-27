@@ -3,16 +3,17 @@ package com.ekotyoo.racana.ui.main.tourplanlist
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.airbnb.lottie.compose.*
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.RPlanCard
 import com.ekotyoo.racana.core.composables.RTopAppBar
@@ -20,6 +21,7 @@ import com.ekotyoo.racana.core.navigation.BottomNavGraph
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.data.model.TourPlan
+import com.ekotyoo.racana.ui.main.tourplanlist.model.TourPlanListEvent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -35,15 +37,43 @@ fun TourPlanListScreen(
     LaunchedEffect(Unit) {
         viewModel.eventChannel.collect { event ->
             when (event) {
-
+                TourPlanListEvent.TourPlanClicked -> {}
             }
         }
     }
+
+    val tourPlanEmpty by derivedStateOf { state.tourPlanList.isEmpty() }
 
     Box(Modifier.fillMaxSize()) {
         TourPlanListContent(
             tourPlanList = state.tourPlanList
         )
+        if (tourPlanEmpty) {
+            TourPlanListEmpty(modifier = Modifier.align(Alignment.Center))
+        }
+    }
+}
+
+@Composable
+fun TourPlanListEmpty(modifier: Modifier = Modifier) {
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.location))
+    val progress by animateLottieCompositionAsState(
+        composition,
+        iterations = LottieConstants.IterateForever
+    )
+    Column(
+        modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        LottieAnimation(
+            modifier = Modifier
+                .size(160.dp)
+                .align(Alignment.CenterHorizontally),
+            composition = composition,
+            progress = progress
+        )
+        Text(text = stringResource(id = R.string.tour_plan_empty),
+            style = MaterialTheme.typography.body1)
     }
 }
 
