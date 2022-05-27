@@ -41,13 +41,16 @@ import com.ekotyoo.racana.data.model.DailyItem
 import com.ekotyoo.racana.data.model.TravelDestination
 import com.ekotyoo.racana.data.model.getDummyTourPlan
 import com.ekotyoo.racana.ui.destinations.DestinationDetailScreenDestination
+import com.ekotyoo.racana.ui.destinations.MainScreenDestination
 import com.ekotyoo.racana.ui.destinations.TourPlanMapScreenDestination
+import com.ekotyoo.racana.ui.main.Action
 import com.ekotyoo.racana.ui.main.tourplanmap.model.TourPlanMapArgument
 import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultArgument
 import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultEvent
 import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.popUpTo
 import com.ramcosta.composedestinations.result.ResultBackNavigator
 import com.skydoves.landscapist.coil.CoilImage
 import kotlinx.coroutines.launch
@@ -77,7 +80,12 @@ fun TourPlanScreen(
                 }
                 is TourPlanResultEvent.SaveTourPlanSuccess -> {
                     modalBottomSheetState.hide()
-                    snackbarHostState.showSnackbar("Berhasil menyimpan tour plan")
+                    navigator.navigate(MainScreenDestination(
+                        Action.SAVE_TOUR_PLAN_SUCCESS)) {
+                        popUpTo(MainScreenDestination) {
+                            inclusive = true
+                        }
+                    }
                 }
                 is TourPlanResultEvent.SaveTourPlanError -> {
                     modalBottomSheetState.hide()
