@@ -4,6 +4,7 @@ buildscript {
         hilt_version = '2.42'
         retrofit_version = '2.9.0'
         okhttp_version = '4.9.3'
+        room_version = "2.4.2"
     }
     dependencies {
         classpath 'com.google.dagger:hilt-android-gradle-plugin:2.42'

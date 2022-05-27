@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -119,8 +120,26 @@ class TourPlanResultViewModel @Inject constructor(
     }
 
     fun onSaveTourPlanSubmitted() {
-        viewModelScope.launch {
-            _eventChannel.send(TourPlanResultEvent.SaveTourPlanSuccess)
+        saveTourPlan()
+    }
+
+    private fun saveTourPlan() {
+        if (_state.value.tourPlan != null) {
+            val tourPlan = _state.value.tourPlan
+            viewModelScope.launch {
+                when (tourPlanRepository.saveTourPlan(tourPlan!!,
+                    _state.value.titleTextFieldValue,
+                    _state.value.descriptionTextFieldValue)) {
+                    is Result.Error -> {
+                        _eventChannel.send(TourPlanResultEvent.SaveTourPlanError)
+                        Timber.d("Save Tour Plan Gagal")
+                    }
+                    is Result.Success -> {
+                        _eventChannel.send(TourPlanResultEvent.SaveTourPlanSuccess)
+                        Timber.d("Save Tour Plan Berhasil")
+                    }
+                }
+            }
         }
     }
 

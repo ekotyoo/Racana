@@ -64,6 +64,7 @@ fun TourPlanScreen(
 ) {
     val state by viewModel.state.collectAsState()
     val scope = rememberCoroutineScope()
+    val snackbarHostState = SnackbarHostState()
     val modalBottomSheetState =
         rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
 
@@ -75,6 +76,11 @@ fun TourPlanScreen(
                 }
                 is TourPlanResultEvent.SaveTourPlanSuccess -> {
                     modalBottomSheetState.hide()
+                    snackbarHostState.showSnackbar("Berhasil menyimpan tour plan")
+                }
+                is TourPlanResultEvent.SaveTourPlanError -> {
+                    modalBottomSheetState.hide()
+                    snackbarHostState.showSnackbar("Berhasil menyimpan tour plan")
                 }
             }
         }
@@ -126,6 +132,7 @@ fun TourPlanScreen(
                 modifier = Modifier.align(Alignment.Center),
                 visible = state.isLoading
             )
+            SnackbarHost(hostState = snackbarHostState)
         }
     }
 }
@@ -398,8 +405,8 @@ fun SaveTourPlanSheetContent(
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(onDone = {
                     focusManager.clearFocus()
-                    onSubmit()
-                })
+                    }
+                )
             )
             AnimatedVisibility(isDescriptionError) {
                 Text(

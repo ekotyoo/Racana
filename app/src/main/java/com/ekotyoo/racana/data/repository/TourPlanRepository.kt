@@ -1,6 +1,7 @@
 package com.ekotyoo.racana.data.repository
 
 import com.ekotyoo.racana.core.utils.Result
+import com.ekotyoo.racana.data.datasource.local.database.TourPlanDao
 import com.ekotyoo.racana.data.datasource.remote.TourPlanApi
 import com.ekotyoo.racana.data.model.DailyItem
 import com.ekotyoo.racana.data.model.TourPlan
@@ -9,12 +10,27 @@ import dagger.hilt.android.scopes.ViewModelScoped
 import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException
+import java.lang.Exception
 import java.time.Instant
 import java.time.ZoneId
 import javax.inject.Inject
 
 @ViewModelScoped
-class TourPlanRepository @Inject constructor(private val tourPlanApi: TourPlanApi) {
+class TourPlanRepository @Inject constructor(
+    private val tourPlanApi: TourPlanApi,
+    private val tourPlanDao: TourPlanDao,
+) {
+    fun getSavedTourPlan() = tourPlanDao.getAllTourPlan()
+
+    suspend fun saveTourPlan(tourPlan: TourPlan, title: String, description: String): Result<Unit> {
+        return try {
+            tourPlanDao.insertTourPlanWithDateAndDestinations(tourPlan, title, description)
+            Result.Success(Unit)
+        } catch (e: Exception) {
+            Timber.d(e.message)
+            Result.Error(message = e.message.toString(), e)
+        }
+    }
 
     suspend fun getTourPlan(
         city: String,
@@ -22,7 +38,7 @@ class TourPlanRepository @Inject constructor(private val tourPlanApi: TourPlanAp
         startDateInMillis: Long?,
         endDateInMillis: Long?,
         totalDestination: Int,
-        category: Int
+        category: Int,
     ): Result<TourPlan> {
         try {
             val response = tourPlanApi.getTourPlan(
@@ -41,7 +57,13 @@ class TourPlanRepository @Inject constructor(private val tourPlanApi: TourPlanAp
                     val date =
                         Instant.ofEpochMilli(item.date).atZone(ZoneId.systemDefault()).toLocalDate()
                     val destinationList =
-                        item.destinations.map { TravelDestination(it.name, it.imageUrl, it.name, it.lat, it.long) }
+                        item.destinations.map {
+                            TravelDestination(it.name,
+                                it.imageUrl,
+                                it.name,
+                                it.lat,
+                                it.long)
+                        }
                     dailyList.add(
                         DailyItem(
                             number = i + 1,

@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter
 data class TourPlan(
     val id: String? = null,
     val title: String? = null,
+    val description: String? = null,
     val dailyList: List<DailyItem>
 ) : Parcelable
 

@@ -12,6 +12,7 @@ data class TravelDestination(
     val lat: Double? = null,
     val lon: Double? = null,
     val isDone: Boolean = false,
+    val expense: Long = 0
 ) : Parcelable
 
 fun getDummyDestination(): List<TravelDestination> {
