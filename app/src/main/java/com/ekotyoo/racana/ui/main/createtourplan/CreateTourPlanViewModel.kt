@@ -3,14 +3,13 @@ package com.ekotyoo.racana.ui.main.createtourplan
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ekotyoo.racana.core.utils.AssetLoader
+import com.ekotyoo.racana.core.utils.AssetUtil
 import com.ekotyoo.racana.ui.main.createtourplan.model.CreateTourPlanEvent
 import com.ekotyoo.racana.ui.main.createtourplan.model.CreateTourPlanState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -35,7 +34,7 @@ class CreateTourPlanViewModel @Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                _state.update { it.copy(cities = AssetLoader.getCityProvince(context)) }
+                _state.update { it.copy(cities = AssetUtil.getCityProvince(context)) }
             } catch (e: IOException) {
                 Timber.d(e.message)
             }

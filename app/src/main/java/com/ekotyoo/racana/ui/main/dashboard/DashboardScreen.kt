@@ -33,8 +33,8 @@ import com.ekotyoo.racana.core.composables.RImageCard
 import com.ekotyoo.racana.core.navigation.BottomNavGraph
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaTheme
-import com.ekotyoo.racana.ui.main.dashboard.model.TravelDestination
-import com.ekotyoo.racana.ui.main.dashboard.model.getDummyDestination
+import com.ekotyoo.racana.data.model.TravelDestination
+import com.ekotyoo.racana.data.model.getDummyDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
@@ -44,7 +44,7 @@ import com.skydoves.landscapist.coil.CoilImage
 @Composable
 fun DashboardScreen(
     navigator: DestinationsNavigator,
-    viewModel: DashboardViewModel = hiltViewModel()
+    viewModel: DashboardViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
     val lazyListState = rememberLazyListState()
@@ -70,7 +70,7 @@ fun DashboardScreen(
 @Composable
 fun DashboardContent(
     destinations: List<TravelDestination>,
-    lazyListState: LazyListState
+    lazyListState: LazyListState,
 ) {
     LazyColumn(
         state = lazyListState,
@@ -114,7 +114,7 @@ fun DashboardContent(
 fun DashboardAppBar(
     userName: String? = null,
     expanded: Boolean = false,
-    onSearchClicked: () -> Unit
+    onSearchClicked: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -192,7 +192,7 @@ fun DashboardSection(
     modifier: Modifier = Modifier,
     title: String,
     seeAllVisible: Boolean = true,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Column(modifier) {
         Row(
@@ -222,7 +222,7 @@ fun DashboardSection(
 fun DestinationRow(
     modifier: Modifier = Modifier,
     destinations: List<TravelDestination>,
-    onItemClick: (TravelDestination) -> Unit
+    onItemClick: (TravelDestination) -> Unit,
 ) {
     LazyRow(
         modifier = modifier,

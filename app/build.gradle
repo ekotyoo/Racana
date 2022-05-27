@@ -5,6 +5,7 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -66,12 +67,21 @@ dependencies {
     // To use java.time.* in API level < 26
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
+    // Room
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
     // Compose Lifecycle ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1"
 
     // Raam Costa Compose Destination
     ksp 'io.github.raamcosta.compose-destinations:ksp:1.5.5-beta'
     implementation 'io.github.raamcosta.compose-destinations:animations-core:1.5.5-beta'
+
+    // Maps Compose
+    implementation  "com.google.maps.android:maps-compose:2.1.1"
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
 
     // Material 3
     implementation "androidx.compose.material3:material3:1.0.0-alpha12"

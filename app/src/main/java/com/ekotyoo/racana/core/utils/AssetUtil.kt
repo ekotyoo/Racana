@@ -5,7 +5,7 @@ import com.ekotyoo.racana.data.datasource.local.CityWithProvinceItem
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-object AssetLoader {
+object AssetUtil {
     fun getCityProvince(context: Context): List<Pair<String, String>> {
         val jsonString = context.assets.open("citiesprovince.json").bufferedReader()
             .use { it.readText() }
