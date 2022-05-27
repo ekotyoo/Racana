@@ -149,7 +149,7 @@ fun ProfileContent(
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 ProfileButton(
-                    text = stringResource(id = R.string.my_plan),
+                    text = stringResource(id = R.string.upgrade_premium),
                     icon = Icons.Default.List,
                     onClick = onMyPlanButtonCLicked
                 )
