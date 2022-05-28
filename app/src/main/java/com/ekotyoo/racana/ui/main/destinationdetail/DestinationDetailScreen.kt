@@ -100,7 +100,7 @@ fun DestinationDetailContent(
             CoilImage(
                 contentDescription = null,
                 modifier = Modifier
-                    .height((SCREEN_WIDTH * 1.13).dp)
+                    .aspectRatio(0.88f)
                     .clip(MaterialTheme.shapes.medium),
                 contentScale = ContentScale.Crop,
                 imageModel = destination.imageUrl,
@@ -147,7 +147,7 @@ fun DestinationDetailContent(
             Spacer(modifier = Modifier.height(15.dp))
             GoogleMap(
                 modifier = Modifier
-                    .height((SCREEN_WIDTH * 0.53).dp)
+                    .aspectRatio(1.88f)
                     .fillMaxWidth()
                     .clip(MaterialTheme.shapes.medium),
                 cameraPositionState = rememberCameraPositionState {
