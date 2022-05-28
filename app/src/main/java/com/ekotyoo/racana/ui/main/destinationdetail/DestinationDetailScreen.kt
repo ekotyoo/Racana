@@ -1,7 +1,6 @@
 package com.ekotyoo.racana.ui.main.destinationdetail
 
 import android.content.res.Configuration
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -11,7 +10,6 @@ import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,10 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,9 +29,7 @@ import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetail
-import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetailEvent
 import com.ekotyoo.racana.ui.main.destinationdetail.model.getDummyDetailDestination
-import com.ekotyoo.racana.ui.main.profile.ProfileContent
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
@@ -46,7 +39,6 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
-import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.*
 
@@ -81,7 +73,6 @@ fun DestinationDetailContent(
     onBackButtonClicked: () -> Unit,
     onFavoriteButtonClicked: () -> Unit
 ) {
-    val SCREEN_WIDTH = LocalConfiguration.current.screenWidthDp
     Scaffold(
         topBar = {
             RTopAppBar(
