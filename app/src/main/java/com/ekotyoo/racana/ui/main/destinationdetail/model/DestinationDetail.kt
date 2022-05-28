@@ -20,7 +20,7 @@ fun getDummyDetailDestination(): DestinationDetail {
         address = "Jln. Tepi Pantai",
         ticketPrice = "10000000",
         description = "Pantainya sangat bagus",
-        lat = 0.0,
-        lon = 0.0
+        lat = 1.35,
+        lon = 103.87
     )
 }

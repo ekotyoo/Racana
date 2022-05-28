@@ -22,12 +22,6 @@ class DestinationDetailViewModel @Inject constructor() : ViewModel(){
     private val _eventChannel = Channel<DestinationDetailEvent>()
     val eventChannel = _eventChannel.receiveAsFlow()
 
-    fun onBackButtonPressed() {
-        viewModelScope.launch {
-            _eventChannel.send(DestinationDetailEvent.OnBackButtonPressed)
-        }
-    }
-
     fun onFavoriteButtonClicked() {
         viewModelScope.launch {
             _eventChannel.send(DestinationDetailEvent.OnFavoriteButtonClicked)

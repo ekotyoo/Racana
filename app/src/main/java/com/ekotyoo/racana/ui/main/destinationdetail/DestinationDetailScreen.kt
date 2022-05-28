@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,6 +37,12 @@ import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetail
 import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetailEvent
 import com.ekotyoo.racana.ui.main.destinationdetail.model.getDummyDetailDestination
 import com.ekotyoo.racana.ui.main.profile.ProfileContent
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
+import com.google.maps.android.compose.rememberCameraPositionState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
@@ -54,9 +61,7 @@ fun DestinationDetailScreen(
     LaunchedEffect(Unit) {
         viewModel.eventChannel.collect { event ->
             when (event) {
-                is DestinationDetailEvent.OnBackButtonPressed -> {
 
-                }
             }
         }
     }
@@ -64,7 +69,7 @@ fun DestinationDetailScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         DestinationDetailContent(
             destination = state.destination,
-            onBackButtonClicked = viewModel::onBackButtonPressed,
+            onBackButtonClicked = { navigator.popBackStack() },
             onFavoriteButtonClicked = viewModel::onFavoriteButtonClicked
         )
     }
@@ -76,6 +81,7 @@ fun DestinationDetailContent(
     onBackButtonClicked: () -> Unit,
     onFavoriteButtonClicked: () -> Unit
 ) {
+    val SCREEN_WIDTH = LocalConfiguration.current.screenWidthDp
     Scaffold(
         topBar = {
             RTopAppBar(
@@ -94,7 +100,7 @@ fun DestinationDetailContent(
             CoilImage(
                 contentDescription = null,
                 modifier = Modifier
-                    .height(371.dp)
+                    .height((SCREEN_WIDTH * 1.13).dp)
                     .clip(MaterialTheme.shapes.medium),
                 contentScale = ContentScale.Crop,
                 imageModel = destination.imageUrl,
@@ -138,7 +144,23 @@ fun DestinationDetailContent(
                 text = destination.description,
                 style = MaterialTheme.typography.caption
             )
-
+            Spacer(modifier = Modifier.height(15.dp))
+            GoogleMap(
+                modifier = Modifier
+                    .height((SCREEN_WIDTH * 0.53).dp)
+                    .fillMaxWidth()
+                    .clip(MaterialTheme.shapes.medium),
+                cameraPositionState = rememberCameraPositionState {
+                    destination.let {
+                        position = CameraPosition.fromLatLngZoom(LatLng(it.lat, it.lon), 14f)
+                    }
+                }
+           ) {
+                Marker(
+                    state = MarkerState(LatLng(destination.lat, destination.lon))
+                )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
