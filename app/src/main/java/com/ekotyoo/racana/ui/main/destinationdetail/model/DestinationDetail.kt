@@ -18,7 +18,7 @@ fun getDummyDetailDestination(): DestinationDetail {
         imageUrl = "https://picsum.photos/200/300",
         openCloseTime = "08.00-22.00",
         address = "Jln. Tepi Pantai",
-        ticketPrice = "10000",
+        ticketPrice = "10000000",
         description = "Pantainya sangat bagus",
         lat = 0.0,
         lon = 0.0

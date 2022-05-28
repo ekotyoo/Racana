@@ -1,6 +1,7 @@
 package com.ekotyoo.racana.ui.main.destinationdetail
 
 import android.content.res.Configuration
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -19,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -37,6 +39,9 @@ import com.ekotyoo.racana.ui.main.profile.ProfileContent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
+import java.text.DecimalFormat
+import java.text.NumberFormat
+import java.util.*
 
 @Destination(style = NavigationTransition::class)
 @Composable
@@ -92,8 +97,10 @@ fun DestinationDetailContent(
                     .height(371.dp)
                     .clip(MaterialTheme.shapes.medium),
                 contentScale = ContentScale.Crop,
-                imageModel = destination.imageUrl
+                imageModel = destination.imageUrl,
+                previewPlaceholder = R.drawable.ic_launcher_background
             )
+            Spacer(modifier = Modifier.height(16.dp))
             Row(
                 verticalAlignment = Alignment.Top
             ) {
@@ -119,7 +126,7 @@ fun DestinationDetailContent(
             }
             Spacer(modifier = Modifier.height(7.dp))
             Text(
-                text = destination.ticketPrice,
+                text = "Rp ${NumberFormat.getInstance(Locale.ITALY).format(destination.ticketPrice.toInt())}",
                 style = MaterialTheme.typography.subtitle2
             )
             Spacer(modifier = Modifier.height(11.dp))
