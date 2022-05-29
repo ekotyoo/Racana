@@ -174,7 +174,6 @@ fun ProfileContent(
                     onClick = onLogOutButtonClicked,
                     isWarning = true
                 )
-                Text(text = LocalConfiguration.current.screenWidthDp.toString())
             }
         }
     )

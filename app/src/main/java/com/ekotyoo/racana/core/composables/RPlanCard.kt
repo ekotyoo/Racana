@@ -39,14 +39,15 @@ fun RPlanCard(
             CoilImage(
                 modifier = Modifier
                     .clip(MaterialTheme.shapes.medium)
-                    .size(100.dp),
+                    .fillMaxHeight()
+                    .aspectRatio(1f),
                 imageModel = imageUrl,
                 contentScale = ContentScale.Crop,
                 previewPlaceholder = R.drawable.ic_launcher_background,
                 contentDescription = null
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Column() {
+            Column {
                 Text(
                     text = name,
                     style = MaterialTheme.typography.subtitle2,

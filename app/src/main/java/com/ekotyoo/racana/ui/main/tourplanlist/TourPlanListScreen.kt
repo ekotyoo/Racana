@@ -21,6 +21,7 @@ import com.ekotyoo.racana.core.navigation.BottomNavGraph
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.data.model.TourPlan
+import com.ekotyoo.racana.data.model.getDummyTourPlan
 import com.ekotyoo.racana.ui.destinations.DestinationDetailScreenDestination
 import com.ekotyoo.racana.ui.main.tourplanlist.model.TourPlanListEvent
 import com.ramcosta.composedestinations.annotation.Destination
@@ -97,6 +98,7 @@ fun TourPlanListContent(
             items(tourPlanList.size) { index ->
                 val plan = tourPlanList[index]
                 RPlanCard(
+                    modifier = Modifier.aspectRatio(2.6f),
                     name = plan.title ?: "Untitled",
                     imageUrl = plan.imageUrl,
                     date = plan.period,
@@ -121,6 +123,6 @@ fun TourPlanListContent(
 @Composable
 fun RPlanCardPreview() {
     RacanaTheme {
-        TourPlanListContent(tourPlanList = emptyList())
+        TourPlanListContent(tourPlanList = listOf(getDummyTourPlan()))
     }
 }
