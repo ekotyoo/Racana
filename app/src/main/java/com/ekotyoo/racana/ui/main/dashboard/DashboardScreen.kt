@@ -122,6 +122,7 @@ fun DashboardAppBar(
             .fillMaxWidth()
             .padding(16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         AnimatedContent(targetState = expanded) { target ->
             if (target) {
@@ -177,7 +178,7 @@ fun DashboardHeader() {
             )
             Spacer(Modifier.height(16.dp))
             CurrentTourPlanCard(
-                modifier = Modifier.height(240.dp),
+                modifier = Modifier.aspectRatio(1.58f),
                 imageUrl = "https://picsum.photos/200/300",
                 title = "Travel to Madura",
                 date = "16 Mei 2022 - 18 Mei 2022",

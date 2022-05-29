@@ -34,7 +34,7 @@ fun RImageCard(
         modifier
             .clip(MaterialTheme.shapes.small)
             .fillMaxWidth()
-            .height(160.dp)
+            .aspectRatio(2.42f)
             .clickable(onClick = onClick)
     ) {
         CoilImage(
