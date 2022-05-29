@@ -5,6 +5,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.dimensionResource
 
 private val DarkColorPalette = darkColors(
     primary = RacanaViolet,
@@ -36,10 +41,34 @@ fun RacanaTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable
         LightColorPalette
     }
 
-    MaterialTheme(
-        colors = colors,
-        typography = Typography,
-        shapes = Shapes,
-        content = content
-    )
+    val configuration = LocalConfiguration.current
+    val dimensions = if (configuration.screenWidthDp <= 480) mdpi else hdpi
+    
+    ProvideDimens(dimensions = dimensions) {
+        MaterialTheme(
+            colors = colors,
+            typography = getTypography(),
+            shapes = Shapes,
+            content = content
+        )
+    }
+}
+
+object RacanaTheme {
+    val dimens: Dimensions
+        @Composable
+        get() = LocalAppDimens.current
+}
+
+@Composable
+fun ProvideDimens(
+    dimensions: Dimensions,
+    content: @Composable () -> Unit
+) {
+    val dimensionSet = remember { dimensions }
+    CompositionLocalProvider(LocalAppDimens provides dimensionSet, content = content)
+}
+
+private val LocalAppDimens = staticCompositionLocalOf {
+    mdpi
 }

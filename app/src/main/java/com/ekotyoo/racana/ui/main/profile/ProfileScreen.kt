@@ -1,17 +1,12 @@
 package com.ekotyoo.racana.ui.main.profile
 
 import android.content.res.Configuration
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ExitToApp
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -106,15 +102,17 @@ fun ProfileContent(
         content = {
             Column(
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Top
+                verticalArrangement = Arrangement.Top,
             ) {
                 Box(
                     modifier = Modifier
                         .background(MaterialTheme.colors.primary)
-                        .padding(16.dp)
-                        .fillMaxWidth(),
+                        .padding(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 4.dp)
+                        .fillMaxWidth()
+                        .aspectRatio(1.49f),
                     contentAlignment = Alignment.Center
                 ) {
                     Column(
@@ -123,14 +121,20 @@ fun ProfileContent(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Top
                     ) {
-                        CoilImage(
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(120.dp)
-                                .clip(CircleShape),
-                            contentScale = ContentScale.Crop,
-                            imageModel = profilePictureUrl
-                        )
+                        Row {
+                            Spacer(modifier = Modifier.weight(0.3f))
+                            CoilImage(
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .weight(0.4f)
+                                    .aspectRatio(1f)
+                                    .clip(CircleShape),
+                                contentScale = ContentScale.Crop,
+                                imageModel = profilePictureUrl,
+                                previewPlaceholder = R.drawable.ic_launcher_background
+                            )
+                            Spacer(modifier = Modifier.weight(0.3f))
+                        }
                         Spacer(Modifier.height(16.dp))
                         Text(
                             text = nameTextFieldValue,
@@ -150,7 +154,7 @@ fun ProfileContent(
                 Spacer(modifier = Modifier.height(8.dp))
                 ProfileButton(
                     text = stringResource(id = R.string.upgrade_premium),
-                    icon = Icons.Default.List,
+                    icon = Icons.Default.Star,
                     onClick = onMyPlanButtonCLicked
                 )
                 ProfileButton(
@@ -170,6 +174,7 @@ fun ProfileContent(
                     onClick = onLogOutButtonClicked,
                     isWarning = true
                 )
+                Text(text = LocalConfiguration.current.screenWidthDp.toString())
             }
         }
     )
@@ -193,7 +198,8 @@ fun ProfileButton(
                 .clip(MaterialTheme.shapes.small)
                 .clickable(onClick = onClick)
                 .padding(16.dp, 8.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .aspectRatio(9.11f),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -201,7 +207,8 @@ fun ProfileButton(
                 contentDescription = null,
                 modifier = Modifier
                     .padding(end = 16.dp)
-                    .size(36.dp)
+                    .fillMaxHeight()
+                    .aspectRatio(1f)
                     .padding(4.dp),
                 tint = textAndIconColor
             )
@@ -209,14 +216,14 @@ fun ProfileButton(
                 text = text,
                 style = MaterialTheme.typography.body1,
                 color = textAndIconColor
-
             )
             Spacer(modifier = Modifier.weight(1f))
             Icon(
                 imageVector = Icons.Rounded.ChevronRight,
                 contentDescription = null,
                 modifier = Modifier
-                    .size(36.dp)
+                    .fillMaxHeight()
+                    .aspectRatio(1f)
                     .background(
                         color = buttonColor,
                         shape = MaterialTheme.shapes.small
@@ -250,8 +257,8 @@ fun RegisterScreenPreview() {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
             ProfileContent(
                 profilePictureUrl = "",
-                nameTextFieldValue = "",
-                emailTextFieldValue = "",
+                nameTextFieldValue = "JohnDoe",
+                emailTextFieldValue = "john@mail.com",
                 isPremium = false,
                 {},
                 {},
