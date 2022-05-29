@@ -22,7 +22,7 @@ val balooFamily = FontFamily(
 // Set of Material typography styles to start with
 @JvmName("getTypography1")
 @Composable
-fun getTypography() : Typography {
+fun getTypography(): Typography {
     return Typography(
         body1 = TextStyle(
             fontFamily = poppinsFamily,
