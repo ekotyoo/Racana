@@ -105,7 +105,8 @@ fun RDestinationCardPreview() {
             name = "Candi Bali",
             location = "Bali",
             imageUrl = dummy_image,
-            onClick = {})
+            onClick = {}
+        )
     }
 }
 

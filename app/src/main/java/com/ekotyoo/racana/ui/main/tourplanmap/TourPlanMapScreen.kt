@@ -26,13 +26,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
+import com.ekotyoo.racana.core.composables.DayHeaderSection
 import com.ekotyoo.racana.core.composables.RIconButton
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaGreen
 import com.ekotyoo.racana.core.utils.BitmapUtil
 import com.ekotyoo.racana.ui.main.tourplanmap.model.TourPlanMapArgument
 import com.ekotyoo.racana.ui.main.tourplanmap.model.TourPlanMapState
-import com.ekotyoo.racana.ui.main.tourplanresult.DayHeaderSection
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -238,3 +238,5 @@ fun MapDestinationCard(
         }
     }
 }
+
+
