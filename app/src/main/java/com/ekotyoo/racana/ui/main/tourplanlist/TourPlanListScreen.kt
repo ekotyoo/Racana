@@ -54,7 +54,8 @@ fun TourPlanListScreen(
     Box(Modifier.fillMaxSize()) {
         TourPlanListContent(
             tourPlanList = state.tourPlanList,
-            onCardClick = viewModel::onTourPlanClicked
+            onCardClick = viewModel::onTourPlanClicked,
+            onDelete = viewModel::deletePlanButtonClicked
         )
         if (tourPlanEmpty) {
             TourPlanListEmpty(modifier = Modifier.align(Alignment.Center))
@@ -88,7 +89,8 @@ fun TourPlanListEmpty(modifier: Modifier = Modifier) {
 @Composable
 fun TourPlanListContent(
     tourPlanList: List<TourPlan>,
-    onCardClick: () -> Unit
+    onCardClick: () -> Unit,
+    onDelete: () -> Unit
 ) {
     Scaffold(topBar = {
         RTopAppBar(title = stringResource(id = R.string.tour_plan_list))
@@ -108,7 +110,8 @@ fun TourPlanListContent(
                     imageUrl = plan.imageUrl,
                     date = plan.period,
                     desciption = plan.description ?: "-",
-                    onClick = onCardClick
+                    onClick = onCardClick,
+                    onDelete = onDelete
                 )
             }
         }
@@ -128,6 +131,6 @@ fun TourPlanListContent(
 @Composable
 fun RPlanCardPreview() {
     RacanaTheme {
-        TourPlanListContent(tourPlanList = listOf(getDummyTourPlan()), {})
+        TourPlanListContent(tourPlanList = listOf(getDummyTourPlan()), {}, {})
     }
 }

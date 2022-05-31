@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.ekotyoo.racana.core.utils.Result
 import com.ekotyoo.racana.data.repository.TourPlanRepository
 import com.ekotyoo.racana.ui.destinations.TourPlanScreenDestination
+import com.ekotyoo.racana.ui.main.tourplandetailsaved.model.TourPlanDetailSavedEvent
 import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultEvent
 import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -146,6 +147,12 @@ class TourPlanResultViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    fun deleteDestinationButtonClicked() {
+        viewModelScope.launch {
+            _eventChannel.send(TourPlanResultEvent.DeleteDestinationButtonClicked)
         }
     }
 

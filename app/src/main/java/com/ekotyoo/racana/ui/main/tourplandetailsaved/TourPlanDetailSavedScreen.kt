@@ -80,7 +80,8 @@ fun TourPlanDetailSavedScreen(
                 state = state,
                 onDateSelected = viewModel::onDateSelected,
                 onDestinationClicked = viewModel::navigateToDestinationDetail,
-                onStartTourButtonClicked = viewModel::startTourButtonClicked
+                onStartTourButtonClicked = viewModel::startTourButtonClicked,
+                onDeleteButtonClicked = viewModel::deleteDestinationButtonClicked
             )
         }
     }
@@ -93,6 +94,7 @@ fun TourPlanDetailSavedContent(
     state: TourPlanDetailSavedState,
     onDateSelected: (Int) -> Unit,
     onDestinationClicked: () -> Unit,
+    onDeleteButtonClicked: () -> Unit,
     onStartTourButtonClicked: () -> Unit
 ) {
     Column(
@@ -155,7 +157,8 @@ fun TourPlanDetailSavedContent(
             targetState = state.selectedDestinationList) { targetList ->
             AttractionList(
                 destinationList = targetList,
-                onClick = onDestinationClicked
+                onClick = onDestinationClicked,
+                onDelete = onDeleteButtonClicked
             )
         }
     }
@@ -188,7 +191,8 @@ fun TourPlanDetailSavedPreview() {
                 ),
                 onDateSelected = {},
                 onDestinationClicked = {},
-                onStartTourButtonClicked = {}
+                onStartTourButtonClicked = {},
+                onDeleteButtonClicked = {}
             )
         }
     }

@@ -5,4 +5,5 @@ sealed class TourPlanResultEvent {
     object SaveTourPlanSuccess : TourPlanResultEvent()
     object SaveTourPlanError : TourPlanResultEvent()
     object NavigateToDestinationDetail : TourPlanResultEvent()
+    object DeleteDestinationButtonClicked : TourPlanResultEvent()
 }

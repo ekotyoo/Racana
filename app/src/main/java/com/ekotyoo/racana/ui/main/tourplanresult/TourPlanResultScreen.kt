@@ -135,7 +135,8 @@ fun TourPlanScreen(
                         navigator.navigate(destination)
                     },
                     onChangePlanButtonClicked = viewModel::onChangePlanButtonClicked,
-                    onDestinationClicked = viewModel::navigateToDestinationDetail
+                    onDestinationClicked = viewModel::navigateToDestinationDetail,
+                    onDeleteButtonClicked = viewModel::deleteDestinationButtonClicked
                 )
             }
             RLoadingOverlay(
@@ -155,8 +156,9 @@ fun TourPlanContent(
     onDateSelected: (Int) -> Unit,
     onOpenMapButtonClicked: () -> Unit,
     onChangePlanButtonClicked: () -> Unit,
-    onDestinationClicked: () -> Unit
-) {
+    onDestinationClicked: () -> Unit,
+    onDeleteButtonClicked: () -> Unit
+    ) {
     Column(Modifier.fillMaxSize()) {
         Spacer(Modifier.height(32.dp))
         DayHeaderSection(
@@ -169,7 +171,8 @@ fun TourPlanContent(
             targetState = state.selectedDestinationList) { targetList ->
             AttractionList(
                 destinationList = targetList,
-                onClick = onDestinationClicked
+                onClick = onDestinationClicked,
+                onDelete = onDeleteButtonClicked
             )
         }
         Spacer(Modifier.height(16.dp))
@@ -317,7 +320,8 @@ fun TourPlanScreenPreview() {
             onDateSelected = {},
             onOpenMapButtonClicked = {},
             onChangePlanButtonClicked = {},
-            onDestinationClicked = {}
+            onDestinationClicked = {},
+            onDeleteButtonClicked = {}
         )
     }
 }

@@ -10,6 +10,7 @@ import androidx.compose.material.icons.rounded.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
@@ -23,19 +24,21 @@ fun RIconButton(
     iconModifier: Modifier = Modifier,
     imageVector: ImageVector,
     contentDescription: String?,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    tint: Color = MaterialTheme.colors.onSecondary,
+    background: Color = MaterialTheme.colors.secondary
 ) {
     IconButton(
         modifier = modifier
             .clip(MaterialTheme.shapes.small)
-            .background(MaterialTheme.colors.secondary),
+            .background(background),
         onClick = onClick
     ) {
         Icon(
             modifier = iconModifier,
             painter = rememberVectorPainter(image = imageVector),
             contentDescription = contentDescription,
-            tint = MaterialTheme.colors.onSecondary
+            tint = tint
         )
     }
 }
@@ -51,6 +54,6 @@ fun RIconButton(
 @Composable
 fun RIconButtonPreview() {
     RacanaTheme {
-        RIconButton(imageVector = Icons.Rounded.Search, contentDescription =  null) {}
+        RIconButton(imageVector = Icons.Rounded.Search, contentDescription =  null, onClick = {})
     }
 }

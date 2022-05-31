@@ -6,7 +6,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -23,7 +27,8 @@ fun RPlanCard(
     date: String,
     desciption: String,
     imageUrl: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onDelete: () -> Unit
 ) {
     Card(
         modifier = modifier
@@ -47,7 +52,7 @@ fun RPlanCard(
                 contentDescription = null
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Column {
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = name,
                     style = MaterialTheme.typography.subtitle2,
@@ -63,6 +68,14 @@ fun RPlanCard(
                     style = MaterialTheme.typography.caption
                 )
             }
+            RIconButton(
+                imageVector = Icons.Default.Delete,
+                contentDescription = null,
+                onClick = onDelete,
+                background = MaterialTheme.colors.surface,
+                tint = MaterialTheme.colors.error,
+                modifier = Modifier.align(CenterVertically)
+            )
         }
     }
 }
@@ -87,7 +100,8 @@ fun RPlanCardPreview() {
             imageUrl = "https://picsum.photos/200/300",
             onClick = {},
             date = "12 Mei 2021 - 28 Mei2022",
-            desciption = "Ini deskripsi"
+            desciption = "Ini deskripsi",
+            onDelete = {}
         )
     }
 }

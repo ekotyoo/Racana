@@ -42,4 +42,10 @@ class TourPlanDetailSavedViewModel @Inject constructor() : ViewModel() {
             _eventChannel.send(TourPlanDetailSavedEvent.StartTourButtonClicked)
         }
     }
+
+    fun deleteDestinationButtonClicked() {
+        viewModelScope.launch {
+            _eventChannel.send(TourPlanDetailSavedEvent.DeleteDestinationButtonClicked)
+        }
+    }
 }

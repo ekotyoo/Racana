@@ -9,11 +9,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
@@ -37,7 +37,8 @@ fun RDetailTourPlan(
     modifier: Modifier = Modifier,
     state: TourPlanResultState,
     onDateSelected: (Int) -> Unit,
-    onDestinationClicked: () -> Unit
+    onDestinationClicked: () -> Unit,
+    onDeleteButtonClicked: () -> Unit
 ) {
     Column(modifier) {
         Spacer(Modifier.height(32.dp))
@@ -51,7 +52,8 @@ fun RDetailTourPlan(
             targetState = state.selectedDestinationList) { targetList ->
             AttractionList(
                 destinationList = targetList,
-                onClick = onDestinationClicked
+                onClick = onDestinationClicked,
+                onDelete = onDeleteButtonClicked
             )
         }
     }
@@ -61,7 +63,8 @@ fun RDetailTourPlan(
 fun AttractionList(
     modifier: Modifier = Modifier,
     destinationList: List<TravelDestination>?,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onDelete: () -> Unit
 ) {
     val items = destinationList ?: emptyList()
     LazyColumn(
@@ -74,7 +77,8 @@ fun AttractionList(
                 title = destination.name,
                 location = destination.location,
                 isDone = destination.isDone,
-                onClick = onClick
+                onClick = onClick,
+                onDelete = onDelete
             )
         }
     }
@@ -149,7 +153,8 @@ fun AttractionCard(
     title: String,
     location: String,
     isDone: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onDelete: () -> Unit
 ) {
     Row {
         ProgressLine(
@@ -167,9 +172,10 @@ fun AttractionCard(
                 shape = MaterialTheme.shapes.small
             ) {
                 Row(
-                    Modifier
+                    modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp)
+                        .padding(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     CoilImage(
                         modifier = Modifier
@@ -182,11 +188,18 @@ fun AttractionCard(
                         contentDescription = null,
                     )
                     Spacer(Modifier.width(8.dp))
-                    Column {
+                    Column(Modifier.weight(1f)) {
                         Text(text = title, style = MaterialTheme.typography.subtitle1)
                         Text(text = "Expense", style = MaterialTheme.typography.caption)
                         Text(text = location, style = MaterialTheme.typography.caption)
                     }
+                    RIconButton(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = null,
+                        onClick = onDelete,
+                        background = MaterialTheme.colors.surface,
+                        tint = MaterialTheme.colors.error
+                    )
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -260,7 +273,8 @@ fun TourPlanScreenPreview() {
         RDetailTourPlan(
             state = TourPlanResultState(tourPlan = getDummyTourPlan()),
             onDateSelected = {},
-            onDestinationClicked = {}
+            onDestinationClicked = {},
+            onDeleteButtonClicked = {}
         )
     }
 }
