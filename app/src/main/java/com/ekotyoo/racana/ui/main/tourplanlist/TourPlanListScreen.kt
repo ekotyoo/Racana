@@ -1,6 +1,7 @@
 package com.ekotyoo.racana.ui.main.tourplanlist
 
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
@@ -19,10 +20,11 @@ import com.ekotyoo.racana.core.composables.RPlanCard
 import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.BottomNavGraph
 import com.ekotyoo.racana.core.navigation.NavigationTransition
+import com.ekotyoo.racana.core.navigation.RootNavigator
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.data.model.TourPlan
 import com.ekotyoo.racana.data.model.getDummyTourPlan
-import com.ekotyoo.racana.ui.destinations.DestinationDetailScreenDestination
+import com.ekotyoo.racana.ui.destinations.TourPlanDetailSavedScreenDestination
 import com.ekotyoo.racana.ui.main.tourplanlist.model.TourPlanListEvent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -32,6 +34,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Composable
 fun TourPlanListScreen(
     navigator: DestinationsNavigator,
+    rootNavigator: RootNavigator,
     viewModel: TourPlanListViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
@@ -40,7 +43,7 @@ fun TourPlanListScreen(
         viewModel.eventChannel.collect { event ->
             when (event) {
                 is TourPlanListEvent.NavigateToTourPlanResult -> {
-                    navigator.navigate(DestinationDetailScreenDestination)
+                    rootNavigator.value.navigate(TourPlanDetailSavedScreenDestination)
                 }
             }
         }
@@ -50,7 +53,8 @@ fun TourPlanListScreen(
 
     Box(Modifier.fillMaxSize()) {
         TourPlanListContent(
-            tourPlanList = state.tourPlanList
+            tourPlanList = state.tourPlanList,
+            onCardClick = viewModel::onTourPlanClicked
         )
         if (tourPlanEmpty) {
             TourPlanListEmpty(modifier = Modifier.align(Alignment.Center))
@@ -84,6 +88,7 @@ fun TourPlanListEmpty(modifier: Modifier = Modifier) {
 @Composable
 fun TourPlanListContent(
     tourPlanList: List<TourPlan>,
+    onCardClick: () -> Unit
 ) {
     Scaffold(topBar = {
         RTopAppBar(title = stringResource(id = R.string.tour_plan_list))
@@ -103,7 +108,7 @@ fun TourPlanListContent(
                     imageUrl = plan.imageUrl,
                     date = plan.period,
                     desciption = plan.description ?: "-",
-                    onClick = {}
+                    onClick = onCardClick
                 )
             }
         }
@@ -123,6 +128,6 @@ fun TourPlanListContent(
 @Composable
 fun RPlanCardPreview() {
     RacanaTheme {
-        TourPlanListContent(tourPlanList = listOf(getDummyTourPlan()))
+        TourPlanListContent(tourPlanList = listOf(getDummyTourPlan()), {})
     }
 }

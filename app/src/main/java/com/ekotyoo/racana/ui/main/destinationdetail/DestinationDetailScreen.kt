@@ -28,6 +28,7 @@ import com.ekotyoo.racana.core.composables.RIconButton
 import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaTheme
+import com.ekotyoo.racana.core.utils.CurrencyFormatter
 import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetail
 import com.ekotyoo.racana.ui.main.destinationdetail.model.getDummyDetailDestination
 import com.google.android.gms.maps.model.CameraPosition
@@ -123,7 +124,7 @@ fun DestinationDetailContent(
             }
             Spacer(modifier = Modifier.height(7.dp))
             Text(
-                text = "Rp ${NumberFormat.getInstance(Locale.ITALY).format(destination.ticketPrice.toInt())}",
+                text = CurrencyFormatter(destination.ticketPrice),
                 style = MaterialTheme.typography.subtitle2
             )
             Spacer(modifier = Modifier.height(11.dp))

@@ -13,3 +13,14 @@ data class TourPlanResultArgument(
     val totalDestination: Int,
     val category: Int
 ) : Parcelable
+
+fun getDummyTourPlanResultArgument() : TourPlanResultArgument {
+    return TourPlanResultArgument(
+        "Malang",
+        120000,
+        LocalDate.of(2022, 5, 10),
+        LocalDate.of(2022, 5, 15),
+        5,
+        1
+    )
+}
