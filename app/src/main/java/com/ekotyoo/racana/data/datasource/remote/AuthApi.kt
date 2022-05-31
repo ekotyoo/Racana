@@ -8,14 +8,14 @@ import retrofit2.http.POST
 interface AuthApi {
 
     @FormUrlEncoded
-    @POST("login")
+    @POST("auth/login")
     suspend fun login(
         @Field("email") email: String,
         @Field("password") password: String
     ): Response<LoginResponse>
 
     @FormUrlEncoded
-    @POST("register")
+    @POST("auth/signup")
     suspend fun register(
         @Field("name") name: String,
         @Field("email") email: String,

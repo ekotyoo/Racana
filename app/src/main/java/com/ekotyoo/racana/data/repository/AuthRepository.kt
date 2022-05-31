@@ -20,16 +20,15 @@ class AuthRepository @Inject constructor(
     suspend fun login(email: String, password: String): Result<UserModel> {
         try {
             val response = authApi.login(email, password)
-            val body = response.body()
-            return if (response.isSuccessful && body != null) {
+            val data = response.body()?.data
+            return if (response.isSuccessful && data != null) {
                 val user = UserModel(
-                    body.user.id,
-                    body.user.name,
-                    body.user.email,
-                    body.token
+                    data.id,
+                    data.name,
+                    data.email,
+                    data.token
                 )
                 userPreferencesDataStore.saveUserData(user)
-                Timber.d("Success: $body")
                 Result.Success(user)
             } else {
                 Result.Error("Login Failed", null)
@@ -46,15 +45,14 @@ class AuthRepository @Inject constructor(
     suspend fun register(name: String, email: String, password: String): Result<UserModel> {
         try {
             val response = authApi.register(name, email, password)
-            val body = response.body()
-            return if (response.isSuccessful && body != null) {
+            val data = response.body()?.data
+            return if (response.isSuccessful && data != null) {
                 val user = UserModel(
-                    body.user.id,
-                    body.user.name,
-                    body.user.email,
+                    data.id,
+                    data.name,
+                    data.email,
                     ""
                 )
-                Timber.d("Success: $body")
                 Result.Success(user)
             } else {
                 Result.Error("Register Failed", null)
