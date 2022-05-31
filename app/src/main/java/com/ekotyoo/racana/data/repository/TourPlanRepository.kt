@@ -1,6 +1,7 @@
 package com.ekotyoo.racana.data.repository
 
 import com.ekotyoo.racana.core.utils.Result
+import com.ekotyoo.racana.data.datasource.local.UserPreferencesDataStore
 import com.ekotyoo.racana.data.datasource.local.database.TourPlanDao
 import com.ekotyoo.racana.data.datasource.local.database.entity.toModel
 import com.ekotyoo.racana.data.datasource.remote.TourPlanApi
@@ -8,6 +9,7 @@ import com.ekotyoo.racana.data.model.DailyItem
 import com.ekotyoo.racana.data.model.TourPlan
 import com.ekotyoo.racana.data.model.TravelDestination
 import dagger.hilt.android.scopes.ViewModelScoped
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import retrofit2.HttpException
 import timber.log.Timber
@@ -20,6 +22,7 @@ import javax.inject.Inject
 class TourPlanRepository @Inject constructor(
     private val tourPlanApi: TourPlanApi,
     private val tourPlanDao: TourPlanDao,
+    private val userPreferencesDataStore: UserPreferencesDataStore
 ) {
     fun getSavedTourPlan() = tourPlanDao.getAllTourPlan().map { list ->
         list.map { it.toModel() }
@@ -44,7 +47,9 @@ class TourPlanRepository @Inject constructor(
         category: Int,
     ): Result<TourPlan> {
         try {
+            val token = userPreferencesDataStore.userData.first().token
             val response = tourPlanApi.getTourPlan(
+                token ?: "",
                 city,
                 budget,
                 startDateInMillis,

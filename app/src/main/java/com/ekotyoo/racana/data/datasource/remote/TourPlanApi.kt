@@ -1,15 +1,14 @@
 package com.ekotyoo.racana.data.datasource.remote
 
 import retrofit2.Response
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface TourPlanApi {
 
     @FormUrlEncoded
-    @POST("tourplan")
+    @POST("predict")
     suspend fun getTourPlan(
+        @Header("Authorization") token: String,
         @Field("city") city: String,
         @Field("budget") budget: Long,
         @Field("start_date") startDateInMillis: Long?,

@@ -2,10 +2,7 @@ package com.ekotyoo.racana.data.datasource.local
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.emptyPreferences
-import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
 import com.ekotyoo.racana.data.model.UserModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -57,7 +54,7 @@ class UserPreferencesDataStore @Inject constructor(
     }
 
     private companion object {
-        val KEY_USER_ID = stringPreferencesKey("KEY_ID")
+        val KEY_USER_ID = intPreferencesKey("KEY_ID")
         val KEY_USER_NAME = stringPreferencesKey("KEY_NAME")
         val KEY_USER_EMAIL = stringPreferencesKey("KEY_EMAIL")
         val KEY_USER_TOKEN = stringPreferencesKey("KEY_TOKEN")

@@ -51,5 +51,4 @@ object ApiModule {
         retrofit.create(TourPlanApi::class.java)
 }
 
-// TODO: Change with real API Url
-private const val BASE_URL = "http:/192.168.1.13:3000/" //Mockoon server
+private const val BASE_URL = "https://racana-test.herokuapp.com/api/" //Mockoon server
