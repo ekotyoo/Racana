@@ -24,6 +24,7 @@ class DestinationRepository @Inject constructor(
             return if (response.isSuccessful && data != null) {
                 val destinations = data.map {
                     TravelDestination(
+                        id = it.id,
                         name = it.name,
                         imageUrl = it.imageUrl,
                         location = it.location,

@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -56,14 +58,14 @@ import java.time.LocalDate
 fun CreateTourPlanScreen(
     navigator: DestinationsNavigator,
     resultRecipient: ResultRecipient<TourPlanScreenDestination, String?>,
-    viewModel: CreateTourPlanViewModel = hiltViewModel()
+    viewModel: CreateTourPlanViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
-    
+
     resultRecipient.onNavResult { result ->
-        when(result) {
+        when (result) {
             is NavResult.Canceled -> {}
             is NavResult.Value -> {
                 result.value?.let {
@@ -130,7 +132,7 @@ fun CreateTourPlanContent(
     onSubmitClicked: () -> Unit,
     state: CreateTourPlanState,
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
-    scaffoldState: ScaffoldState = rememberScaffoldState()
+    scaffoldState: ScaffoldState = rememberScaffoldState(),
 ) {
     val modalBottomSheetState =
         rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
@@ -241,15 +243,14 @@ fun CreateTourPlanContent(
                             horizontalArrangement = Arrangement.spacedBy(16.dp),
                             verticalArrangement = Arrangement.spacedBy(16.dp),
                             content = {
-                                items(state.categories.size) {
-                                    val category = state.categories[it]
+                                itemsIndexed(state.categories) { i, category ->
                                     CategoryCard(
                                         imageUrl = category.imageUrl,
                                         title = category.title,
                                         onClick = {
-                                            onCategorySelected(it)
+                                            onCategorySelected(i)
                                         },
-                                        isChecked = state.selectedCategory == it
+                                        isChecked = state.selectedCategory == i
                                     )
                                 }
                             }
@@ -280,7 +281,7 @@ fun CityDropdown(
     cityTextFieldValue: String,
     onCityTextFieldCleared: () -> Unit,
     onCitiesTextFieldValueChange: (String) -> Unit,
-    onCitySelected: (String) -> Unit
+    onCitySelected: (String) -> Unit,
 ) {
     var citiesDropdownVisible by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
@@ -353,8 +354,8 @@ fun CityDropdown(
                     .fillMaxWidth()
                     .heightIn(0.dp, 200.dp)
             ) {
-                items(cityResult.size) {
-                    val (city, province) = cityResult[it]
+                items(cityResult, key = { it.first }) { item ->
+                    val (city, province) = item
                     DropdownMenuItem(
                         modifier = Modifier.clip(MaterialTheme.shapes.small),
                         onClick = {
@@ -380,7 +381,7 @@ fun CategoryCard(
     imageUrl: String,
     title: String,
     onClick: () -> Unit,
-    isChecked: Boolean = false
+    isChecked: Boolean = false,
 ) {
     Box(
         modifier
@@ -441,7 +442,7 @@ fun Counter(
     modifier: Modifier = Modifier,
     value: Int,
     onIncrement: (Int) -> Unit,
-    onDecrement: (Int) -> Unit
+    onDecrement: (Int) -> Unit,
 ) {
     Row(
         modifier = modifier
@@ -497,7 +498,7 @@ fun Counter(
 fun CreateTourPlanSection(
     modifier: Modifier = Modifier,
     title: String,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Column(modifier) {
         Text(

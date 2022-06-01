@@ -4,12 +4,7 @@ import android.content.res.Configuration
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -18,11 +13,6 @@ import androidx.compose.material.icons.rounded.BookmarkBorder
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.*
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -32,10 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.*
 import com.ekotyoo.racana.core.navigation.NavigationTransition
-import com.ekotyoo.racana.core.theme.RacanaGray
 import com.ekotyoo.racana.core.theme.RacanaTheme
-import com.ekotyoo.racana.data.model.DailyItem
-import com.ekotyoo.racana.data.model.TravelDestination
 import com.ekotyoo.racana.data.model.getDummyTourPlan
 import com.ekotyoo.racana.ui.destinations.DestinationDetailScreenDestination
 import com.ekotyoo.racana.ui.destinations.MainScreenDestination
@@ -49,7 +36,6 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
 import com.ramcosta.composedestinations.result.ResultBackNavigator
-import com.skydoves.landscapist.coil.CoilImage
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -91,6 +77,7 @@ fun TourPlanScreen(
                 is TourPlanResultEvent.NavigateToDestinationDetail -> {
                     navigator.navigate(DestinationDetailScreenDestination)
                 }
+                TourPlanResultEvent.DeleteDestinationButtonClicked -> {}
             }
         }
     }
@@ -157,9 +144,9 @@ fun TourPlanContent(
     onOpenMapButtonClicked: () -> Unit,
     onChangePlanButtonClicked: () -> Unit,
     onDestinationClicked: () -> Unit,
-    onDeleteButtonClicked: () -> Unit
-    ) {
-    Column(Modifier.fillMaxSize()) {
+    onDeleteButtonClicked: () -> Unit,
+) {
+    Column(modifier.fillMaxSize()) {
         Spacer(Modifier.height(32.dp))
         DayHeaderSection(
             selectedDate = state.selectedDate,
@@ -244,7 +231,7 @@ fun SaveTourPlanSheetContent(
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(onDone = {
                     focusManager.clearFocus()
-                    }
+                }
                 )
             )
             AnimatedVisibility(isDescriptionError) {

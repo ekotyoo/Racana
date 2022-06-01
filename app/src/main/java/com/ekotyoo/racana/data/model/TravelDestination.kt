@@ -6,6 +6,7 @@ import kotlin.random.Random
 
 @Parcelize
 data class TravelDestination(
+    val id: Int = 0,
     val name: String,
     val imageUrl: String,
     val location: String,

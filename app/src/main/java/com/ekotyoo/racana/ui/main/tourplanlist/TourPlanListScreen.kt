@@ -3,6 +3,7 @@ package com.ekotyoo.racana.ui.main.tourplanlist
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material3.Text
@@ -100,8 +101,7 @@ fun TourPlanListContent(
             contentPadding = PaddingValues(vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            items(tourPlanList.size) { index ->
-                val plan = tourPlanList[index]
+            items(tourPlanList, key = {it.id ?: 0}) { plan ->
                 RPlanCard(
                     modifier = Modifier.aspectRatio(2.6f),
                     name = plan.title ?: "Untitled",

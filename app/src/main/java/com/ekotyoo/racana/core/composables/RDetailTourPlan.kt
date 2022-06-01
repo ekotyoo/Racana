@@ -9,7 +9,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.material.*
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
@@ -38,7 +42,7 @@ fun RDetailTourPlan(
     state: TourPlanResultState,
     onDateSelected: (Int) -> Unit,
     onDestinationClicked: () -> Unit,
-    onDeleteButtonClicked: () -> Unit
+    onDeleteButtonClicked: () -> Unit,
 ) {
     Column(modifier) {
         Spacer(Modifier.height(32.dp))
@@ -64,7 +68,7 @@ fun AttractionList(
     modifier: Modifier = Modifier,
     destinationList: List<TravelDestination>?,
     onClick: () -> Unit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
 ) {
     val items = destinationList ?: emptyList()
     LazyColumn(
@@ -154,7 +158,7 @@ fun AttractionCard(
     location: String,
     isDone: Boolean,
     onClick: () -> Unit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
 ) {
     Row {
         ProgressLine(
@@ -219,16 +223,16 @@ fun DayHeaderSection(
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         val items = dailyList ?: emptyList()
-        items(items.size) {
+        itemsIndexed(items) { i, item ->
             DayHeaderContainer(
                 modifier = Modifier
                     .clip(MaterialTheme.shapes.small)
                     .clickable {
-                        onItemSelected(it)
+                        onItemSelected(i)
                     },
-                isSelected = it == selectedDate,
-                dayTitle = "Hari-${items[it].number}",
-                date = items[it].dateFormatted
+                isSelected = i == selectedDate,
+                dayTitle = "Hari-${item.number}",
+                date = item.dateFormatted
             )
         }
     }
