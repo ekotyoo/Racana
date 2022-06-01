@@ -1,10 +1,10 @@
 const DestinationModel = require("../models/destinationModel");
 const responseHelper = require("../utils/responseHelper");
+const { Op } = require("sequelize");
 
 const getAllDestinations = async (req, res) => {
   try {
     const keyword = req.query.keyword;
-    console.log(keyword);
     let data;
     if (keyword) {
       data = await DestinationModel.findAll({
@@ -19,7 +19,6 @@ const getAllDestinations = async (req, res) => {
     if (!data) return res.json(responseHelper.responseError("No data."));
     res.json(responseHelper.responseSuccess(data, "Sucessfully get data."));
   } catch (error) {
-    console.log(error);
     res.status(500).json(responseHelper.responseError("Internal server error."));
   }
 };
