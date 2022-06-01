@@ -3,7 +3,18 @@ const responseHelper = require("../utils/responseHelper");
 
 const getAllDestinations = async (req, res) => {
   try {
-    const data = await DestinationModel.findAll();
+    const keyword = req.query.keyword;
+    let data;
+    if (keyword) {
+      data = await DestinationModel.findAll({
+        name: {
+          [Op.like]: `%${keyword}%`,
+        },
+      });
+    } else {
+      data = await DestinationModel.findAll();
+    }
+
     if (!data) return res.json(responseHelper.responseError("No data."));
     res.json(responseHelper.responseSuccess(data, "Sucessfully get data."));
   } catch (error) {
