@@ -5,8 +5,10 @@ const { Op } = require("sequelize");
 const getAllDestinations = async (req, res) => {
   try {
     const keyword = req.query.keyword;
+    console.log(keyword);
     let data;
     if (keyword) {
+      console.log("pake keyword");
       data = await DestinationModel.findAll({
         name: {
           [Op.substring]: `${keyword}`,
