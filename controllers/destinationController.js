@@ -10,8 +10,10 @@ const getAllDestinations = async (req, res) => {
     if (keyword) {
       console.log("pake keyword");
       data = await DestinationModel.findAll({
-        name: {
-          [Op.substring]: `${keyword}`,
+        where: {
+          name: {
+            [Op.substring]: `${keyword}`,
+          },
         },
       });
     } else {
