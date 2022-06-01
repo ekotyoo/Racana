@@ -1,0 +1,106 @@
+{
+  "id": 0,
+  "daily_list": [
+    {
+      "date": 1653411600000,
+      "destinations": [
+        {
+          "id": 0,
+          "name": "Hutan Monyet",
+          "expense": 50000,
+          "brief": "Ini adalah brief",
+          "image_url": "https://cdn.pixabay.com/photo/2022/05/21/21/04/monkeys-7212290_960_720.jpg",
+          "lat": -19.0,
+          "long": 8.75
+        },
+        {
+          "id": 0,
+          "name": "Air Terjun Pengantin",
+          "expense": 20000,
+          "brief": "Ini adalah brief",
+          "image_url": "https://cdn.pixabay.com/photo/2022/03/23/17/16/waterfall-7087571_960_720.jpg",
+          "lat": -19.2,
+          "long": 8.4
+        },
+        {
+          "id": 0,
+          "name": "Kupu-kupu Terbang",
+          "expense": 50000,
+          "brief": "Ini adalah brief",
+          "image_url": "https://cdn.pixabay.com/photo/2014/05/26/13/32/butterfly-354528_960_720.jpg",
+          "lat": -19.0,
+          "long": 8.73
+        }
+      ]
+    },
+    {
+      "date": 1653498000000,
+      "destinations": [
+        {
+          "id": 0,
+          "name": "Pulau Sempu",
+          "expense": 100000,
+          "brief": "Ini adalah brief",
+          "image_url": "https://cdn.pixabay.com/photo/2016/03/28/09/33/island-1285147_960_720.jpg",
+          "lat": -8.141558,
+          "long": 111.43762
+        },
+        {
+          "id": 0,
+          "name": "Hutan Belantara",
+          "expense": 20000,
+          "brief": "Ini adalah brief",
+          "image_url": "https://cdn.pixabay.com/photo/2015/06/08/15/21/palm-trees-802019_960_720.jpg",
+          "lat": -7.9,
+          "long": 111.409
+        }
+      ]
+    },
+    {
+      "date": 1653584400000,
+      "destinations": [
+        {
+          "id": 0,
+          "name": "Danau 1000 warna",
+          "expense": 50000,
+          "brief": "Ini adalah brief",
+          "image_url": "https://cdn.pixabay.com/photo/2017/05/09/03/46/alberta-2297204_960_720.jpg",
+          "lat": -7.579459,
+          "long": 111.645505
+        }
+      ]
+    },
+    {
+      "date": 1653670800000,
+      "destinations": [
+        {
+          "id": 0,
+          "name": "Kota Tua",
+          "expense": 50000,
+          "brief": "Ini adalah brief",
+          "image_url": "https://cdn.pixabay.com/photo/2022/04/08/21/04/buildings-7120297_960_720.jpg",
+          "lat": -19.0,
+          "long": 8.75
+        },
+        {
+          "id": 0,
+          "name": "Gunung Salju",
+          "expense": 20000,
+          "brief": "Ini adalah brief",
+          "image_url": "https://cdn.pixabay.com/photo/2022/04/23/07/38/lin-zhi-7151302_960_720.jpg",
+          "lat": -19.2,
+          "long": 8.4
+        },
+        {
+          "id": 0,
+          "name": "Jalan Aneh",
+          "expense": 50000,
+          "brief": "Ini adalah brief",
+          "image_url": "https://cdn.pixabay.com/photo/2022/05/16/19/14/road-7201023_960_720.jpg",
+          "lat": -19.0,
+          "long": 8.73
+        }
+      ]
+    }
+  ]
+}
