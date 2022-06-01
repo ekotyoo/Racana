@@ -23,6 +23,7 @@ const login = async (req, res) => {
         .json(responseHelper.responseError("Email and password must be correct."));
 
     const token = jwt.sign({ email: data.email, userId: data.id }, process.env.SECRET_TOKEN);
+    console.log(loginResult);
 
     res.json(
       responseHelper.responseSuccess(
@@ -31,6 +32,7 @@ const login = async (req, res) => {
       )
     );
   } catch (error) {
+    console.log(error);
     res.status(500).json(responseHelper.responseError("Internal server error."));
   }
 };
