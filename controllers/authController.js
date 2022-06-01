@@ -7,6 +7,7 @@ const responseHelper = require("../utils/responseHelper");
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log(req.body);
 
     const data = await userModel.findOne({
       where: { email: email },
@@ -15,6 +16,7 @@ const login = async (req, res) => {
     if (!data) return res.status(401).json(responseHelper.responseError("User not found."));
 
     const loginResult = await bcrypt.compare(password, data.password);
+    console.log(loginResult);
     if (!loginResult)
       return res
         .status(401)
