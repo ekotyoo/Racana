@@ -22,7 +22,7 @@ import javax.inject.Inject
 class TourPlanRepository @Inject constructor(
     private val tourPlanApi: TourPlanApi,
     private val tourPlanDao: TourPlanDao,
-    private val userPreferencesDataStore: UserPreferencesDataStore
+    private val userPreferencesDataStore: UserPreferencesDataStore,
 ) {
     fun getSavedTourPlan() = tourPlanDao.getAllTourPlan().map { list ->
         list.map { it.toModel() }
@@ -66,11 +66,13 @@ class TourPlanRepository @Inject constructor(
                         Instant.ofEpochMilli(item.date).atZone(ZoneId.systemDefault()).toLocalDate()
                     val destinationList =
                         item.destinations.map {
-                            TravelDestination(it.name,
-                                it.imageUrl,
-                                it.name,
-                                it.lat,
-                                it.long)
+                            TravelDestination(
+                                name = it.name,
+                                imageUrl = it.imageUrl,
+                                location = it.name,
+                                lat = it.lat,
+                                lon = it.long
+                            )
                         }
                     dailyList.add(
                         DailyItem(
