@@ -9,7 +9,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,7 +24,7 @@ fun RPlanCard(
     modifier: Modifier = Modifier,
     name: String,
     date: String,
-    desciption: String,
+    description: String,
     imageUrl: String,
     onClick: () -> Unit,
     onDelete: () -> Unit
@@ -34,7 +33,7 @@ fun RPlanCard(
         modifier = modifier
             .height(116.dp)
             .fillMaxWidth(),
-        elevation = 10.dp,
+        elevation = 8.dp,
     ) {
         Row(
             modifier = Modifier
@@ -64,7 +63,7 @@ fun RPlanCard(
                 )
                 Spacer(modifier = Modifier.height(5.dp))
                 Text(
-                    text = desciption,
+                    text = description,
                     style = MaterialTheme.typography.caption
                 )
             }
@@ -100,7 +99,7 @@ fun RPlanCardPreview() {
             imageUrl = "https://picsum.photos/200/300",
             onClick = {},
             date = "12 Mei 2021 - 28 Mei2022",
-            desciption = "Ini deskripsi",
+            description = "Ini deskripsi",
             onDelete = {}
         )
     }

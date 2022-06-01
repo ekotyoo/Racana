@@ -1,7 +1,6 @@
 package com.ekotyoo.racana.ui.main.tourplanlist
 
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
@@ -27,13 +26,11 @@ import com.ekotyoo.racana.data.model.getDummyTourPlan
 import com.ekotyoo.racana.ui.destinations.TourPlanDetailSavedScreenDestination
 import com.ekotyoo.racana.ui.main.tourplanlist.model.TourPlanListEvent
 import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @BottomNavGraph
 @Destination(style = NavigationTransition::class)
 @Composable
 fun TourPlanListScreen(
-    navigator: DestinationsNavigator,
     rootNavigator: RootNavigator,
     viewModel: TourPlanListViewModel = hiltViewModel(),
 ) {
@@ -45,6 +42,7 @@ fun TourPlanListScreen(
                 is TourPlanListEvent.NavigateToTourPlanResult -> {
                     rootNavigator.value.navigate(TourPlanDetailSavedScreenDestination)
                 }
+                TourPlanListEvent.DeletePlanButtonClicked -> {}
             }
         }
     }
@@ -90,7 +88,7 @@ fun TourPlanListEmpty(modifier: Modifier = Modifier) {
 fun TourPlanListContent(
     tourPlanList: List<TourPlan>,
     onCardClick: () -> Unit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
 ) {
     Scaffold(topBar = {
         RTopAppBar(title = stringResource(id = R.string.tour_plan_list))
@@ -99,7 +97,7 @@ fun TourPlanListContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            contentPadding = PaddingValues(bottom = 16.dp),
+            contentPadding = PaddingValues(vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(tourPlanList.size) { index ->
@@ -109,7 +107,7 @@ fun TourPlanListContent(
                     name = plan.title ?: "Untitled",
                     imageUrl = plan.imageUrl,
                     date = plan.period,
-                    desciption = plan.description ?: "-",
+                    description = plan.description ?: "-",
                     onClick = onCardClick,
                     onDelete = onDelete
                 )
