@@ -1,7 +1,7 @@
 package com.ekotyoo.racana.data.repository
 
 import com.ekotyoo.racana.data.datasource.local.UserPreferencesDataStore
-import com.ekotyoo.racana.data.datasource.remote.AuthApi
+import com.ekotyoo.racana.data.datasource.remote.api.AuthApi
 import com.ekotyoo.racana.data.model.UserModel
 import dagger.hilt.android.scopes.ViewModelScoped
 import com.ekotyoo.racana.core.utils.Result

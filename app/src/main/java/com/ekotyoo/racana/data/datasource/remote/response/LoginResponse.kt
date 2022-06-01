@@ -1,11 +1,11 @@
-package com.ekotyoo.racana.data.datasource.remote
+package com.ekotyoo.racana.data.datasource.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class RegisterResponse(
+data class LoginResponse(
 
 	@field:SerializedName("data")
-	val data: RegisterData,
+	val data: LoginData,
 
 	@field:SerializedName("message")
 	val message: String,
@@ -14,7 +14,7 @@ data class RegisterResponse(
 	val status: String,
 )
 
-data class RegisterData(
+data class LoginData(
 
 	@field:SerializedName("name")
 	val name: String,
@@ -24,4 +24,7 @@ data class RegisterData(
 
 	@field:SerializedName("email")
 	val email: String,
+
+	@field:SerializedName("token")
+	val token: String,
 )

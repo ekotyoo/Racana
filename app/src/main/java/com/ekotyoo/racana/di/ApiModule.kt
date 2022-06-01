@@ -1,7 +1,8 @@
 package com.ekotyoo.racana.di
 
-import com.ekotyoo.racana.data.datasource.remote.AuthApi
-import com.ekotyoo.racana.data.datasource.remote.TourPlanApi
+import com.ekotyoo.racana.data.datasource.remote.api.AuthApi
+import com.ekotyoo.racana.data.datasource.remote.api.DestinationApi
+import com.ekotyoo.racana.data.datasource.remote.api.TourPlanApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -49,6 +50,11 @@ object ApiModule {
     @Provides
     fun provideTourPlanApi(retrofit: Retrofit): TourPlanApi =
         retrofit.create(TourPlanApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideDestinationApi(retrofit: Retrofit): DestinationApi =
+        retrofit.create(DestinationApi::class.java)
 }
 
-private const val BASE_URL = "https://racana-test.herokuapp.com/api/" //Mockoon server
+private const val BASE_URL = "https://racana-test.herokuapp.com/api/"

@@ -1,5 +1,6 @@
-package com.ekotyoo.racana.data.datasource.remote
+package com.ekotyoo.racana.data.datasource.remote.api
 
+import com.ekotyoo.racana.data.datasource.remote.response.TourPlanResponse
 import retrofit2.Response
 import retrofit2.http.*
 

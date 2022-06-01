@@ -1,5 +1,7 @@
-package com.ekotyoo.racana.data.datasource.remote
+package com.ekotyoo.racana.data.datasource.remote.api
 
+import com.ekotyoo.racana.data.datasource.remote.response.LoginResponse
+import com.ekotyoo.racana.data.datasource.remote.response.RegisterResponse
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded

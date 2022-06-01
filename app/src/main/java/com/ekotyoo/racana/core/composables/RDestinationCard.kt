@@ -16,6 +16,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ekotyoo.racana.R
@@ -54,6 +55,8 @@ fun RDestinationCard(
             Text(
                 text = name,
                 style = MaterialTheme.typography.subtitle2,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
             )
             CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                 Row(

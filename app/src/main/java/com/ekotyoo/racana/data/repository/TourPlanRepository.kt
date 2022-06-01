@@ -4,7 +4,7 @@ import com.ekotyoo.racana.core.utils.Result
 import com.ekotyoo.racana.data.datasource.local.UserPreferencesDataStore
 import com.ekotyoo.racana.data.datasource.local.database.TourPlanDao
 import com.ekotyoo.racana.data.datasource.local.database.entity.toModel
-import com.ekotyoo.racana.data.datasource.remote.TourPlanApi
+import com.ekotyoo.racana.data.datasource.remote.api.TourPlanApi
 import com.ekotyoo.racana.data.model.DailyItem
 import com.ekotyoo.racana.data.model.TourPlan
 import com.ekotyoo.racana.data.model.TravelDestination
