@@ -9,9 +9,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.List
+import androidx.compose.material.icons.rounded.Person
+import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -24,13 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ekotyoo.racana.ui.NavGraphs
 import com.ekotyoo.racana.ui.appCurrentDestinationAsState
-import com.ekotyoo.racana.ui.destinations.CreateTourPlanScreenDestination
-import com.ekotyoo.racana.ui.destinations.DashboardScreenDestination
-import com.ekotyoo.racana.ui.destinations.ProfileScreenDestination
-import com.ekotyoo.racana.ui.destinations.TourPlanListScreenDestination
+import com.ekotyoo.racana.ui.destinations.*
 import com.ekotyoo.racana.ui.startAppDestination
-import com.ramcosta.composedestinations.annotation.NavGraph
-import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.navigate
 import com.ramcosta.composedestinations.navigation.popUpTo
@@ -40,7 +36,7 @@ import com.ramcosta.composedestinations.spec.DirectionDestinationSpec
 fun RBottomNavigationBar(
     modifier: Modifier = Modifier,
     rootNavigator: DestinationsNavigator,
-    bottomAppBarNavController: NavController
+    bottomAppBarNavController: NavController,
 ) {
     val currentDestination =
         bottomAppBarNavController.appCurrentDestinationAsState().value
@@ -91,7 +87,7 @@ fun RBottomAppBarIcon(
     isSelected: Boolean = false,
     imageVector: ImageVector,
     contentDescription: String?,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     val color =
         animateColorAsState(targetValue = if (isSelected) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface)
@@ -127,7 +123,8 @@ enum class BottomBarDestination(
     val direction: DirectionDestinationSpec,
     val icon: ImageVector,
 ) {
-    MainScreen(DashboardScreenDestination, Icons.Filled.Home),
-    TourPlanListScreen(TourPlanListScreenDestination, Icons.Filled.List),
-    ProfileScreen(ProfileScreenDestination, Icons.Filled.Person)
+    MainScreen(DashboardScreenDestination, Icons.Rounded.Home),
+    SearchScreen(SearchScreenDestination, Icons.Rounded.Search),
+    TourPlanListScreen(TourPlanListScreenDestination, Icons.Rounded.List),
+    ProfileScreen(ProfileScreenDestination, Icons.Rounded.Person)
 }

@@ -59,4 +59,7 @@
     <string name="tour_plan_empty">Tour Plan Anda Kosong</string>
     <string name="upgrade_premium">Upgrade Premium</string>
     <string name="trip_date">Tanggal Trip</string>
+    <string name="search">Pencarian</string>
+    <string name="search_destination">Cari destinasi..</string>
+    <string name="destination_detail">Detail Destinasi</string>
 </resources>

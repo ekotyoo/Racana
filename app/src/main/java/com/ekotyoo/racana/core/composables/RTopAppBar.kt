@@ -1,5 +1,6 @@
 package com.ekotyoo.racana.core.composables
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
@@ -20,15 +21,17 @@ import com.ekotyoo.racana.R
 fun RTopAppBar(
     modifier: Modifier = Modifier,
     title: String,
-    topAppBarColor: Color = MaterialTheme.colors.surface,
-    textColor: Color = MaterialTheme.colors.onSurface,
+    topAppBarColor: Color = MaterialTheme.colors.primary,
+    textColor: Color = MaterialTheme.colors.onPrimary,
     isBackButtonAvailable: Boolean = false,
     onBackButtonCLicked: () -> Unit = {},
     actionIcon: ImageVector? = null,
     onActionsButtonClicked: () -> Unit = {},
 ) {
     CenterAlignedTopAppBar(
-        modifier = modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+        modifier = modifier
+            .background(MaterialTheme.colors.primary)
+            .padding(horizontal = 12.dp, vertical = 8.dp),
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = topAppBarColor),
         title = {
             Text(

@@ -77,7 +77,7 @@ fun DestinationDetailContent(
     Scaffold(
         topBar = {
             RTopAppBar(
-                title = "",
+                title = stringResource(id = R.string.destination_detail),
                 isBackButtonAvailable = true,
                 onBackButtonCLicked = onBackButtonClicked
             )
@@ -89,6 +89,7 @@ fun DestinationDetailContent(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
         ) {
+            Spacer(Modifier.height(16.dp))
             CoilImage(
                 contentDescription = null,
                 modifier = Modifier

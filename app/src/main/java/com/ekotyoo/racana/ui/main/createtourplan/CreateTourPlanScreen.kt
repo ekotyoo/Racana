@@ -160,6 +160,7 @@ fun CreateTourPlanContent(
                         .fillMaxSize()
                         .padding(horizontal = 16.dp)
                 ) {
+                    Spacer(Modifier.height(16.dp))
                     // City Input
                     CreateTourPlanSection(title = "Kota") {
                         CityDropdown(
