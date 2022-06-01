@@ -4,7 +4,6 @@ import android.content.res.Configuration
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
@@ -32,31 +31,30 @@ import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.core.utils.CurrencyFormatter
 import com.ekotyoo.racana.ui.destinations.DestinationDetailScreenDestination
 import com.ekotyoo.racana.ui.destinations.TourPlanMapScreenDestination
-import com.ekotyoo.racana.ui.main.profile.ProfileContent
 import com.ekotyoo.racana.ui.main.tourplandetailsaved.model.TourPlanDetailSavedEvent
 import com.ekotyoo.racana.ui.main.tourplandetailsaved.model.TourPlanDetailSavedState
 import com.ekotyoo.racana.ui.main.tourplanmap.model.TourPlanMapArgument
-import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultArgument
-import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
-import java.time.LocalDate
 
 @Destination(style = NavigationTransition::class)
 @Composable
 fun TourPlanDetailSavedScreen(
     navigator: DestinationsNavigator,
-    viewModel: TourPlanDetailSavedViewModel = hiltViewModel()
+    viewModel: TourPlanDetailSavedViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.eventChannel.collect { event ->
-            when(event) {
+            when (event) {
                 is TourPlanDetailSavedEvent.NavigateToDestinationDetail -> {
                     navigator.navigate(DestinationDetailScreenDestination)
                 }
+                is TourPlanDetailSavedEvent.DeleteDestinationButtonClicked -> {}
+                is TourPlanDetailSavedEvent.NavigateBackWithMessage -> {}
+                is TourPlanDetailSavedEvent.StartTourButtonClicked -> {}
             }
         }
     }
@@ -95,17 +93,18 @@ fun TourPlanDetailSavedContent(
     onDateSelected: (Int) -> Unit,
     onDestinationClicked: () -> Unit,
     onDeleteButtonClicked: () -> Unit,
-    onStartTourButtonClicked: () -> Unit
+    onStartTourButtonClicked: () -> Unit,
 ) {
     Column(
-        modifier = Modifier
-            .padding(horizontal = 16.dp)
+        modifier = modifier
             .fillMaxSize()
     ) {
+        Spacer(modifier = Modifier.height(16.dp))
         CoilImage(
             imageModel = state.tourPlan.imageUrl,
             contentDescription = null,
             modifier = Modifier
+                .padding(horizontal = 16.dp)
                 .fillMaxWidth()
                 .aspectRatio(2.45f)
                 .clip(MaterialTheme.shapes.medium),
@@ -114,13 +113,15 @@ fun TourPlanDetailSavedContent(
         )
         Spacer(modifier = Modifier.height(16.dp))
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Top
         ) {
-            Column(modifier = Modifier.weight(0.5f)) {
+            Column {
                 Text(
-                    text = stringResource(id = R.string.trip_date), 
+                    text = stringResource(id = R.string.trip_date),
                     style = MaterialTheme.typography.subtitle2
                 )
                 Text(
@@ -128,7 +129,7 @@ fun TourPlanDetailSavedContent(
                     style = MaterialTheme.typography.caption,
                 )
             }
-            val budget = state.tourPlanResultArgs?.totalBudget ?: 0
+            val budget = 0
             Text(
                 text = CurrencyFormatter(budget),
                 style = MaterialTheme.typography.subtitle2
@@ -138,10 +139,12 @@ fun TourPlanDetailSavedContent(
 
         //Description
         Text(
+            modifier = Modifier.padding(horizontal = 16.dp),
             text = stringResource(id = R.string.description),
             style = MaterialTheme.typography.subtitle2
         )
         Text(
+            modifier = Modifier.padding(horizontal = 16.dp),
             text = state.tourPlan.description ?: "",
             style = MaterialTheme.typography.caption
         )
@@ -179,16 +182,7 @@ fun TourPlanDetailSavedPreview() {
     RacanaTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
             TourPlanDetailSavedContent(
-                state = TourPlanDetailSavedState(
-                    tourPlanResultArgs = TourPlanResultArgument(
-                        "Malang",
-                        1000000,
-                        null,
-                        null,
-                        5,
-                        1
-                    )
-                ),
+                state = TourPlanDetailSavedState(),
                 onDateSelected = {},
                 onDestinationClicked = {},
                 onStartTourButtonClicked = {},
