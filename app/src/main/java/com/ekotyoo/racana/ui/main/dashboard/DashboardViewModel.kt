@@ -40,6 +40,7 @@ class DashboardViewModel @Inject constructor(
     }
 
     private fun getTopDestinations() {
+        _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
             when(val result = destinationRepository.getDestinations()) {
                 is Result.Error -> {
@@ -49,6 +50,7 @@ class DashboardViewModel @Inject constructor(
                     _state.update { it.copy(destinations = result.value) }
                 }
             }
+            _state.update { it.copy(isLoading = false) }
         }
     }
 }

@@ -3,6 +3,7 @@ package com.ekotyoo.racana.ui.main.dashboard
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
@@ -15,6 +16,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush.Companion.linearGradient
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ExperimentalTextApi
@@ -31,7 +35,6 @@ import com.ekotyoo.racana.core.navigation.BottomNavGraph
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.data.model.TravelDestination
-import com.ekotyoo.racana.data.model.getDummyDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
@@ -59,7 +62,8 @@ fun DashboardScreen(
     ) {
         DashboardContent(
             destinations = state.destinations,
-            lazyListState = lazyListState
+            lazyListState = lazyListState,
+            isLoading = state.isLoading,
         )
     }
 }
@@ -68,19 +72,20 @@ fun DashboardScreen(
 fun DashboardContent(
     destinations: List<TravelDestination>,
     lazyListState: LazyListState,
+    isLoading: Boolean,
 ) {
     LazyColumn(
         state = lazyListState,
     ) {
         item {
-            DashboardHeader()
+            DashboardHeader(isLoading = isLoading)
             Spacer(Modifier.height(16.dp))
         }
         item {
             DashboardSection(
                 title = stringResource(id = R.string.top_destination)
             ) {
-                DestinationRow(destinations = destinations, onItemClick = {})
+                DestinationRow(destinations = destinations, isLoading = isLoading, onItemClick = {})
             }
             Spacer(Modifier.height(16.dp))
         }
@@ -92,13 +97,23 @@ fun DashboardContent(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     modifier = Modifier.padding(horizontal = 16.dp)
                 ) {
-                    repeat(4) {
+                    if (isLoading) {
                         RImageCard(
-                            imageUrl = "https://picsum.photos/200/300",
-                            title = "Lorem Ipsum Dolor",
-                            description = "Lorem ipsum dolor dolr asdf das",
+                            imageUrl = "",
+                            title = "",
+                            description = "",
+                            isLoading = isLoading,
                             onClick = {}
                         )
+                    } else {
+                        repeat(4) {
+                            RImageCard(
+                                imageUrl = "https://picsum.photos/200/300",
+                                title = "Lorem Ipsum Dolor",
+                                description = "Lorem ipsum dolor dolr asdf das",
+                                onClick = {}
+                            )
+                        }
                     }
                 }
             }
@@ -159,7 +174,9 @@ fun DashboardAppBar(
 }
 
 @Composable
-fun DashboardHeader() {
+fun DashboardHeader(
+    isLoading: Boolean,
+) {
     Box(
         modifier = Modifier
             .background(MaterialTheme.colors.primary)
@@ -179,7 +196,8 @@ fun DashboardHeader() {
                 imageUrl = "https://picsum.photos/200/300",
                 title = "Travel to Madura",
                 date = "16 Mei 2022 - 18 Mei 2022",
-                location = "Jawa Timur"
+                location = "Jawa Timur",
+                isLoading = isLoading,
             )
         }
     }
@@ -220,6 +238,7 @@ fun DashboardSection(
 fun DestinationRow(
     modifier: Modifier = Modifier,
     destinations: List<TravelDestination>,
+    isLoading: Boolean = false,
     onItemClick: (TravelDestination) -> Unit,
 ) {
     LazyRow(
@@ -227,13 +246,26 @@ fun DestinationRow(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
-        items(destinations, key = {it.id}) { destination ->
-            RDestinationCard(
-                name = destination.name,
-                location = destination.location,
-                imageUrl = destination.imageUrl,
-                onClick = { onItemClick(destination) }
-            )
+        if (isLoading) {
+            items(4) {
+                RDestinationCard(
+                    name = "",
+                    location = "",
+                    imageUrl = "",
+                    isLoading = isLoading,
+                    onClick = { }
+                )
+            }
+        } else {
+            items(destinations, key = { it.id }) { destination ->
+                RDestinationCard(
+                    name = destination.name,
+                    location = destination.location,
+                    imageUrl = destination.imageUrl,
+                    isLoading = isLoading,
+                    onClick = { onItemClick(destination) }
+                )
+            }
         }
     }
 }
@@ -246,63 +278,87 @@ fun CurrentTourPlanCard(
     title: String,
     date: String,
     location: String,
+    isLoading: Boolean = false,
 ) {
-    Card(modifier) {
-        Column(modifier = Modifier.padding(8.dp)) {
-            CoilImage(
-                modifier = Modifier
-                    .weight(1f)
-                    .clip(MaterialTheme.shapes.small)
-                    .fillMaxWidth(),
-                imageModel = imageUrl,
-                previewPlaceholder = R.drawable.ic_launcher_background,
-                contentScale = ContentScale.Crop,
-                contentDescription = null,
-            )
+    val gradient = listOf(
+        Color.LightGray.copy(alpha = 0.9f),
+        Color.LightGray.copy(alpha = 0.3f),
+        Color.LightGray.copy(alpha = 0.9f)
+    )
 
-            Spacer(Modifier.height(8.dp))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.h6
+    val translateX = rememberInfiniteTransition().animateFloat(initialValue = 0f,
+        targetValue = 1000f,
+        animationSpec = infiniteRepeatable(tween(1000, easing = FastOutSlowInEasing)))
+
+    val brush = linearGradient(
+        colors = gradient,
+        start = Offset(200f, 0f),
+        end = Offset(x = translateX.value, y = 0f)
+    )
+
+    Card(modifier) {
+        if (isLoading) {
+            Spacer(modifier = Modifier
+                .clip(MaterialTheme.shapes.small)
+                .background(brush)
+                .padding(8.dp))
+        } else {
+            Column(modifier = Modifier.padding(8.dp)) {
+                CoilImage(
+                    modifier = Modifier
+                        .weight(1f)
+                        .clip(MaterialTheme.shapes.small)
+                        .fillMaxWidth(),
+                    imageModel = imageUrl,
+                    previewPlaceholder = R.drawable.ic_launcher_background,
+                    contentScale = ContentScale.Crop,
+                    contentDescription = null,
                 )
-                CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            modifier = Modifier.size(16.dp),
-                            imageVector = Icons.Rounded.Place,
-                            contentDescription = null,
-                            tint = MaterialTheme.colors.primary
-                        )
-                        Spacer(Modifier.width(4.dp))
-                        Text(
-                            text = location,
-                            style = MaterialTheme.typography.body2.copy(
-                                platformStyle = PlatformTextStyle(
-                                    includeFontPadding = false
+
+                Spacer(Modifier.height(8.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.h6
+                    )
+                    CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                modifier = Modifier.size(16.dp),
+                                imageVector = Icons.Rounded.Place,
+                                contentDescription = null,
+                                tint = MaterialTheme.colors.primary
+                            )
+                            Spacer(Modifier.width(4.dp))
+                            Text(
+                                text = location,
+                                style = MaterialTheme.typography.body2.copy(
+                                    platformStyle = PlatformTextStyle(
+                                        includeFontPadding = false
+                                    ),
+                                    lineHeightStyle = LineHeightStyle(
+                                        alignment = LineHeightStyle.Alignment.Center,
+                                        trim = LineHeightStyle.Trim.None
+                                    )
                                 ),
-                                lineHeightStyle = LineHeightStyle(
-                                    alignment = LineHeightStyle.Alignment.Center,
-                                    trim = LineHeightStyle.Trim.None
-                                )
-                            ),
-                        )
+                            )
+                        }
                     }
                 }
+                Text(
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                    text = date,
+                    style = MaterialTheme.typography.body2
+                )
             }
-            Text(
-                modifier = Modifier.padding(horizontal = 8.dp),
-                text = date,
-                style = MaterialTheme.typography.body2
-            )
         }
     }
 }
@@ -329,21 +385,21 @@ fun CurrentTourPlanCardPreview() {
     }
 }
 
-@Preview(
-    name = "Light Mode Preview",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO
-)
-@Preview(
-    name = "Dark Mode Preview",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-)
-@Composable
-fun MainScreenPreview() {
-    RacanaTheme {
-        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-            DashboardContent(getDummyDestination(), rememberLazyListState())
-        }
-    }
-}
+//@Preview(
+//    name = "Light Mode Preview",
+//    showBackground = true,
+//    uiMode = Configuration.UI_MODE_NIGHT_NO
+//)
+//@Preview(
+//    name = "Dark Mode Preview",
+//    showBackground = true,
+//    uiMode = Configuration.UI_MODE_NIGHT_YES,
+//)
+//@Composable
+//fun MainScreenPreview() {
+//    RacanaTheme {
+//        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
+//            DashboardContent(getDummyDestination(), rememberLazyListState())
+//        }
+//    }
+//}
