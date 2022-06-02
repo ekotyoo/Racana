@@ -55,7 +55,9 @@ fun RBottomNavigationBar(
                     onClick = {
                         if (currentDestination != destination.direction) {
                             bottomAppBarNavController.navigate(destination.direction) {
-                                popUpTo(DashboardScreenDestination)
+                                popUpTo(currentDestination) {
+                                    inclusive = true
+                                }
                                 launchSingleTop = true
                             }
                         }

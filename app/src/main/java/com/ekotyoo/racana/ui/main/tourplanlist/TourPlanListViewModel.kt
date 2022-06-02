@@ -3,7 +3,6 @@ package com.ekotyoo.racana.ui.main.tourplanlist
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ekotyoo.racana.data.repository.TourPlanRepository
-import com.ekotyoo.racana.ui.main.tourplandetailsaved.model.TourPlanDetailSavedEvent
 import com.ekotyoo.racana.ui.main.tourplanlist.model.TourPlanListEvent
 import com.ekotyoo.racana.ui.main.tourplanlist.model.TourPlanListState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,7 +30,7 @@ class TourPlanListViewModel @Inject constructor(
 
     fun onTourPlanClicked() {
         viewModelScope.launch {
-            _eventChannel.send(TourPlanListEvent.NavigateToTourPlanResult)
+            _eventChannel.send(TourPlanListEvent.NavigateToTourPlanDetail)
         }
     }
 

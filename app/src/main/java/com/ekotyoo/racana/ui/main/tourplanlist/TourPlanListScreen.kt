@@ -24,9 +24,11 @@ import com.ekotyoo.racana.core.navigation.RootNavigator
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.data.model.TourPlan
 import com.ekotyoo.racana.data.model.getDummyTourPlan
+import com.ekotyoo.racana.ui.destinations.MainScreenDestination
 import com.ekotyoo.racana.ui.destinations.TourPlanDetailSavedScreenDestination
 import com.ekotyoo.racana.ui.main.tourplanlist.model.TourPlanListEvent
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.popUpTo
 
 @BottomNavGraph
 @Destination(style = NavigationTransition::class)
@@ -40,8 +42,10 @@ fun TourPlanListScreen(
     LaunchedEffect(Unit) {
         viewModel.eventChannel.collect { event ->
             when (event) {
-                is TourPlanListEvent.NavigateToTourPlanResult -> {
-                    rootNavigator.value.navigate(TourPlanDetailSavedScreenDestination)
+                is TourPlanListEvent.NavigateToTourPlanDetail -> {
+                    rootNavigator.value.navigate(TourPlanDetailSavedScreenDestination) {
+                        launchSingleTop = true
+                    }
                 }
                 TourPlanListEvent.DeletePlanButtonClicked -> {}
             }
