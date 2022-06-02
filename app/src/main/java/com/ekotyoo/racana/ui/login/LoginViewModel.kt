@@ -60,6 +60,10 @@ class LoginViewModel @Inject constructor(
         _state.update { it.copy(passwordErrorMessage = errorMessage) }
     }
 
+    fun onHideShowPasswordToggled() {
+        _state.update { it.copy(isPasswordObscured = !_state.value.isPasswordObscured) }
+    }
+
     fun onLoginButtonClicked() {
         val email = state.value.emailTextFieldValue
         val password = state.value.passwordTextFieldValue

@@ -12,6 +12,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -81,8 +84,10 @@ fun LoginScreen(
                 passwordValue = state.passwordTextFieldValue,
                 emailErrorMessage = state.emailErrorMessage,
                 passwordErrorMessage = state.passwordErrorMessage,
+                isPasswordObscured = state.isPasswordObscured,
                 onEmailEmailTextFieldChange = viewModel::onEmailTextFieldValueChange,
                 onPasswordTextFieldChange = viewModel::onPasswordTextFieldValueChange,
+                onHideShowPasswordToggled = viewModel::onHideShowPasswordToggled,
                 onLoginButtonClicked = viewModel::onLoginButtonClicked,
                 onRegisterTextClicked = viewModel::onRegisterTextClicked,
             )
@@ -101,6 +106,8 @@ fun LoginContent(
     passwordValue: String,
     emailErrorMessage: String?,
     passwordErrorMessage: String?,
+    isPasswordObscured: Boolean = true,
+    onHideShowPasswordToggled: () -> Unit = {},
     onEmailEmailTextFieldChange: (String) -> Unit,
     onPasswordTextFieldChange: (String) -> Unit,
     onLoginButtonClicked: () -> Unit,
@@ -186,7 +193,15 @@ fun LoginContent(
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done
             ),
-            visualTransformation = PasswordVisualTransformation(),
+            trailingIcon = {
+                IconButton(onClick = onHideShowPasswordToggled) {
+                    Icon(
+                        imageVector = if (isPasswordObscured) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                        contentDescription = null
+                    )
+                }
+            },
+            visualTransformation = if (isPasswordObscured) PasswordVisualTransformation() else VisualTransformation.None,
             onValueChange = onPasswordTextFieldChange,
             isError = isPasswordError
         )

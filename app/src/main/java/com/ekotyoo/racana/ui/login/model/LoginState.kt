@@ -5,5 +5,6 @@ data class LoginState(
     val emailTextFieldValue: String = "",
     val passwordTextFieldValue: String = "",
     val emailErrorMessage: String? = "",
-    val passwordErrorMessage: String? = ""
+    val passwordErrorMessage: String? = "",
+    val isPasswordObscured: Boolean = true,
 )
