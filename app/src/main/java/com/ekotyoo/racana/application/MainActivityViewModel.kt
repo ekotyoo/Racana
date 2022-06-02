@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,6 +25,7 @@ class MainActivityViewModel @Inject constructor(authRepository: AuthRepository) 
     init {
         viewModelScope.launch {
             authRepository.userData.collect {
+                Timber.d(it.toString())
                 if (it.token.isNullOrEmpty()) {
                     _eventChannel.send(MainActivityEvent.Unauthenticated)
                 }

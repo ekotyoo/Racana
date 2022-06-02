@@ -31,9 +31,9 @@ class TourPlanDetailSavedViewModel @Inject constructor() : ViewModel() {
         _state.update { it.copy(selectedDate = value) }
     }
 
-    fun navigateToDestinationDetail() {
+    fun navigateToDestinationDetail(id: Int) {
         viewModelScope.launch {
-            _eventChannel.send(TourPlanDetailSavedEvent.NavigateToDestinationDetail)
+            _eventChannel.send(TourPlanDetailSavedEvent.NavigateToDestinationDetail(id))
         }
     }
 

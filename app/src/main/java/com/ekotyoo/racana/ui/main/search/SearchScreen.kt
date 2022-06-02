@@ -3,6 +3,7 @@ package com.ekotyoo.racana.ui.main.search
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -35,7 +36,10 @@ import com.ekotyoo.racana.core.navigation.BottomNavGraph
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.navigation.RootNavigator
 import com.ekotyoo.racana.core.theme.RacanaTheme
+import com.ekotyoo.racana.ui.destinations.DestinationDetailScreenDestination
+import com.ekotyoo.racana.ui.main.createtourplan.model.DestinationCategory
 import com.ekotyoo.racana.ui.main.createtourplan.model.getCategories
+import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationArgument
 import com.ekotyoo.racana.ui.main.search.model.SearchEvent
 import com.ekotyoo.racana.ui.main.search.model.SearchState
 import com.ramcosta.composedestinations.annotation.Destination
@@ -55,6 +59,13 @@ fun SearchScreen(
             when (event) {
                 is SearchEvent.NotFound -> snackbarHostState.showSnackbar("Destinasi tidak ditemukan.")
                 is SearchEvent.Error -> snackbarHostState.showSnackbar(event.message)
+                is SearchEvent.NavigateToDetail -> {
+                    rootNavigator.value.navigate(
+                        DestinationDetailScreenDestination(DestinationArgument(event.id))
+                    ) {
+                        launchSingleTop = true
+                    }
+                }
             }
         }
     }
@@ -64,7 +75,9 @@ fun SearchScreen(
             state = state,
             onSearch = viewModel::onSearch,
             onQueryChange = viewModel::onQueryChange,
-            onQueryClear = viewModel::onQueryClear
+            onQueryClear = viewModel::onQueryClear,
+            onCategoryClick = viewModel::onCategoryClick,
+            onSearchResultClick = viewModel::onSearchResultClick
         )
         SnackbarHost(hostState = snackbarHostState)
     }
@@ -76,6 +89,8 @@ fun SearchContent(
     onSearch: () -> Unit = {},
     onQueryChange: (String) -> Unit = {},
     onQueryClear: () -> Unit = {},
+    onCategoryClick: (DestinationCategory) -> Unit = {},
+    onSearchResultClick: (Int) -> Unit = {},
 ) {
     Scaffold(
         topBar = { RTopAppBar(title = stringResource(id = R.string.search)) }
@@ -103,7 +118,10 @@ fun SearchContent(
                 onValueChange = onQueryChange
             )
             Spacer(Modifier.height(16.dp))
-            SearchChipRow()
+            SearchChipRow(
+                selectedCategory = state.selectedCategory,
+                onItemClick = onCategoryClick
+            )
             Spacer(Modifier.height(16.dp))
             if (state.isLoading) {
                 val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.location_loading))
@@ -133,7 +151,9 @@ fun SearchContent(
                             name = destination.name,
                             imageUrl = destination.imageUrl,
                             location = destination.location,
-                            onClick = {}
+                            onClick = {
+                                onSearchResultClick(destination.id)
+                            }
                         )
                     }
                 }
@@ -143,19 +163,25 @@ fun SearchContent(
 }
 
 @Composable
-fun SearchChipRow() {
+fun SearchChipRow(
+    selectedCategory: DestinationCategory? = null,
+    categories: List<DestinationCategory> = getCategories(),
+    onItemClick: (DestinationCategory) -> Unit,
+) {
     LazyRow(
         contentPadding = PaddingValues(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(getCategories()) { category ->
-            RChip(text = category.title, filled = false)
+        items(categories) { category ->
+            RChip(text = category.title, filled = selectedCategory?.id == category.id, onClick = {
+                onItemClick(category)
+            })
         }
     }
 }
 
 @Composable
-fun RChip(text: String, filled: Boolean) {
+fun RChip(text: String, filled: Boolean, onClick: () -> Unit) {
     val backgroundColor =
         if (filled) MaterialTheme.colors.primary else MaterialTheme.colors.background
     val textColor = if (filled) MaterialTheme.colors.background else MaterialTheme.colors.primary
@@ -165,7 +191,10 @@ fun RChip(text: String, filled: Boolean) {
         color = textColor,
         modifier = Modifier
             .clip(MaterialTheme.shapes.small)
-            .border(1.5.dp, color = textColor, shape = MaterialTheme.shapes.small)
+            .border(1.5.dp,
+                color = MaterialTheme.colors.primary,
+                shape = MaterialTheme.shapes.small)
+            .clickable(onClick = onClick)
             .background(color = backgroundColor)
             .padding(horizontal = 12.dp, vertical = 4.dp)
     )

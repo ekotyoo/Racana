@@ -50,7 +50,7 @@ fun TourPlanDetailSavedScreen(
         viewModel.eventChannel.collect { event ->
             when (event) {
                 is TourPlanDetailSavedEvent.NavigateToDestinationDetail -> {
-                    navigator.navigate(DestinationDetailScreenDestination)
+                    navigator.navigate(DestinationDetailScreenDestination(event.id))
                 }
                 is TourPlanDetailSavedEvent.DeleteDestinationButtonClicked -> {}
                 is TourPlanDetailSavedEvent.NavigateBackWithMessage -> {}
@@ -91,7 +91,7 @@ fun TourPlanDetailSavedContent(
     modifier: Modifier = Modifier,
     state: TourPlanDetailSavedState,
     onDateSelected: (Int) -> Unit,
-    onDestinationClicked: () -> Unit,
+    onDestinationClicked: (Int) -> Unit,
     onDeleteButtonClicked: () -> Unit,
     onStartTourButtonClicked: () -> Unit,
 ) {

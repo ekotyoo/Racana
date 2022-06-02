@@ -9,6 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
@@ -41,7 +42,7 @@ fun RDetailTourPlan(
     modifier: Modifier = Modifier,
     state: TourPlanResultState,
     onDateSelected: (Int) -> Unit,
-    onDestinationClicked: () -> Unit,
+    onDestinationClicked: (Int) -> Unit,
     onDeleteButtonClicked: () -> Unit,
 ) {
     Column(modifier) {
@@ -67,21 +68,22 @@ fun RDetailTourPlan(
 fun AttractionList(
     modifier: Modifier = Modifier,
     destinationList: List<TravelDestination>?,
-    onClick: () -> Unit,
+    onClick: (Int) -> Unit,
     onDelete: () -> Unit,
 ) {
     val items = destinationList ?: emptyList()
     LazyColumn(
         modifier = modifier.padding(horizontal = 16.dp)
     ) {
-        items(items.size) {
-            val destination = items[it]
+        items(items) { destination ->
             AttractionCard(
                 imageUrl = destination.imageUrl,
                 title = destination.name,
                 location = destination.location,
                 isDone = destination.isDone,
-                onClick = onClick,
+                onClick = {
+                    onClick(destination.id)
+                },
                 onDelete = onDelete
             )
         }

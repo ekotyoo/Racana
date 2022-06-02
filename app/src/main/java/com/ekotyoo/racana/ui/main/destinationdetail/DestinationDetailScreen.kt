@@ -25,10 +25,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.RIconButton
+import com.ekotyoo.racana.core.composables.RLoadingOverlay
 import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.core.utils.CurrencyFormatter
+import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationArgument
 import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetail
 import com.ekotyoo.racana.ui.main.destinationdetail.model.getDummyDetailDestination
 import com.google.android.gms.maps.model.CameraPosition
@@ -40,14 +42,16 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
-import java.text.NumberFormat
-import java.util.*
+import timber.log.Timber
 
-@Destination(style = NavigationTransition::class)
+@Destination(
+    style = NavigationTransition::class,
+    navArgsDelegate = DestinationArgument::class
+)
 @Composable
 fun DestinationDetailScreen(
     navigator: DestinationsNavigator,
-    viewModel: DestinationDetailViewModel = hiltViewModel()
+    viewModel: DestinationDetailViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -65,6 +69,7 @@ fun DestinationDetailScreen(
             onBackButtonClicked = { navigator.popBackStack() },
             onFavoriteButtonClicked = viewModel::onFavoriteButtonClicked
         )
+        RLoadingOverlay(modifier = Modifier.align(Alignment.Center), visible = state.isLoading)
     }
 }
 
@@ -72,8 +77,13 @@ fun DestinationDetailScreen(
 fun DestinationDetailContent(
     destination: DestinationDetail,
     onBackButtonClicked: () -> Unit,
-    onFavoriteButtonClicked: () -> Unit
+    onFavoriteButtonClicked: () -> Unit,
 ) {
+    val cameraPositionState = rememberCameraPositionState {
+        Timber.d(destination.toString())
+        position = CameraPosition.fromLatLngZoom(LatLng(destination.lat, destination.lon), 10f)
+    }
+
     Scaffold(
         topBar = {
             RTopAppBar(
@@ -143,12 +153,8 @@ fun DestinationDetailContent(
                     .aspectRatio(1.88f)
                     .fillMaxWidth()
                     .clip(MaterialTheme.shapes.medium),
-                cameraPositionState = rememberCameraPositionState {
-                    destination.let {
-                        position = CameraPosition.fromLatLngZoom(LatLng(it.lat, it.lon), 14f)
-                    }
-                }
-           ) {
+                cameraPositionState = cameraPositionState
+            ) {
                 Marker(
                     state = MarkerState(LatLng(destination.lat, destination.lon))
                 )

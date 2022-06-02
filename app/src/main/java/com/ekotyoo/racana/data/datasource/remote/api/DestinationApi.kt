@@ -1,9 +1,11 @@
 package com.ekotyoo.racana.data.datasource.remote.api
 
+import com.ekotyoo.racana.data.datasource.remote.response.DestinationResponse
 import com.ekotyoo.racana.data.datasource.remote.response.ListDestinationResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface DestinationApi {
@@ -18,4 +20,10 @@ interface DestinationApi {
         @Header("Authorization") token: String,
         @Query("keyword") query: String
     ): Response<ListDestinationResponse>
+
+    @GET("destination/{id}")
+    suspend fun getDestinationById(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int
+    ): Response<DestinationResponse>
 }

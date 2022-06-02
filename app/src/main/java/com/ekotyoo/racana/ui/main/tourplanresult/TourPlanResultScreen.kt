@@ -75,7 +75,7 @@ fun TourPlanScreen(
                     snackbarHostState.showSnackbar("Berhasil menyimpan tour plan")
                 }
                 is TourPlanResultEvent.NavigateToDestinationDetail -> {
-                    navigator.navigate(DestinationDetailScreenDestination)
+                    navigator.navigate(DestinationDetailScreenDestination(event.id))
                 }
                 TourPlanResultEvent.DeleteDestinationButtonClicked -> {}
             }
@@ -143,7 +143,7 @@ fun TourPlanContent(
     onDateSelected: (Int) -> Unit,
     onOpenMapButtonClicked: () -> Unit,
     onChangePlanButtonClicked: () -> Unit,
-    onDestinationClicked: () -> Unit,
+    onDestinationClicked: (Int) -> Unit,
     onDeleteButtonClicked: () -> Unit,
 ) {
     Column(modifier.fillMaxSize()) {

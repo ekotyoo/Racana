@@ -48,4 +48,33 @@ class DestinationRepository @Inject constructor(
             return Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
         }
     }
+
+    suspend fun getDestinationById(id: Int): Result<TravelDestination> {
+        try {
+            val token = userPreferencesDataStore.userData.first().token
+            val response = destinationApi.getDestinationById(token ?: "", id)
+            val data = response.body()?.data
+            return if (response.isSuccessful && data != null) {
+                val destination = TravelDestination(
+                    id = data.id,
+                    name = data.name,
+                    imageUrl = data.imageUrl,
+                    location = data.location,
+                    lat = data.lat,
+                    lon = data.lon,
+                    brief = data.brief,
+                    expense = data.expense.toLong()
+                )
+                Result.Success(destination)
+            } else {
+                Result.Error("Failed getting data.", null)
+            }
+        } catch (e: IOException) {
+            Timber.d(e)
+            return Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        } catch (e: HttpException) {
+            Timber.d(e)
+            return Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        }
+    }
 }
