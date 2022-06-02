@@ -1,6 +1,7 @@
 package com.ekotyoo.racana.ui.main.dashboard
 
 import android.content.res.Configuration
+import android.widget.Toast
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.*
@@ -9,6 +10,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.NotificationAdd
+import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Icon
@@ -20,6 +23,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush.Companion.linearGradient
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.PlatformTextStyle
@@ -33,17 +37,19 @@ import com.ekotyoo.racana.core.composables.RIconButton
 import com.ekotyoo.racana.core.composables.RImageCard
 import com.ekotyoo.racana.core.navigation.BottomNavGraph
 import com.ekotyoo.racana.core.navigation.NavigationTransition
+import com.ekotyoo.racana.core.navigation.RootNavigator
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.data.model.TravelDestination
+import com.ekotyoo.racana.ui.destinations.DestinationDetailScreenDestination
+import com.ekotyoo.racana.ui.main.dashboard.model.DashboardEvent
 import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
 
 @BottomNavGraph(start = true)
 @Destination(style = NavigationTransition::class)
 @Composable
 fun DashboardScreen(
-    navigator: DestinationsNavigator,
+    rootNavigator: RootNavigator,
     viewModel: DashboardViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
@@ -51,19 +57,36 @@ fun DashboardScreen(
     val appBarExpanded = derivedStateOf {
         lazyListState.firstVisibleItemIndex == 0
     }
+
+    LaunchedEffect(Unit) {
+        viewModel.eventChannel.collect { event ->
+            when(event) {
+                is DashboardEvent.NavigateToDetailDestination -> {
+                    rootNavigator.value.navigate(DestinationDetailScreenDestination(event.id)) {
+                        launchSingleTop = true
+                    }
+                }
+            }
+        }
+    }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
+            val context = LocalContext.current
             DashboardAppBar(
                 userName = state.user?.name,
                 expanded = appBarExpanded.value
-            ) {}
+            ) {
+                Toast.makeText(context, "Fitur ini belum tersedia.", Toast.LENGTH_SHORT).show()
+            }
         }
     ) {
         DashboardContent(
             destinations = state.destinations,
             lazyListState = lazyListState,
             isLoading = state.isLoading,
+            onDestinationClick = viewModel::onDestinationClicked
         )
     }
 }
@@ -71,6 +94,7 @@ fun DashboardScreen(
 @Composable
 fun DashboardContent(
     destinations: List<TravelDestination>,
+    onDestinationClick: (Int) -> Unit = {},
     lazyListState: LazyListState,
     isLoading: Boolean,
 ) {
@@ -85,7 +109,7 @@ fun DashboardContent(
             DashboardSection(
                 title = stringResource(id = R.string.top_destination)
             ) {
-                DestinationRow(destinations = destinations, isLoading = isLoading, onItemClick = {})
+                DestinationRow(destinations = destinations, isLoading = isLoading, onItemClick = onDestinationClick)
             }
             Spacer(Modifier.height(16.dp))
         }
@@ -126,7 +150,7 @@ fun DashboardContent(
 fun DashboardAppBar(
     userName: String? = null,
     expanded: Boolean = false,
-    onSearchClicked: () -> Unit,
+    onActionClicked: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -166,9 +190,9 @@ fun DashboardAppBar(
             }
         }
         RIconButton(
-            imageVector = Icons.Rounded.Search,
-            onClick = onSearchClicked,
-            contentDescription = stringResource(id = R.string.search_button)
+            imageVector = Icons.Rounded.Notifications,
+            onClick = onActionClicked,
+            contentDescription = "Tombol Notifikasi"
         )
     }
 }
@@ -239,7 +263,7 @@ fun DestinationRow(
     modifier: Modifier = Modifier,
     destinations: List<TravelDestination>,
     isLoading: Boolean = false,
-    onItemClick: (TravelDestination) -> Unit,
+    onItemClick: (Int) -> Unit,
 ) {
     LazyRow(
         modifier = modifier,
@@ -263,7 +287,7 @@ fun DestinationRow(
                     location = destination.location,
                     imageUrl = destination.imageUrl,
                     isLoading = isLoading,
-                    onClick = { onItemClick(destination) }
+                    onClick = { onItemClick(destination.id) }
                 )
             }
         }

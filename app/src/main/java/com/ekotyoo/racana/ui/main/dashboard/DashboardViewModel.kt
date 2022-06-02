@@ -39,6 +39,12 @@ class DashboardViewModel @Inject constructor(
         }
     }
 
+    fun onDestinationClicked(id: Int) {
+        viewModelScope.launch {
+            _eventChannel.send(DashboardEvent.NavigateToDetailDestination(id))
+        }
+    }
+
     private fun getTopDestinations() {
         _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
