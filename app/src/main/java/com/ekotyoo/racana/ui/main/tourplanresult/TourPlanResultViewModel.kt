@@ -149,12 +149,6 @@ class TourPlanResultViewModel @Inject constructor(
         }
     }
 
-    fun deleteDestinationButtonClicked() {
-        viewModelScope.launch {
-            _eventChannel.send(TourPlanResultEvent.DeleteDestinationButtonClicked)
-        }
-    }
-
     companion object {
         const val OVER_200_CHARS = "over_200_chars"
         const val OVER_30_CHARS = "over_30_chars"

@@ -69,7 +69,7 @@ fun AttractionList(
     modifier: Modifier = Modifier,
     destinationList: List<TravelDestination>?,
     onClick: (Int) -> Unit,
-    onDelete: () -> Unit,
+    onDelete: (() -> Unit)? = null,
 ) {
     val items = destinationList ?: emptyList()
     LazyColumn(
@@ -160,7 +160,7 @@ fun AttractionCard(
     location: String,
     isDone: Boolean,
     onClick: () -> Unit,
-    onDelete: () -> Unit,
+    onDelete: (() -> Unit)? = null,
 ) {
     Row {
         ProgressLine(
@@ -199,13 +199,15 @@ fun AttractionCard(
                         Text(text = "Expense", style = MaterialTheme.typography.caption)
                         Text(text = location, style = MaterialTheme.typography.caption)
                     }
-                    RIconButton(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = null,
-                        onClick = onDelete,
-                        background = MaterialTheme.colors.surface,
-                        tint = MaterialTheme.colors.error
-                    )
+                    if(onDelete != null) {
+                        RIconButton(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = null,
+                            onClick = onDelete,
+                            background = MaterialTheme.colors.surface,
+                            tint = MaterialTheme.colors.error
+                        )
+                    }
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))

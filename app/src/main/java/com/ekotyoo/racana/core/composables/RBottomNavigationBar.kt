@@ -67,7 +67,9 @@ fun RBottomNavigationBar(
             FloatingActionButton(
                 containerColor = MaterialTheme.colors.primary,
                 onClick = {
-                    rootNavigator.navigate(CreateTourPlanScreenDestination)
+                    rootNavigator.navigate(CreateTourPlanScreenDestination) {
+                        launchSingleTop = true
+                    }
                 }
             ) {
                 Icon(

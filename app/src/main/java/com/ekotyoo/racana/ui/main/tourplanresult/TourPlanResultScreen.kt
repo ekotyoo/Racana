@@ -123,7 +123,6 @@ fun TourPlanScreen(
                     },
                     onChangePlanButtonClicked = viewModel::onChangePlanButtonClicked,
                     onDestinationClicked = viewModel::navigateToDestinationDetail,
-                    onDeleteButtonClicked = viewModel::deleteDestinationButtonClicked
                 )
             }
             RLoadingOverlay(
@@ -144,7 +143,6 @@ fun TourPlanContent(
     onOpenMapButtonClicked: () -> Unit,
     onChangePlanButtonClicked: () -> Unit,
     onDestinationClicked: (Int) -> Unit,
-    onDeleteButtonClicked: () -> Unit,
 ) {
     Column(modifier.fillMaxSize()) {
         Spacer(Modifier.height(32.dp))
@@ -159,7 +157,6 @@ fun TourPlanContent(
             AttractionList(
                 destinationList = targetList,
                 onClick = onDestinationClicked,
-                onDelete = onDeleteButtonClicked
             )
         }
         Spacer(Modifier.height(16.dp))
@@ -308,7 +305,6 @@ fun TourPlanScreenPreview() {
             onOpenMapButtonClicked = {},
             onChangePlanButtonClicked = {},
             onDestinationClicked = {},
-            onDeleteButtonClicked = {}
         )
     }
 }
