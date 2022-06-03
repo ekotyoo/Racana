@@ -29,8 +29,10 @@ import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.core.utils.CurrencyFormatter
+import com.ekotyoo.racana.data.model.TourPlan
 import com.ekotyoo.racana.ui.destinations.DestinationDetailScreenDestination
 import com.ekotyoo.racana.ui.destinations.TourPlanMapScreenDestination
+import com.ekotyoo.racana.ui.main.tourplandetailsaved.model.TourPlanDetailSavedArgument
 import com.ekotyoo.racana.ui.main.tourplandetailsaved.model.TourPlanDetailSavedEvent
 import com.ekotyoo.racana.ui.main.tourplandetailsaved.model.TourPlanDetailSavedState
 import com.ekotyoo.racana.ui.main.tourplanmap.model.TourPlanMapArgument
@@ -38,7 +40,10 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
 
-@Destination(style = NavigationTransition::class)
+@Destination(
+    style = NavigationTransition::class,
+    navArgsDelegate = TourPlanDetailSavedArgument::class
+)
 @Composable
 fun TourPlanDetailSavedScreen(
     navigator: DestinationsNavigator,

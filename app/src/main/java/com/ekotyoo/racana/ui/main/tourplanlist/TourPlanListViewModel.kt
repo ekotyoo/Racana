@@ -2,6 +2,7 @@ package com.ekotyoo.racana.ui.main.tourplanlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ekotyoo.racana.data.model.TourPlan
 import com.ekotyoo.racana.data.repository.TourPlanRepository
 import com.ekotyoo.racana.ui.main.tourplanlist.model.TourPlanListEvent
 import com.ekotyoo.racana.ui.main.tourplanlist.model.TourPlanListState
@@ -28,9 +29,9 @@ class TourPlanListViewModel @Inject constructor(
     private val _eventChannel = Channel<TourPlanListEvent>()
     val eventChannel = _eventChannel.receiveAsFlow()
 
-    fun onTourPlanClicked() {
+    fun onTourPlanClicked(tourPlan: TourPlan) {
         viewModelScope.launch {
-            _eventChannel.send(TourPlanListEvent.NavigateToTourPlanDetail)
+            _eventChannel.send(TourPlanListEvent.NavigateToTourPlanDetail(tourPlan))
         }
     }
 

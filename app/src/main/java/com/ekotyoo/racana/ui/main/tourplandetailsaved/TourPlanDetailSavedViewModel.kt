@@ -3,12 +3,9 @@ package com.ekotyoo.racana.ui.main.tourplandetailsaved
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ekotyoo.racana.core.utils.Result
-import com.ekotyoo.racana.data.repository.TourPlanRepository
-import com.ekotyoo.racana.ui.destinations.TourPlanScreenDestination
+import com.ekotyoo.racana.ui.destinations.TourPlanDetailSavedScreenDestination
 import com.ekotyoo.racana.ui.main.tourplandetailsaved.model.TourPlanDetailSavedEvent
 import com.ekotyoo.racana.ui.main.tourplandetailsaved.model.TourPlanDetailSavedState
-import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,13 +16,21 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TourPlanDetailSavedViewModel @Inject constructor() : ViewModel() {
+class TourPlanDetailSavedViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
+) : ViewModel() {
 
     private val _state = MutableStateFlow(TourPlanDetailSavedState())
     val state: StateFlow<TourPlanDetailSavedState> = _state
 
     private val _eventChannel = Channel<TourPlanDetailSavedEvent>()
     val eventChannel = _eventChannel.receiveAsFlow()
+
+    init {
+        val args = TourPlanDetailSavedScreenDestination.argsFrom(savedStateHandle)
+        val tourPlan = args.tourPlan
+        _state.update { it.copy(tourPlan = tourPlan) }
+    }
 
     fun onDateSelected(value: Int) {
         _state.update { it.copy(selectedDate = value) }

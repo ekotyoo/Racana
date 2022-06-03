@@ -24,11 +24,10 @@ import com.ekotyoo.racana.core.navigation.RootNavigator
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.data.model.TourPlan
 import com.ekotyoo.racana.data.model.getDummyTourPlan
-import com.ekotyoo.racana.ui.destinations.MainScreenDestination
 import com.ekotyoo.racana.ui.destinations.TourPlanDetailSavedScreenDestination
+import com.ekotyoo.racana.ui.main.tourplandetailsaved.model.TourPlanDetailSavedArgument
 import com.ekotyoo.racana.ui.main.tourplanlist.model.TourPlanListEvent
 import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.popUpTo
 
 @BottomNavGraph
 @Destination(style = NavigationTransition::class)
@@ -43,7 +42,11 @@ fun TourPlanListScreen(
         viewModel.eventChannel.collect { event ->
             when (event) {
                 is TourPlanListEvent.NavigateToTourPlanDetail -> {
-                    rootNavigator.value.navigate(TourPlanDetailSavedScreenDestination) {
+                    rootNavigator.value.navigate(
+                        TourPlanDetailSavedScreenDestination(
+                            TourPlanDetailSavedArgument(event.tourPlan)
+                        )
+                    ) {
                         launchSingleTop = true
                     }
                 }
@@ -92,7 +95,7 @@ fun TourPlanListEmpty(modifier: Modifier = Modifier) {
 @Composable
 fun TourPlanListContent(
     tourPlanList: List<TourPlan>,
-    onCardClick: () -> Unit,
+    onCardClick: (TourPlan) -> Unit,
     onDelete: () -> Unit,
 ) {
     Scaffold(topBar = {
@@ -105,14 +108,16 @@ fun TourPlanListContent(
             contentPadding = PaddingValues(vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            items(tourPlanList, key = {it.id ?: 0}) { plan ->
+            items(tourPlanList, key = { it.id ?: 0 }) { plan ->
                 RPlanCard(
                     modifier = Modifier.aspectRatio(2.6f),
                     name = plan.title ?: "Untitled",
                     imageUrl = plan.imageUrl,
                     date = plan.period,
                     description = plan.description ?: "-",
-                    onClick = onCardClick,
+                    onClick = {
+                        onCardClick(plan)
+                    },
                     onDelete = onDelete
                 )
             }
