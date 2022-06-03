@@ -9,7 +9,6 @@ import com.ekotyoo.racana.ui.destinations.DestinationDetailScreenDestination
 import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetail
 import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetailEvent
 import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetailState
-import com.ekotyoo.racana.ui.main.destinationdetail.model.getDummyDetailDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -51,11 +50,11 @@ class DestinationDetailViewModel @Inject constructor(
                             name = result.value.name,
                             imageUrl = result.value.imageUrl,
                             openCloseTime = "--",
-                            address = result.value.location,
-                            ticketPrice = result.value.expense,
-                            description = result.value.brief,
-                            lat = result.value.lat ?: .0,
-                            lon = result.value.lon ?: .0
+                            address = result.value.address,
+                            ticketPrice = result.value.weekdayPrice.toLong(),
+                            description = result.value.description,
+                            lat = result.value.lat,
+                            lon = result.value.lon
                         ))
                     }
                 }

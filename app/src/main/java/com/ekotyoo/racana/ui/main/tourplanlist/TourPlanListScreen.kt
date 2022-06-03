@@ -1,6 +1,5 @@
 package com.ekotyoo.racana.ui.main.tourplanlist
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -11,7 +10,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.airbnb.lottie.compose.*
@@ -21,9 +19,7 @@ import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.BottomNavGraph
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.navigation.RootNavigator
-import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.data.model.TourPlan
-import com.ekotyoo.racana.data.model.getDummyTourPlan
 import com.ekotyoo.racana.ui.destinations.TourPlanDetailSavedScreenDestination
 import com.ekotyoo.racana.ui.main.tourplandetailsaved.model.TourPlanDetailSavedArgument
 import com.ekotyoo.racana.ui.main.tourplanlist.model.TourPlanListEvent
@@ -122,22 +118,5 @@ fun TourPlanListContent(
                 )
             }
         }
-    }
-}
-
-@Preview(
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-    name = "Light Mode Preview"
-)
-@Preview(
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    name = "Dark Mode Preview"
-)
-@Composable
-fun RPlanCardPreview() {
-    RacanaTheme {
-        TourPlanListContent(tourPlanList = listOf(getDummyTourPlan()), {}, {})
     }
 }

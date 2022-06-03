@@ -10,10 +10,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.NotificationAdd
 import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.Place
-import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -60,7 +58,7 @@ fun DashboardScreen(
 
     LaunchedEffect(Unit) {
         viewModel.eventChannel.collect { event ->
-            when(event) {
+            when (event) {
                 is DashboardEvent.NavigateToDetailDestination -> {
                     rootNavigator.value.navigate(DestinationDetailScreenDestination(event.id)) {
                         launchSingleTop = true
@@ -109,7 +107,9 @@ fun DashboardContent(
             DashboardSection(
                 title = stringResource(id = R.string.top_destination)
             ) {
-                DestinationRow(destinations = destinations, isLoading = isLoading, onItemClick = onDestinationClick)
+                DestinationRow(destinations = destinations,
+                    isLoading = isLoading,
+                    onItemClick = onDestinationClick)
             }
             Spacer(Modifier.height(16.dp))
         }
@@ -284,7 +284,7 @@ fun DestinationRow(
             items(destinations, key = { it.id }) { destination ->
                 RDestinationCard(
                     name = destination.name,
-                    location = destination.location,
+                    location = destination.address,
                     imageUrl = destination.imageUrl,
                     isLoading = isLoading,
                     onClick = { onItemClick(destination.id) }

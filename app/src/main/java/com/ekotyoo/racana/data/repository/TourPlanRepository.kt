@@ -69,9 +69,15 @@ class TourPlanRepository @Inject constructor(
                             TravelDestination(
                                 name = it.name,
                                 imageUrl = it.imageUrl,
-                                location = it.name,
+                                address = it.address,
                                 lat = it.lat,
-                                lon = it.long
+                                lon = it.lon,
+                                rating = it.rating,
+                                categoryId = it.categoryId,
+                                weekdayPrice = it.weekdayPrice,
+                                weekendHolidayPrice = it.weekendHolidayPrice,
+                                description = it.description,
+                                id = it.id,
                             )
                         }
                     dailyList.add(

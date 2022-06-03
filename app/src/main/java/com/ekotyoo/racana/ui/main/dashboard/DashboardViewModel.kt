@@ -3,7 +3,6 @@ package com.ekotyoo.racana.ui.main.dashboard
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ekotyoo.racana.core.utils.Result
-import com.ekotyoo.racana.data.model.getDummyDestination
 import com.ekotyoo.racana.data.repository.AuthRepository
 import com.ekotyoo.racana.data.repository.DestinationRepository
 import com.ekotyoo.racana.ui.main.dashboard.model.DashboardEvent
@@ -21,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
     authRepository: AuthRepository,
-    private val destinationRepository: DestinationRepository
+    private val destinationRepository: DestinationRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(DashboardState())
@@ -48,7 +47,7 @@ class DashboardViewModel @Inject constructor(
     private fun getTopDestinations() {
         _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-            when(val result = destinationRepository.getDestinations()) {
+            when (val result = destinationRepository.getDestinations()) {
                 is Result.Error -> {
                     Timber.d("Error")
                 }

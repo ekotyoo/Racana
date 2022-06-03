@@ -41,11 +41,11 @@ interface TourPlanDao {
             val destinations = tourPlan.dailyList[index].destinationList.map {
                 DestinationEntity(name = it.name,
                     imageUrl = it.imageUrl,
-                    location = it.location,
+                    location = it.address,
                     lat = it.lat,
                     lon = it.lon,
                     visited = it.isDone,
-                    expense = it.expense,
+                    expense = it.weekdayPrice.toLong(),
                     dateId = id)
             }
             insertDestination(destinations)

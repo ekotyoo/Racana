@@ -16,8 +16,8 @@ data class ListDestinationResponse(
 
 data class ListDestinationData(
 
-	@field:SerializedName("brief")
-	val brief: String,
+	@field:SerializedName("addresss")
+	val addresss: String,
 
 	@field:SerializedName("imageUrl")
 	val imageUrl: String,
@@ -25,18 +25,27 @@ data class ListDestinationData(
 	@field:SerializedName("name")
 	val name: String,
 
-	@field:SerializedName("location")
-	val location: String,
+	@field:SerializedName("weekendHolidayPrice")
+	val weekendHolidayPrice: Int,
+
+	@field:SerializedName("rating")
+	val rating: Int,
+
+	@field:SerializedName("description")
+	val description: String,
 
 	@field:SerializedName("lon")
 	val lon: Double,
 
+	@field:SerializedName("weekdayPrice")
+	val weekdayPrice: Int,
+
 	@field:SerializedName("id")
 	val id: Int,
 
-	@field:SerializedName("expense")
-	val expense: Int,
-
 	@field:SerializedName("lat")
 	val lat: Double,
+
+	@field:SerializedName("categoryId")
+	val categoryId: Int
 )

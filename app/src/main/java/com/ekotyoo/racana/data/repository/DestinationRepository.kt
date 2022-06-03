@@ -30,10 +30,14 @@ class DestinationRepository @Inject constructor(
                         id = it.id,
                         name = it.name,
                         imageUrl = it.imageUrl,
-                        location = it.location,
+                        address = it.addresss,
                         lat = it.lat,
                         lon = it.lon,
-                        expense = it.expense.toLong()
+                        description = it.description,
+                        weekdayPrice = it.weekdayPrice,
+                        weekendHolidayPrice = it.weekendHolidayPrice,
+                        rating = it.rating,
+                        categoryId = it.categoryId
                     )
                 }
                 Result.Success(destinations)
@@ -59,11 +63,14 @@ class DestinationRepository @Inject constructor(
                     id = data.id,
                     name = data.name,
                     imageUrl = data.imageUrl,
-                    location = data.location,
+                    address = data.address,
                     lat = data.lat,
                     lon = data.lon,
-                    brief = data.brief,
-                    expense = data.expense.toLong()
+                    description = data.description,
+                    weekdayPrice = data.weekdayPrice,
+                    weekendHolidayPrice = data.weekendHolidayPrice,
+                    rating = data.rating,
+                    categoryId = data.categoryId
                 )
                 Result.Success(destination)
             } else {

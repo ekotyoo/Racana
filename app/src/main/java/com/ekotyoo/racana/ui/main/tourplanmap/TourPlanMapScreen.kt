@@ -77,18 +77,14 @@ fun TourPlanMapContent(
 
     val cameraPositionState = rememberCameraPositionState {
         destinationList.first().let {
-            if (it.lat != null && it.lon != null) {
-                position = CameraPosition.fromLatLngZoom(LatLng(it.lat, it.lon), 10f)
-            }
+            position = CameraPosition.fromLatLngZoom(LatLng(it.lat, it.lon), 10f)
         }
     }
 
     LaunchedEffect(state.selectedDate) {
         scrollState.scrollToItem(0)
         destinationList.first().let {
-            if (it.lat != null && it.lon != null) {
-                cameraPositionState.animate(CameraUpdateFactory.newLatLng(LatLng(it.lat, it.lon)))
-            }
+            cameraPositionState.animate(CameraUpdateFactory.newLatLng(LatLng(it.lat, it.lon)))
         }
     }
 
@@ -101,22 +97,20 @@ fun TourPlanMapContent(
                 ) {
                     val points = mutableListOf<LatLng>()
                     destinationList.forEachIndexed { i, destination ->
-                        if (destination.lat != null && destination.lon != null) {
-                            val position = LatLng(destination.lat, destination.lon)
-                            points.add(position)
-                            Marker(
-                                state = MarkerState(position),
-                                icon = BitmapUtil.markerBitmapDescriptor(context = LocalContext.current,
-                                    R.drawable.map_marker,
-                                    i + 1
-                                ),
-                                onClick = {
-                                    scope.launch { scrollState.animateScrollToItem(i) }
-                                    false
-                                },
-                                title = destination.name
-                            )
-                        }
+                        val position = LatLng(destination.lat, destination.lon)
+                        points.add(position)
+                        Marker(
+                            state = MarkerState(position),
+                            icon = BitmapUtil.markerBitmapDescriptor(context = LocalContext.current,
+                                R.drawable.map_marker,
+                                i + 1
+                            ),
+                            onClick = {
+                                scope.launch { scrollState.animateScrollToItem(i) }
+                                false
+                            },
+                            title = destination.name
+                        )
                     }
                     Polyline(
                         points = points,
@@ -148,14 +142,12 @@ fun TourPlanMapContent(
                                 MapDestinationCard(
                                     imageUrl = item.imageUrl,
                                     title = item.name,
-                                    location = item.location,
+                                    location = item.address,
                                     onClick = {
-                                        if (item.lat != null && item.lon != null) {
-                                            scope.launch {
-                                                cameraPositionState.animate(CameraUpdateFactory.newLatLng(
-                                                    LatLng(item.lat, item.lon))
-                                                )
-                                            }
+                                        scope.launch {
+                                            cameraPositionState.animate(CameraUpdateFactory.newLatLng(
+                                                LatLng(item.lat, item.lon))
+                                            )
                                         }
                                     }
                                 )

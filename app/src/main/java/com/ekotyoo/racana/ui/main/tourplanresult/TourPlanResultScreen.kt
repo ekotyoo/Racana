@@ -23,7 +23,6 @@ import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.*
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaTheme
-import com.ekotyoo.racana.data.model.getDummyTourPlan
 import com.ekotyoo.racana.ui.destinations.DestinationDetailScreenDestination
 import com.ekotyoo.racana.ui.destinations.MainScreenDestination
 import com.ekotyoo.racana.ui.destinations.TourPlanMapScreenDestination
@@ -283,28 +282,5 @@ fun SheetSection(
 fun SaveTourPlanSheetPreview() {
     RacanaTheme {
         SaveTourPlanSheetContent()
-    }
-}
-
-@Preview(
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-    name = "Light Mode Preview"
-)
-@Preview(
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    name = "Dark Mode Preview"
-)
-@Composable
-fun TourPlanScreenPreview() {
-    RacanaTheme {
-        TourPlanContent(
-            state = TourPlanResultState(tourPlan = getDummyTourPlan()),
-            onDateSelected = {},
-            onOpenMapButtonClicked = {},
-            onChangePlanButtonClicked = {},
-            onDestinationClicked = {},
-        )
     }
 }

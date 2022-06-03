@@ -27,18 +27,3 @@ data class DailyItem(
     val dateFormatted: String
         get() = date.format(DATE_FORMAT)
 }
-
-fun getDummyTourPlan(): TourPlan {
-    val dailyItemList: MutableList<DailyItem> = mutableListOf()
-    repeat(7) {
-        dailyItemList.add(
-            DailyItem(
-                number = it + 1,
-                date = LocalDate.now().plusDays(it.toLong()),
-                destinationList = getDummyDestination()
-            )
-        )
-    }
-
-    return TourPlan(title = "Tour Plan Title", dailyList = dailyItemList)
-}

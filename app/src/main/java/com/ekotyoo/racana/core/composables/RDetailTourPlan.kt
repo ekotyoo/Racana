@@ -1,6 +1,5 @@
 package com.ekotyoo.racana.core.composables
 
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Canvas
@@ -25,14 +24,11 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.theme.RacanaGray
-import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.data.model.DailyItem
 import com.ekotyoo.racana.data.model.TravelDestination
-import com.ekotyoo.racana.data.model.getDummyTourPlan
 import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultState
 import com.skydoves.landscapist.coil.CoilImage
 
@@ -79,7 +75,7 @@ fun AttractionList(
             AttractionCard(
                 imageUrl = destination.imageUrl,
                 title = destination.name,
-                location = destination.location,
+                location = destination.address,
                 isDone = destination.isDone,
                 onClick = {
                     onClick(destination.id)
@@ -199,7 +195,7 @@ fun AttractionCard(
                         Text(text = "Expense", style = MaterialTheme.typography.caption)
                         Text(text = location, style = MaterialTheme.typography.caption)
                     }
-                    if(onDelete != null) {
+                    if (onDelete != null) {
                         RIconButton(
                             imageVector = Icons.Default.Delete,
                             contentDescription = null,
@@ -262,27 +258,5 @@ fun DayHeaderContainer(
         Text(text = dayTitle, style = MaterialTheme.typography.subtitle1, color = color)
         Text(text = date, style = MaterialTheme.typography.body2, color = color)
 
-    }
-}
-
-@Preview(
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-    name = "Light Mode Preview"
-)
-@Preview(
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    name = "Dark Mode Preview"
-)
-@Composable
-fun TourPlanScreenPreview() {
-    RacanaTheme {
-        RDetailTourPlan(
-            state = TourPlanResultState(tourPlan = getDummyTourPlan()),
-            onDateSelected = {},
-            onDestinationClicked = {},
-            onDeleteButtonClicked = {}
-        )
     }
 }

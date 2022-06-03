@@ -22,24 +22,36 @@ data class DailyListItem(
 
 data class DestinationsItem(
 
-	@field:SerializedName("brief")
-	val brief: String,
+	@field:SerializedName("addresss")
+	val address: String,
 
-	@field:SerializedName("image_url")
+	@field:SerializedName("imageUrl")
 	val imageUrl: String,
 
 	@field:SerializedName("name")
 	val name: String,
 
-	@field:SerializedName("id")
-	val id: Long,
+	@field:SerializedName("weekendHolidayPrice")
+	val weekendHolidayPrice: Int,
 
-	@field:SerializedName("expense")
-	val expense: Int,
+	@field:SerializedName("rating")
+	val rating: Int,
+
+	@field:SerializedName("description")
+	val description: String,
+
+	@field:SerializedName("lon")
+	val lon: Double,
+
+	@field:SerializedName("weekdayPrice")
+	val weekdayPrice: Int,
+
+	@field:SerializedName("id")
+	val id: Int,
 
 	@field:SerializedName("lat")
 	val lat: Double,
 
-	@field:SerializedName("long")
-	val long: Double
+	@field:SerializedName("categoryId")
+	val categoryId: Int
 )
