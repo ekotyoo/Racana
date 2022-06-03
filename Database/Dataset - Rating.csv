@@ -1,0 +1,3001 @@
+User_Id,Place_Id,Nama Tempat,Place_Rating
+1,2,Agung Bali Oleh-Oleh,3
+1,7,Aloha Ubud Swing,5
+1,8,Bali Bird Park,5
+1,12,Big Garden Corner,2
+1,13,Wanagiri Hidden Hills,5
+1,19,Desa Celuk,5
+1,23,Goa Gajah,4
+1,25,Gunung Batur,5
+1,31,Kintamani Highland,5
+1,33,Sacred Monkey Forest Sanctuary,4
+1,35,Desa Wisata Penglipuran,4
+1,36,Pantai Angel's Billabong,3
+1,37,Pantai Atuh,4
+1,38,Pantai Blue Lagoon,4
+1,39,Pantai Canggu,3
+1,40,Crystal Bay,4
+1,41,Pantai Diamond,5
+1,43,Pantai Dreamland,3
+1,45,Pantai Kuta,4
+1,46,Pantai Melasti,3
+1,47,Pantai Nusa Dua,3
+1,48,Pantai Padang Padang,3
+1,49,Pantai Pandawa,4
+1,50,Pantai Pasih Uug,5
+1,51,White Sand Beach,5
+1,52,Puseh Batuan Temple,2
+1,58,Gunung Kawi Sebatu Temple,5
+1,59,Pura Kehen,1
+1,67,Mas Carving Center,5
+1,68,Watersport Tanjung Benoa Bali,5
+2,2,Agung Bali Oleh-Oleh,3
+2,3,Wisata Air Panas Toya Bungkah,5
+2,5,Air Terjun Tegenungan,2
+2,6,Air Terjun Tukad Cepung,3
+2,7,Aloha Ubud Swing,5
+2,8,Bali Bird Park,5
+2,10,Bali Swing,5
+2,11,Batik Koleksi Sari Amerta,3
+2,13,Wanagiri Hidden Hills,5
+2,18,Desa Budaya Kertalangu,3
+2,22,Garuda Wisnu Kencana,4
+2,30,Pabrik Kata-Kata Joger,3
+2,31,Kintamani Highland,5
+2,32,Krisna Oleh-Oleh,4
+2,35,Desa Wisata Penglipuran,5
+2,37,Pantai Atuh,5
+2,38,Pantai Blue Lagoon,4
+2,40,Crystal Bay,4
+2,41,Pantai Diamond,5
+2,45,Pantai Kuta,4
+2,47,Pantai Nusa Dua,5
+2,49,Pantai Pandawa,2
+2,50,Pantai Pasih Uug,5
+2,53,Pantai Sanur,5
+2,55,Pantai Waterblow,5
+2,57,Besakih Temple,1
+2,64,Pura Tanah Lot,5
+2,70,Kecak & Fire Dance,5
+2,71,Teras Sawah Tegalalang,5
+2,72,Tirta Gangga,5
+3,1,Satria Agrowisata,4
+3,2,Agung Bali Oleh-Oleh,5
+3,4,Air Terjun Aling-Aling,5
+3,6,Air Terjun Tukad Cepung,1
+3,8,Bali Bird Park,5
+3,9,Handara Iconic Gate,4
+3,11,Batik Koleksi Sari Amerta,3
+3,13,Wanagiri Hidden Hills,4
+3,15,Danau Batur,5
+3,17,Danau Tamblingan,5
+3,18,Desa Budaya Kertalangu,3
+3,19,Desa Celuk,3
+3,20,Desa Tohpati,4
+3,22,Garuda Wisnu Kencana,5
+3,29,Jimbaran Bay,5
+3,33,Sacred Monkey Forest Sanctuary,5
+3,35,Desa Wisata Penglipuran,5
+3,36,Pantai Angel's Billabong,5
+3,37,Pantai Atuh,5
+3,41,Pantai Diamond,5
+3,44,Pantai Kelingking,5
+3,49,Pantai Pandawa,5
+3,55,Pantai Waterblow,5
+3,56,Ubud Traditional Art Market,5
+3,60,Pura Lempuyang,5
+3,64,Pura Tanah Lot,5
+3,67,Mas Carving Center,5
+3,68,Watersport Tanjung Benoa Bali,5
+3,69,Barong & Kris Dance,5
+3,73,Waterbom Bali,5
+4,1,Satria Agrowisata,4
+4,3,Wisata Air Panas Toya Bungkah,3
+4,4,Air Terjun Aling-Aling,5
+4,8,Bali Bird Park,1
+4,10,Bali Swing,5
+4,16,Danau Beratan,5
+4,17,Danau Tamblingan,4
+4,20,Desa Tohpati,5
+4,25,Gunung Batur,5
+4,27,Puri Saren Palace,4
+4,29,Jimbaran Bay,3
+4,37,Pantai Atuh,4
+4,38,Pantai Blue Lagoon,4
+4,40,Crystal Bay,2
+4,42,Pantai Double Six,5
+4,43,Pantai Dreamland,5
+4,45,Pantai Kuta,5
+4,46,Pantai Melasti,5
+4,47,Pantai Nusa Dua,5
+4,48,Pantai Padang Padang,3
+4,51,White Sand Beach,5
+4,52,Puseh Batuan Temple,5
+4,53,Pantai Sanur,5
+4,54,Pantai Seminyak,5
+4,63,Pura Taman Ayun,3
+4,64,Pura Tanah Lot,5
+4,65,Pura Tirta Empul,5
+4,67,Mas Carving Center,5
+4,71,Teras Sawah Tegalalang,5
+4,73,Waterbom Bali,5
+5,1,Satria Agrowisata,1
+5,3,Wisata Air Panas Toya Bungkah,5
+5,5,Air Terjun Tegenungan,4
+5,10,Bali Swing,5
+5,12,Big Garden Corner,5
+5,13,Wanagiri Hidden Hills,5
+5,15,Danau Batur,5
+5,17,Danau Tamblingan,5
+5,19,Desa Celuk,3
+5,21,Galeri Seni Semar Kuning,5
+5,22,Garuda Wisnu Kencana,3
+5,24,Gunung Agung,5
+5,27,Puri Saren Palace,5
+5,29,Jimbaran Bay,5
+5,30,Pabrik Kata-Kata Joger,4
+5,32,Krisna Oleh-Oleh,1
+5,33,Sacred Monkey Forest Sanctuary,3
+5,34,Monumen Bajra Sandhi,4
+5,36,Pantai Angel's Billabong,5
+5,42,Pantai Double Six,5
+5,44,Pantai Kelingking,5
+5,46,Pantai Melasti,4
+5,53,Pantai Sanur,5
+5,58,Gunung Kawi Sebatu Temple,5
+5,59,Pura Kehen,1
+5,60,Pura Lempuyang,5
+5,68,Watersport Tanjung Benoa Bali,5
+5,69,Barong & Kris Dance,5
+5,74,Alas Harum Agro Tourism,5
+5,75,Wisata Agro Teba Sari Bali,5
+6,1,Satria Agrowisata,4
+6,2,Agung Bali Oleh-Oleh,3
+6,8,Bali Bird Park,5
+6,11,Batik Koleksi Sari Amerta,4
+6,15,Danau Batur,4
+6,19,Desa Celuk,4
+6,23,Goa Gajah,2
+6,25,Gunung Batur,5
+6,26,Taman Ujung Water Palace,4
+6,27,Puri Saren Palace,3
+6,28,Jatiluwih Green Land,5
+6,32,Krisna Oleh-Oleh,4
+6,33,Sacred Monkey Forest Sanctuary,3
+6,34,Monumen Bajra Sandhi,4
+6,35,Desa Wisata Penglipuran,4
+6,37,Pantai Atuh,5
+6,39,Pantai Canggu,4
+6,40,Crystal Bay,5
+6,41,Pantai Diamond,5
+6,42,Pantai Double Six,5
+6,43,Pantai Dreamland,3
+6,47,Pantai Nusa Dua,5
+6,52,Puseh Batuan Temple,5
+6,54,Pantai Seminyak,5
+6,64,Pura Tanah Lot,5
+6,66,Pura Uluwatu,3
+6,70,Kecak & Fire Dance,5
+6,72,Tirta Gangga,5
+6,73,Waterbom Bali,5
+6,75,Wisata Agro Teba Sari Bali,5
+7,3,Wisata Air Panas Toya Bungkah,4
+7,5,Air Terjun Tegenungan,4
+7,7,Aloha Ubud Swing,5
+7,8,Bali Bird Park,5
+7,9,Handara Iconic Gate,2
+7,12,Big Garden Corner,4
+7,14,Campuhan Ridge Walk,2
+7,16,Danau Beratan,5
+7,18,Desa Budaya Kertalangu,4
+7,19,Desa Celuk,5
+7,26,Taman Ujung Water Palace,5
+7,29,Jimbaran Bay,4
+7,31,Kintamani Highland,4
+7,32,Krisna Oleh-Oleh,4
+7,33,Sacred Monkey Forest Sanctuary,4
+7,34,Monumen Bajra Sandhi,4
+7,35,Desa Wisata Penglipuran,4
+7,40,Crystal Bay,5
+7,41,Pantai Diamond,5
+7,45,Pantai Kuta,3
+7,48,Pantai Padang Padang,5
+7,54,Pantai Seminyak,5
+7,56,Ubud Traditional Art Market,5
+7,57,Besakih Temple,5
+7,59,Pura Kehen,1
+7,63,Pura Taman Ayun,3
+7,67,Mas Carving Center,5
+7,68,Watersport Tanjung Benoa Bali,5
+7,72,Tirta Gangga,5
+7,75,Wisata Agro Teba Sari Bali,5
+8,2,Agung Bali Oleh-Oleh,5
+8,5,Air Terjun Tegenungan,5
+8,7,Aloha Ubud Swing,5
+8,9,Handara Iconic Gate,5
+8,12,Big Garden Corner,4
+8,20,Desa Tohpati,4
+8,22,Garuda Wisnu Kencana,4
+8,23,Goa Gajah,4
+8,25,Gunung Batur,5
+8,28,Jatiluwih Green Land,5
+8,32,Krisna Oleh-Oleh,4
+8,35,Desa Wisata Penglipuran,5
+8,37,Pantai Atuh,1
+8,40,Crystal Bay,4
+8,41,Pantai Diamond,5
+8,43,Pantai Dreamland,1
+8,45,Pantai Kuta,4
+8,46,Pantai Melasti,4
+8,47,Pantai Nusa Dua,4
+8,48,Pantai Padang Padang,5
+8,50,Pantai Pasih Uug,3
+8,52,Puseh Batuan Temple,5
+8,55,Pantai Waterblow,5
+8,56,Ubud Traditional Art Market,5
+8,57,Besakih Temple,5
+8,61,Pura Luhur Batukaru,5
+8,62,Pura Saraswati,3
+8,66,Pura Uluwatu,3
+8,71,Teras Sawah Tegalalang,5
+8,73,Waterbom Bali,5
+9,1,Satria Agrowisata,4
+9,2,Agung Bali Oleh-Oleh,5
+9,4,Air Terjun Aling-Aling,5
+9,5,Air Terjun Tegenungan,4
+9,6,Air Terjun Tukad Cepung,5
+9,7,Aloha Ubud Swing,5
+9,10,Bali Swing,5
+9,14,Campuhan Ridge Walk,5
+9,16,Danau Beratan,3
+9,18,Desa Budaya Kertalangu,4
+9,25,Gunung Batur,5
+9,33,Sacred Monkey Forest Sanctuary,5
+9,38,Pantai Blue Lagoon,3
+9,40,Crystal Bay,3
+9,44,Pantai Kelingking,3
+9,46,Pantai Melasti,5
+9,48,Pantai Padang Padang,4
+9,49,Pantai Pandawa,1
+9,54,Pantai Seminyak,5
+9,57,Besakih Temple,5
+9,58,Gunung Kawi Sebatu Temple,5
+9,60,Pura Lempuyang,5
+9,61,Pura Luhur Batukaru,5
+9,62,Pura Saraswati,3
+9,64,Pura Tanah Lot,5
+9,66,Pura Uluwatu,3
+9,68,Watersport Tanjung Benoa Bali,5
+9,71,Teras Sawah Tegalalang,5
+9,72,Tirta Gangga,5
+9,73,Waterbom Bali,5
+10,2,Agung Bali Oleh-Oleh,4
+10,3,Wisata Air Panas Toya Bungkah,4
+10,4,Air Terjun Aling-Aling,4
+10,5,Air Terjun Tegenungan,5
+10,8,Bali Bird Park,4
+10,11,Batik Koleksi Sari Amerta,4
+10,13,Wanagiri Hidden Hills,5
+10,14,Campuhan Ridge Walk,5
+10,16,Danau Beratan,2
+10,17,Danau Tamblingan,2
+10,18,Desa Budaya Kertalangu,5
+10,22,Garuda Wisnu Kencana,4
+10,26,Taman Ujung Water Palace,2
+10,30,Pabrik Kata-Kata Joger,4
+10,33,Sacred Monkey Forest Sanctuary,5
+10,36,Pantai Angel's Billabong,5
+10,37,Pantai Atuh,5
+10,38,Pantai Blue Lagoon,4
+10,40,Crystal Bay,5
+10,44,Pantai Kelingking,3
+10,47,Pantai Nusa Dua,3
+10,50,Pantai Pasih Uug,4
+10,51,White Sand Beach,5
+10,52,Puseh Batuan Temple,5
+10,53,Pantai Sanur,5
+10,58,Gunung Kawi Sebatu Temple,5
+10,59,Pura Kehen,1
+10,63,Pura Taman Ayun,2
+10,66,Pura Uluwatu,3
+10,75,Wisata Agro Teba Sari Bali,5
+11,1,Satria Agrowisata,1
+11,2,Agung Bali Oleh-Oleh,4
+11,4,Air Terjun Aling-Aling,4
+11,5,Air Terjun Tegenungan,1
+11,8,Bali Bird Park,4
+11,11,Batik Koleksi Sari Amerta,4
+11,14,Campuhan Ridge Walk,4
+11,16,Danau Beratan,4
+11,17,Danau Tamblingan,4
+11,18,Desa Budaya Kertalangu,5
+11,20,Desa Tohpati,4
+11,21,Galeri Seni Semar Kuning,5
+11,23,Goa Gajah,4
+11,26,Taman Ujung Water Palace,5
+11,27,Puri Saren Palace,2
+11,29,Jimbaran Bay,4
+11,31,Kintamani Highland,5
+11,38,Pantai Blue Lagoon,4
+11,40,Crystal Bay,5
+11,43,Pantai Dreamland,3
+11,46,Pantai Melasti,5
+11,48,Pantai Padang Padang,4
+11,49,Pantai Pandawa,5
+11,58,Gunung Kawi Sebatu Temple,5
+11,60,Pura Lempuyang,5
+11,63,Pura Taman Ayun,1
+11,64,Pura Tanah Lot,4
+11,67,Mas Carving Center,5
+11,70,Kecak & Fire Dance,5
+11,73,Waterbom Bali,5
+12,7,Aloha Ubud Swing,5
+12,9,Handara Iconic Gate,1
+12,10,Bali Swing,4
+12,12,Big Garden Corner,1
+12,16,Danau Beratan,5
+12,17,Danau Tamblingan,5
+12,18,Desa Budaya Kertalangu,5
+12,22,Garuda Wisnu Kencana,3
+12,23,Goa Gajah,3
+12,26,Taman Ujung Water Palace,3
+12,29,Jimbaran Bay,4
+12,31,Kintamani Highland,4
+12,33,Sacred Monkey Forest Sanctuary,4
+12,34,Monumen Bajra Sandhi,4
+12,36,Pantai Angel's Billabong,5
+12,38,Pantai Blue Lagoon,2
+12,39,Pantai Canggu,4
+12,40,Crystal Bay,5
+12,43,Pantai Dreamland,5
+12,47,Pantai Nusa Dua,4
+12,50,Pantai Pasih Uug,4
+12,51,White Sand Beach,5
+12,53,Pantai Sanur,5
+12,56,Ubud Traditional Art Market,5
+12,59,Pura Kehen,5
+12,66,Pura Uluwatu,3
+12,68,Watersport Tanjung Benoa Bali,5
+12,69,Barong & Kris Dance,5
+12,70,Kecak & Fire Dance,4
+12,73,Waterbom Bali,5
+13,3,Wisata Air Panas Toya Bungkah,5
+13,6,Air Terjun Tukad Cepung,4
+13,10,Bali Swing,5
+13,13,Wanagiri Hidden Hills,3
+13,18,Desa Budaya Kertalangu,4
+13,20,Desa Tohpati,3
+13,21,Galeri Seni Semar Kuning,4
+13,22,Garuda Wisnu Kencana,1
+13,23,Goa Gajah,3
+13,25,Gunung Batur,5
+13,26,Taman Ujung Water Palace,1
+13,27,Puri Saren Palace,3
+13,33,Sacred Monkey Forest Sanctuary,4
+13,37,Pantai Atuh,5
+13,40,Crystal Bay,3
+13,42,Pantai Double Six,4
+13,44,Pantai Kelingking,4
+13,45,Pantai Kuta,3
+13,51,White Sand Beach,5
+13,56,Ubud Traditional Art Market,5
+13,57,Besakih Temple,5
+13,61,Pura Luhur Batukaru,5
+13,62,Pura Saraswati,2
+13,65,Pura Tirta Empul,5
+13,67,Mas Carving Center,5
+13,70,Kecak & Fire Dance,4
+13,71,Teras Sawah Tegalalang,5
+13,72,Tirta Gangga,5
+13,73,Waterbom Bali,5
+13,74,Alas Harum Agro Tourism,5
+14,1,Satria Agrowisata,4
+14,3,Wisata Air Panas Toya Bungkah,4
+14,8,Bali Bird Park,5
+14,18,Desa Budaya Kertalangu,4
+14,20,Desa Tohpati,4
+14,21,Galeri Seni Semar Kuning,5
+14,24,Gunung Agung,4
+14,28,Jatiluwih Green Land,5
+14,31,Kintamani Highland,5
+14,32,Krisna Oleh-Oleh,5
+14,35,Desa Wisata Penglipuran,5
+14,39,Pantai Canggu,4
+14,41,Pantai Diamond,4
+14,42,Pantai Double Six,5
+14,44,Pantai Kelingking,4
+14,46,Pantai Melasti,5
+14,47,Pantai Nusa Dua,3
+14,50,Pantai Pasih Uug,4
+14,52,Puseh Batuan Temple,5
+14,54,Pantai Seminyak,5
+14,56,Ubud Traditional Art Market,5
+14,57,Besakih Temple,5
+14,60,Pura Lempuyang,5
+14,64,Pura Tanah Lot,4
+14,65,Pura Tirta Empul,5
+14,67,Mas Carving Center,5
+14,68,Watersport Tanjung Benoa Bali,5
+14,69,Barong & Kris Dance,5
+14,70,Kecak & Fire Dance,4
+14,71,Teras Sawah Tegalalang,5
+15,2,Agung Bali Oleh-Oleh,5
+15,3,Wisata Air Panas Toya Bungkah,4
+15,9,Handara Iconic Gate,4
+15,10,Bali Swing,5
+15,15,Danau Batur,4
+15,16,Danau Beratan,5
+15,19,Desa Celuk,2
+15,20,Desa Tohpati,4
+15,25,Gunung Batur,5
+15,30,Pabrik Kata-Kata Joger,4
+15,31,Kintamani Highland,3
+15,33,Sacred Monkey Forest Sanctuary,4
+15,38,Pantai Blue Lagoon,4
+15,40,Crystal Bay,1
+15,43,Pantai Dreamland,5
+15,45,Pantai Kuta,4
+15,47,Pantai Nusa Dua,5
+15,48,Pantai Padang Padang,4
+15,51,White Sand Beach,5
+15,53,Pantai Sanur,5
+15,54,Pantai Seminyak,5
+15,59,Pura Kehen,5
+15,60,Pura Lempuyang,5
+15,61,Pura Luhur Batukaru,5
+15,63,Pura Taman Ayun,5
+15,66,Pura Uluwatu,2
+15,67,Mas Carving Center,5
+15,69,Barong & Kris Dance,4
+15,71,Teras Sawah Tegalalang,5
+15,72,Tirta Gangga,5
+16,4,Air Terjun Aling-Aling,5
+16,6,Air Terjun Tukad Cepung,5
+16,7,Aloha Ubud Swing,5
+16,8,Bali Bird Park,5
+16,9,Handara Iconic Gate,3
+16,12,Big Garden Corner,4
+16,14,Campuhan Ridge Walk,5
+16,23,Goa Gajah,3
+16,24,Gunung Agung,5
+16,25,Gunung Batur,5
+16,27,Puri Saren Palace,5
+16,28,Jatiluwih Green Land,5
+16,30,Pabrik Kata-Kata Joger,5
+16,33,Sacred Monkey Forest Sanctuary,3
+16,34,Monumen Bajra Sandhi,4
+16,37,Pantai Atuh,3
+16,38,Pantai Blue Lagoon,3
+16,42,Pantai Double Six,4
+16,43,Pantai Dreamland,5
+16,48,Pantai Padang Padang,1
+16,51,White Sand Beach,5
+16,52,Puseh Batuan Temple,5
+16,53,Pantai Sanur,5
+16,56,Ubud Traditional Art Market,5
+16,59,Pura Kehen,5
+16,60,Pura Lempuyang,5
+16,63,Pura Taman Ayun,5
+16,65,Pura Tirta Empul,5
+16,69,Barong & Kris Dance,4
+16,75,Wisata Agro Teba Sari Bali,5
+17,4,Air Terjun Aling-Aling,4
+17,5,Air Terjun Tegenungan,5
+17,7,Aloha Ubud Swing,5
+17,8,Bali Bird Park,5
+17,9,Handara Iconic Gate,3
+17,10,Bali Swing,5
+17,11,Batik Koleksi Sari Amerta,4
+17,12,Big Garden Corner,1
+17,14,Campuhan Ridge Walk,5
+17,17,Danau Tamblingan,5
+17,18,Desa Budaya Kertalangu,4
+17,24,Gunung Agung,5
+17,28,Jatiluwih Green Land,2
+17,29,Jimbaran Bay,5
+17,36,Pantai Angel's Billabong,3
+17,37,Pantai Atuh,5
+17,38,Pantai Blue Lagoon,1
+17,40,Crystal Bay,4
+17,41,Pantai Diamond,4
+17,42,Pantai Double Six,3
+17,45,Pantai Kuta,3
+17,49,Pantai Pandawa,5
+17,50,Pantai Pasih Uug,5
+17,52,Puseh Batuan Temple,5
+17,55,Pantai Waterblow,5
+17,56,Ubud Traditional Art Market,5
+17,59,Pura Kehen,5
+17,60,Pura Lempuyang,5
+17,69,Barong & Kris Dance,4
+17,71,Teras Sawah Tegalalang,5
+18,3,Wisata Air Panas Toya Bungkah,2
+18,7,Aloha Ubud Swing,3
+18,8,Bali Bird Park,5
+18,14,Campuhan Ridge Walk,4
+18,15,Danau Batur,5
+18,16,Danau Beratan,5
+18,18,Desa Budaya Kertalangu,4
+18,33,Sacred Monkey Forest Sanctuary,5
+18,39,Pantai Canggu,5
+18,40,Crystal Bay,4
+18,41,Pantai Diamond,5
+18,44,Pantai Kelingking,4
+18,45,Pantai Kuta,4
+18,46,Pantai Melasti,4
+18,47,Pantai Nusa Dua,4
+18,48,Pantai Padang Padang,2
+18,49,Pantai Pandawa,5
+18,50,Pantai Pasih Uug,5
+18,51,White Sand Beach,5
+18,54,Pantai Seminyak,5
+18,55,Pantai Waterblow,5
+18,63,Pura Taman Ayun,5
+18,64,Pura Tanah Lot,4
+18,66,Pura Uluwatu,2
+18,67,Mas Carving Center,5
+18,68,Watersport Tanjung Benoa Bali,5
+18,69,Barong & Kris Dance,4
+18,71,Teras Sawah Tegalalang,5
+18,73,Waterbom Bali,5
+18,74,Alas Harum Agro Tourism,5
+19,2,Agung Bali Oleh-Oleh,5
+19,5,Air Terjun Tegenungan,4
+19,6,Air Terjun Tukad Cepung,5
+19,9,Handara Iconic Gate,3
+19,17,Danau Tamblingan,5
+19,18,Desa Budaya Kertalangu,3
+19,23,Goa Gajah,1
+19,24,Gunung Agung,5
+19,26,Taman Ujung Water Palace,5
+19,28,Jatiluwih Green Land,5
+19,30,Pabrik Kata-Kata Joger,4
+19,40,Crystal Bay,5
+19,42,Pantai Double Six,4
+19,43,Pantai Dreamland,4
+19,44,Pantai Kelingking,4
+19,45,Pantai Kuta,4
+19,47,Pantai Nusa Dua,4
+19,48,Pantai Padang Padang,5
+19,53,Pantai Sanur,5
+19,57,Besakih Temple,5
+19,59,Pura Kehen,5
+19,62,Pura Saraswati,2
+19,66,Pura Uluwatu,1
+19,68,Watersport Tanjung Benoa Bali,5
+19,69,Barong & Kris Dance,4
+19,70,Kecak & Fire Dance,4
+19,72,Tirta Gangga,5
+19,73,Waterbom Bali,5
+19,74,Alas Harum Agro Tourism,5
+19,75,Wisata Agro Teba Sari Bali,5
+20,1,Satria Agrowisata,1
+20,3,Wisata Air Panas Toya Bungkah,4
+20,8,Bali Bird Park,5
+20,15,Danau Batur,5
+20,18,Desa Budaya Kertalangu,3
+20,19,Desa Celuk,1
+20,21,Galeri Seni Semar Kuning,5
+20,23,Goa Gajah,3
+20,26,Taman Ujung Water Palace,5
+20,30,Pabrik Kata-Kata Joger,4
+20,32,Krisna Oleh-Oleh,4
+20,35,Desa Wisata Penglipuran,5
+20,37,Pantai Atuh,5
+20,38,Pantai Blue Lagoon,4
+20,40,Crystal Bay,5
+20,41,Pantai Diamond,5
+20,42,Pantai Double Six,4
+20,44,Pantai Kelingking,4
+20,48,Pantai Padang Padang,5
+20,49,Pantai Pandawa,5
+20,51,White Sand Beach,5
+20,56,Ubud Traditional Art Market,5
+20,59,Pura Kehen,5
+20,60,Pura Lempuyang,5
+20,62,Pura Saraswati,2
+20,63,Pura Taman Ayun,5
+20,65,Pura Tirta Empul,5
+20,71,Teras Sawah Tegalalang,5
+20,74,Alas Harum Agro Tourism,5
+20,75,Wisata Agro Teba Sari Bali,5
+21,4,Air Terjun Aling-Aling,5
+21,5,Air Terjun Tegenungan,5
+21,6,Air Terjun Tukad Cepung,5
+21,8,Bali Bird Park,5
+21,9,Handara Iconic Gate,5
+21,16,Danau Beratan,5
+21,17,Danau Tamblingan,4
+21,18,Desa Budaya Kertalangu,3
+21,22,Garuda Wisnu Kencana,4
+21,30,Pabrik Kata-Kata Joger,4
+21,35,Desa Wisata Penglipuran,5
+21,38,Pantai Blue Lagoon,4
+21,39,Pantai Canggu,3
+21,40,Crystal Bay,5
+21,41,Pantai Diamond,5
+21,42,Pantai Double Six,2
+21,49,Pantai Pandawa,3
+21,50,Pantai Pasih Uug,5
+21,56,Ubud Traditional Art Market,5
+21,57,Besakih Temple,5
+21,59,Pura Kehen,5
+21,61,Pura Luhur Batukaru,5
+21,62,Pura Saraswati,1
+21,66,Pura Uluwatu,1
+21,67,Mas Carving Center,5
+21,70,Kecak & Fire Dance,4
+21,71,Teras Sawah Tegalalang,5
+21,73,Waterbom Bali,5
+21,74,Alas Harum Agro Tourism,5
+21,75,Wisata Agro Teba Sari Bali,5
+22,5,Air Terjun Tegenungan,4
+22,7,Aloha Ubud Swing,5
+22,8,Bali Bird Park,4
+22,12,Big Garden Corner,3
+22,17,Danau Tamblingan,5
+22,18,Desa Budaya Kertalangu,5
+22,19,Desa Celuk,4
+22,20,Desa Tohpati,5
+22,25,Gunung Batur,5
+22,26,Taman Ujung Water Palace,5
+22,29,Jimbaran Bay,1
+22,35,Desa Wisata Penglipuran,5
+22,36,Pantai Angel's Billabong,5
+22,37,Pantai Atuh,5
+22,38,Pantai Blue Lagoon,3
+22,39,Pantai Canggu,4
+22,40,Crystal Bay,2
+22,42,Pantai Double Six,5
+22,43,Pantai Dreamland,2
+22,44,Pantai Kelingking,5
+22,52,Puseh Batuan Temple,5
+22,55,Pantai Waterblow,5
+22,56,Ubud Traditional Art Market,5
+22,57,Besakih Temple,4
+22,58,Gunung Kawi Sebatu Temple,5
+22,60,Pura Lempuyang,5
+22,64,Pura Tanah Lot,4
+22,68,Watersport Tanjung Benoa Bali,5
+22,73,Waterbom Bali,5
+22,74,Alas Harum Agro Tourism,5
+23,3,Wisata Air Panas Toya Bungkah,4
+23,4,Air Terjun Aling-Aling,5
+23,6,Air Terjun Tukad Cepung,5
+23,10,Bali Swing,5
+23,14,Campuhan Ridge Walk,3
+23,18,Desa Budaya Kertalangu,4
+23,24,Gunung Agung,5
+23,26,Taman Ujung Water Palace,5
+23,31,Kintamani Highland,5
+23,33,Sacred Monkey Forest Sanctuary,5
+23,36,Pantai Angel's Billabong,5
+23,37,Pantai Atuh,4
+23,38,Pantai Blue Lagoon,3
+23,39,Pantai Canggu,4
+23,42,Pantai Double Six,4
+23,43,Pantai Dreamland,2
+23,46,Pantai Melasti,5
+23,51,White Sand Beach,5
+23,53,Pantai Sanur,4
+23,54,Pantai Seminyak,5
+23,57,Besakih Temple,4
+23,60,Pura Lempuyang,5
+23,61,Pura Luhur Batukaru,5
+23,63,Pura Taman Ayun,5
+23,65,Pura Tirta Empul,5
+23,66,Pura Uluwatu,5
+23,67,Mas Carving Center,5
+23,69,Barong & Kris Dance,4
+23,70,Kecak & Fire Dance,4
+23,74,Alas Harum Agro Tourism,5
+24,3,Wisata Air Panas Toya Bungkah,5
+24,4,Air Terjun Aling-Aling,2
+24,5,Air Terjun Tegenungan,5
+24,7,Aloha Ubud Swing,5
+24,8,Bali Bird Park,5
+24,10,Bali Swing,5
+24,11,Batik Koleksi Sari Amerta,4
+24,13,Wanagiri Hidden Hills,5
+24,14,Campuhan Ridge Walk,4
+24,16,Danau Beratan,5
+24,18,Desa Budaya Kertalangu,5
+24,21,Galeri Seni Semar Kuning,5
+24,29,Jimbaran Bay,5
+24,30,Pabrik Kata-Kata Joger,4
+24,32,Krisna Oleh-Oleh,4
+24,33,Sacred Monkey Forest Sanctuary,5
+24,34,Monumen Bajra Sandhi,4
+24,35,Desa Wisata Penglipuran,4
+24,36,Pantai Angel's Billabong,4
+24,43,Pantai Dreamland,5
+24,45,Pantai Kuta,5
+24,47,Pantai Nusa Dua,5
+24,49,Pantai Pandawa,3
+24,57,Besakih Temple,4
+24,63,Pura Taman Ayun,5
+24,64,Pura Tanah Lot,4
+24,65,Pura Tirta Empul,5
+24,66,Pura Uluwatu,5
+24,70,Kecak & Fire Dance,4
+24,71,Teras Sawah Tegalalang,5
+25,1,Satria Agrowisata,1
+25,5,Air Terjun Tegenungan,3
+25,11,Batik Koleksi Sari Amerta,3
+25,13,Wanagiri Hidden Hills,5
+25,15,Danau Batur,4
+25,16,Danau Beratan,5
+25,18,Desa Budaya Kertalangu,5
+25,24,Gunung Agung,1
+25,25,Gunung Batur,5
+25,26,Taman Ujung Water Palace,5
+25,27,Puri Saren Palace,4
+25,29,Jimbaran Bay,5
+25,30,Pabrik Kata-Kata Joger,4
+25,35,Desa Wisata Penglipuran,5
+25,36,Pantai Angel's Billabong,5
+25,38,Pantai Blue Lagoon,5
+25,41,Pantai Diamond,1
+25,42,Pantai Double Six,5
+25,43,Pantai Dreamland,4
+25,44,Pantai Kelingking,5
+25,50,Pantai Pasih Uug,4
+25,51,White Sand Beach,5
+25,55,Pantai Waterblow,5
+25,56,Ubud Traditional Art Market,5
+25,57,Besakih Temple,4
+25,58,Gunung Kawi Sebatu Temple,5
+25,60,Pura Lempuyang,5
+25,73,Waterbom Bali,5
+25,74,Alas Harum Agro Tourism,5
+25,75,Wisata Agro Teba Sari Bali,5
+26,3,Wisata Air Panas Toya Bungkah,4
+26,4,Air Terjun Aling-Aling,5
+26,9,Handara Iconic Gate,5
+26,11,Batik Koleksi Sari Amerta,5
+26,12,Big Garden Corner,4
+26,13,Wanagiri Hidden Hills,5
+26,21,Galeri Seni Semar Kuning,4
+26,25,Gunung Batur,5
+26,28,Jatiluwih Green Land,5
+26,29,Jimbaran Bay,4
+26,32,Krisna Oleh-Oleh,1
+26,33,Sacred Monkey Forest Sanctuary,5
+26,35,Desa Wisata Penglipuran,1
+26,39,Pantai Canggu,3
+26,40,Crystal Bay,4
+26,41,Pantai Diamond,5
+26,43,Pantai Dreamland,4
+26,44,Pantai Kelingking,5
+26,45,Pantai Kuta,3
+26,53,Pantai Sanur,4
+26,54,Pantai Seminyak,5
+26,55,Pantai Waterblow,5
+26,57,Besakih Temple,4
+26,59,Pura Kehen,5
+26,62,Pura Saraswati,1
+26,65,Pura Tirta Empul,5
+26,67,Mas Carving Center,5
+26,69,Barong & Kris Dance,4
+26,73,Waterbom Bali,5
+26,75,Wisata Agro Teba Sari Bali,5
+27,1,Satria Agrowisata,1
+27,2,Agung Bali Oleh-Oleh,2
+27,3,Wisata Air Panas Toya Bungkah,5
+27,5,Air Terjun Tegenungan,4
+27,6,Air Terjun Tukad Cepung,4
+27,10,Bali Swing,3
+27,12,Big Garden Corner,4
+27,14,Campuhan Ridge Walk,2
+27,17,Danau Tamblingan,4
+27,19,Desa Celuk,5
+27,25,Gunung Batur,4
+27,29,Jimbaran Bay,4
+27,30,Pabrik Kata-Kata Joger,4
+27,32,Krisna Oleh-Oleh,5
+27,39,Pantai Canggu,3
+27,40,Crystal Bay,1
+27,42,Pantai Double Six,4
+27,45,Pantai Kuta,4
+27,50,Pantai Pasih Uug,4
+27,52,Puseh Batuan Temple,5
+27,53,Pantai Sanur,4
+27,58,Gunung Kawi Sebatu Temple,5
+27,62,Pura Saraswati,5
+27,63,Pura Taman Ayun,5
+27,64,Pura Tanah Lot,4
+27,66,Pura Uluwatu,5
+27,70,Kecak & Fire Dance,4
+27,71,Teras Sawah Tegalalang,5
+27,73,Waterbom Bali,5
+27,74,Alas Harum Agro Tourism,5
+28,5,Air Terjun Tegenungan,1
+28,8,Bali Bird Park,4
+28,11,Batik Koleksi Sari Amerta,5
+28,13,Wanagiri Hidden Hills,5
+28,14,Campuhan Ridge Walk,3
+28,15,Danau Batur,4
+28,16,Danau Beratan,5
+28,18,Desa Budaya Kertalangu,4
+28,21,Galeri Seni Semar Kuning,5
+28,22,Garuda Wisnu Kencana,3
+28,28,Jatiluwih Green Land,5
+28,30,Pabrik Kata-Kata Joger,4
+28,31,Kintamani Highland,3
+28,33,Sacred Monkey Forest Sanctuary,4
+28,34,Monumen Bajra Sandhi,4
+28,35,Desa Wisata Penglipuran,5
+28,43,Pantai Dreamland,5
+28,44,Pantai Kelingking,5
+28,46,Pantai Melasti,3
+28,47,Pantai Nusa Dua,5
+28,48,Pantai Padang Padang,5
+28,49,Pantai Pandawa,4
+28,50,Pantai Pasih Uug,4
+28,55,Pantai Waterblow,5
+28,56,Ubud Traditional Art Market,5
+28,57,Besakih Temple,4
+28,61,Pura Luhur Batukaru,5
+28,65,Pura Tirta Empul,5
+28,69,Barong & Kris Dance,4
+28,73,Waterbom Bali,5
+29,5,Air Terjun Tegenungan,4
+29,6,Air Terjun Tukad Cepung,4
+29,7,Aloha Ubud Swing,5
+29,9,Handara Iconic Gate,4
+29,13,Wanagiri Hidden Hills,5
+29,14,Campuhan Ridge Walk,5
+29,21,Galeri Seni Semar Kuning,5
+29,23,Goa Gajah,3
+29,30,Pabrik Kata-Kata Joger,5
+29,31,Kintamani Highland,2
+29,32,Krisna Oleh-Oleh,4
+29,33,Sacred Monkey Forest Sanctuary,3
+29,39,Pantai Canggu,5
+29,42,Pantai Double Six,3
+29,47,Pantai Nusa Dua,3
+29,54,Pantai Seminyak,5
+29,56,Ubud Traditional Art Market,5
+29,58,Gunung Kawi Sebatu Temple,5
+29,59,Pura Kehen,5
+29,60,Pura Lempuyang,5
+29,63,Pura Taman Ayun,5
+29,64,Pura Tanah Lot,4
+29,65,Pura Tirta Empul,5
+29,66,Pura Uluwatu,5
+29,68,Watersport Tanjung Benoa Bali,5
+29,69,Barong & Kris Dance,4
+29,72,Tirta Gangga,5
+29,73,Waterbom Bali,5
+29,74,Alas Harum Agro Tourism,5
+29,75,Wisata Agro Teba Sari Bali,4
+30,1,Satria Agrowisata,1
+30,3,Wisata Air Panas Toya Bungkah,3
+30,4,Air Terjun Aling-Aling,5
+30,5,Air Terjun Tegenungan,4
+30,7,Aloha Ubud Swing,5
+30,9,Handara Iconic Gate,4
+30,10,Bali Swing,5
+30,12,Big Garden Corner,4
+30,15,Danau Batur,2
+30,20,Desa Tohpati,2
+30,22,Garuda Wisnu Kencana,4
+30,25,Gunung Batur,5
+30,29,Jimbaran Bay,4
+30,30,Pabrik Kata-Kata Joger,3
+30,31,Kintamani Highland,5
+30,32,Krisna Oleh-Oleh,5
+30,37,Pantai Atuh,5
+30,38,Pantai Blue Lagoon,4
+30,42,Pantai Double Six,1
+30,43,Pantai Dreamland,4
+30,46,Pantai Melasti,4
+30,47,Pantai Nusa Dua,3
+30,49,Pantai Pandawa,3
+30,51,White Sand Beach,5
+30,52,Puseh Batuan Temple,5
+30,57,Besakih Temple,4
+30,59,Pura Kehen,5
+30,61,Pura Luhur Batukaru,5
+30,64,Pura Tanah Lot,4
+30,72,Tirta Gangga,5
+31,1,Satria Agrowisata,4
+31,2,Agung Bali Oleh-Oleh,5
+31,8,Bali Bird Park,5
+31,9,Handara Iconic Gate,2
+31,12,Big Garden Corner,5
+31,14,Campuhan Ridge Walk,3
+31,17,Danau Tamblingan,5
+31,18,Desa Budaya Kertalangu,4
+31,19,Desa Celuk,4
+31,21,Galeri Seni Semar Kuning,5
+31,24,Gunung Agung,5
+31,24,Gunung Agung,4
+31,26,Taman Ujung Water Palace,5
+31,33,Sacred Monkey Forest Sanctuary,4
+31,35,Desa Wisata Penglipuran,5
+31,44,Pantai Kelingking,5
+31,48,Pantai Padang Padang,3
+31,49,Pantai Pandawa,2
+31,52,Puseh Batuan Temple,5
+31,55,Pantai Waterblow,5
+31,60,Pura Lempuyang,5
+31,62,Pura Saraswati,5
+31,63,Pura Taman Ayun,5
+31,65,Pura Tirta Empul,5
+31,66,Pura Uluwatu,5
+31,68,Watersport Tanjung Benoa Bali,5
+31,70,Kecak & Fire Dance,4
+31,73,Waterbom Bali,5
+31,74,Alas Harum Agro Tourism,5
+31,75,Wisata Agro Teba Sari Bali,4
+32,1,Satria Agrowisata,1
+32,7,Aloha Ubud Swing,5
+32,8,Bali Bird Park,5
+32,11,Batik Koleksi Sari Amerta,3
+32,15,Danau Batur,5
+32,17,Danau Tamblingan,4
+32,18,Desa Budaya Kertalangu,4
+32,20,Desa Tohpati,4
+32,21,Galeri Seni Semar Kuning,5
+32,23,Goa Gajah,3
+32,26,Taman Ujung Water Palace,5
+32,27,Puri Saren Palace,2
+32,29,Jimbaran Bay,5
+32,30,Pabrik Kata-Kata Joger,4
+32,38,Pantai Blue Lagoon,2
+32,40,Crystal Bay,5
+32,41,Pantai Diamond,5
+32,44,Pantai Kelingking,5
+32,51,White Sand Beach,5
+32,52,Puseh Batuan Temple,5
+32,53,Pantai Sanur,4
+32,54,Pantai Seminyak,5
+32,55,Pantai Waterblow,4
+32,58,Gunung Kawi Sebatu Temple,5
+32,67,Mas Carving Center,5
+32,68,Watersport Tanjung Benoa Bali,4
+32,70,Kecak & Fire Dance,4
+32,71,Teras Sawah Tegalalang,5
+32,72,Tirta Gangga,5
+32,75,Wisata Agro Teba Sari Bali,4
+33,7,Aloha Ubud Swing,5
+33,9,Handara Iconic Gate,4
+33,10,Bali Swing,5
+33,13,Wanagiri Hidden Hills,5
+33,16,Danau Beratan,5
+33,18,Desa Budaya Kertalangu,3
+33,19,Desa Celuk,1
+33,21,Galeri Seni Semar Kuning,5
+33,22,Garuda Wisnu Kencana,4
+33,26,Taman Ujung Water Palace,5
+33,27,Puri Saren Palace,3
+33,30,Pabrik Kata-Kata Joger,5
+33,34,Monumen Bajra Sandhi,5
+33,35,Desa Wisata Penglipuran,5
+33,37,Pantai Atuh,5
+33,38,Pantai Blue Lagoon,4
+33,45,Pantai Kuta,4
+33,48,Pantai Padang Padang,4
+33,51,White Sand Beach,5
+33,52,Puseh Batuan Temple,4
+33,54,Pantai Seminyak,5
+33,58,Gunung Kawi Sebatu Temple,5
+33,62,Pura Saraswati,5
+33,63,Pura Taman Ayun,5
+33,64,Pura Tanah Lot,4
+33,65,Pura Tirta Empul,5
+33,67,Mas Carving Center,5
+33,72,Tirta Gangga,4
+33,74,Alas Harum Agro Tourism,5
+33,75,Wisata Agro Teba Sari Bali,4
+34,1,Satria Agrowisata,1
+34,4,Air Terjun Aling-Aling,4
+34,9,Handara Iconic Gate,4
+34,10,Bali Swing,5
+34,11,Batik Koleksi Sari Amerta,5
+34,12,Big Garden Corner,5
+34,16,Danau Beratan,5
+34,17,Danau Tamblingan,5
+34,20,Desa Tohpati,5
+34,22,Garuda Wisnu Kencana,4
+34,23,Goa Gajah,2
+34,24,Gunung Agung,4
+34,25,Gunung Batur,5
+34,27,Puri Saren Palace,4
+34,29,Jimbaran Bay,5
+34,30,Pabrik Kata-Kata Joger,3
+34,32,Krisna Oleh-Oleh,4
+34,38,Pantai Blue Lagoon,4
+34,46,Pantai Melasti,4
+34,50,Pantai Pasih Uug,5
+34,52,Puseh Batuan Temple,4
+34,53,Pantai Sanur,4
+34,58,Gunung Kawi Sebatu Temple,5
+34,60,Pura Lempuyang,5
+34,62,Pura Saraswati,5
+34,67,Mas Carving Center,5
+34,70,Kecak & Fire Dance,4
+34,71,Teras Sawah Tegalalang,5
+34,73,Waterbom Bali,5
+34,75,Wisata Agro Teba Sari Bali,4
+35,5,Air Terjun Tegenungan,5
+35,8,Bali Bird Park,5
+35,10,Bali Swing,5
+35,11,Batik Koleksi Sari Amerta,4
+35,12,Big Garden Corner,5
+35,13,Wanagiri Hidden Hills,4
+35,14,Campuhan Ridge Walk,5
+35,17,Danau Tamblingan,5
+35,20,Desa Tohpati,3
+35,22,Garuda Wisnu Kencana,4
+35,23,Goa Gajah,3
+35,24,Gunung Agung,5
+35,26,Taman Ujung Water Palace,5
+35,27,Puri Saren Palace,4
+35,29,Jimbaran Bay,3
+35,31,Kintamani Highland,5
+35,33,Sacred Monkey Forest Sanctuary,5
+35,35,Desa Wisata Penglipuran,5
+35,36,Pantai Angel's Billabong,3
+35,41,Pantai Diamond,5
+35,42,Pantai Double Six,3
+35,44,Pantai Kelingking,5
+35,47,Pantai Nusa Dua,5
+35,48,Pantai Padang Padang,4
+35,50,Pantai Pasih Uug,4
+35,57,Besakih Temple,4
+35,58,Gunung Kawi Sebatu Temple,5
+35,62,Pura Saraswati,5
+35,67,Mas Carving Center,5
+35,73,Waterbom Bali,5
+36,3,Wisata Air Panas Toya Bungkah,4
+36,6,Air Terjun Tukad Cepung,5
+36,10,Bali Swing,1
+36,11,Batik Koleksi Sari Amerta,4
+36,14,Campuhan Ridge Walk,5
+36,17,Danau Tamblingan,5
+36,24,Gunung Agung,5
+36,25,Gunung Batur,5
+36,27,Puri Saren Palace,5
+36,28,Jatiluwih Green Land,5
+36,34,Monumen Bajra Sandhi,4
+36,36,Pantai Angel's Billabong,3
+36,37,Pantai Atuh,5
+36,44,Pantai Kelingking,5
+36,45,Pantai Kuta,5
+36,46,Pantai Melasti,3
+36,47,Pantai Nusa Dua,5
+36,49,Pantai Pandawa,3
+36,50,Pantai Pasih Uug,4
+36,51,White Sand Beach,5
+36,53,Pantai Sanur,4
+36,55,Pantai Waterblow,4
+36,60,Pura Lempuyang,5
+36,63,Pura Taman Ayun,5
+36,66,Pura Uluwatu,5
+36,68,Watersport Tanjung Benoa Bali,4
+36,69,Barong & Kris Dance,4
+36,71,Teras Sawah Tegalalang,5
+36,73,Waterbom Bali,5
+36,75,Wisata Agro Teba Sari Bali,4
+37,7,Aloha Ubud Swing,5
+37,11,Batik Koleksi Sari Amerta,5
+37,14,Campuhan Ridge Walk,5
+37,15,Danau Batur,4
+37,17,Danau Tamblingan,5
+37,23,Goa Gajah,3
+37,24,Gunung Agung,5
+37,25,Gunung Batur,5
+37,27,Puri Saren Palace,4
+37,29,Jimbaran Bay,3
+37,31,Kintamani Highland,1
+37,35,Desa Wisata Penglipuran,2
+37,37,Pantai Atuh,5
+37,39,Pantai Canggu,4
+37,46,Pantai Melasti,4
+37,49,Pantai Pandawa,3
+37,50,Pantai Pasih Uug,4
+37,51,White Sand Beach,5
+37,52,Puseh Batuan Temple,4
+37,53,Pantai Sanur,4
+37,55,Pantai Waterblow,4
+37,57,Besakih Temple,4
+37,60,Pura Lempuyang,5
+37,62,Pura Saraswati,5
+37,64,Pura Tanah Lot,4
+37,65,Pura Tirta Empul,5
+37,66,Pura Uluwatu,5
+37,67,Mas Carving Center,5
+37,68,Watersport Tanjung Benoa Bali,4
+37,71,Teras Sawah Tegalalang,4
+38,1,Satria Agrowisata,2
+38,2,Agung Bali Oleh-Oleh,3
+38,3,Wisata Air Panas Toya Bungkah,5
+38,5,Air Terjun Tegenungan,3
+38,11,Batik Koleksi Sari Amerta,4
+38,14,Campuhan Ridge Walk,5
+38,18,Desa Budaya Kertalangu,4
+38,22,Garuda Wisnu Kencana,3
+38,24,Gunung Agung,5
+38,26,Taman Ujung Water Palace,5
+38,31,Kintamani Highland,5
+38,32,Krisna Oleh-Oleh,4
+38,40,Crystal Bay,4
+38,42,Pantai Double Six,5
+38,43,Pantai Dreamland,5
+38,44,Pantai Kelingking,5
+38,45,Pantai Kuta,5
+38,46,Pantai Melasti,4
+38,48,Pantai Padang Padang,4
+38,49,Pantai Pandawa,5
+38,51,White Sand Beach,4
+38,54,Pantai Seminyak,5
+38,55,Pantai Waterblow,4
+38,57,Besakih Temple,4
+38,58,Gunung Kawi Sebatu Temple,5
+38,59,Pura Kehen,5
+38,62,Pura Saraswati,5
+38,63,Pura Taman Ayun,4
+38,71,Teras Sawah Tegalalang,4
+38,74,Alas Harum Agro Tourism,5
+39,1,Satria Agrowisata,1
+39,2,Agung Bali Oleh-Oleh,4
+39,4,Air Terjun Aling-Aling,5
+39,5,Air Terjun Tegenungan,4
+39,6,Air Terjun Tukad Cepung,4
+39,7,Aloha Ubud Swing,5
+39,9,Handara Iconic Gate,4
+39,11,Batik Koleksi Sari Amerta,2
+39,13,Wanagiri Hidden Hills,4
+39,17,Danau Tamblingan,5
+39,20,Desa Tohpati,3
+39,30,Pabrik Kata-Kata Joger,4
+39,31,Kintamani Highland,2
+39,32,Krisna Oleh-Oleh,4
+39,33,Sacred Monkey Forest Sanctuary,5
+39,34,Monumen Bajra Sandhi,4
+39,37,Pantai Atuh,5
+39,44,Pantai Kelingking,5
+39,48,Pantai Padang Padang,5
+39,50,Pantai Pasih Uug,1
+39,51,White Sand Beach,4
+39,54,Pantai Seminyak,5
+39,55,Pantai Waterblow,4
+39,60,Pura Lempuyang,5
+39,62,Pura Saraswati,5
+39,63,Pura Taman Ayun,4
+39,65,Pura Tirta Empul,4
+39,70,Kecak & Fire Dance,4
+39,71,Teras Sawah Tegalalang,4
+39,73,Waterbom Bali,5
+40,2,Agung Bali Oleh-Oleh,4
+40,3,Wisata Air Panas Toya Bungkah,4
+40,4,Air Terjun Aling-Aling,5
+40,5,Air Terjun Tegenungan,4
+40,6,Air Terjun Tukad Cepung,5
+40,8,Bali Bird Park,4
+40,9,Handara Iconic Gate,1
+40,11,Batik Koleksi Sari Amerta,5
+40,14,Campuhan Ridge Walk,5
+40,16,Danau Beratan,5
+40,17,Danau Tamblingan,4
+40,21,Galeri Seni Semar Kuning,5
+40,24,Gunung Agung,3
+40,25,Gunung Batur,5
+40,31,Kintamani Highland,2
+40,33,Sacred Monkey Forest Sanctuary,4
+40,40,Crystal Bay,4
+40,41,Pantai Diamond,5
+40,52,Puseh Batuan Temple,4
+40,54,Pantai Seminyak,4
+40,55,Pantai Waterblow,4
+40,59,Pura Kehen,5
+40,60,Pura Lempuyang,5
+40,63,Pura Taman Ayun,4
+40,64,Pura Tanah Lot,4
+40,68,Watersport Tanjung Benoa Bali,4
+40,69,Barong & Kris Dance,4
+40,70,Kecak & Fire Dance,3
+40,73,Waterbom Bali,5
+40,74,Alas Harum Agro Tourism,5
+41,6,Air Terjun Tukad Cepung,5
+41,9,Handara Iconic Gate,5
+41,12,Big Garden Corner,3
+41,13,Wanagiri Hidden Hills,3
+41,19,Desa Celuk,3
+41,20,Desa Tohpati,4
+41,21,Galeri Seni Semar Kuning,5
+41,26,Taman Ujung Water Palace,5
+41,27,Puri Saren Palace,4
+41,30,Pabrik Kata-Kata Joger,4
+41,31,Kintamani Highland,5
+41,32,Krisna Oleh-Oleh,5
+41,33,Sacred Monkey Forest Sanctuary,3
+41,34,Monumen Bajra Sandhi,5
+41,36,Pantai Angel's Billabong,1
+41,37,Pantai Atuh,5
+41,41,Pantai Diamond,2
+41,44,Pantai Kelingking,5
+41,45,Pantai Kuta,2
+41,46,Pantai Melasti,5
+41,47,Pantai Nusa Dua,5
+41,51,White Sand Beach,4
+41,52,Puseh Batuan Temple,4
+41,53,Pantai Sanur,4
+41,54,Pantai Seminyak,4
+41,55,Pantai Waterblow,4
+41,57,Besakih Temple,4
+41,67,Mas Carving Center,5
+41,68,Watersport Tanjung Benoa Bali,4
+41,73,Waterbom Bali,5
+42,2,Agung Bali Oleh-Oleh,3
+42,4,Air Terjun Aling-Aling,5
+42,5,Air Terjun Tegenungan,2
+42,8,Bali Bird Park,5
+42,9,Handara Iconic Gate,4
+42,11,Batik Koleksi Sari Amerta,3
+42,18,Desa Budaya Kertalangu,3
+42,19,Desa Celuk,4
+42,23,Goa Gajah,3
+42,24,Gunung Agung,5
+42,26,Taman Ujung Water Palace,4
+42,30,Pabrik Kata-Kata Joger,3
+42,32,Krisna Oleh-Oleh,4
+42,34,Monumen Bajra Sandhi,4
+42,36,Pantai Angel's Billabong,4
+42,37,Pantai Atuh,5
+42,38,Pantai Blue Lagoon,4
+42,41,Pantai Diamond,5
+42,48,Pantai Padang Padang,3
+42,52,Puseh Batuan Temple,4
+42,54,Pantai Seminyak,4
+42,57,Besakih Temple,4
+42,58,Gunung Kawi Sebatu Temple,5
+42,62,Pura Saraswati,5
+42,63,Pura Taman Ayun,4
+42,69,Barong & Kris Dance,4
+42,71,Teras Sawah Tegalalang,4
+42,72,Tirta Gangga,4
+42,74,Alas Harum Agro Tourism,5
+42,75,Wisata Agro Teba Sari Bali,4
+43,1,Satria Agrowisata,2
+43,2,Agung Bali Oleh-Oleh,5
+43,3,Wisata Air Panas Toya Bungkah,4
+43,8,Bali Bird Park,3
+43,11,Batik Koleksi Sari Amerta,3
+43,12,Big Garden Corner,5
+43,18,Desa Budaya Kertalangu,5
+43,20,Desa Tohpati,5
+43,29,Jimbaran Bay,3
+43,30,Pabrik Kata-Kata Joger,5
+43,32,Krisna Oleh-Oleh,5
+43,38,Pantai Blue Lagoon,1
+43,39,Pantai Canggu,1
+43,40,Crystal Bay,4
+43,41,Pantai Diamond,5
+43,44,Pantai Kelingking,2
+43,45,Pantai Kuta,2
+43,49,Pantai Pandawa,5
+43,50,Pantai Pasih Uug,4
+43,52,Puseh Batuan Temple,4
+43,60,Pura Lempuyang,5
+43,62,Pura Saraswati,5
+43,65,Pura Tirta Empul,4
+43,66,Pura Uluwatu,5
+43,68,Watersport Tanjung Benoa Bali,4
+43,69,Barong & Kris Dance,4
+43,70,Kecak & Fire Dance,3
+43,71,Teras Sawah Tegalalang,4
+43,73,Waterbom Bali,5
+43,74,Alas Harum Agro Tourism,5
+44,1,Satria Agrowisata,5
+44,2,Agung Bali Oleh-Oleh,3
+44,3,Wisata Air Panas Toya Bungkah,4
+44,9,Handara Iconic Gate,4
+44,13,Wanagiri Hidden Hills,4
+44,17,Danau Tamblingan,5
+44,19,Desa Celuk,3
+44,20,Desa Tohpati,3
+44,21,Galeri Seni Semar Kuning,5
+44,24,Gunung Agung,5
+44,27,Puri Saren Palace,4
+44,29,Jimbaran Bay,5
+44,32,Krisna Oleh-Oleh,4
+44,33,Sacred Monkey Forest Sanctuary,3
+44,36,Pantai Angel's Billabong,4
+44,39,Pantai Canggu,2
+44,41,Pantai Diamond,5
+44,42,Pantai Double Six,5
+44,43,Pantai Dreamland,5
+44,44,Pantai Kelingking,4
+44,46,Pantai Melasti,5
+44,47,Pantai Nusa Dua,3
+44,50,Pantai Pasih Uug,4
+44,51,White Sand Beach,4
+44,54,Pantai Seminyak,4
+44,59,Pura Kehen,5
+44,61,Pura Luhur Batukaru,5
+44,63,Pura Taman Ayun,4
+44,66,Pura Uluwatu,5
+44,68,Watersport Tanjung Benoa Bali,4
+45,2,Agung Bali Oleh-Oleh,5
+45,3,Wisata Air Panas Toya Bungkah,2
+45,6,Air Terjun Tukad Cepung,4
+45,7,Aloha Ubud Swing,5
+45,10,Bali Swing,5
+45,12,Big Garden Corner,4
+45,13,Wanagiri Hidden Hills,5
+45,17,Danau Tamblingan,5
+45,20,Desa Tohpati,3
+45,21,Galeri Seni Semar Kuning,2
+45,24,Gunung Agung,5
+45,25,Gunung Batur,5
+45,28,Jatiluwih Green Land,4
+45,29,Jimbaran Bay,5
+45,31,Kintamani Highland,5
+45,33,Sacred Monkey Forest Sanctuary,3
+45,35,Desa Wisata Penglipuran,5
+45,36,Pantai Angel's Billabong,2
+45,40,Crystal Bay,4
+45,42,Pantai Double Six,4
+45,46,Pantai Melasti,4
+45,48,Pantai Padang Padang,5
+45,49,Pantai Pandawa,4
+45,53,Pantai Sanur,4
+45,54,Pantai Seminyak,4
+45,55,Pantai Waterblow,4
+45,57,Besakih Temple,3
+45,64,Pura Tanah Lot,4
+45,71,Teras Sawah Tegalalang,4
+45,74,Alas Harum Agro Tourism,5
+46,1,Satria Agrowisata,4
+46,5,Air Terjun Tegenungan,4
+46,7,Aloha Ubud Swing,5
+46,10,Bali Swing,5
+46,11,Batik Koleksi Sari Amerta,4
+46,13,Wanagiri Hidden Hills,5
+46,14,Campuhan Ridge Walk,4
+46,17,Danau Tamblingan,4
+46,20,Desa Tohpati,4
+46,21,Galeri Seni Semar Kuning,3
+46,22,Garuda Wisnu Kencana,2
+46,25,Gunung Batur,5
+46,29,Jimbaran Bay,4
+46,34,Monumen Bajra Sandhi,4
+46,37,Pantai Atuh,5
+46,39,Pantai Canggu,4
+46,40,Crystal Bay,4
+46,41,Pantai Diamond,5
+46,42,Pantai Double Six,1
+46,44,Pantai Kelingking,4
+46,48,Pantai Padang Padang,4
+46,49,Pantai Pandawa,4
+46,54,Pantai Seminyak,4
+46,55,Pantai Waterblow,4
+46,60,Pura Lempuyang,5
+46,65,Pura Tirta Empul,4
+46,70,Kecak & Fire Dance,3
+46,72,Tirta Gangga,4
+46,73,Waterbom Bali,5
+46,74,Alas Harum Agro Tourism,5
+47,4,Air Terjun Aling-Aling,5
+47,6,Air Terjun Tukad Cepung,5
+47,7,Aloha Ubud Swing,4
+47,8,Bali Bird Park,5
+47,9,Handara Iconic Gate,4
+47,10,Bali Swing,5
+47,14,Campuhan Ridge Walk,5
+47,16,Danau Beratan,5
+47,19,Desa Celuk,3
+47,20,Desa Tohpati,4
+47,21,Galeri Seni Semar Kuning,5
+47,24,Gunung Agung,5
+47,26,Taman Ujung Water Palace,5
+47,27,Puri Saren Palace,4
+47,31,Kintamani Highland,5
+47,34,Monumen Bajra Sandhi,4
+47,38,Pantai Blue Lagoon,4
+47,39,Pantai Canggu,4
+47,40,Crystal Bay,5
+47,46,Pantai Melasti,3
+47,50,Pantai Pasih Uug,5
+47,53,Pantai Sanur,4
+47,54,Pantai Seminyak,4
+47,55,Pantai Waterblow,4
+47,62,Pura Saraswati,5
+47,63,Pura Taman Ayun,4
+47,65,Pura Tirta Empul,4
+47,69,Barong & Kris Dance,4
+47,71,Teras Sawah Tegalalang,4
+47,72,Tirta Gangga,4
+48,4,Air Terjun Aling-Aling,1
+48,7,Aloha Ubud Swing,4
+48,11,Batik Koleksi Sari Amerta,4
+48,12,Big Garden Corner,3
+48,13,Wanagiri Hidden Hills,5
+48,15,Danau Batur,4
+48,19,Desa Celuk,4
+48,22,Garuda Wisnu Kencana,1
+48,23,Goa Gajah,3
+48,26,Taman Ujung Water Palace,3
+48,27,Puri Saren Palace,5
+48,33,Sacred Monkey Forest Sanctuary,4
+48,35,Desa Wisata Penglipuran,4
+48,36,Pantai Angel's Billabong,5
+48,37,Pantai Atuh,5
+48,43,Pantai Dreamland,4
+48,45,Pantai Kuta,5
+48,48,Pantai Padang Padang,4
+48,53,Pantai Sanur,4
+48,58,Gunung Kawi Sebatu Temple,4
+48,60,Pura Lempuyang,4
+48,63,Pura Taman Ayun,4
+48,64,Pura Tanah Lot,4
+48,65,Pura Tirta Empul,4
+48,68,Watersport Tanjung Benoa Bali,4
+48,70,Kecak & Fire Dance,3
+48,71,Teras Sawah Tegalalang,4
+48,72,Tirta Gangga,4
+48,74,Alas Harum Agro Tourism,5
+48,75,Wisata Agro Teba Sari Bali,4
+49,1,Satria Agrowisata,4
+49,4,Air Terjun Aling-Aling,5
+49,5,Air Terjun Tegenungan,4
+49,12,Big Garden Corner,4
+49,14,Campuhan Ridge Walk,5
+49,18,Desa Budaya Kertalangu,4
+49,19,Desa Celuk,5
+49,25,Gunung Batur,4
+49,27,Puri Saren Palace,2
+49,32,Krisna Oleh-Oleh,1
+49,33,Sacred Monkey Forest Sanctuary,1
+49,34,Monumen Bajra Sandhi,3
+49,37,Pantai Atuh,5
+49,39,Pantai Canggu,4
+49,40,Crystal Bay,5
+49,43,Pantai Dreamland,5
+49,44,Pantai Kelingking,5
+49,46,Pantai Melasti,2
+49,53,Pantai Sanur,4
+49,54,Pantai Seminyak,4
+49,55,Pantai Waterblow,4
+49,57,Besakih Temple,3
+49,59,Pura Kehen,5
+49,60,Pura Lempuyang,4
+49,62,Pura Saraswati,5
+49,64,Pura Tanah Lot,4
+49,66,Pura Uluwatu,5
+49,70,Kecak & Fire Dance,3
+49,72,Tirta Gangga,4
+49,75,Wisata Agro Teba Sari Bali,4
+50,8,Bali Bird Park,2
+50,10,Bali Swing,5
+50,11,Batik Koleksi Sari Amerta,4
+50,13,Wanagiri Hidden Hills,5
+50,15,Danau Batur,4
+50,17,Danau Tamblingan,5
+50,23,Goa Gajah,5
+50,25,Gunung Batur,5
+50,27,Puri Saren Palace,3
+50,29,Jimbaran Bay,4
+50,31,Kintamani Highland,4
+50,32,Krisna Oleh-Oleh,4
+50,35,Desa Wisata Penglipuran,5
+50,37,Pantai Atuh,5
+50,39,Pantai Canggu,2
+50,40,Crystal Bay,4
+50,42,Pantai Double Six,5
+50,44,Pantai Kelingking,5
+50,46,Pantai Melasti,4
+50,49,Pantai Pandawa,4
+50,52,Puseh Batuan Temple,4
+50,55,Pantai Waterblow,4
+50,59,Pura Kehen,5
+50,61,Pura Luhur Batukaru,5
+50,62,Pura Saraswati,5
+50,64,Pura Tanah Lot,4
+50,68,Watersport Tanjung Benoa Bali,4
+50,69,Barong & Kris Dance,4
+50,70,Kecak & Fire Dance,3
+50,72,Tirta Gangga,4
+51,4,Air Terjun Aling-Aling,5
+51,6,Air Terjun Tukad Cepung,5
+51,9,Handara Iconic Gate,5
+51,10,Bali Swing,1
+51,11,Batik Koleksi Sari Amerta,1
+51,14,Campuhan Ridge Walk,5
+51,16,Danau Beratan,2
+51,20,Desa Tohpati,2
+51,26,Taman Ujung Water Palace,5
+51,27,Puri Saren Palace,3
+51,29,Jimbaran Bay,4
+51,31,Kintamani Highland,4
+51,33,Sacred Monkey Forest Sanctuary,4
+51,38,Pantai Blue Lagoon,3
+51,39,Pantai Canggu,5
+51,40,Crystal Bay,5
+51,43,Pantai Dreamland,1
+51,46,Pantai Melasti,5
+51,47,Pantai Nusa Dua,5
+51,48,Pantai Padang Padang,3
+51,50,Pantai Pasih Uug,5
+51,51,White Sand Beach,4
+51,53,Pantai Sanur,4
+51,55,Pantai Waterblow,4
+51,58,Gunung Kawi Sebatu Temple,4
+51,59,Pura Kehen,5
+51,61,Pura Luhur Batukaru,5
+51,64,Pura Tanah Lot,4
+51,68,Watersport Tanjung Benoa Bali,4
+51,75,Wisata Agro Teba Sari Bali,4
+52,4,Air Terjun Aling-Aling,5
+52,9,Handara Iconic Gate,4
+52,10,Bali Swing,4
+52,13,Wanagiri Hidden Hills,5
+52,15,Danau Batur,5
+52,16,Danau Beratan,5
+52,18,Desa Budaya Kertalangu,4
+52,19,Desa Celuk,4
+52,20,Desa Tohpati,5
+52,24,Gunung Agung,3
+52,25,Gunung Batur,5
+52,26,Taman Ujung Water Palace,5
+52,30,Pabrik Kata-Kata Joger,4
+52,31,Kintamani Highland,5
+52,32,Krisna Oleh-Oleh,4
+52,45,Pantai Kuta,5
+52,48,Pantai Padang Padang,4
+52,50,Pantai Pasih Uug,5
+52,52,Puseh Batuan Temple,4
+52,54,Pantai Seminyak,4
+52,57,Besakih Temple,3
+52,58,Gunung Kawi Sebatu Temple,4
+52,59,Pura Kehen,5
+52,60,Pura Lempuyang,4
+52,63,Pura Taman Ayun,4
+52,64,Pura Tanah Lot,4
+52,65,Pura Tirta Empul,4
+52,66,Pura Uluwatu,5
+52,69,Barong & Kris Dance,4
+52,72,Tirta Gangga,4
+53,4,Air Terjun Aling-Aling,5
+53,11,Batik Koleksi Sari Amerta,2
+53,13,Wanagiri Hidden Hills,5
+53,15,Danau Batur,4
+53,18,Desa Budaya Kertalangu,4
+53,19,Desa Celuk,5
+53,20,Desa Tohpati,5
+53,22,Garuda Wisnu Kencana,4
+53,24,Gunung Agung,1
+53,25,Gunung Batur,4
+53,26,Taman Ujung Water Palace,4
+53,29,Jimbaran Bay,4
+53,30,Pabrik Kata-Kata Joger,5
+53,36,Pantai Angel's Billabong,4
+53,39,Pantai Canggu,5
+53,40,Crystal Bay,1
+53,41,Pantai Diamond,3
+53,43,Pantai Dreamland,4
+53,44,Pantai Kelingking,5
+53,48,Pantai Padang Padang,4
+53,49,Pantai Pandawa,5
+53,50,Pantai Pasih Uug,4
+53,54,Pantai Seminyak,4
+53,57,Besakih Temple,3
+53,58,Gunung Kawi Sebatu Temple,4
+53,61,Pura Luhur Batukaru,4
+53,64,Pura Tanah Lot,4
+53,65,Pura Tirta Empul,4
+53,66,Pura Uluwatu,5
+53,73,Waterbom Bali,5
+54,1,Satria Agrowisata,1
+54,3,Wisata Air Panas Toya Bungkah,4
+54,4,Air Terjun Aling-Aling,5
+54,5,Air Terjun Tegenungan,5
+54,6,Air Terjun Tukad Cepung,5
+54,7,Aloha Ubud Swing,5
+54,14,Campuhan Ridge Walk,5
+54,17,Danau Tamblingan,4
+54,19,Desa Celuk,4
+54,23,Goa Gajah,5
+54,24,Gunung Agung,5
+54,29,Jimbaran Bay,1
+54,32,Krisna Oleh-Oleh,4
+54,34,Monumen Bajra Sandhi,4
+54,36,Pantai Angel's Billabong,5
+54,40,Crystal Bay,4
+54,45,Pantai Kuta,4
+54,48,Pantai Padang Padang,3
+54,51,White Sand Beach,4
+54,52,Puseh Batuan Temple,4
+54,53,Pantai Sanur,4
+54,55,Pantai Waterblow,4
+54,59,Pura Kehen,5
+54,64,Pura Tanah Lot,4
+54,66,Pura Uluwatu,5
+54,69,Barong & Kris Dance,3
+54,71,Teras Sawah Tegalalang,4
+54,72,Tirta Gangga,4
+54,74,Alas Harum Agro Tourism,5
+54,75,Wisata Agro Teba Sari Bali,4
+55,1,Satria Agrowisata,4
+55,2,Agung Bali Oleh-Oleh,3
+55,7,Aloha Ubud Swing,5
+55,8,Bali Bird Park,5
+55,10,Bali Swing,5
+55,12,Big Garden Corner,4
+55,16,Danau Beratan,5
+55,17,Danau Tamblingan,5
+55,19,Desa Celuk,5
+55,20,Desa Tohpati,4
+55,21,Galeri Seni Semar Kuning,3
+55,25,Gunung Batur,5
+55,26,Taman Ujung Water Palace,4
+55,33,Sacred Monkey Forest Sanctuary,5
+55,39,Pantai Canggu,5
+55,40,Crystal Bay,5
+55,41,Pantai Diamond,5
+55,44,Pantai Kelingking,5
+55,45,Pantai Kuta,1
+55,48,Pantai Padang Padang,3
+55,55,Pantai Waterblow,4
+55,56,Ubud Traditional Art Market,4
+55,60,Pura Lempuyang,4
+55,61,Pura Luhur Batukaru,4
+55,63,Pura Taman Ayun,4
+55,66,Pura Uluwatu,4
+55,68,Watersport Tanjung Benoa Bali,4
+55,69,Barong & Kris Dance,3
+55,70,Kecak & Fire Dance,3
+55,74,Alas Harum Agro Tourism,5
+56,1,Satria Agrowisata,5
+56,2,Agung Bali Oleh-Oleh,4
+56,7,Aloha Ubud Swing,2
+56,8,Bali Bird Park,3
+56,10,Bali Swing,5
+56,11,Batik Koleksi Sari Amerta,2
+56,13,Wanagiri Hidden Hills,5
+56,14,Campuhan Ridge Walk,5
+56,18,Desa Budaya Kertalangu,5
+56,20,Desa Tohpati,5
+56,21,Galeri Seni Semar Kuning,5
+56,28,Jatiluwih Green Land,3
+56,35,Desa Wisata Penglipuran,4
+56,37,Pantai Atuh,5
+56,39,Pantai Canggu,5
+56,41,Pantai Diamond,5
+56,42,Pantai Double Six,4
+56,44,Pantai Kelingking,5
+56,47,Pantai Nusa Dua,4
+56,48,Pantai Padang Padang,2
+56,49,Pantai Pandawa,1
+56,51,White Sand Beach,4
+56,52,Puseh Batuan Temple,4
+56,53,Pantai Sanur,4
+56,60,Pura Lempuyang,4
+56,64,Pura Tanah Lot,4
+56,66,Pura Uluwatu,4
+56,69,Barong & Kris Dance,3
+56,73,Waterbom Bali,5
+56,74,Alas Harum Agro Tourism,5
+57,1,Satria Agrowisata,4
+57,2,Agung Bali Oleh-Oleh,4
+57,4,Air Terjun Aling-Aling,4
+57,5,Air Terjun Tegenungan,5
+57,6,Air Terjun Tukad Cepung,5
+57,9,Handara Iconic Gate,3
+57,10,Bali Swing,5
+57,13,Wanagiri Hidden Hills,5
+57,15,Danau Batur,3
+57,16,Danau Beratan,4
+57,18,Desa Budaya Kertalangu,5
+57,22,Garuda Wisnu Kencana,3
+57,24,Gunung Agung,5
+57,27,Puri Saren Palace,1
+57,32,Krisna Oleh-Oleh,4
+57,37,Pantai Atuh,5
+57,38,Pantai Blue Lagoon,4
+57,39,Pantai Canggu,5
+57,43,Pantai Dreamland,5
+57,49,Pantai Pandawa,4
+57,56,Ubud Traditional Art Market,4
+57,59,Pura Kehen,5
+57,60,Pura Lempuyang,4
+57,62,Pura Saraswati,5
+57,69,Barong & Kris Dance,3
+57,70,Kecak & Fire Dance,3
+57,71,Teras Sawah Tegalalang,4
+57,72,Tirta Gangga,4
+57,73,Waterbom Bali,5
+57,74,Alas Harum Agro Tourism,5
+58,1,Satria Agrowisata,4
+58,7,Aloha Ubud Swing,4
+58,10,Bali Swing,2
+58,11,Batik Koleksi Sari Amerta,4
+58,12,Big Garden Corner,5
+58,15,Danau Batur,4
+58,16,Danau Beratan,5
+58,17,Danau Tamblingan,4
+58,23,Goa Gajah,2
+58,25,Gunung Batur,5
+58,28,Jatiluwih Green Land,5
+58,36,Pantai Angel's Billabong,5
+58,40,Crystal Bay,4
+58,41,Pantai Diamond,5
+58,42,Pantai Double Six,4
+58,45,Pantai Kuta,3
+58,48,Pantai Padang Padang,4
+58,50,Pantai Pasih Uug,5
+58,51,White Sand Beach,4
+58,54,Pantai Seminyak,4
+58,56,Ubud Traditional Art Market,4
+58,57,Besakih Temple,3
+58,59,Pura Kehen,5
+58,60,Pura Lempuyang,4
+58,62,Pura Saraswati,5
+58,67,Mas Carving Center,4
+58,70,Kecak & Fire Dance,3
+58,71,Teras Sawah Tegalalang,3
+58,72,Tirta Gangga,4
+58,74,Alas Harum Agro Tourism,5
+59,3,Wisata Air Panas Toya Bungkah,5
+59,4,Air Terjun Aling-Aling,4
+59,7,Aloha Ubud Swing,5
+59,11,Batik Koleksi Sari Amerta,3
+59,13,Wanagiri Hidden Hills,5
+59,21,Galeri Seni Semar Kuning,5
+59,23,Goa Gajah,2
+59,25,Gunung Batur,4
+59,27,Puri Saren Palace,4
+59,31,Kintamani Highland,4
+59,32,Krisna Oleh-Oleh,5
+59,37,Pantai Atuh,4
+59,38,Pantai Blue Lagoon,5
+59,39,Pantai Canggu,5
+59,48,Pantai Padang Padang,5
+59,49,Pantai Pandawa,4
+59,50,Pantai Pasih Uug,5
+59,53,Pantai Sanur,4
+59,54,Pantai Seminyak,4
+59,55,Pantai Waterblow,4
+59,56,Ubud Traditional Art Market,4
+59,58,Gunung Kawi Sebatu Temple,4
+59,64,Pura Tanah Lot,4
+59,66,Pura Uluwatu,4
+59,67,Mas Carving Center,4
+59,69,Barong & Kris Dance,3
+59,71,Teras Sawah Tegalalang,3
+59,72,Tirta Gangga,4
+59,73,Waterbom Bali,4
+59,75,Wisata Agro Teba Sari Bali,4
+60,8,Bali Bird Park,3
+60,9,Handara Iconic Gate,5
+60,11,Batik Koleksi Sari Amerta,3
+60,22,Garuda Wisnu Kencana,3
+60,23,Goa Gajah,2
+60,26,Taman Ujung Water Palace,5
+60,28,Jatiluwih Green Land,4
+60,29,Jimbaran Bay,4
+60,30,Pabrik Kata-Kata Joger,4
+60,32,Krisna Oleh-Oleh,1
+60,34,Monumen Bajra Sandhi,3
+60,36,Pantai Angel's Billabong,1
+60,37,Pantai Atuh,5
+60,38,Pantai Blue Lagoon,3
+60,43,Pantai Dreamland,5
+60,44,Pantai Kelingking,4
+60,46,Pantai Melasti,1
+60,47,Pantai Nusa Dua,5
+60,49,Pantai Pandawa,5
+60,52,Puseh Batuan Temple,4
+60,59,Pura Kehen,5
+60,60,Pura Lempuyang,4
+60,61,Pura Luhur Batukaru,4
+60,63,Pura Taman Ayun,4
+60,66,Pura Uluwatu,4
+60,67,Mas Carving Center,4
+60,68,Watersport Tanjung Benoa Bali,4
+60,70,Kecak & Fire Dance,3
+60,72,Tirta Gangga,4
+60,73,Waterbom Bali,4
+61,5,Air Terjun Tegenungan,5
+61,6,Air Terjun Tukad Cepung,5
+61,7,Aloha Ubud Swing,5
+61,14,Campuhan Ridge Walk,5
+61,20,Desa Tohpati,4
+61,22,Garuda Wisnu Kencana,4
+61,23,Goa Gajah,3
+61,24,Gunung Agung,5
+61,26,Taman Ujung Water Palace,5
+61,27,Puri Saren Palace,4
+61,30,Pabrik Kata-Kata Joger,4
+61,31,Kintamani Highland,4
+61,32,Krisna Oleh-Oleh,4
+61,33,Sacred Monkey Forest Sanctuary,5
+61,37,Pantai Atuh,5
+61,38,Pantai Blue Lagoon,4
+61,39,Pantai Canggu,5
+61,41,Pantai Diamond,5
+61,44,Pantai Kelingking,5
+61,45,Pantai Kuta,5
+61,50,Pantai Pasih Uug,4
+61,51,White Sand Beach,4
+61,52,Puseh Batuan Temple,4
+61,57,Besakih Temple,3
+61,59,Pura Kehen,5
+61,63,Pura Taman Ayun,4
+61,65,Pura Tirta Empul,4
+61,70,Kecak & Fire Dance,3
+61,71,Teras Sawah Tegalalang,3
+61,72,Tirta Gangga,4
+62,1,Satria Agrowisata,1
+62,10,Bali Swing,5
+62,11,Batik Koleksi Sari Amerta,3
+62,13,Wanagiri Hidden Hills,5
+62,15,Danau Batur,4
+62,22,Garuda Wisnu Kencana,4
+62,23,Goa Gajah,5
+62,24,Gunung Agung,5
+62,25,Gunung Batur,4
+62,26,Taman Ujung Water Palace,4
+62,27,Puri Saren Palace,3
+62,29,Jimbaran Bay,2
+62,30,Pabrik Kata-Kata Joger,5
+62,31,Kintamani Highland,5
+62,33,Sacred Monkey Forest Sanctuary,2
+62,34,Monumen Bajra Sandhi,2
+62,40,Crystal Bay,2
+62,42,Pantai Double Six,5
+62,43,Pantai Dreamland,3
+62,47,Pantai Nusa Dua,4
+62,50,Pantai Pasih Uug,5
+62,51,White Sand Beach,4
+62,52,Puseh Batuan Temple,4
+62,53,Pantai Sanur,4
+62,56,Ubud Traditional Art Market,4
+62,61,Pura Luhur Batukaru,4
+62,64,Pura Tanah Lot,4
+62,67,Mas Carving Center,4
+62,69,Barong & Kris Dance,3
+62,73,Waterbom Bali,4
+63,6,Air Terjun Tukad Cepung,5
+63,7,Aloha Ubud Swing,5
+63,11,Batik Koleksi Sari Amerta,5
+63,15,Danau Batur,4
+63,21,Galeri Seni Semar Kuning,5
+63,22,Garuda Wisnu Kencana,5
+63,24,Gunung Agung,5
+63,31,Kintamani Highland,5
+63,32,Krisna Oleh-Oleh,5
+63,33,Sacred Monkey Forest Sanctuary,5
+63,38,Pantai Blue Lagoon,4
+63,40,Crystal Bay,5
+63,42,Pantai Double Six,3
+63,45,Pantai Kuta,3
+63,46,Pantai Melasti,5
+63,49,Pantai Pandawa,4
+63,50,Pantai Pasih Uug,2
+63,51,White Sand Beach,4
+63,57,Besakih Temple,3
+63,59,Pura Kehen,5
+63,60,Pura Lempuyang,4
+63,61,Pura Luhur Batukaru,4
+63,63,Pura Taman Ayun,4
+63,65,Pura Tirta Empul,4
+63,66,Pura Uluwatu,4
+63,68,Watersport Tanjung Benoa Bali,4
+63,69,Barong & Kris Dance,3
+63,70,Kecak & Fire Dance,3
+63,73,Waterbom Bali,4
+63,74,Alas Harum Agro Tourism,4
+64,1,Satria Agrowisata,4
+64,4,Air Terjun Aling-Aling,5
+64,5,Air Terjun Tegenungan,5
+64,7,Aloha Ubud Swing,5
+64,10,Bali Swing,5
+64,12,Big Garden Corner,4
+64,14,Campuhan Ridge Walk,5
+64,15,Danau Batur,5
+64,17,Danau Tamblingan,5
+64,23,Goa Gajah,3
+64,24,Gunung Agung,5
+64,25,Gunung Batur,5
+64,27,Puri Saren Palace,3
+64,28,Jatiluwih Green Land,5
+64,29,Jimbaran Bay,2
+64,34,Monumen Bajra Sandhi,5
+64,36,Pantai Angel's Billabong,3
+64,40,Crystal Bay,5
+64,41,Pantai Diamond,5
+64,45,Pantai Kuta,3
+64,48,Pantai Padang Padang,5
+64,49,Pantai Pandawa,2
+64,53,Pantai Sanur,4
+64,54,Pantai Seminyak,4
+64,56,Ubud Traditional Art Market,4
+64,59,Pura Kehen,5
+64,64,Pura Tanah Lot,4
+64,69,Barong & Kris Dance,3
+64,71,Teras Sawah Tegalalang,3
+64,72,Tirta Gangga,4
+65,6,Air Terjun Tukad Cepung,5
+65,10,Bali Swing,5
+65,11,Batik Koleksi Sari Amerta,4
+65,14,Campuhan Ridge Walk,5
+65,16,Danau Beratan,3
+65,17,Danau Tamblingan,5
+65,19,Desa Celuk,3
+65,23,Goa Gajah,2
+65,24,Gunung Agung,5
+65,27,Puri Saren Palace,3
+65,30,Pabrik Kata-Kata Joger,4
+65,31,Kintamani Highland,5
+65,32,Krisna Oleh-Oleh,5
+65,38,Pantai Blue Lagoon,3
+65,40,Crystal Bay,5
+65,47,Pantai Nusa Dua,2
+65,50,Pantai Pasih Uug,4
+65,51,White Sand Beach,4
+65,52,Puseh Batuan Temple,4
+65,54,Pantai Seminyak,4
+65,55,Pantai Waterblow,4
+65,57,Besakih Temple,3
+65,58,Gunung Kawi Sebatu Temple,4
+65,60,Pura Lempuyang,4
+65,62,Pura Saraswati,5
+65,63,Pura Taman Ayun,4
+65,67,Mas Carving Center,4
+65,70,Kecak & Fire Dance,3
+65,71,Teras Sawah Tegalalang,3
+65,75,Wisata Agro Teba Sari Bali,4
+66,1,Satria Agrowisata,2
+66,3,Wisata Air Panas Toya Bungkah,5
+66,4,Air Terjun Aling-Aling,5
+66,8,Bali Bird Park,5
+66,9,Handara Iconic Gate,1
+66,13,Wanagiri Hidden Hills,5
+66,14,Campuhan Ridge Walk,5
+66,17,Danau Tamblingan,5
+66,19,Desa Celuk,4
+66,20,Desa Tohpati,5
+66,21,Galeri Seni Semar Kuning,1
+66,27,Puri Saren Palace,4
+66,28,Jatiluwih Green Land,5
+66,31,Kintamani Highland,5
+66,34,Monumen Bajra Sandhi,5
+66,36,Pantai Angel's Billabong,5
+66,38,Pantai Blue Lagoon,5
+66,41,Pantai Diamond,5
+66,42,Pantai Double Six,4
+66,45,Pantai Kuta,4
+66,46,Pantai Melasti,5
+66,48,Pantai Padang Padang,5
+66,50,Pantai Pasih Uug,3
+66,51,White Sand Beach,4
+66,54,Pantai Seminyak,4
+66,65,Pura Tirta Empul,4
+66,67,Mas Carving Center,4
+66,68,Watersport Tanjung Benoa Bali,4
+66,71,Teras Sawah Tegalalang,3
+66,75,Wisata Agro Teba Sari Bali,4
+67,2,Agung Bali Oleh-Oleh,4
+67,3,Wisata Air Panas Toya Bungkah,1
+67,4,Air Terjun Aling-Aling,5
+67,5,Air Terjun Tegenungan,2
+67,7,Aloha Ubud Swing,5
+67,11,Batik Koleksi Sari Amerta,1
+67,12,Big Garden Corner,3
+67,13,Wanagiri Hidden Hills,5
+67,14,Campuhan Ridge Walk,5
+67,18,Desa Budaya Kertalangu,3
+67,19,Desa Celuk,4
+67,21,Galeri Seni Semar Kuning,2
+67,22,Garuda Wisnu Kencana,5
+67,28,Jatiluwih Green Land,5
+67,29,Jimbaran Bay,5
+67,35,Desa Wisata Penglipuran,4
+67,41,Pantai Diamond,5
+67,44,Pantai Kelingking,1
+67,50,Pantai Pasih Uug,5
+67,53,Pantai Sanur,4
+67,54,Pantai Seminyak,4
+67,55,Pantai Waterblow,4
+67,56,Ubud Traditional Art Market,4
+67,57,Besakih Temple,3
+67,59,Pura Kehen,5
+67,60,Pura Lempuyang,4
+67,63,Pura Taman Ayun,4
+67,66,Pura Uluwatu,4
+67,68,Watersport Tanjung Benoa Bali,4
+67,74,Alas Harum Agro Tourism,4
+68,2,Agung Bali Oleh-Oleh,3
+68,5,Air Terjun Tegenungan,3
+68,8,Bali Bird Park,5
+68,9,Handara Iconic Gate,2
+68,14,Campuhan Ridge Walk,5
+68,15,Danau Batur,4
+68,17,Danau Tamblingan,4
+68,18,Desa Budaya Kertalangu,5
+68,19,Desa Celuk,4
+68,20,Desa Tohpati,1
+68,21,Galeri Seni Semar Kuning,5
+68,26,Taman Ujung Water Palace,5
+68,28,Jatiluwih Green Land,5
+68,29,Jimbaran Bay,5
+68,39,Pantai Canggu,5
+68,40,Crystal Bay,4
+68,44,Pantai Kelingking,5
+68,45,Pantai Kuta,4
+68,46,Pantai Melasti,4
+68,51,White Sand Beach,4
+68,52,Puseh Batuan Temple,4
+68,56,Ubud Traditional Art Market,4
+68,58,Gunung Kawi Sebatu Temple,4
+68,59,Pura Kehen,4
+68,61,Pura Luhur Batukaru,4
+68,68,Watersport Tanjung Benoa Bali,4
+68,70,Kecak & Fire Dance,3
+68,73,Waterbom Bali,3
+68,74,Alas Harum Agro Tourism,4
+68,75,Wisata Agro Teba Sari Bali,4
+69,1,Satria Agrowisata,4
+69,6,Air Terjun Tukad Cepung,5
+69,8,Bali Bird Park,5
+69,11,Batik Koleksi Sari Amerta,4
+69,14,Campuhan Ridge Walk,4
+69,15,Danau Batur,1
+69,21,Galeri Seni Semar Kuning,4
+69,23,Goa Gajah,5
+69,25,Gunung Batur,5
+69,28,Jatiluwih Green Land,5
+69,31,Kintamani Highland,4
+69,33,Sacred Monkey Forest Sanctuary,4
+69,35,Desa Wisata Penglipuran,5
+69,37,Pantai Atuh,5
+69,41,Pantai Diamond,5
+69,44,Pantai Kelingking,5
+69,46,Pantai Melasti,4
+69,47,Pantai Nusa Dua,5
+69,49,Pantai Pandawa,4
+69,50,Pantai Pasih Uug,4
+69,55,Pantai Waterblow,3
+69,56,Ubud Traditional Art Market,4
+69,60,Pura Lempuyang,4
+69,63,Pura Taman Ayun,4
+69,67,Mas Carving Center,4
+69,68,Watersport Tanjung Benoa Bali,4
+69,69,Barong & Kris Dance,3
+69,72,Tirta Gangga,4
+69,74,Alas Harum Agro Tourism,4
+69,75,Wisata Agro Teba Sari Bali,4
+70,1,Satria Agrowisata,4
+70,7,Aloha Ubud Swing,5
+70,8,Bali Bird Park,5
+70,14,Campuhan Ridge Walk,5
+70,20,Desa Tohpati,4
+70,21,Galeri Seni Semar Kuning,5
+70,22,Garuda Wisnu Kencana,3
+70,23,Goa Gajah,2
+70,24,Gunung Agung,5
+70,25,Gunung Batur,5
+70,28,Jatiluwih Green Land,1
+70,38,Pantai Blue Lagoon,1
+70,39,Pantai Canggu,4
+70,40,Crystal Bay,5
+70,45,Pantai Kuta,1
+70,47,Pantai Nusa Dua,4
+70,52,Puseh Batuan Temple,4
+70,54,Pantai Seminyak,4
+70,55,Pantai Waterblow,3
+70,56,Ubud Traditional Art Market,4
+70,58,Gunung Kawi Sebatu Temple,4
+70,60,Pura Lempuyang,4
+70,61,Pura Luhur Batukaru,4
+70,62,Pura Saraswati,5
+70,63,Pura Taman Ayun,4
+70,67,Mas Carving Center,4
+70,69,Barong & Kris Dance,3
+70,70,Kecak & Fire Dance,3
+70,71,Teras Sawah Tegalalang,3
+70,72,Tirta Gangga,3
+71,2,Agung Bali Oleh-Oleh,4
+71,4,Air Terjun Aling-Aling,3
+71,5,Air Terjun Tegenungan,5
+71,7,Aloha Ubud Swing,5
+71,13,Wanagiri Hidden Hills,5
+71,16,Danau Beratan,5
+71,19,Desa Celuk,3
+71,22,Garuda Wisnu Kencana,5
+71,25,Gunung Batur,3
+71,28,Jatiluwih Green Land,4
+71,30,Pabrik Kata-Kata Joger,5
+71,31,Kintamani Highland,4
+71,39,Pantai Canggu,5
+71,43,Pantai Dreamland,5
+71,44,Pantai Kelingking,5
+71,45,Pantai Kuta,3
+71,50,Pantai Pasih Uug,5
+71,51,White Sand Beach,4
+71,52,Puseh Batuan Temple,3
+71,54,Pantai Seminyak,3
+71,58,Gunung Kawi Sebatu Temple,4
+71,60,Pura Lempuyang,4
+71,61,Pura Luhur Batukaru,4
+71,64,Pura Tanah Lot,4
+71,67,Mas Carving Center,4
+71,68,Watersport Tanjung Benoa Bali,3
+71,70,Kecak & Fire Dance,3
+71,71,Teras Sawah Tegalalang,3
+71,72,Tirta Gangga,3
+71,73,Waterbom Bali,3
+72,2,Agung Bali Oleh-Oleh,4
+72,3,Wisata Air Panas Toya Bungkah,4
+72,4,Air Terjun Aling-Aling,5
+72,6,Air Terjun Tukad Cepung,5
+72,13,Wanagiri Hidden Hills,5
+72,16,Danau Beratan,5
+72,17,Danau Tamblingan,5
+72,18,Desa Budaya Kertalangu,4
+72,19,Desa Celuk,4
+72,21,Galeri Seni Semar Kuning,4
+72,31,Kintamani Highland,5
+72,32,Krisna Oleh-Oleh,4
+72,33,Sacred Monkey Forest Sanctuary,5
+72,36,Pantai Angel's Billabong,4
+72,38,Pantai Blue Lagoon,4
+72,39,Pantai Canggu,5
+72,40,Crystal Bay,5
+72,41,Pantai Diamond,5
+72,44,Pantai Kelingking,4
+72,45,Pantai Kuta,4
+72,51,White Sand Beach,4
+72,52,Puseh Batuan Temple,3
+72,53,Pantai Sanur,4
+72,57,Besakih Temple,3
+72,61,Pura Luhur Batukaru,4
+72,64,Pura Tanah Lot,4
+72,66,Pura Uluwatu,4
+72,71,Teras Sawah Tegalalang,2
+72,73,Waterbom Bali,3
+72,74,Alas Harum Agro Tourism,4
+73,2,Agung Bali Oleh-Oleh,3
+73,7,Aloha Ubud Swing,5
+73,12,Big Garden Corner,5
+73,13,Wanagiri Hidden Hills,5
+73,14,Campuhan Ridge Walk,5
+73,16,Danau Beratan,5
+73,19,Desa Celuk,5
+73,23,Goa Gajah,3
+73,28,Jatiluwih Green Land,5
+73,32,Krisna Oleh-Oleh,4
+73,33,Sacred Monkey Forest Sanctuary,5
+73,35,Desa Wisata Penglipuran,5
+73,37,Pantai Atuh,5
+73,38,Pantai Blue Lagoon,4
+73,39,Pantai Canggu,4
+73,51,White Sand Beach,4
+73,52,Puseh Batuan Temple,3
+73,53,Pantai Sanur,4
+73,54,Pantai Seminyak,3
+73,58,Gunung Kawi Sebatu Temple,3
+73,59,Pura Kehen,4
+73,62,Pura Saraswati,5
+73,63,Pura Taman Ayun,3
+73,66,Pura Uluwatu,4
+73,67,Mas Carving Center,4
+73,69,Barong & Kris Dance,2
+73,70,Kecak & Fire Dance,3
+73,71,Teras Sawah Tegalalang,2
+73,73,Waterbom Bali,2
+73,74,Alas Harum Agro Tourism,4
+74,1,Satria Agrowisata,4
+74,2,Agung Bali Oleh-Oleh,4
+74,3,Wisata Air Panas Toya Bungkah,5
+74,6,Air Terjun Tukad Cepung,3
+74,7,Aloha Ubud Swing,5
+74,9,Handara Iconic Gate,1
+74,10,Bali Swing,5
+74,15,Danau Batur,4
+74,17,Danau Tamblingan,5
+74,18,Desa Budaya Kertalangu,3
+74,21,Galeri Seni Semar Kuning,5
+74,22,Garuda Wisnu Kencana,4
+74,23,Goa Gajah,3
+74,27,Puri Saren Palace,4
+74,29,Jimbaran Bay,5
+74,30,Pabrik Kata-Kata Joger,2
+74,31,Kintamani Highland,4
+74,32,Krisna Oleh-Oleh,5
+74,34,Monumen Bajra Sandhi,5
+74,37,Pantai Atuh,1
+74,38,Pantai Blue Lagoon,5
+74,50,Pantai Pasih Uug,5
+74,56,Ubud Traditional Art Market,4
+74,58,Gunung Kawi Sebatu Temple,3
+74,61,Pura Luhur Batukaru,4
+74,63,Pura Taman Ayun,3
+74,68,Watersport Tanjung Benoa Bali,3
+74,69,Barong & Kris Dance,2
+74,72,Tirta Gangga,3
+74,74,Alas Harum Agro Tourism,4
+75,1,Satria Agrowisata,1
+75,4,Air Terjun Aling-Aling,4
+75,6,Air Terjun Tukad Cepung,2
+75,7,Aloha Ubud Swing,1
+75,10,Bali Swing,4
+75,12,Big Garden Corner,4
+75,13,Wanagiri Hidden Hills,5
+75,14,Campuhan Ridge Walk,1
+75,16,Danau Beratan,5
+75,17,Danau Tamblingan,1
+75,20,Desa Tohpati,4
+75,25,Gunung Batur,5
+75,26,Taman Ujung Water Palace,5
+75,29,Jimbaran Bay,5
+75,30,Pabrik Kata-Kata Joger,5
+75,31,Kintamani Highland,5
+75,34,Monumen Bajra Sandhi,4
+75,35,Desa Wisata Penglipuran,5
+75,37,Pantai Atuh,5
+75,39,Pantai Canggu,5
+75,49,Pantai Pandawa,2
+75,50,Pantai Pasih Uug,2
+75,51,White Sand Beach,3
+75,56,Ubud Traditional Art Market,4
+75,58,Gunung Kawi Sebatu Temple,3
+75,62,Pura Saraswati,5
+75,63,Pura Taman Ayun,3
+75,67,Mas Carving Center,3
+75,69,Barong & Kris Dance,2
+75,73,Waterbom Bali,2
+76,1,Satria Agrowisata,4
+76,9,Handara Iconic Gate,3
+76,12,Big Garden Corner,5
+76,23,Goa Gajah,3
+76,24,Gunung Agung,5
+76,26,Taman Ujung Water Palace,5
+76,27,Puri Saren Palace,5
+76,33,Sacred Monkey Forest Sanctuary,4
+76,34,Monumen Bajra Sandhi,4
+76,41,Pantai Diamond,5
+76,43,Pantai Dreamland,4
+76,44,Pantai Kelingking,5
+76,45,Pantai Kuta,3
+76,47,Pantai Nusa Dua,1
+76,52,Puseh Batuan Temple,3
+76,53,Pantai Sanur,4
+76,54,Pantai Seminyak,3
+76,55,Pantai Waterblow,3
+76,56,Ubud Traditional Art Market,4
+76,60,Pura Lempuyang,4
+76,61,Pura Luhur Batukaru,4
+76,62,Pura Saraswati,5
+76,64,Pura Tanah Lot,4
+76,66,Pura Uluwatu,4
+76,67,Mas Carving Center,3
+76,69,Barong & Kris Dance,1
+76,70,Kecak & Fire Dance,3
+76,71,Teras Sawah Tegalalang,2
+76,72,Tirta Gangga,3
+76,73,Waterbom Bali,1
+77,1,Satria Agrowisata,3
+77,3,Wisata Air Panas Toya Bungkah,4
+77,4,Air Terjun Aling-Aling,5
+77,5,Air Terjun Tegenungan,5
+77,9,Handara Iconic Gate,5
+77,13,Wanagiri Hidden Hills,5
+77,14,Campuhan Ridge Walk,5
+77,15,Danau Batur,2
+77,16,Danau Beratan,5
+77,20,Desa Tohpati,4
+77,21,Galeri Seni Semar Kuning,4
+77,22,Garuda Wisnu Kencana,3
+77,24,Gunung Agung,2
+77,29,Jimbaran Bay,4
+77,33,Sacred Monkey Forest Sanctuary,4
+77,34,Monumen Bajra Sandhi,4
+77,36,Pantai Angel's Billabong,4
+77,37,Pantai Atuh,3
+77,40,Crystal Bay,3
+77,47,Pantai Nusa Dua,4
+77,48,Pantai Padang Padang,5
+77,50,Pantai Pasih Uug,5
+77,55,Pantai Waterblow,3
+77,57,Besakih Temple,3
+77,58,Gunung Kawi Sebatu Temple,3
+77,60,Pura Lempuyang,4
+77,65,Pura Tirta Empul,4
+77,68,Watersport Tanjung Benoa Bali,3
+77,70,Kecak & Fire Dance,3
+77,75,Wisata Agro Teba Sari Bali,4
+78,1,Satria Agrowisata,1
+78,5,Air Terjun Tegenungan,5
+78,6,Air Terjun Tukad Cepung,5
+78,8,Bali Bird Park,5
+78,10,Bali Swing,5
+78,13,Wanagiri Hidden Hills,5
+78,18,Desa Budaya Kertalangu,3
+78,19,Desa Celuk,4
+78,20,Desa Tohpati,4
+78,23,Goa Gajah,3
+78,24,Gunung Agung,5
+78,25,Gunung Batur,1
+78,29,Jimbaran Bay,5
+78,30,Pabrik Kata-Kata Joger,5
+78,31,Kintamani Highland,5
+78,33,Sacred Monkey Forest Sanctuary,2
+78,34,Monumen Bajra Sandhi,3
+78,36,Pantai Angel's Billabong,5
+78,39,Pantai Canggu,1
+78,40,Crystal Bay,2
+78,41,Pantai Diamond,5
+78,44,Pantai Kelingking,5
+78,49,Pantai Pandawa,3
+78,51,White Sand Beach,3
+78,56,Ubud Traditional Art Market,4
+78,61,Pura Luhur Batukaru,4
+78,63,Pura Taman Ayun,3
+78,66,Pura Uluwatu,4
+78,71,Teras Sawah Tegalalang,1
+78,75,Wisata Agro Teba Sari Bali,4
+79,1,Satria Agrowisata,5
+79,3,Wisata Air Panas Toya Bungkah,4
+79,4,Air Terjun Aling-Aling,5
+79,7,Aloha Ubud Swing,5
+79,8,Bali Bird Park,5
+79,10,Bali Swing,5
+79,11,Batik Koleksi Sari Amerta,4
+79,13,Wanagiri Hidden Hills,2
+79,14,Campuhan Ridge Walk,5
+79,15,Danau Batur,5
+79,16,Danau Beratan,5
+79,19,Desa Celuk,4
+79,20,Desa Tohpati,4
+79,21,Galeri Seni Semar Kuning,5
+79,23,Goa Gajah,3
+79,26,Taman Ujung Water Palace,4
+79,30,Pabrik Kata-Kata Joger,4
+79,31,Kintamani Highland,3
+79,32,Krisna Oleh-Oleh,4
+79,33,Sacred Monkey Forest Sanctuary,3
+79,36,Pantai Angel's Billabong,4
+79,37,Pantai Atuh,5
+79,42,Pantai Double Six,2
+79,44,Pantai Kelingking,5
+79,48,Pantai Padang Padang,4
+79,59,Pura Kehen,4
+79,60,Pura Lempuyang,3
+79,61,Pura Luhur Batukaru,4
+79,64,Pura Tanah Lot,4
+79,75,Wisata Agro Teba Sari Bali,4
+80,3,Wisata Air Panas Toya Bungkah,5
+80,6,Air Terjun Tukad Cepung,5
+80,8,Bali Bird Park,5
+80,12,Big Garden Corner,5
+80,14,Campuhan Ridge Walk,5
+80,17,Danau Tamblingan,4
+80,25,Gunung Batur,4
+80,27,Puri Saren Palace,3
+80,30,Pabrik Kata-Kata Joger,4
+80,31,Kintamani Highland,4
+80,32,Krisna Oleh-Oleh,4
+80,35,Desa Wisata Penglipuran,3
+80,36,Pantai Angel's Billabong,4
+80,38,Pantai Blue Lagoon,5
+80,39,Pantai Canggu,2
+80,40,Crystal Bay,5
+80,41,Pantai Diamond,5
+80,44,Pantai Kelingking,3
+80,49,Pantai Pandawa,4
+80,53,Pantai Sanur,4
+80,55,Pantai Waterblow,3
+80,59,Pura Kehen,4
+80,61,Pura Luhur Batukaru,4
+80,62,Pura Saraswati,5
+80,63,Pura Taman Ayun,3
+80,64,Pura Tanah Lot,3
+80,66,Pura Uluwatu,4
+80,68,Watersport Tanjung Benoa Bali,3
+80,71,Teras Sawah Tegalalang,1
+80,74,Alas Harum Agro Tourism,4
+81,7,Aloha Ubud Swing,5
+81,9,Handara Iconic Gate,3
+81,13,Wanagiri Hidden Hills,1
+81,16,Danau Beratan,5
+81,17,Danau Tamblingan,5
+81,18,Desa Budaya Kertalangu,3
+81,19,Desa Celuk,3
+81,22,Garuda Wisnu Kencana,2
+81,23,Goa Gajah,4
+81,31,Kintamani Highland,4
+81,32,Krisna Oleh-Oleh,4
+81,33,Sacred Monkey Forest Sanctuary,5
+81,34,Monumen Bajra Sandhi,5
+81,39,Pantai Canggu,4
+81,43,Pantai Dreamland,4
+81,44,Pantai Kelingking,4
+81,45,Pantai Kuta,1
+81,46,Pantai Melasti,4
+81,50,Pantai Pasih Uug,4
+81,54,Pantai Seminyak,3
+81,55,Pantai Waterblow,3
+81,56,Ubud Traditional Art Market,4
+81,60,Pura Lempuyang,2
+81,61,Pura Luhur Batukaru,3
+81,62,Pura Saraswati,5
+81,63,Pura Taman Ayun,3
+81,68,Watersport Tanjung Benoa Bali,3
+81,70,Kecak & Fire Dance,3
+81,71,Teras Sawah Tegalalang,5
+81,72,Tirta Gangga,3
+82,1,Satria Agrowisata,4
+82,7,Aloha Ubud Swing,5
+82,8,Bali Bird Park,4
+82,10,Bali Swing,5
+82,13,Wanagiri Hidden Hills,5
+82,15,Danau Batur,5
+82,17,Danau Tamblingan,5
+82,20,Desa Tohpati,4
+82,24,Gunung Agung,5
+82,25,Gunung Batur,5
+82,27,Puri Saren Palace,4
+82,32,Krisna Oleh-Oleh,5
+82,37,Pantai Atuh,4
+82,39,Pantai Canggu,5
+82,42,Pantai Double Six,4
+82,44,Pantai Kelingking,5
+82,45,Pantai Kuta,3
+82,47,Pantai Nusa Dua,2
+82,48,Pantai Padang Padang,5
+82,49,Pantai Pandawa,5
+82,52,Puseh Batuan Temple,3
+82,53,Pantai Sanur,3
+82,54,Pantai Seminyak,2
+82,56,Ubud Traditional Art Market,4
+82,58,Gunung Kawi Sebatu Temple,2
+82,67,Mas Carving Center,3
+82,68,Watersport Tanjung Benoa Bali,3
+82,70,Kecak & Fire Dance,3
+82,73,Waterbom Bali,5
+82,75,Wisata Agro Teba Sari Bali,4
+83,4,Air Terjun Aling-Aling,5
+83,8,Bali Bird Park,5
+83,10,Bali Swing,5
+83,13,Wanagiri Hidden Hills,1
+83,16,Danau Beratan,5
+83,21,Galeri Seni Semar Kuning,5
+83,23,Goa Gajah,1
+83,29,Jimbaran Bay,5
+83,31,Kintamani Highland,5
+83,33,Sacred Monkey Forest Sanctuary,5
+83,34,Monumen Bajra Sandhi,5
+83,36,Pantai Angel's Billabong,5
+83,40,Crystal Bay,4
+83,46,Pantai Melasti,5
+83,50,Pantai Pasih Uug,4
+83,56,Ubud Traditional Art Market,3
+83,59,Pura Kehen,4
+83,60,Pura Lempuyang,5
+83,62,Pura Saraswati,5
+83,63,Pura Taman Ayun,2
+83,64,Pura Tanah Lot,3
+83,65,Pura Tirta Empul,4
+83,66,Pura Uluwatu,4
+83,67,Mas Carving Center,3
+83,68,Watersport Tanjung Benoa Bali,3
+83,69,Barong & Kris Dance,1
+83,71,Teras Sawah Tegalalang,5
+83,73,Waterbom Bali,5
+83,74,Alas Harum Agro Tourism,3
+83,75,Wisata Agro Teba Sari Bali,4
+84,2,Agung Bali Oleh-Oleh,5
+84,5,Air Terjun Tegenungan,3
+84,6,Air Terjun Tukad Cepung,5
+84,10,Bali Swing,5
+84,11,Batik Koleksi Sari Amerta,3
+84,12,Big Garden Corner,5
+84,17,Danau Tamblingan,3
+84,18,Desa Budaya Kertalangu,4
+84,22,Garuda Wisnu Kencana,4
+84,24,Gunung Agung,5
+84,25,Gunung Batur,3
+84,29,Jimbaran Bay,4
+84,31,Kintamani Highland,5
+84,35,Desa Wisata Penglipuran,4
+84,36,Pantai Angel's Billabong,5
+84,37,Pantai Atuh,5
+84,40,Crystal Bay,4
+84,42,Pantai Double Six,5
+84,43,Pantai Dreamland,4
+84,44,Pantai Kelingking,5
+84,45,Pantai Kuta,4
+84,46,Pantai Melasti,4
+84,47,Pantai Nusa Dua,3
+84,56,Ubud Traditional Art Market,3
+84,58,Gunung Kawi Sebatu Temple,2
+84,60,Pura Lempuyang,5
+84,63,Pura Taman Ayun,1
+84,67,Mas Carving Center,3
+84,68,Watersport Tanjung Benoa Bali,3
+84,69,Barong & Kris Dance,1
+85,4,Air Terjun Aling-Aling,5
+85,5,Air Terjun Tegenungan,5
+85,9,Handara Iconic Gate,4
+85,11,Batik Koleksi Sari Amerta,5
+85,12,Big Garden Corner,4
+85,15,Danau Batur,3
+85,17,Danau Tamblingan,4
+85,20,Desa Tohpati,5
+85,22,Garuda Wisnu Kencana,4
+85,25,Gunung Batur,5
+85,27,Puri Saren Palace,4
+85,28,Jatiluwih Green Land,5
+85,32,Krisna Oleh-Oleh,4
+85,33,Sacred Monkey Forest Sanctuary,5
+85,35,Desa Wisata Penglipuran,5
+85,38,Pantai Blue Lagoon,2
+85,42,Pantai Double Six,4
+85,43,Pantai Dreamland,4
+85,44,Pantai Kelingking,5
+85,45,Pantai Kuta,4
+85,52,Puseh Batuan Temple,3
+85,57,Besakih Temple,3
+85,59,Pura Kehen,4
+85,62,Pura Saraswati,4
+85,63,Pura Taman Ayun,5
+85,66,Pura Uluwatu,3
+85,67,Mas Carving Center,2
+85,68,Watersport Tanjung Benoa Bali,2
+85,71,Teras Sawah Tegalalang,5
+85,74,Alas Harum Agro Tourism,3
+86,1,Satria Agrowisata,3
+86,5,Air Terjun Tegenungan,4
+86,7,Aloha Ubud Swing,5
+86,12,Big Garden Corner,2
+86,13,Wanagiri Hidden Hills,4
+86,14,Campuhan Ridge Walk,5
+86,15,Danau Batur,5
+86,23,Goa Gajah,4
+86,24,Gunung Agung,5
+86,25,Gunung Batur,1
+86,27,Puri Saren Palace,4
+86,28,Jatiluwih Green Land,3
+86,33,Sacred Monkey Forest Sanctuary,4
+86,39,Pantai Canggu,4
+86,41,Pantai Diamond,5
+86,42,Pantai Double Six,5
+86,44,Pantai Kelingking,5
+86,46,Pantai Melasti,5
+86,47,Pantai Nusa Dua,4
+86,49,Pantai Pandawa,4
+86,54,Pantai Seminyak,2
+86,58,Gunung Kawi Sebatu Temple,2
+86,61,Pura Luhur Batukaru,3
+86,63,Pura Taman Ayun,5
+86,66,Pura Uluwatu,3
+86,67,Mas Carving Center,2
+86,68,Watersport Tanjung Benoa Bali,1
+86,69,Barong & Kris Dance,1
+86,70,Kecak & Fire Dance,3
+86,74,Alas Harum Agro Tourism,3
+87,1,Satria Agrowisata,3
+87,4,Air Terjun Aling-Aling,1
+87,6,Air Terjun Tukad Cepung,4
+87,7,Aloha Ubud Swing,5
+87,8,Bali Bird Park,5
+87,9,Handara Iconic Gate,1
+87,12,Big Garden Corner,4
+87,13,Wanagiri Hidden Hills,5
+87,15,Danau Batur,5
+87,16,Danau Beratan,5
+87,19,Desa Celuk,3
+87,22,Garuda Wisnu Kencana,2
+87,28,Jatiluwih Green Land,5
+87,30,Pabrik Kata-Kata Joger,4
+87,31,Kintamani Highland,3
+87,37,Pantai Atuh,4
+87,38,Pantai Blue Lagoon,5
+87,52,Puseh Batuan Temple,3
+87,54,Pantai Seminyak,1
+87,55,Pantai Waterblow,3
+87,56,Ubud Traditional Art Market,3
+87,57,Besakih Temple,3
+87,59,Pura Kehen,3
+87,60,Pura Lempuyang,5
+87,63,Pura Taman Ayun,5
+87,64,Pura Tanah Lot,3
+87,68,Watersport Tanjung Benoa Bali,5
+87,70,Kecak & Fire Dance,2
+87,71,Teras Sawah Tegalalang,5
+87,72,Tirta Gangga,3
+88,1,Satria Agrowisata,5
+88,3,Wisata Air Panas Toya Bungkah,3
+88,6,Air Terjun Tukad Cepung,4
+88,10,Bali Swing,3
+88,11,Batik Koleksi Sari Amerta,3
+88,13,Wanagiri Hidden Hills,5
+88,17,Danau Tamblingan,5
+88,18,Desa Budaya Kertalangu,3
+88,21,Galeri Seni Semar Kuning,5
+88,23,Goa Gajah,3
+88,28,Jatiluwih Green Land,5
+88,29,Jimbaran Bay,4
+88,33,Sacred Monkey Forest Sanctuary,4
+88,35,Desa Wisata Penglipuran,5
+88,36,Pantai Angel's Billabong,5
+88,37,Pantai Atuh,4
+88,38,Pantai Blue Lagoon,3
+88,39,Pantai Canggu,5
+88,41,Pantai Diamond,5
+88,43,Pantai Dreamland,5
+88,49,Pantai Pandawa,5
+88,52,Puseh Batuan Temple,2
+88,53,Pantai Sanur,3
+88,56,Ubud Traditional Art Market,3
+88,61,Pura Luhur Batukaru,3
+88,66,Pura Uluwatu,3
+88,67,Mas Carving Center,2
+88,69,Barong & Kris Dance,1
+88,70,Kecak & Fire Dance,1
+88,75,Wisata Agro Teba Sari Bali,4
+89,2,Agung Bali Oleh-Oleh,5
+89,6,Air Terjun Tukad Cepung,5
+89,10,Bali Swing,5
+89,13,Wanagiri Hidden Hills,5
+89,14,Campuhan Ridge Walk,5
+89,15,Danau Batur,3
+89,16,Danau Beratan,4
+89,19,Desa Celuk,4
+89,20,Desa Tohpati,4
+89,21,Galeri Seni Semar Kuning,5
+89,22,Garuda Wisnu Kencana,4
+89,23,Goa Gajah,2
+89,28,Jatiluwih Green Land,5
+89,29,Jimbaran Bay,5
+89,30,Pabrik Kata-Kata Joger,4
+89,31,Kintamani Highland,3
+89,32,Krisna Oleh-Oleh,4
+89,33,Sacred Monkey Forest Sanctuary,2
+89,40,Crystal Bay,4
+89,41,Pantai Diamond,5
+89,47,Pantai Nusa Dua,5
+89,48,Pantai Padang Padang,4
+89,53,Pantai Sanur,3
+89,54,Pantai Seminyak,1
+89,56,Ubud Traditional Art Market,3
+89,61,Pura Luhur Batukaru,3
+89,67,Mas Carving Center,2
+89,70,Kecak & Fire Dance,5
+89,72,Tirta Gangga,3
+89,75,Wisata Agro Teba Sari Bali,4
+90,4,Air Terjun Aling-Aling,5
+90,7,Aloha Ubud Swing,5
+90,8,Bali Bird Park,5
+90,11,Batik Koleksi Sari Amerta,4
+90,13,Wanagiri Hidden Hills,3
+90,15,Danau Batur,4
+90,16,Danau Beratan,5
+90,17,Danau Tamblingan,5
+90,19,Desa Celuk,1
+90,20,Desa Tohpati,4
+90,23,Goa Gajah,3
+90,25,Gunung Batur,5
+90,26,Taman Ujung Water Palace,5
+90,27,Puri Saren Palace,1
+90,32,Krisna Oleh-Oleh,4
+90,35,Desa Wisata Penglipuran,5
+90,37,Pantai Atuh,5
+90,40,Crystal Bay,4
+90,43,Pantai Dreamland,3
+90,44,Pantai Kelingking,5
+90,46,Pantai Melasti,4
+90,47,Pantai Nusa Dua,5
+90,53,Pantai Sanur,3
+90,59,Pura Kehen,3
+90,60,Pura Lempuyang,5
+90,62,Pura Saraswati,4
+90,68,Watersport Tanjung Benoa Bali,5
+90,70,Kecak & Fire Dance,5
+90,71,Teras Sawah Tegalalang,5
+90,75,Wisata Agro Teba Sari Bali,4
+91,3,Wisata Air Panas Toya Bungkah,4
+91,4,Air Terjun Aling-Aling,5
+91,5,Air Terjun Tegenungan,5
+91,6,Air Terjun Tukad Cepung,5
+91,7,Aloha Ubud Swing,5
+91,9,Handara Iconic Gate,3
+91,11,Batik Koleksi Sari Amerta,3
+91,12,Big Garden Corner,5
+91,15,Danau Batur,3
+91,16,Danau Beratan,4
+91,21,Galeri Seni Semar Kuning,5
+91,22,Garuda Wisnu Kencana,5
+91,23,Goa Gajah,3
+91,25,Gunung Batur,2
+91,32,Krisna Oleh-Oleh,4
+91,34,Monumen Bajra Sandhi,1
+91,36,Pantai Angel's Billabong,5
+91,41,Pantai Diamond,5
+91,44,Pantai Kelingking,5
+91,51,White Sand Beach,3
+91,54,Pantai Seminyak,5
+91,55,Pantai Waterblow,2
+91,56,Ubud Traditional Art Market,2
+91,57,Besakih Temple,3
+91,59,Pura Kehen,2
+91,61,Pura Luhur Batukaru,3
+91,68,Watersport Tanjung Benoa Bali,5
+91,71,Teras Sawah Tegalalang,5
+91,73,Waterbom Bali,5
+91,75,Wisata Agro Teba Sari Bali,3
+92,1,Satria Agrowisata,5
+92,4,Air Terjun Aling-Aling,5
+92,6,Air Terjun Tukad Cepung,5
+92,7,Aloha Ubud Swing,5
+92,9,Handara Iconic Gate,5
+92,14,Campuhan Ridge Walk,5
+92,16,Danau Beratan,5
+92,20,Desa Tohpati,4
+92,26,Taman Ujung Water Palace,5
+92,28,Jatiluwih Green Land,5
+92,29,Jimbaran Bay,1
+92,31,Kintamani Highland,2
+92,32,Krisna Oleh-Oleh,4
+92,33,Sacred Monkey Forest Sanctuary,3
+92,34,Monumen Bajra Sandhi,5
+92,35,Desa Wisata Penglipuran,5
+92,36,Pantai Angel's Billabong,3
+92,37,Pantai Atuh,5
+92,38,Pantai Blue Lagoon,5
+92,40,Crystal Bay,3
+92,49,Pantai Pandawa,3
+92,54,Pantai Seminyak,5
+92,57,Besakih Temple,2
+92,60,Pura Lempuyang,5
+92,61,Pura Luhur Batukaru,3
+92,62,Pura Saraswati,4
+92,64,Pura Tanah Lot,3
+92,65,Pura Tirta Empul,4
+92,69,Barong & Kris Dance,1
+92,70,Kecak & Fire Dance,5
+93,1,Satria Agrowisata,3
+93,2,Agung Bali Oleh-Oleh,5
+93,5,Air Terjun Tegenungan,5
+93,10,Bali Swing,5
+93,12,Big Garden Corner,5
+93,13,Wanagiri Hidden Hills,5
+93,17,Danau Tamblingan,4
+93,19,Desa Celuk,4
+93,24,Gunung Agung,5
+93,25,Gunung Batur,5
+93,29,Jimbaran Bay,4
+93,33,Sacred Monkey Forest Sanctuary,4
+93,36,Pantai Angel's Billabong,5
+93,38,Pantai Blue Lagoon,4
+93,40,Crystal Bay,5
+93,48,Pantai Padang Padang,5
+93,52,Puseh Batuan Temple,1
+93,54,Pantai Seminyak,5
+93,56,Ubud Traditional Art Market,2
+93,57,Besakih Temple,2
+93,58,Gunung Kawi Sebatu Temple,1
+93,59,Pura Kehen,1
+93,64,Pura Tanah Lot,2
+93,65,Pura Tirta Empul,4
+93,67,Mas Carving Center,1
+93,69,Barong & Kris Dance,5
+93,70,Kecak & Fire Dance,5
+93,72,Tirta Gangga,3
+93,73,Waterbom Bali,5
+93,75,Wisata Agro Teba Sari Bali,3
+94,1,Satria Agrowisata,4
+94,5,Air Terjun Tegenungan,5
+94,6,Air Terjun Tukad Cepung,5
+94,7,Aloha Ubud Swing,5
+94,17,Danau Tamblingan,5
+94,18,Desa Budaya Kertalangu,4
+94,24,Gunung Agung,5
+94,26,Taman Ujung Water Palace,5
+94,29,Jimbaran Bay,4
+94,32,Krisna Oleh-Oleh,5
+94,33,Sacred Monkey Forest Sanctuary,5
+94,35,Desa Wisata Penglipuran,5
+94,38,Pantai Blue Lagoon,4
+94,40,Crystal Bay,5
+94,41,Pantai Diamond,5
+94,46,Pantai Melasti,5
+94,49,Pantai Pandawa,4
+94,50,Pantai Pasih Uug,3
+94,52,Puseh Batuan Temple,5
+94,53,Pantai Sanur,3
+94,57,Besakih Temple,2
+94,58,Gunung Kawi Sebatu Temple,1
+94,59,Pura Kehen,5
+94,60,Pura Lempuyang,5
+94,62,Pura Saraswati,4
+94,63,Pura Taman Ayun,5
+94,64,Pura Tanah Lot,2
+94,65,Pura Tirta Empul,4
+94,72,Tirta Gangga,2
+94,73,Waterbom Bali,5
+95,3,Wisata Air Panas Toya Bungkah,5
+95,11,Batik Koleksi Sari Amerta,1
+95,14,Campuhan Ridge Walk,5
+95,16,Danau Beratan,5
+95,18,Desa Budaya Kertalangu,4
+95,19,Desa Celuk,2
+95,22,Garuda Wisnu Kencana,4
+95,23,Goa Gajah,5
+95,27,Puri Saren Palace,3
+95,28,Jatiluwih Green Land,5
+95,34,Monumen Bajra Sandhi,5
+95,35,Desa Wisata Penglipuran,5
+95,37,Pantai Atuh,3
+95,38,Pantai Blue Lagoon,4
+95,43,Pantai Dreamland,5
+95,45,Pantai Kuta,3
+95,46,Pantai Melasti,5
+95,49,Pantai Pandawa,3
+95,52,Puseh Batuan Temple,5
+95,54,Pantai Seminyak,5
+95,56,Ubud Traditional Art Market,1
+95,59,Pura Kehen,5
+95,60,Pura Lempuyang,5
+95,64,Pura Tanah Lot,1
+95,65,Pura Tirta Empul,4
+95,66,Pura Uluwatu,2
+95,68,Watersport Tanjung Benoa Bali,5
+95,71,Teras Sawah Tegalalang,5
+95,73,Waterbom Bali,5
+95,74,Alas Harum Agro Tourism,3
+96,1,Satria Agrowisata,5
+96,2,Agung Bali Oleh-Oleh,5
+96,3,Wisata Air Panas Toya Bungkah,1
+96,4,Air Terjun Aling-Aling,4
+96,9,Handara Iconic Gate,4
+96,10,Bali Swing,4
+96,12,Big Garden Corner,5
+96,13,Wanagiri Hidden Hills,5
+96,14,Campuhan Ridge Walk,5
+96,16,Danau Beratan,1
+96,18,Desa Budaya Kertalangu,4
+96,19,Desa Celuk,1
+96,21,Galeri Seni Semar Kuning,5
+96,25,Gunung Batur,5
+96,29,Jimbaran Bay,4
+96,30,Pabrik Kata-Kata Joger,4
+96,31,Kintamani Highland,1
+96,34,Monumen Bajra Sandhi,3
+96,36,Pantai Angel's Billabong,4
+96,37,Pantai Atuh,5
+96,42,Pantai Double Six,5
+96,46,Pantai Melasti,4
+96,48,Pantai Padang Padang,4
+96,57,Besakih Temple,1
+96,63,Pura Taman Ayun,5
+96,67,Mas Carving Center,1
+96,68,Watersport Tanjung Benoa Bali,5
+96,71,Teras Sawah Tegalalang,5
+96,72,Tirta Gangga,2
+96,75,Wisata Agro Teba Sari Bali,2
+97,5,Air Terjun Tegenungan,3
+97,8,Bali Bird Park,5
+97,9,Handara Iconic Gate,5
+97,11,Batik Koleksi Sari Amerta,3
+97,12,Big Garden Corner,5
+97,16,Danau Beratan,5
+97,18,Desa Budaya Kertalangu,5
+97,19,Desa Celuk,4
+97,20,Desa Tohpati,1
+97,21,Galeri Seni Semar Kuning,5
+97,22,Garuda Wisnu Kencana,1
+97,24,Gunung Agung,4
+97,31,Kintamani Highland,1
+97,33,Sacred Monkey Forest Sanctuary,4
+97,35,Desa Wisata Penglipuran,5
+97,36,Pantai Angel's Billabong,3
+97,40,Crystal Bay,5
+97,42,Pantai Double Six,5
+97,43,Pantai Dreamland,5
+97,55,Pantai Waterblow,2
+97,60,Pura Lempuyang,5
+97,62,Pura Saraswati,4
+97,66,Pura Uluwatu,1
+97,68,Watersport Tanjung Benoa Bali,5
+97,69,Barong & Kris Dance,5
+97,71,Teras Sawah Tegalalang,5
+97,72,Tirta Gangga,2
+97,73,Waterbom Bali,5
+97,74,Alas Harum Agro Tourism,2
+97,75,Wisata Agro Teba Sari Bali,1
+98,1,Satria Agrowisata,1
+98,5,Air Terjun Tegenungan,4
+98,6,Air Terjun Tukad Cepung,5
+98,9,Handara Iconic Gate,4
+98,10,Bali Swing,5
+98,16,Danau Beratan,5
+98,17,Danau Tamblingan,5
+98,22,Garuda Wisnu Kencana,4
+98,24,Gunung Agung,5
+98,25,Gunung Batur,5
+98,31,Kintamani Highland,5
+98,32,Krisna Oleh-Oleh,4
+98,34,Monumen Bajra Sandhi,4
+98,36,Pantai Angel's Billabong,2
+98,38,Pantai Blue Lagoon,1
+98,39,Pantai Canggu,4
+98,45,Pantai Kuta,4
+98,47,Pantai Nusa Dua,4
+98,51,White Sand Beach,1
+98,53,Pantai Sanur,3
+98,54,Pantai Seminyak,5
+98,55,Pantai Waterblow,1
+98,58,Gunung Kawi Sebatu Temple,1
+98,59,Pura Kehen,5
+98,60,Pura Lempuyang,5
+98,64,Pura Tanah Lot,5
+98,67,Mas Carving Center,5
+98,68,Watersport Tanjung Benoa Bali,5
+98,72,Tirta Gangga,1
+98,74,Alas Harum Agro Tourism,1
+99,2,Agung Bali Oleh-Oleh,3
+99,3,Wisata Air Panas Toya Bungkah,5
+99,4,Air Terjun Aling-Aling,5
+99,7,Aloha Ubud Swing,5
+99,14,Campuhan Ridge Walk,5
+99,15,Danau Batur,3
+99,16,Danau Beratan,4
+99,18,Desa Budaya Kertalangu,5
+99,19,Desa Celuk,3
+99,27,Puri Saren Palace,4
+99,29,Jimbaran Bay,5
+99,30,Pabrik Kata-Kata Joger,1
+99,32,Krisna Oleh-Oleh,5
+99,37,Pantai Atuh,4
+99,39,Pantai Canggu,5
+99,40,Crystal Bay,3
+99,41,Pantai Diamond,5
+99,48,Pantai Padang Padang,5
+99,49,Pantai Pandawa,3
+99,53,Pantai Sanur,2
+99,54,Pantai Seminyak,5
+99,55,Pantai Waterblow,1
+99,60,Pura Lempuyang,5
+99,61,Pura Luhur Batukaru,3
+99,63,Pura Taman Ayun,5
+99,64,Pura Tanah Lot,5
+99,66,Pura Uluwatu,5
+99,71,Teras Sawah Tegalalang,5
+99,72,Tirta Gangga,1
+99,73,Waterbom Bali,5
+100,1,Satria Agrowisata,4
+100,3,Wisata Air Panas Toya Bungkah,5
+100,4,Air Terjun Aling-Aling,5
+100,6,Air Terjun Tukad Cepung,5
+100,8,Bali Bird Park,4
+100,10,Bali Swing,3
+100,15,Danau Batur,5
+100,16,Danau Beratan,4
+100,17,Danau Tamblingan,5
+100,19,Desa Celuk,3
+100,21,Galeri Seni Semar Kuning,5
+100,27,Puri Saren Palace,3
+100,34,Monumen Bajra Sandhi,4
+100,36,Pantai Angel's Billabong,4
+100,37,Pantai Atuh,5
+100,38,Pantai Blue Lagoon,1
+100,41,Pantai Diamond,4
+100,44,Pantai Kelingking,5
+100,45,Pantai Kuta,2
+100,51,White Sand Beach,2
+100,52,Puseh Batuan Temple,5
+100,53,Pantai Sanur,1
+100,54,Pantai Seminyak,5
+100,55,Pantai Waterblow,5
+100,57,Besakih Temple,1
+100,58,Gunung Kawi Sebatu Temple,1
+100,59,Pura Kehen,5
+100,65,Pura Tirta Empul,4
+100,69,Barong & Kris Dance,5
+100,72,Tirta Gangga,5
