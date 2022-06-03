@@ -2,6 +2,7 @@ const DestinationModel = require("../models/destinationModel");
 const TourPlanDateModel = require("../models/tourPlanDateModel");
 const TourPlanModel = require("../models/tourPlanModel");
 const responseHelper = require("../utils/responseHelper");
+const db = require("../config/db");
 const { Op } = require("sequelize");
 
 const getAllTourPlan = async (req, res) => {
@@ -44,31 +45,37 @@ const insertTourPlan = async (req, res) => {
     const userId = req.token.userId;
     const { title, description, tourplandates } = req.body;
 
-    const data = await TourPlanModel.create(
-      {
-        title: title,
-        description: description,
-        userId: userId,
-        tourplandates: tourplandates,
-      },
-      { include: { model: TourPlanDateModel } }
-    );
-
-    const newTourPlanDates = data.tourplandates;
-    newTourPlanDates.forEach(async (item, i) => {
-      const date = await TourPlanDateModel.findOne({
-        where: { id: item.id },
-      });
-      const destinations = await DestinationModel.findAll({
-        where: {
-          id: tourplandates[i].destinations,
+    const result = await db.transaction(async (t) => {
+      const data = await TourPlanModel.create(
+        {
+          title: title,
+          description: description,
+          userId: userId,
+          tourplandates: tourplandates,
         },
+        { include: { model: TourPlanDateModel }, transaction: t }
+      );
+
+      const newTourPlanDates = data.tourplandates;
+      newTourPlanDates.forEach(async (item, i) => {
+        const date = await TourPlanDateModel.findOne({
+          where: { id: item.id },
+        });
+        if (!date) throw new Error();
+
+        const destinations = await DestinationModel.findAll({
+          where: {
+            id: tourplandates[i].destinations,
+          },
+        });
+        const destinationResult = date.setDestinations(destinations);
+        if (!destinationResult) throw new Error();
       });
-      date.setDestinations(destinations);
+      return data;
     });
 
-    if (!data) return res.json(responseHelper.responseError("Failed inserting data."));
-    res.json(responseHelper.responseSuccess(data, "Sucessfully inserting data."));
+    if (!result) return res.json(responseHelper.responseError("Failed inserting data."));
+    res.json(responseHelper.responseSuccess(result, "Sucessfully inserting data."));
   } catch (error) {
     console.log(error);
     res.status(500).json(responseHelper.responseError("Internal server error."));
@@ -119,10 +126,10 @@ const insertTourPlanDate = async (req, res) => {
     });
     if (!tourPlan) return res.json(responseHelper.responseError("Tour plan not found."));
 
-    const { date_millis } = req.body;
+    const dateMillis = req.body.date_millis;
 
     const date = tourPlan.createTourplandate({
-      date_millis: date_millis,
+      date_millis: dateMillis,
     });
 
     if (!date) return res.json(responseHelper.responseError("Failed inserting data."));
