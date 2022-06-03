@@ -8,6 +8,7 @@ const DestinationModel = db.define(
     name: { type: sequelize.STRING, allowNull: false },
     description: { type: sequelize.STRING, allowNull: false },
     addresss: { type: sequelize.STRING, allowNull: false },
+    city: { type: sequelize.STRING, allowNull: false },
     lat: { type: sequelize.DECIMAL(8, 6), allowNull: false },
     lon: { type: sequelize.DECIMAL(9, 6), allowNull: false },
     imageUrl: { type: sequelize.STRING, allowNull: false },
