@@ -29,7 +29,10 @@ data class DestinationData(
 	val weekendHolidayPrice: Int,
 
 	@field:SerializedName("rating")
-	val rating: Int,
+	val rating: Float,
+
+	@field:SerializedName("city")
+	val city: String,
 
 	@field:SerializedName("description")
 	val description: String,

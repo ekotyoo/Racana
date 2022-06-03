@@ -284,7 +284,7 @@ fun DestinationRow(
             items(destinations, key = { it.id }) { destination ->
                 RDestinationCard(
                     name = destination.name,
-                    location = destination.address,
+                    location = destination.city,
                     imageUrl = destination.imageUrl,
                     isLoading = isLoading,
                     onClick = { onItemClick(destination.id) }

@@ -150,7 +150,7 @@ fun SearchContent(
                         RDestinationCard(
                             name = destination.name,
                             imageUrl = destination.imageUrl,
-                            location = destination.address,
+                            location = destination.city,
                             onClick = {
                                 onSearchResultClick(destination.id)
                             }

@@ -31,6 +31,7 @@ class DestinationRepository @Inject constructor(
                         name = it.name,
                         imageUrl = it.imageUrl,
                         address = it.addresss,
+                        city = it.city,
                         lat = it.lat,
                         lon = it.lon,
                         description = it.description,
