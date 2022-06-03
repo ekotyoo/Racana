@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
 
 app.use("/api", router);
 
-db.sync().then(() => {
+db.sync({ alter: true }).then(() => {
   app.listen(port, function () {
     console.log("Listening on localhost:" + port);
   });
