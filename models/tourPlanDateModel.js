@@ -12,6 +12,7 @@ const TourPlanDateModel = db.define(
   }
 );
 
-TourPlanDateModel.hasMany(DestinationModel);
+TourPlanDateModel.belongsToMany(DestinationModel, { through: "DateDestination" });
+DestinationModel.belongsToMany(TourPlanDateModel, { through: "DateDestination" });
 
 module.exports = TourPlanDateModel;

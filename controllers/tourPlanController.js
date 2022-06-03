@@ -42,17 +42,35 @@ const getTourPlanById = async (req, res) => {
 const insertTourPlan = async (req, res) => {
   try {
     const userId = req.token.userId;
-    const { title, description } = req.body;
+    const { title, description, tourplandates } = req.body;
 
-    const data = await TourPlanModel.create({
-      title: title,
-      description: description,
-      userId: userId,
+    const data = await TourPlanModel.create(
+      {
+        title: title,
+        description: description,
+        userId: userId,
+        tourplandates: tourplandates,
+      },
+      { include: { model: TourPlanDateModel } }
+    );
+
+    const newTourPlanDates = data.tourplandates;
+    newTourPlanDates.forEach(async (item, i) => {
+      const date = await TourPlanDateModel.findOne({
+        where: { id: item.id },
+      });
+      const destinations = await DestinationModel.findAll({
+        where: {
+          id: tourplandates[i].destinations,
+        },
+      });
+      date.setDestinations(destinations);
     });
 
     if (!data) return res.json(responseHelper.responseError("Failed inserting data."));
     res.json(responseHelper.responseSuccess(data, "Sucessfully inserting data."));
   } catch (error) {
+    console.log(error);
     res.status(500).json(responseHelper.responseError("Internal server error."));
   }
 };
