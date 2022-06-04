@@ -63,7 +63,8 @@ class TourPlanRepository @Inject constructor(
                 val dailyList = mutableListOf<DailyItem>()
                 body.dailyList.forEachIndexed { i, item ->
                     val date =
-                        Instant.ofEpochMilli(item.date).atZone(ZoneId.systemDefault()).toLocalDate()
+                        Instant.ofEpochMilli(item.dateMillis).atZone(ZoneId.systemDefault())
+                            .toLocalDate()
                     val destinationList =
                         item.destinations.map {
                             TravelDestination(
@@ -88,7 +89,7 @@ class TourPlanRepository @Inject constructor(
                         )
                     )
                 }
-                Result.Success(TourPlan(id = body.id, dailyList = dailyList))
+                Result.Success(TourPlan(dailyList = dailyList))
             } else {
                 Result.Error(message = "Terjadi kesalahan, coba lagi nanti!", throwable = null)
             }
