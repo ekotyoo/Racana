@@ -12,7 +12,18 @@ const TourPlanDateModel = db.define(
   }
 );
 
-TourPlanDateModel.belongsToMany(DestinationModel, { through: "DateDestination" });
-DestinationModel.belongsToMany(TourPlanDateModel, { through: "DateDestination" });
+const DateDestination = db.define(
+  "datedestination",
+  {
+    isDone: {
+      type: sequelize.BOOLEAN,
+      defaultValue: false,
+    },
+  },
+  { timestamps: false }
+);
+
+TourPlanDateModel.belongsToMany(DestinationModel, { through: DateDestination });
+DestinationModel.belongsToMany(TourPlanDateModel, { through: DateDestination });
 
 module.exports = TourPlanDateModel;
