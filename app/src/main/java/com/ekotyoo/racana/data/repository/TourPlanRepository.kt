@@ -4,6 +4,8 @@ import com.ekotyoo.racana.core.utils.Result
 import com.ekotyoo.racana.data.datasource.local.UserPreferencesDataStore
 import com.ekotyoo.racana.data.datasource.local.database.TourPlanDao
 import com.ekotyoo.racana.data.datasource.remote.api.TourPlanApi
+import com.ekotyoo.racana.data.datasource.remote.request.TourPlanDateRequest
+import com.ekotyoo.racana.data.datasource.remote.request.TourPlanRequest
 import com.ekotyoo.racana.data.model.DailyItem
 import com.ekotyoo.racana.data.model.TourPlan
 import com.ekotyoo.racana.data.model.TravelDestination
@@ -74,11 +76,29 @@ class TourPlanRepository @Inject constructor(
 
     suspend fun saveTourPlan(tourPlan: TourPlan, title: String, description: String): Result<Unit> {
         return try {
-            tourPlanDao.insertTourPlanWithDateAndDestinations(tourPlan, title, description)
-            Result.Success(Unit)
-        } catch (e: Exception) {
+            val token = userPreferencesDataStore.userData.first().token
+            val requestBody = TourPlanRequest(
+                title = title,
+                description = description,
+                tourPlanDates = tourPlan.dailyList.map {
+                    TourPlanDateRequest(
+                        dateMillis = it.date.toEpochDay(),
+                        destinations = it.destinationList.map { destination -> destination.id }
+                    )
+                }
+            )
+            val response = tourPlanApi.saveTourPlan(token ?: "", requestBody)
+            if (response.isSuccessful) {
+                Result.Success(Unit)
+            } else {
+                Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+            }
+        } catch (e: IOException) {
             Timber.d(e.message)
-            Result.Error(message = e.message.toString(), e)
+            Result.Error(message = "Terjadi kesalahan, coba lagi nanti!", throwable = e)
+        } catch (e: HttpException) {
+            Timber.d(e.message)
+            Result.Error(message = "Terjadi kesalahan, coba lagi nanti!", throwable = e)
         }
     }
 

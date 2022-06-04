@@ -2,7 +2,7 @@ package com.ekotyoo.racana.data.datasource.remote.request
 
 import com.google.gson.annotations.SerializedName
 
-data class TourplanRequest(
+data class TourPlanRequest(
 
     @SerializedName("title")
     val title: String,
