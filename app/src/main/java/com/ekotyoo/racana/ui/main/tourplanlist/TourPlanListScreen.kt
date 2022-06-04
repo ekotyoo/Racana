@@ -59,8 +59,24 @@ fun TourPlanListScreen(
             onCardClick = viewModel::onTourPlanClicked,
             onDelete = viewModel::deletePlanButtonClicked
         )
-        if (tourPlanEmpty) {
+        if (tourPlanEmpty && !state.isLoading) {
             TourPlanListEmpty(modifier = Modifier.align(Alignment.Center))
+        }
+        if (state.isLoading) {
+            val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.location_loading))
+            val progress by animateLottieCompositionAsState(
+                composition,
+                iterations = LottieConstants.IterateForever
+            )
+            Box(Modifier.fillMaxSize()) {
+                LottieAnimation(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .size(160.dp),
+                    composition = composition,
+                    progress = progress
+                )
+            }
         }
     }
 }

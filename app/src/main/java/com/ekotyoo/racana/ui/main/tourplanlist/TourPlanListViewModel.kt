@@ -9,7 +9,10 @@ import com.ekotyoo.racana.ui.main.tourplanlist.model.TourPlanListEvent
 import com.ekotyoo.racana.ui.main.tourplanlist.model.TourPlanListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,10 +26,11 @@ class TourPlanListViewModel @Inject constructor(
 
     private val _eventChannel = Channel<TourPlanListEvent>()
     val eventChannel = _eventChannel.receiveAsFlow()
-    
+
     init {
+        _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-            when(val result = tourPlanRepository.getSavedTourPlan()) {
+            when (val result = tourPlanRepository.getSavedTourPlan()) {
                 is Result.Success -> {
                     _state.update { it.copy(tourPlanList = result.value) }
                 }
@@ -34,6 +38,7 @@ class TourPlanListViewModel @Inject constructor(
                     // TODO: Handle error 
                 }
             }
+            _state.update { it.copy(isLoading = false) }
         }
     }
 
