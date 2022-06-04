@@ -236,7 +236,7 @@ fun DayHeaderSection(
                         onItemSelected(i)
                     },
                 isSelected = i == selectedDate,
-                dayTitle = "Hari-${item.number}",
+                dayTitle = "Hari-${i + 1}",
                 date = item.dateFormatted
             )
         }

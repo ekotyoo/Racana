@@ -58,6 +58,8 @@ class TourPlanRepository @Inject constructor(
                                     )
                                 }
                             )
+                        }.sortedBy { item ->
+                            item.date
                         }
                     )
                 }
