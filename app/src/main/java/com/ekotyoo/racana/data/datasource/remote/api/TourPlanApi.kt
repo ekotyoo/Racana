@@ -26,7 +26,7 @@ interface TourPlanApi {
         @Header("Authorization") token: String,
     ): Response<ListTourPlanResponse>
 
-    @POST
+    @POST("tourplan")
     suspend fun saveTourPlan(
         @Header("Authorization") token: String,
         @Body requestBody: TourPlanRequest,

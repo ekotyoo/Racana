@@ -13,9 +13,9 @@ data class TourPlan(
     val dailyList: List<DailyItem>,
 ) : Parcelable {
     val imageUrl: String
-        get() = dailyList.first().destinationList.first().imageUrl
+        get() = dailyList.firstOrNull()?.destinationList?.firstOrNull()?.imageUrl ?: "https://via.placeholder.com/150"
     val period: String
-        get() = dailyList.first().dateFormatted + " - " + dailyList.last().dateFormatted
+        get() = dailyList.firstOrNull()?.dateFormatted + " - " + dailyList.lastOrNull()?.dateFormatted
 }
 
 @Parcelize

@@ -82,13 +82,13 @@ class TourPlanRepository @Inject constructor(
                 description = description,
                 tourPlanDates = tourPlan.dailyList.map {
                     TourPlanDateRequest(
-                        dateMillis = it.date.toEpochDay(),
+                        dateMillis = it.date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli(),
                         destinations = it.destinationList.map { destination -> destination.id }
                     )
                 }
             )
             val response = tourPlanApi.saveTourPlan(token ?: "", requestBody)
-            if (response.isSuccessful) {
+            if (response.isSuccessful && response.body()?.status == "Success") {
                 Result.Success(Unit)
             } else {
                 Result.Error("Terjadi kesalahan, coba lagi nanti.", null)

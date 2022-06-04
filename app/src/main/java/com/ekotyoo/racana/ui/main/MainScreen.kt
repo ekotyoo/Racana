@@ -49,7 +49,6 @@ fun MainScreen(
             when (action) {
                 Action.SAVE_TOUR_PLAN_SUCCESS -> {
                     bottomAppBarNavController.navigate(TourPlanListScreenDestination)
-                    snackBarHostState.showSnackbar("Tour plan berhasil disimpan")
                 }
             }
         }
