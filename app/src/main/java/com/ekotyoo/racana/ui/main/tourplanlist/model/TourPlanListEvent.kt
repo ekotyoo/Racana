@@ -4,5 +4,6 @@ import com.ekotyoo.racana.data.model.TourPlan
 
 sealed class TourPlanListEvent {
     data class NavigateToTourPlanDetail(val tourPlan: TourPlan) : TourPlanListEvent()
-    object DeletePlanButtonClicked : TourPlanListEvent()
+    object DeleteTourPlanSuccess : TourPlanListEvent()
+    object DeleteTourPlanFailed : TourPlanListEvent()
 }

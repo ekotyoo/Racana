@@ -1,6 +1,7 @@
 package com.ekotyoo.racana.data.datasource.remote.api
 
 import com.ekotyoo.racana.data.datasource.remote.request.TourPlanRequest
+import com.ekotyoo.racana.data.datasource.remote.response.DeleteTourPlanResponse
 import com.ekotyoo.racana.data.datasource.remote.response.ListTourPlanResponse
 import com.ekotyoo.racana.data.datasource.remote.response.SaveTourPlanResponse
 import com.ekotyoo.racana.data.datasource.remote.response.TourPlanResponse
@@ -31,4 +32,10 @@ interface TourPlanApi {
         @Header("Authorization") token: String,
         @Body requestBody: TourPlanRequest,
     ): Response<SaveTourPlanResponse>
+
+    @DELETE("tourplan/{id}")
+    suspend fun deleteTourPlanById(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int,
+    ): Response<DeleteTourPlanResponse>
 }

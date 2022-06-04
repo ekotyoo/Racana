@@ -5,6 +5,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.SnackbarHost
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -33,6 +35,7 @@ fun TourPlanListScreen(
     viewModel: TourPlanListViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
+    val snackbarHostState = SnackbarHostState()
 
     LaunchedEffect(Unit) {
         viewModel.eventChannel.collect { event ->
@@ -46,7 +49,12 @@ fun TourPlanListScreen(
                         launchSingleTop = true
                     }
                 }
-                TourPlanListEvent.DeletePlanButtonClicked -> {}
+                TourPlanListEvent.DeleteTourPlanSuccess -> {
+                    snackbarHostState.showSnackbar("Tour plan berhasil dihapus.")
+                }
+                TourPlanListEvent.DeleteTourPlanFailed -> {
+                    snackbarHostState.showSnackbar("Gagal menghapus tour plan.")
+                }
             }
         }
     }
@@ -57,7 +65,7 @@ fun TourPlanListScreen(
         TourPlanListContent(
             tourPlanList = state.tourPlanList,
             onCardClick = viewModel::onTourPlanClicked,
-            onDelete = viewModel::deletePlanButtonClicked
+            onItemDelete = viewModel::deletePlanButtonClicked
         )
         if (tourPlanEmpty && !state.isLoading) {
             TourPlanListEmpty(modifier = Modifier.align(Alignment.Center))
@@ -78,6 +86,7 @@ fun TourPlanListScreen(
                 )
             }
         }
+        SnackbarHost(hostState = snackbarHostState)
     }
 }
 
@@ -108,7 +117,7 @@ fun TourPlanListEmpty(modifier: Modifier = Modifier) {
 fun TourPlanListContent(
     tourPlanList: List<TourPlan>,
     onCardClick: (TourPlan) -> Unit,
-    onDelete: () -> Unit,
+    onItemDelete: (Int) -> Unit,
 ) {
     Scaffold(topBar = {
         RTopAppBar(title = stringResource(id = R.string.tour_plan_list))
@@ -130,7 +139,11 @@ fun TourPlanListContent(
                     onClick = {
                         onCardClick(plan)
                     },
-                    onDelete = onDelete
+                    onDelete = {
+                        if (plan.id != null) {
+                            onItemDelete(plan.id.toInt())
+                        }
+                    }
                 )
             }
         }

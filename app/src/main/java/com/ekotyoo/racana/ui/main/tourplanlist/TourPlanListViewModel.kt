@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TourPlanListViewModel @Inject constructor(
-    tourPlanRepository: TourPlanRepository,
+    private val tourPlanRepository: TourPlanRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(TourPlanListState(tourPlanList = emptyList()))
@@ -28,18 +28,7 @@ class TourPlanListViewModel @Inject constructor(
     val eventChannel = _eventChannel.receiveAsFlow()
 
     init {
-        _state.update { it.copy(isLoading = true) }
-        viewModelScope.launch {
-            when (val result = tourPlanRepository.getSavedTourPlan()) {
-                is Result.Success -> {
-                    _state.update { it.copy(tourPlanList = result.value) }
-                }
-                is Result.Error -> {
-                    // TODO: Handle error 
-                }
-            }
-            _state.update { it.copy(isLoading = false) }
-        }
+        getSavedTourPlan()
     }
 
     fun onTourPlanClicked(tourPlan: TourPlan) {
@@ -48,9 +37,38 @@ class TourPlanListViewModel @Inject constructor(
         }
     }
 
-    fun deletePlanButtonClicked() {
+    fun deletePlanButtonClicked(id: Int) {
+        deleteTourPlan(id)
+    }
+
+    private fun getSavedTourPlan() {
+        _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-            _eventChannel.send(TourPlanListEvent.DeletePlanButtonClicked)
+            when (val result = tourPlanRepository.getSavedTourPlan()) {
+                is Result.Success -> {
+                    _state.update { it.copy(tourPlanList = result.value) }
+                }
+                is Result.Error -> {
+                    // TODO: Handle error
+                }
+            }
+            _state.update { it.copy(isLoading = false) }
+        }
+    }
+
+    private fun deleteTourPlan(id: Int) {
+        _state.update { it.copy(isLoading = true) }
+        viewModelScope.launch {
+            when(tourPlanRepository.deleteTourPlan(id)) {
+                is Result.Success -> {
+                    _eventChannel.send(TourPlanListEvent.DeleteTourPlanSuccess)
+                    getSavedTourPlan()
+                }
+                is Result.Error -> {
+                    _eventChannel.send(TourPlanListEvent.DeleteTourPlanFailed)
+                }
+            }
+            _state.update { it.copy(isLoading = false) }
         }
     }
 }

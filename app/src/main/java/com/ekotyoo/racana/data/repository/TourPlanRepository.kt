@@ -21,7 +21,6 @@ import javax.inject.Inject
 @ViewModelScoped
 class TourPlanRepository @Inject constructor(
     private val tourPlanApi: TourPlanApi,
-    private val tourPlanDao: TourPlanDao,
     private val userPreferencesDataStore: UserPreferencesDataStore,
 ) {
     suspend fun getSavedTourPlan(): Result<List<TourPlan>> {
@@ -92,6 +91,26 @@ class TourPlanRepository @Inject constructor(
                 Result.Success(Unit)
             } else {
                 Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+            }
+        } catch (e: IOException) {
+            Timber.d(e.message)
+            Result.Error(message = "Terjadi kesalahan, coba lagi nanti!", throwable = e)
+        } catch (e: HttpException) {
+            Timber.d(e.message)
+            Result.Error(message = "Terjadi kesalahan, coba lagi nanti!", throwable = e)
+        }
+    }
+
+    suspend fun deleteTourPlan(id: Int): Result<Unit> {
+        return try {
+            val token = userPreferencesDataStore.userData.first().token
+            val response = tourPlanApi.deleteTourPlanById(token ?: "", id)
+            val data = response.body()?.data
+
+            if (response.isSuccessful && data != null) {
+                Result.Success(Unit)
+            } else {
+                Result.Error(message = "Gagal menghapus data.", throwable = null)
             }
         } catch (e: IOException) {
             Timber.d(e.message)

@@ -91,6 +91,7 @@ fun RPlanCard(
                 }
             ) {
                 DropdownMenuItem(onClick = {
+                    popupMenuVisible = false
                     onDelete()
                 }) {
                     Text(
