@@ -62,4 +62,6 @@
     <string name="search">Pencarian</string>
     <string name="search_destination">Cari destinasi..</string>
     <string name="destination_detail">Detail Destinasi</string>
+    <string name="weekday">(Hari Biasa)</string>
+    <string name="weekend">(Hari Libur)</string>
 </resources>

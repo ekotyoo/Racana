@@ -126,16 +126,16 @@ fun TourPlanDetailSavedContent(
             Column {
                 Text(
                     text = stringResource(id = R.string.trip_date),
-                    style = MaterialTheme.typography.subtitle2
+                    style = MaterialTheme.typography.subtitle1
                 )
                 Text(
                     text = state.tourPlan.period,
-                    style = MaterialTheme.typography.caption,
+                    style = MaterialTheme.typography.body2,
                 )
             }
             Text(
                 text = currencyFormatter(state.tourPlan.totalExpense),
-                style = MaterialTheme.typography.subtitle2
+                style = MaterialTheme.typography.subtitle1
             )
         }
         Spacer(modifier = Modifier.height(10.dp))
@@ -144,12 +144,12 @@ fun TourPlanDetailSavedContent(
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
             text = stringResource(id = R.string.description),
-            style = MaterialTheme.typography.subtitle2
+            style = MaterialTheme.typography.subtitle1
         )
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
             text = state.tourPlan.description ?: "",
-            style = MaterialTheme.typography.caption
+            style = MaterialTheme.typography.body2
         )
 
         Spacer(modifier = Modifier.height(16.dp))

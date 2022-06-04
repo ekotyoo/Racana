@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -43,7 +44,6 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
-import timber.log.Timber
 
 @Destination(
     style = NavigationTransition::class,
@@ -85,7 +85,8 @@ fun DestinationDetailContent(
     }
 
     LaunchedEffect(destination.lat, destination.lon) {
-        cameraPositionState.animate(CameraUpdateFactory.newLatLng(LatLng(destination.lat, destination.lon)))
+        cameraPositionState.animate(CameraUpdateFactory.newLatLng(LatLng(destination.lat,
+            destination.lon)))
     }
 
     Scaffold(
@@ -107,7 +108,7 @@ fun DestinationDetailContent(
             CoilImage(
                 contentDescription = null,
                 modifier = Modifier
-                    .aspectRatio(0.88f)
+                    .aspectRatio(1f)
                     .clip(MaterialTheme.shapes.medium),
                 contentScale = ContentScale.Crop,
                 imageModel = destination.imageUrl,
@@ -137,19 +138,37 @@ fun DestinationDetailContent(
                     onClick = onFavoriteButtonClicked
                 )
             }
-            Spacer(modifier = Modifier.height(7.dp))
-            Text(
-                text = currencyFormatter(destination.ticketPrice),
-                style = MaterialTheme.typography.subtitle2
-            )
-            Spacer(modifier = Modifier.height(11.dp))
+            Spacer(modifier = Modifier.height(8.dp))
+            Row {
+                Text(
+                    text = currencyFormatter(destination.ticketPrice),
+                    style = MaterialTheme.typography.subtitle2
+                )
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    text = stringResource(id = R.string.weekday),
+                    style = MaterialTheme.typography.subtitle2.copy(fontWeight = FontWeight.Normal)
+                )
+            }
+            Row {
+                Text(
+                    text = currencyFormatter(destination.ticketPriceWeekend),
+                    style = MaterialTheme.typography.subtitle2
+                )
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    text = stringResource(id = R.string.weekend),
+                    style = MaterialTheme.typography.subtitle2.copy(fontWeight = FontWeight.Normal)
+                )
+            }
+            Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = stringResource(id = R.string.description),
-                style = MaterialTheme.typography.subtitle2
+                style = MaterialTheme.typography.subtitle1
             )
             Text(
                 text = destination.description,
-                style = MaterialTheme.typography.caption
+                style = MaterialTheme.typography.body2
             )
             Spacer(modifier = Modifier.height(15.dp))
             GoogleMap(

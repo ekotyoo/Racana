@@ -171,7 +171,7 @@ fun AttractionCard(
         ) {
             Card(
                 modifier = modifier
-                    .aspectRatio(3.63f),
+                    .aspectRatio(3.4f),
                 onClick = onClick,
                 elevation = 8.dp,
                 shape = MaterialTheme.shapes.small

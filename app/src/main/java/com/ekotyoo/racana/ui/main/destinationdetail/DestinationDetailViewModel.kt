@@ -52,6 +52,7 @@ class DestinationDetailViewModel @Inject constructor(
                             openCloseTime = "--",
                             address = result.value.address,
                             ticketPrice = result.value.weekdayPrice.toLong(),
+                            ticketPriceWeekend = result.value.weekendHolidayPrice.toLong(),
                             description = result.value.description,
                             lat = result.value.lat,
                             lon = result.value.lon
