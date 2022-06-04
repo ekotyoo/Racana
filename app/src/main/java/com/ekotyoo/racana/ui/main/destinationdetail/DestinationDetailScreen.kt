@@ -18,7 +18,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -111,6 +113,7 @@ fun DestinationDetailContent(
                     .aspectRatio(1f)
                     .clip(MaterialTheme.shapes.medium),
                 contentScale = ContentScale.Crop,
+                placeHolder = ImageBitmap.imageResource(id = R.drawable.image_placeholder),
                 imageModel = destination.imageUrl,
                 previewPlaceholder = R.drawable.ic_launcher_background
             )

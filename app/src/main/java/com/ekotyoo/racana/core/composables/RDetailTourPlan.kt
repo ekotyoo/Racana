@@ -24,6 +24,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.theme.RacanaGray
@@ -189,6 +190,7 @@ fun AttractionCard(
                             .clip(MaterialTheme.shapes.small),
                         imageModel = imageUrl,
                         contentScale = ContentScale.Crop,
+                        placeHolder = ImageBitmap.imageResource(id = R.drawable.image_placeholder),
                         previewPlaceholder = R.drawable.ic_launcher_background,
                         contentDescription = null,
                     )

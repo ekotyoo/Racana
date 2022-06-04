@@ -17,7 +17,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.style.LineHeightStyle
@@ -78,6 +80,7 @@ fun RDestinationCard(
                         .fillMaxWidth(),
                     imageModel = imageUrl,
                     contentScale = ContentScale.Crop,
+                    placeHolder = ImageBitmap.imageResource(id = R.drawable.image_placeholder),
                     previewPlaceholder = R.drawable.ic_launcher_background,
                     contentDescription = null,
                 )

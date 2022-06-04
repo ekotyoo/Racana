@@ -17,7 +17,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -113,6 +115,7 @@ fun TourPlanDetailSavedContent(
                 .aspectRatio(2.45f)
                 .clip(MaterialTheme.shapes.medium),
             contentScale = ContentScale.Crop,
+            placeHolder = ImageBitmap.imageResource(id = R.drawable.image_placeholder),
             previewPlaceholder = R.drawable.ic_launcher_background
         )
         Spacer(modifier = Modifier.height(16.dp))

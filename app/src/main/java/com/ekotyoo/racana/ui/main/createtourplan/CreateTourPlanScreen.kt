@@ -24,9 +24,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -396,6 +398,7 @@ fun CategoryCard(
             imageModel = imageUrl,
             contentScale = ContentScale.Crop,
             previewPlaceholder = R.drawable.ic_launcher_background,
+            placeHolder = ImageBitmap.imageResource(id = R.drawable.image_placeholder),
             contentDescription = null
         )
         Spacer(

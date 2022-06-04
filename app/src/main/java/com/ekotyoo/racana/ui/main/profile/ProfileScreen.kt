@@ -12,9 +12,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -131,6 +133,7 @@ fun ProfileContent(
                                     .clip(CircleShape),
                                 contentScale = ContentScale.Crop,
                                 imageModel = profilePictureUrl,
+                                placeHolder = ImageBitmap.imageResource(id = R.drawable.image_placeholder),
                                 previewPlaceholder = R.drawable.ic_launcher_background
                             )
                             Spacer(modifier = Modifier.weight(0.3f))

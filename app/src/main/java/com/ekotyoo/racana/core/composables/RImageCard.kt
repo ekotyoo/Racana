@@ -14,7 +14,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -64,6 +66,7 @@ fun RImageCard(
                 imageModel = imageUrl,
                 contentScale = ContentScale.Crop,
                 previewPlaceholder = R.drawable.ic_launcher_background,
+                placeHolder = ImageBitmap.imageResource(id = R.drawable.image_placeholder),
                 contentDescription = null
             )
             Spacer(
