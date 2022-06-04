@@ -10,6 +10,7 @@ import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.items
@@ -158,8 +159,8 @@ fun CreateTourPlanContent(
             ) {
                 Column(
                     modifier = Modifier
-                        .scrollable(rememberScrollState(), orientation = Orientation.Vertical)
                         .fillMaxSize()
+                        .scrollable(rememberScrollState(), orientation = Orientation.Vertical)
                         .padding(horizontal = 16.dp)
                 ) {
                     Spacer(Modifier.height(16.dp))
@@ -241,8 +242,9 @@ fun CreateTourPlanContent(
 
                     // Category Input
                     CreateTourPlanSection(title = stringResource(id = R.string.destination_category)) {
-                        LazyVerticalGrid(
-                            columns = GridCells.Fixed(2),
+                        LazyHorizontalGrid(
+                            modifier = Modifier.height(140.dp),
+                            rows = GridCells.Fixed(2),
                             horizontalArrangement = Arrangement.spacedBy(16.dp),
                             verticalArrangement = Arrangement.spacedBy(16.dp),
                             content = {
@@ -389,6 +391,7 @@ fun CategoryCard(
     Box(
         modifier
             .clip(MaterialTheme.shapes.small)
+            .aspectRatio(3f)
             .height(64.dp)
             .clickable(onClick = onClick)
     ) {
