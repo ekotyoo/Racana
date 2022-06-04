@@ -2,19 +2,13 @@ package com.ekotyoo.racana.ui.main.createtourplan
 
 import android.content.res.Configuration
 import androidx.compose.animation.*
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -160,7 +154,7 @@ fun CreateTourPlanContent(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .scrollable(rememberScrollState(), orientation = Orientation.Vertical)
+                        .verticalScroll(rememberScrollState())
                         .padding(horizontal = 16.dp)
                 ) {
                     Spacer(Modifier.height(16.dp))
@@ -241,9 +235,11 @@ fun CreateTourPlanContent(
                     Spacer(Modifier.height(16.dp))
 
                     // Category Input
-                    CreateTourPlanSection(title = stringResource(id = R.string.destination_category)) {
+                    CreateTourPlanSection(
+                        modifier = Modifier.height(200.dp),
+                        title = stringResource(id = R.string.destination_category)
+                    ) {
                         LazyHorizontalGrid(
-                            modifier = Modifier.height(140.dp),
                             rows = GridCells.Fixed(2),
                             horizontalArrangement = Arrangement.spacedBy(16.dp),
                             verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -261,14 +257,19 @@ fun CreateTourPlanContent(
                             }
                         )
                     }
-                    Spacer(Modifier.weight(1f))
-                    RFilledButton(
-                        placeholderString = stringResource(id = R.string.save),
-                        onClick = onSubmitClicked
-                    )
-                    Spacer(Modifier.height(32.dp))
                 }
             }
+        }
+        Column(
+            Modifier
+                .align(Alignment.BottomCenter)
+                .padding(horizontal = 16.dp)
+        ) {
+            RFilledButton(
+                placeholderString = stringResource(id = R.string.save),
+                onClick = onSubmitClicked
+            )
+            Spacer(Modifier.height(32.dp))
         }
         RLoadingOverlay(
             modifier = Modifier.align(Alignment.Center),
@@ -391,7 +392,7 @@ fun CategoryCard(
     Box(
         modifier
             .clip(MaterialTheme.shapes.small)
-            .aspectRatio(3f)
+            .aspectRatio(2f)
             .height(64.dp)
             .clickable(onClick = onClick)
     ) {
