@@ -2,6 +2,7 @@ package com.ekotyoo.racana.ui.main.tourplanlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ekotyoo.racana.core.utils.Result
 import com.ekotyoo.racana.data.model.TourPlan
 import com.ekotyoo.racana.data.repository.TourPlanRepository
 import com.ekotyoo.racana.ui.main.tourplanlist.model.TourPlanListEvent
@@ -18,16 +19,23 @@ class TourPlanListViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(TourPlanListState(tourPlanList = emptyList()))
-    val state: StateFlow<TourPlanListState> =
-        _state.combine(tourPlanRepository.getSavedTourPlan()) { state, tourPlan ->
-            state.copy(tourPlanList = tourPlan)
-        }.stateIn(viewModelScope,
-            SharingStarted.Eagerly,
-            TourPlanListState(tourPlanList = emptyList()))
-
+    val state: StateFlow<TourPlanListState> = _state
 
     private val _eventChannel = Channel<TourPlanListEvent>()
     val eventChannel = _eventChannel.receiveAsFlow()
+    
+    init {
+        viewModelScope.launch {
+            when(val result = tourPlanRepository.getSavedTourPlan()) {
+                is Result.Success -> {
+                    _state.update { it.copy(tourPlanList = result.value) }
+                }
+                is Result.Error -> {
+                    // TODO: Handle error 
+                }
+            }
+        }
+    }
 
     fun onTourPlanClicked(tourPlan: TourPlan) {
         viewModelScope.launch {

@@ -3,14 +3,12 @@ package com.ekotyoo.racana.data.repository
 import com.ekotyoo.racana.core.utils.Result
 import com.ekotyoo.racana.data.datasource.local.UserPreferencesDataStore
 import com.ekotyoo.racana.data.datasource.local.database.TourPlanDao
-import com.ekotyoo.racana.data.datasource.local.database.entity.toModel
 import com.ekotyoo.racana.data.datasource.remote.api.TourPlanApi
 import com.ekotyoo.racana.data.model.DailyItem
 import com.ekotyoo.racana.data.model.TourPlan
 import com.ekotyoo.racana.data.model.TravelDestination
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException
@@ -24,8 +22,54 @@ class TourPlanRepository @Inject constructor(
     private val tourPlanDao: TourPlanDao,
     private val userPreferencesDataStore: UserPreferencesDataStore,
 ) {
-    fun getSavedTourPlan() = tourPlanDao.getAllTourPlan().map { list ->
-        list.map { it.toModel() }
+    suspend fun getSavedTourPlan(): Result<List<TourPlan>> {
+        try {
+            val token = userPreferencesDataStore.userData.first().token
+            val response = tourPlanApi.getAllTourPlan(token ?: "")
+            val data = response.body()?.data
+
+            if (response.isSuccessful && data != null) {
+                val tourPlans = data.map {
+                    TourPlan(
+                        id = it.id.toLong(),
+                        title = it.title,
+                        description = it.description,
+                        dailyList = it.tourPlanDates.mapIndexed { i, date ->
+                            DailyItem(
+                                number = i + 1,
+                                date = Instant.ofEpochMilli(date.dateMillis)
+                                    .atZone(ZoneId.systemDefault())
+                                    .toLocalDate(),
+                                destinationList = date.destinations.map { destination ->
+                                    TravelDestination(
+                                        id = destination.id,
+                                        name = destination.name,
+                                        description = destination.description,
+                                        city = destination.city,
+                                        address = destination.address,
+                                        rating = destination.rating,
+                                        imageUrl = destination.imageUrl,
+                                        weekdayPrice = destination.weekdayPrice,
+                                        weekendHolidayPrice = destination.weekendHolidayPrice,
+                                        lat = destination.lat ?: .0,
+                                        lon = destination.lon ?: .0,
+                                        categoryId = destination.categoryId ?: 0,
+                                    )
+                                }
+                            )
+                        }
+                    )
+                }
+
+                return Result.Success(tourPlans)
+            } else {
+                return Result.Error("Gagal mengambil data.", null)
+            }
+        } catch (e: IOException) {
+            return Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        } catch (e: HttpException) {
+            return Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        }
     }
 
     suspend fun saveTourPlan(tourPlan: TourPlan, title: String, description: String): Result<Unit> {
@@ -48,7 +92,7 @@ class TourPlanRepository @Inject constructor(
     ): Result<TourPlan> {
         try {
             val token = userPreferencesDataStore.userData.first().token
-            val response = tourPlanApi.getTourPlan(
+            val response = tourPlanApi.getTourPlanPrediction(
                 token ?: "",
                 city,
                 budget,
