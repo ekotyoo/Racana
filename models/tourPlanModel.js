@@ -8,6 +8,8 @@ const TourPlanModel = db.define("tourplan", {
   isActive: { type: sequelize.BOOLEAN, allowNull: false, defaultValue: false },
 });
 
-TourPlanModel.hasMany(TourPlanDateModel);
+TourPlanModel.hasMany(TourPlanDateModel, {
+  onDelete: "CASCADE",
+});
 
 module.exports = TourPlanModel;
