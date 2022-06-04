@@ -1,47 +1,82 @@
 {
-  "id": 0,
-  "daily_list": [
+  "tourplandates": [
     {
-      "date": 1653411600000,
+      "date_millis": 1654534800000,
       "destinations": [
         {
-          "id": 2,
-          "name": "afsdf",
-          "description": "Description",
-          "addresss": "Address",
-          "lat": -7.884165,
-          "lon": 112.477362,
-          "imageUrl": "https://dummyimage.com/640x360/fff/aaa",
-          "weekdayPrice": 0,
-          "weekendHolidayPrice": 0,
-          "rating": 0,
-          "categoryId": 2
+          "id": 1,
+          "name": "Agrowisata Satria",
+          "description": "Agrowisata Satria menawarkan 'rasa' Bali pada setiap sesapan teh dan kopi di tengah perkebunan yang asri",
+          "addresss": " Manukaya, Kec. Tampaksiring, Kabupaten Gianyar, Bali 80552",
+          "city": "Gianyar",
+          "lat": -8.402229,
+          "lon": 115.322966,
+          "imageUrl": "",
+          "weekdayPrice": 50000,
+          "weekendHolidayPrice": 50000,
+          "rating": 3,
+          "categoryId": 1
         },
         {
           "id": 2,
-          "name": "afsdf",
-          "description": "Description",
-          "addresss": "lorem",
-          "lat": -7.884165,
-          "lon": 112.477362,
-          "imageUrl": "https://dummyimage.com/640x360/fff/aaa",
+          "name": "Agung Bali",
+          "description": "Dapatkan berbagai produk oleh-oleh khas Bali berupa baju vip, camilan, handycraft dan lain-lain.",
+          "addresss": "Jln. Dewi Sri No.18XX, Kuta, Badung, Bali",
+          "city": "Badung",
+          "lat": -8.700234,
+          "lon": 115.176534,
+          "imageUrl": "",
           "weekdayPrice": 0,
           "weekendHolidayPrice": 0,
-          "rating": 0,
-          "categoryId": 2
+          "rating": 4,
+          "categoryId": 3
+        }
+      ]
+    },
+    {
+      "date_millis": 1654621200000,
+      "destinations": [
+        {
+          "id": 8,
+          "name": "Aloha Ubud Swing ",
+          "description": "Ajaklah orang-orang tercinta untuk mencoba ayunan tandem swing yang seru sekaligus menyenangkan, atau jika Anda ingin merasakan sensasi terbang tinggi sendiri, cobalah single swing yang mengayun tinggi hingga 60 meter di atas tanah",
+          "addresss": "Jl. Raya Tegallalang, Tegallalang, Kec. Tegallalang, Kabupaten Gianyar, Bali 80561",
+          "city": "Gianyar",
+          "lat": -8.463738,
+          "lon": 115.276447,
+          "imageUrl": "",
+          "weekdayPrice": 300000,
+          "weekendHolidayPrice": 300000,
+          "rating": 5,
+          "categoryId": 1
         },
         {
-          "id": 2,
-          "name": "afsdf",
-          "description": "asdfasdf",
-          "addresss": "fasdfsdsf",
-          "lat": -7.884165,
-          "lon": 112.477362,
-          "imageUrl": "https://dummyimage.com/640x360/fff/aaa",
-          "weekdayPrice": 0,
-          "weekendHolidayPrice": 0,
-          "rating": 0,
-          "categoryId": 2
+          "id": 9,
+          "name": "Bali Bird Park",
+          "description": "atraksi wisata sekaligus tempat penangkaran berbagai jenis spesies [[burung di Indonesia maupun mancanegara. Selain menampilkan kehidupan alami berbagai jenis burung, bermacam-macam fasilitas dan program spesial diselenggarakan dengan fungsi mendidik dan ",
+          "addresss": "Jl. Serma Cok Ngurah Gambir Singapadu, Batubulan, Gianyar 80582 Indonesia",
+          "city": "Gianyar",
+          "lat": -8.599725,
+          "lon": 115.251882,
+          "imageUrl": "",
+          "weekdayPrice": 95000,
+          "weekendHolidayPrice": 110000,
+          "rating": 4.5,
+          "categoryId": 5
+        },
+        {
+          "id": 10,
+          "name": "Handara Iconic Gate",
+          "description": "Gapura indah yang berada di sebelah Pura Ulun Danu Beratan. Gerbang ini salah satu ikon foto paling mengesankan bagi para wisatawan. Dengan kombinasi gerbang kuno dengan perbukitan dan lapangan golf hijau menjadikan gerbang ini menjadi tempat wisata yang ",
+          "addresss": "Jl. Raya Singaraja-Denpasar, Pancasari, Kec. Sukasada, Kabupaten Buleleng, Bali 81161",
+          "city": "Buleleng",
+          "lat": -8.252796,
+          "lon": 115.158283,
+          "imageUrl": "",
+          "weekdayPrice": 20000,
+          "weekendHolidayPrice": 20000,
+          "rating": 3.5,
+          "categoryId": 4
         }
       ]
     }
