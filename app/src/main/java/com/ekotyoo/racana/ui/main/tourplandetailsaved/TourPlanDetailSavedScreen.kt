@@ -28,8 +28,7 @@ import com.ekotyoo.racana.core.composables.DayHeaderSection
 import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaTheme
-import com.ekotyoo.racana.core.utils.CurrencyFormatter
-import com.ekotyoo.racana.data.model.TourPlan
+import com.ekotyoo.racana.core.utils.currencyFormatter
 import com.ekotyoo.racana.ui.destinations.DestinationDetailScreenDestination
 import com.ekotyoo.racana.ui.destinations.TourPlanMapScreenDestination
 import com.ekotyoo.racana.ui.main.tourplandetailsaved.model.TourPlanDetailSavedArgument
@@ -134,9 +133,8 @@ fun TourPlanDetailSavedContent(
                     style = MaterialTheme.typography.caption,
                 )
             }
-            val budget = 0
             Text(
-                text = CurrencyFormatter(budget),
+                text = currencyFormatter(state.tourPlan.totalExpense),
                 style = MaterialTheme.typography.subtitle2
             )
         }
@@ -154,6 +152,7 @@ fun TourPlanDetailSavedContent(
             style = MaterialTheme.typography.caption
         )
 
+        Spacer(modifier = Modifier.height(16.dp))
         //Tour Plan
         DayHeaderSection(
             selectedDate = state.selectedDate,

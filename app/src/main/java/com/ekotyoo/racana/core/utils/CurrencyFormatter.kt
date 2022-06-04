@@ -3,19 +3,19 @@ package com.ekotyoo.racana.core.utils
 import java.text.NumberFormat
 import java.util.*
 
-fun CurrencyFormatter(price: String) =
+fun currencyFormatter(price: String) =
     "Rp ${NumberFormat.getInstance(Locale.ITALY).format(price.toInt())}"
 
 
-fun CurrencyFormatter(price: Int) =
+fun currencyFormatter(price: Int) =
     "Rp ${NumberFormat.getInstance(Locale.ITALY).format(price)}"
 
-fun CurrencyFormatter(price: Double) =
+fun currencyFormatter(price: Double) =
     "Rp ${NumberFormat.getInstance(Locale.ITALY).format(price.toInt())}"
 
-fun CurrencyFormatter(price: Float) =
+fun currencyFormatter(price: Float) =
     "Rp ${NumberFormat.getInstance(Locale.ITALY).format(price.toInt())}"
 
-fun CurrencyFormatter(price: Long) =
+fun currencyFormatter(price: Long) =
     "Rp ${NumberFormat.getInstance(Locale.ITALY).format(price.toInt())}"
 

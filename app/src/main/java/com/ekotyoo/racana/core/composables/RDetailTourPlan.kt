@@ -27,6 +27,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.theme.RacanaGray
+import com.ekotyoo.racana.core.utils.currencyFormatter
 import com.ekotyoo.racana.data.model.DailyItem
 import com.ekotyoo.racana.data.model.TravelDestination
 import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultState
@@ -75,7 +76,8 @@ fun AttractionList(
             AttractionCard(
                 imageUrl = destination.imageUrl,
                 title = destination.name,
-                location = destination.address,
+                location = destination.city,
+                expense = destination.weekdayPrice,
                 isDone = destination.isDone,
                 onClick = {
                     onClick(destination.id)
@@ -154,6 +156,7 @@ fun AttractionCard(
     imageUrl: String,
     title: String,
     location: String,
+    expense: Int,
     isDone: Boolean,
     onClick: () -> Unit,
     onDelete: (() -> Unit)? = null,
@@ -192,7 +195,7 @@ fun AttractionCard(
                     Spacer(Modifier.width(8.dp))
                     Column(Modifier.weight(1f)) {
                         Text(text = title, style = MaterialTheme.typography.subtitle1)
-                        Text(text = "Expense", style = MaterialTheme.typography.caption)
+                        Text(text = currencyFormatter(expense), style = MaterialTheme.typography.caption)
                         Text(text = location, style = MaterialTheme.typography.caption)
                     }
                     if (onDelete != null) {

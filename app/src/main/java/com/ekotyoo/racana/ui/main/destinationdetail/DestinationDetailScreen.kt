@@ -29,10 +29,11 @@ import com.ekotyoo.racana.core.composables.RLoadingOverlay
 import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaTheme
-import com.ekotyoo.racana.core.utils.CurrencyFormatter
+import com.ekotyoo.racana.core.utils.currencyFormatter
 import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationArgument
 import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetail
 import com.ekotyoo.racana.ui.main.destinationdetail.model.getDummyDetailDestination
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
@@ -80,8 +81,11 @@ fun DestinationDetailContent(
     onFavoriteButtonClicked: () -> Unit,
 ) {
     val cameraPositionState = rememberCameraPositionState {
-        Timber.d(destination.toString())
         position = CameraPosition.fromLatLngZoom(LatLng(destination.lat, destination.lon), 10f)
+    }
+
+    LaunchedEffect(destination.lat, destination.lon) {
+        cameraPositionState.animate(CameraUpdateFactory.newLatLng(LatLng(destination.lat, destination.lon)))
     }
 
     Scaffold(
@@ -135,7 +139,7 @@ fun DestinationDetailContent(
             }
             Spacer(modifier = Modifier.height(7.dp))
             Text(
-                text = CurrencyFormatter(destination.ticketPrice),
+                text = currencyFormatter(destination.ticketPrice),
                 style = MaterialTheme.typography.subtitle2
             )
             Spacer(modifier = Modifier.height(11.dp))
