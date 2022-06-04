@@ -64,4 +64,6 @@
     <string name="destination_detail">Detail Destinasi</string>
     <string name="weekday">(Hari Biasa)</string>
     <string name="weekend">(Hari Libur)</string>
+    <string name="item_option_button">Menu Item</string>
+    <string name="delete_tour_plan">Hapus Tour Plan</string>
 </resources>
