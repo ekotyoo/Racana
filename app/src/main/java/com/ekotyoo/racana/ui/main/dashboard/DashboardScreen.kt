@@ -6,6 +6,7 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.material.*
@@ -41,6 +42,7 @@ import com.ekotyoo.racana.core.navigation.RootNavigator
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.data.model.TravelDestination
 import com.ekotyoo.racana.ui.destinations.DestinationDetailScreenDestination
+import com.ekotyoo.racana.ui.destinations.ListDestinationScreenDestination
 import com.ekotyoo.racana.ui.main.dashboard.model.DashboardEvent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.skydoves.landscapist.coil.CoilImage
@@ -66,6 +68,9 @@ fun DashboardScreen(
                         launchSingleTop = true
                     }
                 }
+                is DashboardEvent.allDestinationClicked -> {
+                    rootNavigator.value.navigate(ListDestinationScreenDestination)
+                }
             }
         }
     }
@@ -86,7 +91,8 @@ fun DashboardScreen(
             destinations = state.destinations,
             lazyListState = lazyListState,
             isLoading = state.isLoading,
-            onDestinationClick = viewModel::onDestinationClicked
+            onDestinationClick = viewModel::onDestinationClicked,
+            onAllDestinationClicked = viewModel::allDestinationClicked
         )
     }
 }
@@ -97,6 +103,7 @@ fun DashboardContent(
     onDestinationClick: (Int) -> Unit = {},
     lazyListState: LazyListState,
     isLoading: Boolean,
+    onAllDestinationClicked: () -> Unit
 ) {
     LazyColumn(
         state = lazyListState,
@@ -107,11 +114,14 @@ fun DashboardContent(
         }
         item {
             DashboardSection(
-                title = stringResource(id = R.string.top_destination)
+                title = stringResource(id = R.string.top_destination),
+                onAllItemShowClicked = onAllDestinationClicked
             ) {
-                DestinationRow(destinations = destinations,
+                DestinationRow(
+                    destinations = destinations,
                     isLoading = isLoading,
-                    onItemClick = onDestinationClick)
+                    onItemClick = onDestinationClick,
+                )
             }
             Spacer(Modifier.height(16.dp))
         }
@@ -234,7 +244,8 @@ fun DashboardSection(
     modifier: Modifier = Modifier,
     title: String,
     seeAllVisible: Boolean = true,
-    content: @Composable () -> Unit,
+    onAllItemShowClicked: () -> Unit = {},
+    content: @Composable () -> Unit
 ) {
     Column(modifier) {
         Row(
@@ -251,7 +262,8 @@ fun DashboardSection(
             if (seeAllVisible) {
                 Text(
                     text = stringResource(id = R.string.see_all),
-                    style = MaterialTheme.typography.body1
+                    style = MaterialTheme.typography.body1,
+                    modifier = Modifier.clickable(onClick = onAllItemShowClicked)
                 )
             }
         }

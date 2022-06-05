@@ -28,6 +28,7 @@ import com.ekotyoo.racana.core.navigation.BottomNavGraph
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.navigation.RootNavigator
 import com.ekotyoo.racana.core.theme.RacanaTheme
+import com.ekotyoo.racana.ui.destinations.FavoriteDestinationScreenDestination
 import com.ekotyoo.racana.ui.destinations.LoginScreenDestination
 import com.ekotyoo.racana.ui.destinations.MainScreenDestination
 import com.ekotyoo.racana.ui.main.profile.model.ProfileEvent
@@ -59,7 +60,9 @@ fun ProfileScreen(
                         launchSingleTop = true
                     }
                 }
-                ProfileEvent.NavigateToFavoriteDestination -> {}
+                ProfileEvent.NavigateToFavoriteDestination -> {
+                    rootNavigator.value.navigate(FavoriteDestinationScreenDestination)
+                }
                 ProfileEvent.NavigateToMyPlan -> {}
                 ProfileEvent.NavigateToSettings -> {}
             }

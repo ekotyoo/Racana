@@ -58,5 +58,11 @@ class DashboardViewModel @Inject constructor(
             _state.update { it.copy(isLoading = false) }
         }
     }
+
+    fun allDestinationClicked() {
+        viewModelScope.launch {
+            _eventChannel.send(DashboardEvent.allDestinationClicked)
+        }
+    }
 }
 
