@@ -66,4 +66,5 @@
     <string name="weekend">(Hari Libur)</string>
     <string name="item_option_button">Menu Item</string>
     <string name="delete_tour_plan">Hapus Tour Plan</string>
+    <string name="popular_destination">Destinasi Populer</string>
 </resources>
