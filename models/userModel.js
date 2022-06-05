@@ -1,6 +1,7 @@
 const sequelize = require("sequelize");
 const db = require("../config/db");
 const TourPlanModel = require("./tourPlanModel");
+const DestinationModel = require("./destinationModel");
 
 const UserModel = db.define("user", {
   name: { type: sequelize.STRING, allowNull: false },
