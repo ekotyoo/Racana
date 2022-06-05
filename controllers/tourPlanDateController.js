@@ -49,7 +49,7 @@ const deleteTourPlanDateDestination = async (req, res) => {
     if (!result)
       return res.status(400).json(responseHelper.responseError("Failed deleting destination"));
 
-    res.json(responseHelper.responseSuccess(data, "Sucessfully deleting destination from date."));
+    res.json(responseHelper.responseSuccess(result, "Sucessfully deleting destination from date."));
   } catch (err) {
     console.log(err);
     res.status(500).json(responseHelper.responseError("Internal server error."));
