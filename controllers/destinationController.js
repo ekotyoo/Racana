@@ -5,13 +5,14 @@ const { Op } = require("sequelize");
 const getTopDestinations = async (req, res) => {
   try {
     const data = await DestinationModel.findAll({
-      order: ["rating", "DESC"],
+      order: [["rating", "DESC"]],
       limit: 10,
     });
 
     if (!data) return res.status(400).json(responseHelper.responseError("No data."));
     res.json(responseHelper.responseSuccess(data, "Sucessfully get data."));
   } catch (error) {
+    console.log(error);
     res.status(500).json(responseHelper.responseError("Internal server error."));
   }
 };
