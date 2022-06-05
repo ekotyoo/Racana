@@ -28,6 +28,7 @@ router.post("/tourplan/:id/date", tokenValidation, tourPlanController.insertTour
 
 // Destination
 router.get("/destination", tokenValidation, destinationController.getAllDestinations);
+router.get("/destination/top", tokenValidation, destinationController.getTopDestinations);
 router.get("/destination/:id", tokenValidation, destinationController.getDestinationById);
 router.post("/destination", tokenValidation, destinationController.insertDestinationById);
 router.put("/destination/:id", tokenValidation, destinationController.updateDestinationById);
