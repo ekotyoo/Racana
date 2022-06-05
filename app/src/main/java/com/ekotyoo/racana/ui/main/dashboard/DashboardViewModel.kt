@@ -47,7 +47,7 @@ class DashboardViewModel @Inject constructor(
     private fun getTopDestinations() {
         _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-            when (val result = destinationRepository.getDestinations()) {
+            when (val result = destinationRepository.getTopDestinations()) {
                 is Result.Error -> {
                     Timber.d("Error")
                 }
