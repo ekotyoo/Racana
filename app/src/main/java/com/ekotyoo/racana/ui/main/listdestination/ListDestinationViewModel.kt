@@ -2,7 +2,8 @@ package com.ekotyoo.racana.ui.main.listdestination
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ekotyoo.racana.data.model.TravelDestination
+import com.ekotyoo.racana.core.utils.Result
+import com.ekotyoo.racana.data.repository.DestinationRepository
 import com.ekotyoo.racana.ui.main.listdestination.model.ListDestinationEvent
 import com.ekotyoo.racana.ui.main.listdestination.model.ListDestinationState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,35 +11,42 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ListDestinationViewModel @Inject constructor() : ViewModel() {
-    private val _state = MutableStateFlow(ListDestinationState(destinations = getDummyDestination()))
+class ListDestinationViewModel @Inject constructor(
+    private val destinationRepository: DestinationRepository
+) : ViewModel() {
+    private val _state = MutableStateFlow(ListDestinationState())
     val state: StateFlow<ListDestinationState> = _state
 
     private val _eventChannel = Channel<ListDestinationEvent>()
     val eventChannel = _eventChannel.receiveAsFlow()
 
-    fun onDestinationClicked(id: Int) {
+    init {
+        getDestinations()
+    }
+
+    private fun getDestinations() {
         viewModelScope.launch {
-            _eventChannel.send(ListDestinationEvent.OnDestinationClicked(id))
+            _state.update { it.copy(isLoading = true) }
+            when(val result = destinationRepository.getTopDestinations()) {
+                is Result.Success -> {
+                    _state.update { it.copy(destinations = result.value) }
+                }
+                is Result.Error -> {
+                    _eventChannel.send(ListDestinationEvent.GetDestinationsError)
+                }
+            }
+            _state.update { it.copy(isLoading = false) }
         }
     }
-}
 
-fun getDummyDestination() : List<TravelDestination> {
-    val dummy = mutableListOf<TravelDestination>()
-    for ( i in 1..10) {
-        dummy.add(
-            TravelDestination(
-                id = i,
-                name = "Destinasi $i",
-                description = "Deskripsi desinasi $i",
-                city = "Kota $i"
-            )
-        )
+    fun onDestinationClicked(id: Int) {
+        viewModelScope.launch {
+            _eventChannel.send(ListDestinationEvent.NavigateToDetailDestination(id))
+        }
     }
-    return dummy
 }

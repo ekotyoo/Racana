@@ -1,4 +1,4 @@
-package com.ekotyoo.racana.ui.favoritedestination.model
+package com.ekotyoo.racana.ui.main.favoritedestination.model
 
 import com.ekotyoo.racana.data.model.TravelDestination
 

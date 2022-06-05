@@ -1,4 +1,4 @@
-package com.ekotyoo.racana.ui.favoritedestination
+package com.ekotyoo.racana.ui.main.favoritedestination
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

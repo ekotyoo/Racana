@@ -52,10 +52,10 @@ class DestinationRepository @Inject constructor(
         }
     }
 
-    suspend fun getTopDestinations(query: String? = null): Result<List<TravelDestination>> {
+    suspend fun getTopDestinations(limit: Int? = null): Result<List<TravelDestination>> {
         try {
             val token = userPreferencesDataStore.userData.first().token
-            val response = destinationApi.getTopDestinations(token ?: "")
+            val response = destinationApi.getTopDestinations(token ?: "", limit)
             val data = response.body()?.data
             return if (response.isSuccessful && data != null) {
                 val destinations = data.map {

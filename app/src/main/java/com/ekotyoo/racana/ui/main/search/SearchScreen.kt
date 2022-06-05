@@ -77,9 +77,9 @@ fun SearchScreen(
             onQueryChange = viewModel::onQueryChange,
             onQueryClear = viewModel::onQueryClear,
             onCategoryClick = viewModel::onCategoryClick,
-            onSearchResultClick = viewModel::onSearchResultClick
+            onSearchResultClick = viewModel::onSearchResultClick,
+            snackbarHostState = snackbarHostState
         )
-        SnackbarHost(hostState = snackbarHostState)
     }
 }
 
@@ -91,8 +91,10 @@ fun SearchContent(
     onQueryClear: () -> Unit = {},
     onCategoryClick: (DestinationCategory) -> Unit = {},
     onSearchResultClick: (Int) -> Unit = {},
+    snackbarHostState: SnackbarHostState = SnackbarHostState()
 ) {
     Scaffold(
+        scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState),
         topBar = { RTopAppBar(title = stringResource(id = R.string.search)) }
     ) {
         Column {

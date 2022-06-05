@@ -10,14 +10,10 @@ import retrofit2.http.Query
 
 interface DestinationApi {
 
-    @GET("destination")
-    suspend fun getDestination(
-        @Header("Authorization") token: String,
-    ): Response<ListDestinationResponse>
-
     @GET("destination/top")
     suspend fun getTopDestinations(
         @Header("Authorization") token: String,
+        @Query("limit") limit: Int? = null,
     ): Response<ListDestinationResponse>
 
     @GET("destination")
