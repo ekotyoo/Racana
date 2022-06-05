@@ -62,4 +62,5 @@
     <string name="search">Pencarian</string>
     <string name="search_destination">Cari destinasi..</string>
     <string name="destination_detail">Detail Destinasi</string>
+    <string name="popular_destination">Destinasi Populer</string>
 </resources>
