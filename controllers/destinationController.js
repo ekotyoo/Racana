@@ -40,7 +40,7 @@ const insertFavoriteDestination = async (req, res) => {
 
     const data = await user.setDestination(destination);
 
-    if (!data) return res.json(responseHelper.responseError("No data."));
+    if (!data) return res.status(400).json(responseHelper.responseError("No data."));
     res.json(responseHelper.responseSuccess(data, "Sucessfully get data."));
   } catch (error) {
     res.status(500).json(responseHelper.responseError("Internal server error."));
