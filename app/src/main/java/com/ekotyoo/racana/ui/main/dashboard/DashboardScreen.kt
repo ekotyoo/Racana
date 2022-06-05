@@ -20,8 +20,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush.Companion.linearGradient
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.PlatformTextStyle
@@ -335,6 +337,7 @@ fun CurrentTourPlanCard(
                         .fillMaxWidth(),
                     imageModel = imageUrl,
                     previewPlaceholder = R.drawable.ic_launcher_background,
+                    placeHolder = ImageBitmap.imageResource(id = R.drawable.image_placeholder),
                     contentScale = ContentScale.Crop,
                     contentDescription = null,
                 )

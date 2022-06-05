@@ -130,19 +130,19 @@ class TourPlanResultViewModel @Inject constructor(
     }
 
     private fun saveTourPlan() {
-        if (_state.value.tourPlan != null) {
-            val tourPlan = _state.value.tourPlan
+        val tourPlan = _state.value.tourPlan
+        if (tourPlan != null) {
             viewModelScope.launch {
-                when (tourPlanRepository.saveTourPlan(tourPlan!!,
+                when (tourPlanRepository.saveTourPlan(tourPlan,
                     _state.value.titleTextFieldValue,
                     _state.value.descriptionTextFieldValue)) {
                     is Result.Error -> {
                         _eventChannel.send(TourPlanResultEvent.SaveTourPlanError)
-                        Timber.d("Save Tour Plan Gagal")
+                        Timber.d("Gagal menyimpan tour plan.")
                     }
                     is Result.Success -> {
                         _eventChannel.send(TourPlanResultEvent.SaveTourPlanSuccess)
-                        Timber.d("Save Tour Plan Berhasil")
+                        Timber.d("Berhasil menyimpan tour plan")
                     }
                 }
             }

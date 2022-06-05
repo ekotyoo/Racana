@@ -14,15 +14,17 @@ import androidx.compose.material.icons.rounded.ChevronLeft
 import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -192,19 +194,20 @@ fun MapDestinationCard(
                 imageModel = imageUrl,
                 contentScale = ContentScale.Crop,
                 previewPlaceholder = R.drawable.ic_launcher_background,
+                placeHolder = ImageBitmap.imageResource(id = R.drawable.image_placeholder),
                 contentDescription = null,
             )
             Column(
                 modifier = Modifier.padding(8.dp)
             ) {
-                Text(text = title,
+                Text(
+                    text = title,
                     style = MaterialTheme.typography.subtitle1,
                     overflow = TextOverflow.Ellipsis,
-                    maxLines = 1)
+                    maxLines = 1
+                )
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
+                    Row {
                         Icon(
                             modifier = Modifier.size(16.dp),
                             imageVector = Icons.Rounded.Place,
@@ -214,6 +217,8 @@ fun MapDestinationCard(
                         Spacer(Modifier.width(4.dp))
                         Text(
                             text = location,
+                            maxLines = 4,
+                            overflow = TextOverflow.Ellipsis,
                             style = MaterialTheme.typography.body2.copy(
                                 platformStyle = PlatformTextStyle(
                                     includeFontPadding = false
@@ -224,6 +229,7 @@ fun MapDestinationCard(
                                 )
                             )
                         )
+                        Spacer(Modifier.width(24.dp))
                     }
                 }
             }

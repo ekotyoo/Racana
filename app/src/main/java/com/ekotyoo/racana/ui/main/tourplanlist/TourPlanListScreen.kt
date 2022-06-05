@@ -5,6 +5,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -33,6 +35,7 @@ fun TourPlanListScreen(
     viewModel: TourPlanListViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
+    val snackbarHostState = SnackbarHostState()
 
     LaunchedEffect(Unit) {
         viewModel.eventChannel.collect { event ->
@@ -46,7 +49,15 @@ fun TourPlanListScreen(
                         launchSingleTop = true
                     }
                 }
-                TourPlanListEvent.DeletePlanButtonClicked -> {}
+                TourPlanListEvent.DeleteTourPlanSuccess -> {
+                    snackbarHostState.showSnackbar("Tour plan berhasil dihapus.")
+                }
+                TourPlanListEvent.DeleteTourPlanFailed -> {
+                    snackbarHostState.showSnackbar("Gagal menghapus tour plan.")
+                }
+                TourPlanListEvent.GetTourPlanFailed -> {
+                    snackbarHostState.showSnackbar("Gagal mengambil data.")
+                }
             }
         }
     }
@@ -57,10 +68,27 @@ fun TourPlanListScreen(
         TourPlanListContent(
             tourPlanList = state.tourPlanList,
             onCardClick = viewModel::onTourPlanClicked,
-            onDelete = viewModel::deletePlanButtonClicked
+            onItemDelete = viewModel::deletePlanButtonClicked,
+            snackbarHostState = snackbarHostState
         )
-        if (tourPlanEmpty) {
+        if (tourPlanEmpty && !state.isLoading) {
             TourPlanListEmpty(modifier = Modifier.align(Alignment.Center))
+        }
+        if (state.isLoading) {
+            val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.location_loading))
+            val progress by animateLottieCompositionAsState(
+                composition,
+                iterations = LottieConstants.IterateForever
+            )
+            Box(Modifier.fillMaxSize()) {
+                LottieAnimation(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .size(160.dp),
+                    composition = composition,
+                    progress = progress
+                )
+            }
         }
     }
 }
@@ -92,11 +120,15 @@ fun TourPlanListEmpty(modifier: Modifier = Modifier) {
 fun TourPlanListContent(
     tourPlanList: List<TourPlan>,
     onCardClick: (TourPlan) -> Unit,
-    onDelete: () -> Unit,
+    onItemDelete: (Int) -> Unit,
+    snackbarHostState: SnackbarHostState,
 ) {
-    Scaffold(topBar = {
-        RTopAppBar(title = stringResource(id = R.string.tour_plan_list))
-    }) {
+    Scaffold(
+        scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState),
+        topBar = {
+            RTopAppBar(title = stringResource(id = R.string.tour_plan_list)
+            )
+        }) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
@@ -114,7 +146,11 @@ fun TourPlanListContent(
                     onClick = {
                         onCardClick(plan)
                     },
-                    onDelete = onDelete
+                    onDelete = {
+                        if (plan.id != null) {
+                            onItemDelete(plan.id.toInt())
+                        }
+                    }
                 )
             }
         }

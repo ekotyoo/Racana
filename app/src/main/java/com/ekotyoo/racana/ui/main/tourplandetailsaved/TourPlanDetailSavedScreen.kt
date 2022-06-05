@@ -4,9 +4,7 @@ import android.content.res.Configuration
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Text
@@ -17,19 +15,21 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.airbnb.lottie.compose.*
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.AttractionList
 import com.ekotyoo.racana.core.composables.DayHeaderSection
 import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaTheme
-import com.ekotyoo.racana.core.utils.CurrencyFormatter
-import com.ekotyoo.racana.data.model.TourPlan
+import com.ekotyoo.racana.core.utils.currencyFormatter
 import com.ekotyoo.racana.ui.destinations.DestinationDetailScreenDestination
 import com.ekotyoo.racana.ui.destinations.TourPlanMapScreenDestination
 import com.ekotyoo.racana.ui.main.tourplandetailsaved.model.TourPlanDetailSavedArgument
@@ -50,6 +50,7 @@ fun TourPlanDetailSavedScreen(
     viewModel: TourPlanDetailSavedViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
+    val snackbarHostState = SnackbarHostState()
 
     LaunchedEffect(Unit) {
         viewModel.eventChannel.collect { event ->
@@ -57,14 +58,20 @@ fun TourPlanDetailSavedScreen(
                 is TourPlanDetailSavedEvent.NavigateToDestinationDetail -> {
                     navigator.navigate(DestinationDetailScreenDestination(event.id))
                 }
-                is TourPlanDetailSavedEvent.DeleteDestinationButtonClicked -> {}
                 is TourPlanDetailSavedEvent.NavigateBackWithMessage -> {}
                 is TourPlanDetailSavedEvent.StartTourButtonClicked -> {}
+                TourPlanDetailSavedEvent.DeleteDestinationSuccess -> {
+                    snackbarHostState.showSnackbar("Berhasil menghapus destinasi.")
+                }
+                TourPlanDetailSavedEvent.DeleteDestinationError -> {
+                    snackbarHostState.showSnackbar("Gagal menghapus destinasi.")
+                }
             }
         }
     }
     Box(modifier = Modifier.fillMaxSize()) {
         Scaffold(
+            scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState),
             topBar = {
                 RTopAppBar(
                     title = state.tourPlan.title ?: "",
@@ -79,13 +86,30 @@ fun TourPlanDetailSavedScreen(
                 )
             }
         ) {
-            TourPlanDetailSavedContent(
-                state = state,
-                onDateSelected = viewModel::onDateSelected,
-                onDestinationClicked = viewModel::navigateToDestinationDetail,
-                onStartTourButtonClicked = viewModel::startTourButtonClicked,
-                onDeleteButtonClicked = viewModel::deleteDestinationButtonClicked
-            )
+            if (state.isLoading) {
+                val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.location_loading))
+                val progress by animateLottieCompositionAsState(
+                    composition,
+                    iterations = LottieConstants.IterateForever
+                )
+                Box(Modifier.fillMaxSize()) {
+                    LottieAnimation(
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .size(160.dp),
+                        composition = composition,
+                        progress = progress
+                    )
+                }
+            } else {
+                TourPlanDetailSavedContent(
+                    state = state,
+                    onDateSelected = viewModel::onDateSelected,
+                    onDestinationClicked = viewModel::navigateToDestinationDetail,
+                    onStartTourButtonClicked = viewModel::startTourButtonClicked,
+                    onDestinationDeleteButtonClicked = viewModel::deleteDestinationButtonClicked
+                )
+            }
         }
     }
 }
@@ -97,7 +121,7 @@ fun TourPlanDetailSavedContent(
     state: TourPlanDetailSavedState,
     onDateSelected: (Int) -> Unit,
     onDestinationClicked: (Int) -> Unit,
-    onDeleteButtonClicked: () -> Unit,
+    onDestinationDeleteButtonClicked: (Int) -> Unit,
     onStartTourButtonClicked: () -> Unit,
 ) {
     Column(
@@ -114,6 +138,7 @@ fun TourPlanDetailSavedContent(
                 .aspectRatio(2.45f)
                 .clip(MaterialTheme.shapes.medium),
             contentScale = ContentScale.Crop,
+            placeHolder = ImageBitmap.imageResource(id = R.drawable.image_placeholder),
             previewPlaceholder = R.drawable.ic_launcher_background
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -127,17 +152,16 @@ fun TourPlanDetailSavedContent(
             Column {
                 Text(
                     text = stringResource(id = R.string.trip_date),
-                    style = MaterialTheme.typography.subtitle2
+                    style = MaterialTheme.typography.subtitle1
                 )
                 Text(
                     text = state.tourPlan.period,
-                    style = MaterialTheme.typography.caption,
+                    style = MaterialTheme.typography.body2,
                 )
             }
-            val budget = 0
             Text(
-                text = CurrencyFormatter(budget),
-                style = MaterialTheme.typography.subtitle2
+                text = currencyFormatter(state.tourPlan.totalExpense),
+                style = MaterialTheme.typography.subtitle1
             )
         }
         Spacer(modifier = Modifier.height(10.dp))
@@ -146,14 +170,15 @@ fun TourPlanDetailSavedContent(
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
             text = stringResource(id = R.string.description),
-            style = MaterialTheme.typography.subtitle2
+            style = MaterialTheme.typography.subtitle1
         )
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
             text = state.tourPlan.description ?: "",
-            style = MaterialTheme.typography.caption
+            style = MaterialTheme.typography.body2
         )
 
+        Spacer(modifier = Modifier.height(16.dp))
         //Tour Plan
         DayHeaderSection(
             selectedDate = state.selectedDate,
@@ -166,7 +191,7 @@ fun TourPlanDetailSavedContent(
             AttractionList(
                 destinationList = targetList,
                 onClick = onDestinationClicked,
-                onDelete = onDeleteButtonClicked
+                onDelete = onDestinationDeleteButtonClicked
             )
         }
     }
@@ -191,7 +216,7 @@ fun TourPlanDetailSavedPreview() {
                 onDateSelected = {},
                 onDestinationClicked = {},
                 onStartTourButtonClicked = {},
-                onDeleteButtonClicked = {}
+                onDestinationDeleteButtonClicked = { }
             )
         }
     }

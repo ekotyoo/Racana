@@ -17,12 +17,45 @@ class DestinationRepository @Inject constructor(
     private val userPreferencesDataStore: UserPreferencesDataStore,
 ) {
 
-    suspend fun getDestinations(query: String? = null): Result<List<TravelDestination>> {
+    suspend fun getDestinations(query: String? = null, category: Int? = null): Result<List<TravelDestination>> {
         try {
             val token = userPreferencesDataStore.userData.first().token
-            val response =
-                if (query != null) destinationApi.searchDestination(token ?: "", query)
-                else destinationApi.getDestination(token ?: "")
+            val response = destinationApi.searchDestination(token ?: "", query, category)
+            val data = response.body()?.data
+            return if (response.isSuccessful && data != null) {
+                val destinations = data.map {
+                    TravelDestination(
+                        id = it.id,
+                        name = it.name,
+                        imageUrl = it.imageUrl,
+                        address = it.addresss,
+                        city = it.city,
+                        lat = it.lat,
+                        lon = it.lon,
+                        description = it.description,
+                        weekdayPrice = it.weekdayPrice,
+                        weekendHolidayPrice = it.weekendHolidayPrice,
+                        rating = it.rating,
+                        categoryId = it.categoryId
+                    )
+                }
+                Result.Success(destinations)
+            } else {
+                Result.Error("Failed getting data.", null)
+            }
+        } catch (e: IOException) {
+            Timber.d(e)
+            return Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        } catch (e: HttpException) {
+            Timber.d(e)
+            return Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        }
+    }
+
+    suspend fun getTopDestinations(query: String? = null): Result<List<TravelDestination>> {
+        try {
+            val token = userPreferencesDataStore.userData.first().token
+            val response = destinationApi.getTopDestinations(token ?: "")
             val data = response.body()?.data
             return if (response.isSuccessful && data != null) {
                 val destinations = data.map {

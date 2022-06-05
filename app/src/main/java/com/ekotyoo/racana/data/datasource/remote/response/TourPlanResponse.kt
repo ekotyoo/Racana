@@ -4,20 +4,17 @@ import com.google.gson.annotations.SerializedName
 
 data class TourPlanResponse(
 
-	@field:SerializedName("daily_list")
-	val dailyList: List<DailyListItem>,
-
-	@field:SerializedName("id")
-	val id: Long
+    @field:SerializedName("tourplandates")
+    val dailyList: List<DailyListItem>,
 )
 
 data class DailyListItem(
 
-	@field:SerializedName("date")
-	val date: Long,
+	@field:SerializedName("date_millis")
+	val dateMillis: Long,
 
 	@field:SerializedName("destinations")
-	val destinations: List<DestinationsItem>
+	val destinations: List<DestinationsItem>,
 )
 
 data class DestinationsItem(
@@ -53,5 +50,5 @@ data class DestinationsItem(
 	val lat: Double,
 
 	@field:SerializedName("categoryId")
-	val categoryId: Int
+	val categoryId: Int,
 )

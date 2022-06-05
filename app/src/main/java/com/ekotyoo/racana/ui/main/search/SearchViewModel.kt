@@ -47,6 +47,7 @@ class SearchViewModel @Inject constructor(
             return
         }
         _state.update { it.copy(selectedCategory = category) }
+        search()
     }
 
     fun onSearchResultClick(id: Int) {
@@ -56,7 +57,7 @@ class SearchViewModel @Inject constructor(
     private fun search() {
         _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-            when (val result = destinationRepository.getDestinations(_state.value.query)) {
+            when (val result = destinationRepository.getDestinations(_state.value.query, _state.value.selectedCategory?.id)) {
                 is Result.Success -> {
                     if (result.value.isNotEmpty()) {
                         _state.update { it.copy(searchResult = result.value) }

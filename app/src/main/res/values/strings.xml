@@ -62,5 +62,8 @@
     <string name="search">Pencarian</string>
     <string name="search_destination">Cari destinasi..</string>
     <string name="destination_detail">Detail Destinasi</string>
-    <string name="popular_destination">Destinasi Populer</string>
+    <string name="weekday">(Hari Biasa)</string>
+    <string name="weekend">(Hari Libur)</string>
+    <string name="item_option_button">Menu Item</string>
+    <string name="delete_tour_plan">Hapus Tour Plan</string>
 </resources>

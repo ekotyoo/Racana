@@ -24,9 +24,11 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.theme.RacanaGray
+import com.ekotyoo.racana.core.utils.currencyFormatter
 import com.ekotyoo.racana.data.model.DailyItem
 import com.ekotyoo.racana.data.model.TravelDestination
 import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultState
@@ -39,7 +41,7 @@ fun RDetailTourPlan(
     state: TourPlanResultState,
     onDateSelected: (Int) -> Unit,
     onDestinationClicked: (Int) -> Unit,
-    onDeleteButtonClicked: () -> Unit,
+    onDestinationDeleteButtonClicked: (Int) -> Unit,
 ) {
     Column(modifier) {
         Spacer(Modifier.height(32.dp))
@@ -54,7 +56,7 @@ fun RDetailTourPlan(
             AttractionList(
                 destinationList = targetList,
                 onClick = onDestinationClicked,
-                onDelete = onDeleteButtonClicked
+                onDelete = onDestinationDeleteButtonClicked
             )
         }
     }
@@ -65,7 +67,7 @@ fun AttractionList(
     modifier: Modifier = Modifier,
     destinationList: List<TravelDestination>?,
     onClick: (Int) -> Unit,
-    onDelete: (() -> Unit)? = null,
+    onDelete: ((Int) -> Unit)? = null,
 ) {
     val items = destinationList ?: emptyList()
     LazyColumn(
@@ -75,12 +77,15 @@ fun AttractionList(
             AttractionCard(
                 imageUrl = destination.imageUrl,
                 title = destination.name,
-                location = destination.address,
+                location = destination.city,
+                expense = destination.weekdayPrice,
                 isDone = destination.isDone,
                 onClick = {
                     onClick(destination.id)
                 },
-                onDelete = onDelete
+                onDelete = if (onDelete != null) {
+                    { onDelete(destination.id) }
+                } else null
             )
         }
     }
@@ -154,6 +159,7 @@ fun AttractionCard(
     imageUrl: String,
     title: String,
     location: String,
+    expense: Int,
     isDone: Boolean,
     onClick: () -> Unit,
     onDelete: (() -> Unit)? = null,
@@ -168,7 +174,7 @@ fun AttractionCard(
         ) {
             Card(
                 modifier = modifier
-                    .aspectRatio(3.63f),
+                    .aspectRatio(3.4f),
                 onClick = onClick,
                 elevation = 8.dp,
                 shape = MaterialTheme.shapes.small
@@ -186,13 +192,15 @@ fun AttractionCard(
                             .clip(MaterialTheme.shapes.small),
                         imageModel = imageUrl,
                         contentScale = ContentScale.Crop,
+                        placeHolder = ImageBitmap.imageResource(id = R.drawable.image_placeholder),
                         previewPlaceholder = R.drawable.ic_launcher_background,
                         contentDescription = null,
                     )
                     Spacer(Modifier.width(8.dp))
                     Column(Modifier.weight(1f)) {
                         Text(text = title, style = MaterialTheme.typography.subtitle1)
-                        Text(text = "Expense", style = MaterialTheme.typography.caption)
+                        Text(text = currencyFormatter(expense),
+                            style = MaterialTheme.typography.caption)
                         Text(text = location, style = MaterialTheme.typography.caption)
                     }
                     if (onDelete != null) {
@@ -231,7 +239,7 @@ fun DayHeaderSection(
                         onItemSelected(i)
                     },
                 isSelected = i == selectedDate,
-                dayTitle = "Hari-${item.number}",
+                dayTitle = "Hari-${i + 1}",
                 date = item.dateFormatted
             )
         }

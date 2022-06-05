@@ -15,10 +15,16 @@ interface DestinationApi {
         @Header("Authorization") token: String,
     ): Response<ListDestinationResponse>
 
+    @GET("destination/top")
+    suspend fun getTopDestinations(
+        @Header("Authorization") token: String,
+    ): Response<ListDestinationResponse>
+
     @GET("destination")
     suspend fun searchDestination(
         @Header("Authorization") token: String,
-        @Query("keyword") query: String
+        @Query("keyword") query: String?,
+        @Query("category") category: Int?,
     ): Response<ListDestinationResponse>
 
     @GET("destination/{id}")

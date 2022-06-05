@@ -2,18 +2,16 @@ package com.ekotyoo.racana.ui.main.createtourplan
 
 import android.content.res.Configuration
 import androidx.compose.animation.*
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -24,9 +22,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -156,8 +156,8 @@ fun CreateTourPlanContent(
             ) {
                 Column(
                     modifier = Modifier
-                        .scrollable(rememberScrollState(), orientation = Orientation.Vertical)
                         .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
                         .padding(horizontal = 16.dp)
                 ) {
                     Spacer(Modifier.height(16.dp))
@@ -238,9 +238,12 @@ fun CreateTourPlanContent(
                     Spacer(Modifier.height(16.dp))
 
                     // Category Input
-                    CreateTourPlanSection(title = stringResource(id = R.string.destination_category)) {
-                        LazyVerticalGrid(
-                            columns = GridCells.Fixed(2),
+                    CreateTourPlanSection(
+                        modifier = Modifier.height(200.dp),
+                        title = stringResource(id = R.string.destination_category)
+                    ) {
+                        LazyHorizontalGrid(
+                            rows = GridCells.Fixed(2),
                             horizontalArrangement = Arrangement.spacedBy(16.dp),
                             verticalArrangement = Arrangement.spacedBy(16.dp),
                             content = {
@@ -387,6 +390,7 @@ fun CategoryCard(
     Box(
         modifier
             .clip(MaterialTheme.shapes.small)
+            .aspectRatio(2f)
             .height(64.dp)
             .clickable(onClick = onClick)
     ) {
@@ -396,6 +400,7 @@ fun CategoryCard(
             imageModel = imageUrl,
             contentScale = ContentScale.Crop,
             previewPlaceholder = R.drawable.ic_launcher_background,
+            placeHolder = ImageBitmap.imageResource(id = R.drawable.image_placeholder),
             contentDescription = null
         )
         Spacer(

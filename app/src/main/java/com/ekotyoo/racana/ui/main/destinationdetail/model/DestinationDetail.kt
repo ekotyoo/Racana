@@ -6,6 +6,7 @@ data class DestinationDetail(
     val openCloseTime: String = "",
     val address: String = "",
     val ticketPrice: Long = 0,
+    val ticketPriceWeekend: Long = 0,
     val isFavorite: Boolean = false,
     val description: String = "",
     val lat: Double = .0,
