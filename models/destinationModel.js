@@ -25,6 +25,5 @@ const DestinationModel = db.define(
 DestinationModel.belongsTo(CategoryModel);
 
 DestinationModel.belongsToMany(UserModel, { through: "FavoriteDestination" });
-UserModel.belongsToMany(DestinationModel, { through: "FavoriteDestination" });
 
 module.exports = DestinationModel;
