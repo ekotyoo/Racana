@@ -22,21 +22,14 @@ const getAllDestinations = async (req, res) => {
     const keyword = req.query.keyword;
     const categoryId = req.query.category;
 
-    console.log(keyword);
-    let data;
-    if (keyword) {
-      console.log("pake keyword");
-      data = await DestinationModel.findAll({
-        where: {
-          name: {
-            [Op.substring]: `${keyword}`,
-          },
-          categoryId: categoryId,
+    const data = await DestinationModel.findAll({
+      where: {
+        name: {
+          [Op.substring]: `${keyword}`,
         },
-      });
-    } else {
-      data = await DestinationModel.findAll();
-    }
+        categoryId: categoryId,
+      },
+    });
 
     if (!data) return res.json(responseHelper.responseError("No data."));
     res.json(responseHelper.responseSuccess(data, "Sucessfully get data."));
