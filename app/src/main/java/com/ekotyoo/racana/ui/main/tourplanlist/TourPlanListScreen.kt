@@ -6,7 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarHostState
-import androidx.compose.material.SnackbarHost
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -65,7 +65,8 @@ fun TourPlanListScreen(
         TourPlanListContent(
             tourPlanList = state.tourPlanList,
             onCardClick = viewModel::onTourPlanClicked,
-            onItemDelete = viewModel::deletePlanButtonClicked
+            onItemDelete = viewModel::deletePlanButtonClicked,
+            snackbarHostState = snackbarHostState
         )
         if (tourPlanEmpty && !state.isLoading) {
             TourPlanListEmpty(modifier = Modifier.align(Alignment.Center))
@@ -86,7 +87,6 @@ fun TourPlanListScreen(
                 )
             }
         }
-        SnackbarHost(hostState = snackbarHostState)
     }
 }
 
@@ -118,10 +118,14 @@ fun TourPlanListContent(
     tourPlanList: List<TourPlan>,
     onCardClick: (TourPlan) -> Unit,
     onItemDelete: (Int) -> Unit,
+    snackbarHostState: SnackbarHostState,
 ) {
-    Scaffold(topBar = {
-        RTopAppBar(title = stringResource(id = R.string.tour_plan_list))
-    }) {
+    Scaffold(
+        scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState),
+        topBar = {
+            RTopAppBar(title = stringResource(id = R.string.tour_plan_list)
+            )
+        }) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
