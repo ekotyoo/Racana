@@ -8,6 +8,7 @@ import com.ekotyoo.racana.data.repository.TourPlanRepository
 import com.ekotyoo.racana.ui.main.tourplanlist.model.TourPlanListEvent
 import com.ekotyoo.racana.ui.main.tourplanlist.model.TourPlanListState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,7 +25,7 @@ class TourPlanListViewModel @Inject constructor(
     private val _state = MutableStateFlow(TourPlanListState(tourPlanList = emptyList()))
     val state: StateFlow<TourPlanListState> = _state
 
-    private val _eventChannel = Channel<TourPlanListEvent>()
+    private val _eventChannel = Channel<TourPlanListEvent>(onBufferOverflow = BufferOverflow.DROP_OLDEST)
     val eventChannel = _eventChannel.receiveAsFlow()
 
     init {
