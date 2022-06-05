@@ -1,7 +1,6 @@
 const sequelize = require("sequelize");
 const db = require("../config/db");
 const CategoryModel = require("./categoryModel");
-const UserModel = require("./userModel");
 
 const DestinationModel = db.define(
   "destination",
@@ -23,7 +22,5 @@ const DestinationModel = db.define(
 );
 
 DestinationModel.belongsTo(CategoryModel);
-
-DestinationModel.belongsToMany(UserModel, { through: "FavoriteDestination" });
 
 module.exports = DestinationModel;

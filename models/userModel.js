@@ -11,5 +11,6 @@ const UserModel = db.define("user", {
 
 UserModel.hasMany(TourPlanModel);
 UserModel.belongsToMany(DestinationModel, { through: "FavoriteDestination" });
+DestinationModel.belongsToMany(UserModel, { through: "FavoriteDestination" });
 
 module.exports = UserModel;
