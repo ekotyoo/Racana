@@ -26,6 +26,12 @@ router.delete("/tourplan/:id", tokenValidation, tourPlanController.deleteTourPla
 router.get("/tourplan/:id/date", tokenValidation, tourPlanDateController.getAllTourPlanDate);
 router.post("/tourplan/:id/date", tokenValidation, tourPlanController.insertTourPlanDate);
 
+router.delete(
+  "/tourplandate/:dateId/destination/:destinationId",
+  tokenValidation,
+  tourPlanDateController.deleteTourPlanDateDestination
+);
+
 // Destination
 router.get("/destination", tokenValidation, destinationController.getAllDestinations);
 router.get("/destination/top", tokenValidation, destinationController.getTopDestinations);

@@ -74,7 +74,8 @@ const insertTourPlan = async (req, res) => {
       return data;
     });
 
-    if (!result) return res.json(responseHelper.responseError("Failed inserting data."));
+    if (!result)
+      return res.status(400).json(responseHelper.responseError("Failed inserting data."));
     res.json(responseHelper.responseSuccess(result, "Sucessfully inserting data."));
   } catch (error) {
     console.log(error);

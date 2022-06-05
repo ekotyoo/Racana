@@ -2,6 +2,7 @@ const TourPlanModel = require("../models/tourPlanModel");
 const responseHelper = require("../utils/responseHelper");
 const { Op } = require("sequelize");
 const TourPlanDateModel = require("../models/tourPlanDateModel");
+const DestinationModel = require("../models/destinationModel");
 
 const getAllTourPlanDate = async (req, res) => {
   try {
@@ -13,15 +14,46 @@ const getAllTourPlanDate = async (req, res) => {
       },
     });
 
-    if (!tourPlan) return res.json(responseHelper.responseError("Tour plan not found."));
+    if (!tourPlan)
+      return res.status(400).json(responseHelper.responseError("Tour plan not found."));
 
     const data = await TourPlanDateModel.findAll({ where: { tourplanId: tourPlan.id } });
 
-    if (!data) return res.json(responseHelper.responseError("Not found"));
+    if (!data) return res.status(400).json(responseHelper.responseError("Not found"));
     res.json(responseHelper.responseSuccess(data, "Sucessfully get data."));
   } catch (error) {
     res.status(500).json(responseHelper.responseError("Internal server error."));
   }
 };
 
-module.exports = { getAllTourPlanDate };
+const deleteTourPlanDateDestination = async (req, res) => {
+  try {
+    const dateId = req.params.dateId;
+    const destinationId = req.params.destinationId;
+
+    const date = await TourPlanDateModel.findOne({
+      where: {
+        id: dateId,
+      },
+    });
+
+    const destination = await DestinationModel.findOne({
+      where: {
+        id: destinationId,
+      },
+    });
+
+    const result = await date.removeDestination(destination);
+    console.log(result);
+
+    if (!result)
+      return res.status(400).json(responseHelper.responseError("Failed deleting destination"));
+
+    res.json(responseHelper.responseSuccess(data, "Sucessfully deleting destination from date."));
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(responseHelper.responseError("Internal server error."));
+  }
+};
+
+module.exports = { getAllTourPlanDate, deleteTourPlanDateDestination };
