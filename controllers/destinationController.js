@@ -3,10 +3,11 @@ const responseHelper = require("../utils/responseHelper");
 const { Op } = require("sequelize");
 
 const getTopDestinations = async (req, res) => {
+  const limit = req.query.limit;
   try {
     const data = await DestinationModel.findAll({
       order: [["rating", "DESC"]],
-      limit: 10,
+      limit: limit,
     });
 
     if (!data) return res.status(400).json(responseHelper.responseError("No data."));
