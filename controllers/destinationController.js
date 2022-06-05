@@ -1,6 +1,7 @@
 const DestinationModel = require("../models/destinationModel");
 const responseHelper = require("../utils/responseHelper");
 const { Op } = require("sequelize");
+const UserModel = require("../models/userModel");
 
 const getTopDestinations = async (req, res) => {
   const limit = req.query.limit;
@@ -21,6 +22,42 @@ const getTopDestinations = async (req, res) => {
     res.json(responseHelper.responseSuccess(data, "Sucessfully get data."));
   } catch (error) {
     console.log(error);
+    res.status(500).json(responseHelper.responseError("Internal server error."));
+  }
+};
+
+const insertFavoriteDestination = async (req, res) => {
+  const userId = req.token.userId;
+  const destinationId = req.params.id;
+  try {
+    const user = await UserModel.findOne({
+      where: { id: userId },
+    });
+
+    const destination = await DestinationModel.findOne({
+      where: { id: destinationId },
+    });
+
+    const data = await user.setDestination(destination);
+
+    if (!data) return res.json(responseHelper.responseError("No data."));
+    res.json(responseHelper.responseSuccess(data, "Sucessfully get data."));
+  } catch (error) {
+    res.status(500).json(responseHelper.responseError("Internal server error."));
+  }
+};
+
+const getFavoriteDestinations = async (req, res) => {
+  const userId = req.token.userId;
+  try {
+    const user = await UserModel.findOne({
+      where: { id: userId },
+    });
+    const data = await user.getDestinations();
+
+    if (!data) return res.json(responseHelper.responseError("No data."));
+    res.json(responseHelper.responseSuccess(data, "Sucessfully get data."));
+  } catch (error) {
     res.status(500).json(responseHelper.responseError("Internal server error."));
   }
 };
@@ -129,4 +166,6 @@ module.exports = {
   insertDestinationById,
   updateDestinationById,
   deleteDestinationById,
+  getFavoriteDestinations,
+  insertFavoriteDestination,
 };

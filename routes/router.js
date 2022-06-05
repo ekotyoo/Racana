@@ -34,8 +34,14 @@ router.delete(
 
 // Destination
 router.get("/destination", tokenValidation, destinationController.getAllDestinations);
+router.get("/destination/favorite", tokenValidation, destinationController.getFavoriteDestinations);
 router.get("/destination/top", tokenValidation, destinationController.getTopDestinations);
 router.get("/destination/:id", tokenValidation, destinationController.getDestinationById);
+router.post(
+  "/destination/:id/favorite",
+  tokenValidation,
+  destinationController.insertFavoriteDestination
+);
 router.post("/destination", tokenValidation, destinationController.insertDestinationById);
 router.put("/destination/:id", tokenValidation, destinationController.updateDestinationById);
 router.delete("/destination/:id", tokenValidation, destinationController.deleteDestinationById);
