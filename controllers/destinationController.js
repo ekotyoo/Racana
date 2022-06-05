@@ -7,7 +7,7 @@ const getTopDestinations = async (req, res) => {
   try {
     const data = await DestinationModel.findAll({
       order: [["rating", "DESC"]],
-      limit: parseInt(limit) ?? undefined,
+      limit: parseInt(limit) ?? 100,
     });
 
     if (!data) return res.status(400).json(responseHelper.responseError("No data."));
