@@ -10,6 +10,7 @@ import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetail
 import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetailEvent
 import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetailState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,7 +27,7 @@ class DestinationDetailViewModel @Inject constructor(
     private val _state = MutableStateFlow(DestinationDetailState())
     val state: StateFlow<DestinationDetailState> = _state
 
-    private val _eventChannel = Channel<DestinationDetailEvent>()
+    private val _eventChannel = Channel<DestinationDetailEvent>(onBufferOverflow = BufferOverflow.DROP_OLDEST)
     val eventChannel = _eventChannel.receiveAsFlow()
 
     init {
@@ -34,19 +35,64 @@ class DestinationDetailViewModel @Inject constructor(
         getDestination(args.categoryId)
     }
 
-    fun onFavoriteButtonClicked() {
+    fun onFavoriteButtonClicked(id: Int) {
+        saveFavoriteDestination(id)
+    }
+
+    fun onUndoFavoriteButtonClicked(id: Int) {
+        deleteFavoriteDestination(id)
+    }
+
+    private fun deleteFavoriteDestination(id: Int) {
         viewModelScope.launch {
-            _eventChannel.send(DestinationDetailEvent.OnFavoriteButtonClicked)
+            _state.update { it.copy(isTogglingFavorite = true) }
+            viewModelScope.launch {
+                when (destinationRepository.deleteFavoriteDestination(id)) {
+                    is Result.Success -> {
+                        _state.update { it.copy(destination = _state.value.destination.copy(isFavorite = false)) }
+                        _eventChannel.send(DestinationDetailEvent.UndoFavoriteDestinationSuccess)
+                    }
+                    is Result.Error -> {
+                        _eventChannel.send(DestinationDetailEvent.UndoFavoriteDestinationError)
+                    }
+                }
+                _state.update { it.copy(isTogglingFavorite = false) }
+            }
+        }
+    }
+
+    private fun saveFavoriteDestination(id: Int) {
+        _state.update { it.copy(isTogglingFavorite = true) }
+        viewModelScope.launch {
+            when (destinationRepository.saveFavoriteDestination(id)) {
+                is Result.Success -> {
+                    _state.update { it.copy(destination = _state.value.destination.copy(isFavorite = true)) }
+                    _eventChannel.send(DestinationDetailEvent.SaveFavoriteDestinationSuccess)
+                }
+                is Result.Error -> {
+                    _eventChannel.send(DestinationDetailEvent.SaveFavoriteDestinationError)
+                }
+            }
+            _state.update { it.copy(isTogglingFavorite = false) }
         }
     }
 
     private fun getDestination(id: Int) {
         _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
+            val favoriteDestinations = destinationRepository.getFavoriteDestinations()
+            var isFavorite = false
+            if (favoriteDestinations is Result.Success) {
+                val destinations = favoriteDestinations.value
+                isFavorite = destinations.any{
+                    it.id == id
+                }
+            }
             when (val result = destinationRepository.getDestinationById(id)) {
                 is Result.Success -> {
                     _state.update {
                         it.copy(destination = DestinationDetail(
+                            id = result.value.id,
                             name = result.value.name,
                             imageUrl = result.value.imageUrl,
                             openCloseTime = "--",
@@ -54,6 +100,7 @@ class DestinationDetailViewModel @Inject constructor(
                             ticketPrice = result.value.weekdayPrice.toLong(),
                             ticketPriceWeekend = result.value.weekendHolidayPrice.toLong(),
                             description = result.value.description,
+                            isFavorite = isFavorite,
                             lat = result.value.lat,
                             lon = result.value.lon
                         ))

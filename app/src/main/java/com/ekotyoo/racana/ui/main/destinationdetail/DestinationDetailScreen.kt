@@ -1,12 +1,10 @@
 package com.ekotyoo.racana.ui.main.destinationdetail
 
-import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -23,7 +21,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
@@ -31,11 +28,10 @@ import com.ekotyoo.racana.core.composables.RIconButton
 import com.ekotyoo.racana.core.composables.RLoadingOverlay
 import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.NavigationTransition
-import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.core.utils.currencyFormatter
 import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationArgument
-import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetail
-import com.ekotyoo.racana.ui.main.destinationdetail.model.getDummyDetailDestination
+import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetailEvent
+import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetailState
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -57,20 +53,34 @@ fun DestinationDetailScreen(
     viewModel: DestinationDetailViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
+    val snackbarHostState = SnackbarHostState()
 
     LaunchedEffect(Unit) {
         viewModel.eventChannel.collect { event ->
             when (event) {
-
+                DestinationDetailEvent.SaveFavoriteDestinationSuccess -> {
+                    snackbarHostState.showSnackbar("Destinasi berhasil ditambahkan ke favorit.")
+                }
+                DestinationDetailEvent.SaveFavoriteDestinationError -> {
+                    snackbarHostState.showSnackbar("Gagal menambahkan destinasi ke favorit.")
+                }
+                DestinationDetailEvent.UndoFavoriteDestinationSuccess -> {
+                    snackbarHostState.showSnackbar("Destinasi berhasil dihapus dari favorit.")
+                }
+                DestinationDetailEvent.UndoFavoriteDestinationError -> {
+                    snackbarHostState.showSnackbar("Gagal menghapus destinasi favorit")
+                }
             }
         }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
         DestinationDetailContent(
-            destination = state.destination,
+            state = state,
+            snackbarHostState = snackbarHostState,
             onBackButtonClicked = { navigator.popBackStack() },
-            onFavoriteButtonClicked = viewModel::onFavoriteButtonClicked
+            onFavoriteButtonClicked = viewModel::onFavoriteButtonClicked,
+            onUndoFavoriteButtonClicked = viewModel::onUndoFavoriteButtonClicked
         )
         RLoadingOverlay(modifier = Modifier.align(Alignment.Center), visible = state.isLoading)
     }
@@ -78,10 +88,14 @@ fun DestinationDetailScreen(
 
 @Composable
 fun DestinationDetailContent(
-    destination: DestinationDetail,
+    state: DestinationDetailState,
+    snackbarHostState: SnackbarHostState,
     onBackButtonClicked: () -> Unit,
-    onFavoriteButtonClicked: () -> Unit,
+    onFavoriteButtonClicked: (Int) -> Unit,
+    onUndoFavoriteButtonClicked: (Int) -> Unit,
 ) {
+    val destination = state.destination
+
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(LatLng(destination.lat, destination.lon), 10f)
     }
@@ -92,6 +106,7 @@ fun DestinationDetailContent(
     }
 
     Scaffold(
+        scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState),
         topBar = {
             RTopAppBar(
                 title = stringResource(id = R.string.destination_detail),
@@ -135,11 +150,30 @@ fun DestinationDetailContent(
                         style = MaterialTheme.typography.body2
                     )
                 }
-                RIconButton(
-                    imageVector = if (destination.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                    contentDescription = null,
-                    onClick = onFavoriteButtonClicked
-                )
+                if (state.isTogglingFavorite) {
+                    IconButton(
+                        modifier = Modifier
+                            .clip(MaterialTheme.shapes.small)
+                            .background(MaterialTheme.colors.secondary),
+                        onClick = {}
+                    ) {
+                        CircularProgressIndicator(
+                            color = MaterialTheme.colors.onSecondary
+                        )
+                    }
+                } else {
+                    RIconButton(
+                        imageVector = if (destination.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        contentDescription = null,
+                        onClick = {
+                            if (destination.isFavorite) {
+                                onUndoFavoriteButtonClicked(destination.id)
+                            } else {
+                                onFavoriteButtonClicked(destination.id)
+                            }
+                        }
+                    )
+                }
             }
             Spacer(modifier = Modifier.height(8.dp))
             Row {
@@ -186,29 +220,6 @@ fun DestinationDetailContent(
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
-        }
-    }
-}
-
-@Preview(
-    name = "Light Mode Preview",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO
-)
-@Preview(
-    name = "Dark Mode Preview",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-)
-@Composable
-fun DestinationDetailPreview() {
-    RacanaTheme {
-        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-            DestinationDetailContent(
-                getDummyDetailDestination(),
-                {},
-                {}
-            )
         }
     }
 }

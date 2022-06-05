@@ -17,7 +17,10 @@ class DestinationRepository @Inject constructor(
     private val userPreferencesDataStore: UserPreferencesDataStore,
 ) {
 
-    suspend fun getDestinations(query: String? = null, category: Int? = null): Result<List<TravelDestination>> {
+    suspend fun getDestinations(
+        query: String? = null,
+        category: Int? = null,
+    ): Result<List<TravelDestination>> {
         try {
             val token = userPreferencesDataStore.userData.first().token
             val response = destinationApi.searchDestination(token ?: "", query, category)
@@ -49,6 +52,79 @@ class DestinationRepository @Inject constructor(
         } catch (e: HttpException) {
             Timber.d(e)
             return Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        }
+    }
+
+    suspend fun getFavoriteDestinations(): Result<List<TravelDestination>> {
+        try {
+            val token = userPreferencesDataStore.userData.first().token
+            val response = destinationApi.getFavoriteDestinations(token ?: "")
+            val data = response.body()?.data
+            return if (response.isSuccessful && data != null) {
+                val destinations = data.map {
+                    TravelDestination(
+                        id = it.id,
+                        name = it.name,
+                        imageUrl = it.imageUrl,
+                        address = it.addresss,
+                        city = it.city,
+                        lat = it.lat,
+                        lon = it.lon,
+                        description = it.description,
+                        weekdayPrice = it.weekdayPrice,
+                        weekendHolidayPrice = it.weekendHolidayPrice,
+                        rating = it.rating,
+                        categoryId = it.categoryId
+                    )
+                }
+                Result.Success(destinations)
+            } else {
+                Result.Error("Failed getting data.", null)
+            }
+        } catch (e: IOException) {
+            Timber.d(e)
+            return Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        } catch (e: HttpException) {
+            Timber.d(e)
+            return Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        }
+    }
+
+    suspend fun saveFavoriteDestination(id: Int): Result<Unit> {
+        return try {
+            val token = userPreferencesDataStore.userData.first().token
+            val response = destinationApi.saveFavoriteDestination(token ?: "", id)
+            val body = response.body()
+            if (response.isSuccessful && body?.status == "Success") {
+                Result.Success(Unit)
+            } else {
+                Result.Error("Gagal menambahkan ke favorit.", null)
+            }
+        } catch (e: IOException) {
+            Timber.d(e)
+            Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        } catch (e: HttpException) {
+            Timber.d(e)
+            Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        }
+    }
+
+    suspend fun deleteFavoriteDestination(id: Int): Result<Unit> {
+        return try {
+            val token = userPreferencesDataStore.userData.first().token
+            val response = destinationApi.deleteFavoriteDestination(token ?: "", id)
+            val body = response.body()
+            if (response.isSuccessful && body?.status == "Success") {
+                Result.Success(Unit)
+            } else {
+                Result.Error("Gagal menghapus destinasi dari daftar favorit.", null)
+            }
+        } catch (e: IOException) {
+            Timber.d(e)
+            Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        } catch (e: HttpException) {
+            Timber.d(e)
+            Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
         }
     }
 

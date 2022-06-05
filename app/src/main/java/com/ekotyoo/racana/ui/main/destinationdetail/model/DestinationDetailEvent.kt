@@ -1,5 +1,8 @@
 package com.ekotyoo.racana.ui.main.destinationdetail.model
 
 sealed class DestinationDetailEvent {
-    object OnFavoriteButtonClicked: DestinationDetailEvent()
+    object SaveFavoriteDestinationSuccess: DestinationDetailEvent()
+    object SaveFavoriteDestinationError: DestinationDetailEvent()
+    object UndoFavoriteDestinationSuccess: DestinationDetailEvent()
+    object UndoFavoriteDestinationError: DestinationDetailEvent()
 }
