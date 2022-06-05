@@ -23,7 +23,8 @@ interface DestinationApi {
     @GET("destination")
     suspend fun searchDestination(
         @Header("Authorization") token: String,
-        @Query("keyword") query: String
+        @Query("keyword") query: String?,
+        @Query("category") category: Int?,
     ): Response<ListDestinationResponse>
 
     @GET("destination/{id}")

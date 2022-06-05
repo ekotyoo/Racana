@@ -17,12 +17,10 @@ class DestinationRepository @Inject constructor(
     private val userPreferencesDataStore: UserPreferencesDataStore,
 ) {
 
-    suspend fun getDestinations(query: String? = null): Result<List<TravelDestination>> {
+    suspend fun getDestinations(query: String? = null, category: Int? = null): Result<List<TravelDestination>> {
         try {
             val token = userPreferencesDataStore.userData.first().token
-            val response =
-                if (query != null) destinationApi.searchDestination(token ?: "", query)
-                else destinationApi.getDestination(token ?: "")
+            val response = destinationApi.searchDestination(token ?: "", query, category)
             val data = response.body()?.data
             return if (response.isSuccessful && data != null) {
                 val destinations = data.map {
