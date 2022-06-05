@@ -5,10 +5,17 @@ const { Op } = require("sequelize");
 const getTopDestinations = async (req, res) => {
   const limit = req.query.limit;
   try {
-    const data = await DestinationModel.findAll({
-      order: [["rating", "DESC"]],
-      limit: parseInt(limit) ?? 100,
-    });
+    let data;
+    if (limit) {
+      data = await DestinationModel.findAll({
+        order: [["rating", "DESC"]],
+        limit: parseInt(limit),
+      });
+    } else {
+      data = await DestinationModel.findAll({
+        order: [["rating", "DESC"]],
+      });
+    }
 
     if (!data) return res.status(400).json(responseHelper.responseError("No data."));
     res.json(responseHelper.responseSuccess(data, "Sucessfully get data."));
