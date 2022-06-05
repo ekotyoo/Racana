@@ -38,7 +38,7 @@ const insertFavoriteDestination = async (req, res) => {
       where: { id: destinationId },
     });
 
-    const data = await user.setDestinations([destination]);
+    const data = await user.addDestination(destination);
 
     if (!data) return res.status(400).json(responseHelper.responseError("No data."));
     res.json(responseHelper.responseSuccess(data, "Sucessfully get data."));
