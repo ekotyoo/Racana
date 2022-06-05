@@ -20,6 +20,8 @@ const getTopDestinations = async (req, res) => {
 const getAllDestinations = async (req, res) => {
   try {
     const keyword = req.query.keyword;
+    const categoryId = req.query.category;
+
     console.log(keyword);
     let data;
     if (keyword) {
@@ -29,6 +31,7 @@ const getAllDestinations = async (req, res) => {
           name: {
             [Op.substring]: `${keyword}`,
           },
+          categoryId: categoryId,
         },
       });
     } else {
