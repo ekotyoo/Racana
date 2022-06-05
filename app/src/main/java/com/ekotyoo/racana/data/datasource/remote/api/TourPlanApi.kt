@@ -1,10 +1,7 @@
 package com.ekotyoo.racana.data.datasource.remote.api
 
 import com.ekotyoo.racana.data.datasource.remote.request.TourPlanRequest
-import com.ekotyoo.racana.data.datasource.remote.response.DeleteTourPlanResponse
-import com.ekotyoo.racana.data.datasource.remote.response.ListTourPlanResponse
-import com.ekotyoo.racana.data.datasource.remote.response.SaveTourPlanResponse
-import com.ekotyoo.racana.data.datasource.remote.response.TourPlanResponse
+import com.ekotyoo.racana.data.datasource.remote.response.*
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -27,6 +24,12 @@ interface TourPlanApi {
         @Header("Authorization") token: String,
     ): Response<ListTourPlanResponse>
 
+    @GET("tourplan/{id}")
+    suspend fun getTourPlanById(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int
+    ): Response<TourPlanByIdResponse>
+
     @POST("tourplan")
     suspend fun saveTourPlan(
         @Header("Authorization") token: String,
@@ -37,5 +40,12 @@ interface TourPlanApi {
     suspend fun deleteTourPlanById(
         @Header("Authorization") token: String,
         @Path("id") id: Int,
+    ): Response<DeleteTourPlanResponse>
+
+    @DELETE("tourplandate/{dateId}/destination/{destinationId}")
+    suspend fun deleteTourPlanDateDestination(
+        @Header("Authorization") token: String,
+        @Path("dateId") dateId: Int,
+        @Path("destinationId") destinationId: Int,
     ): Response<DeleteTourPlanResponse>
 }

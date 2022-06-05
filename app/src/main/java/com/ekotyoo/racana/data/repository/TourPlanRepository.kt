@@ -37,6 +37,7 @@ class TourPlanRepository @Inject constructor(
                         description = it.description,
                         dailyList = it.tourPlanDates.mapIndexed { i, date ->
                             DailyItem(
+                                id = date.id,
                                 number = i + 1,
                                 date = Instant.ofEpochMilli(date.dateMillis)
                                     .atZone(ZoneId.systemDefault())
@@ -64,6 +65,56 @@ class TourPlanRepository @Inject constructor(
                     )
                 }
 
+                return Result.Success(tourPlans)
+            } else {
+                return Result.Error("Gagal mengambil data.", null)
+            }
+        } catch (e: IOException) {
+            return Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        } catch (e: HttpException) {
+            return Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        }
+    }
+
+    suspend fun getSavedTourPlanById(id: Int): Result<TourPlan> {
+        try {
+            val token = userPreferencesDataStore.userData.first().token
+            val response = tourPlanApi.getTourPlanById(token ?: "", id)
+            val data = response.body()?.data
+
+            if (response.isSuccessful && data != null) {
+                val tourPlans = TourPlan(
+                        id = data.id.toLong(),
+                        title = data.title,
+                        description = data.description,
+                        dailyList = data.tourPlanDates.mapIndexed { i, date ->
+                            DailyItem(
+                                id = date.id,
+                                number = i + 1,
+                                date = Instant.ofEpochMilli(date.dateMillis)
+                                    .atZone(ZoneId.systemDefault())
+                                    .toLocalDate(),
+                                destinationList = date.destinations.map { destination ->
+                                    TravelDestination(
+                                        id = destination.id,
+                                        name = destination.name,
+                                        description = destination.description,
+                                        city = destination.city,
+                                        address = destination.address,
+                                        rating = destination.rating,
+                                        imageUrl = destination.imageUrl,
+                                        weekdayPrice = destination.weekdayPrice,
+                                        weekendHolidayPrice = destination.weekendHolidayPrice,
+                                        lat = destination.lat ?: .0,
+                                        lon = destination.lon ?: .0,
+                                        categoryId = destination.categoryId ?: 0,
+                                    )
+                                }
+                            )
+                        }.sortedBy { item ->
+                            item.date
+                        }
+                    )
                 return Result.Success(tourPlans)
             } else {
                 return Result.Error("Gagal mengambil data.", null)
@@ -184,6 +235,29 @@ class TourPlanRepository @Inject constructor(
         } catch (e: HttpException) {
             Timber.d(e.message)
             return Result.Error(message = "Terjadi kesalahan, coba lagi nanti!", throwable = e)
+        }
+    }
+
+    suspend fun deleteTourPlanDateDestination(
+        dateId: Int,
+        destinationId: Int
+    ): Result<Unit> {
+        return try {
+            val token = userPreferencesDataStore.userData.first().token
+            val response = tourPlanApi.deleteTourPlanDateDestination(token ?: "", dateId, destinationId)
+            val data = response.body()?.data
+
+            if (response.isSuccessful && data != null) {
+                Result.Success(Unit)
+            } else {
+                Result.Error(message = "Gagal menghapus data.", throwable = null)
+            }
+        } catch (e: IOException) {
+            Timber.d(e.message)
+            Result.Error(message = "Terjadi kesalahan, coba lagi nanti!", throwable = e)
+        } catch (e: HttpException) {
+            Timber.d(e.message)
+            Result.Error(message = "Terjadi kesalahan, coba lagi nanti!", throwable = e)
         }
     }
 }

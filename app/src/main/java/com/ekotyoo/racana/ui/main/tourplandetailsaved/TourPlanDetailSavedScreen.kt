@@ -4,9 +4,7 @@ import android.content.res.Configuration
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Text
@@ -24,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.airbnb.lottie.compose.*
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.AttractionList
 import com.ekotyoo.racana.core.composables.DayHeaderSection
@@ -51,6 +50,7 @@ fun TourPlanDetailSavedScreen(
     viewModel: TourPlanDetailSavedViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
+    val snackbarHostState = SnackbarHostState()
 
     LaunchedEffect(Unit) {
         viewModel.eventChannel.collect { event ->
@@ -58,14 +58,20 @@ fun TourPlanDetailSavedScreen(
                 is TourPlanDetailSavedEvent.NavigateToDestinationDetail -> {
                     navigator.navigate(DestinationDetailScreenDestination(event.id))
                 }
-                is TourPlanDetailSavedEvent.DeleteDestinationButtonClicked -> {}
                 is TourPlanDetailSavedEvent.NavigateBackWithMessage -> {}
                 is TourPlanDetailSavedEvent.StartTourButtonClicked -> {}
+                TourPlanDetailSavedEvent.DeleteDestinationSuccess -> {
+                    snackbarHostState.showSnackbar("Berhasil menghapus destinasi.")
+                }
+                TourPlanDetailSavedEvent.DeleteDestinationError -> {
+                    snackbarHostState.showSnackbar("Gagal menghapus destinasi.")
+                }
             }
         }
     }
     Box(modifier = Modifier.fillMaxSize()) {
         Scaffold(
+            scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState),
             topBar = {
                 RTopAppBar(
                     title = state.tourPlan.title ?: "",
@@ -80,13 +86,30 @@ fun TourPlanDetailSavedScreen(
                 )
             }
         ) {
-            TourPlanDetailSavedContent(
-                state = state,
-                onDateSelected = viewModel::onDateSelected,
-                onDestinationClicked = viewModel::navigateToDestinationDetail,
-                onStartTourButtonClicked = viewModel::startTourButtonClicked,
-                onDeleteButtonClicked = viewModel::deleteDestinationButtonClicked
-            )
+            if (state.isLoading) {
+                val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.location_loading))
+                val progress by animateLottieCompositionAsState(
+                    composition,
+                    iterations = LottieConstants.IterateForever
+                )
+                Box(Modifier.fillMaxSize()) {
+                    LottieAnimation(
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .size(160.dp),
+                        composition = composition,
+                        progress = progress
+                    )
+                }
+            } else {
+                TourPlanDetailSavedContent(
+                    state = state,
+                    onDateSelected = viewModel::onDateSelected,
+                    onDestinationClicked = viewModel::navigateToDestinationDetail,
+                    onStartTourButtonClicked = viewModel::startTourButtonClicked,
+                    onDestinationDeleteButtonClicked = viewModel::deleteDestinationButtonClicked
+                )
+            }
         }
     }
 }
@@ -98,7 +121,7 @@ fun TourPlanDetailSavedContent(
     state: TourPlanDetailSavedState,
     onDateSelected: (Int) -> Unit,
     onDestinationClicked: (Int) -> Unit,
-    onDeleteButtonClicked: () -> Unit,
+    onDestinationDeleteButtonClicked: (Int) -> Unit,
     onStartTourButtonClicked: () -> Unit,
 ) {
     Column(
@@ -168,7 +191,7 @@ fun TourPlanDetailSavedContent(
             AttractionList(
                 destinationList = targetList,
                 onClick = onDestinationClicked,
-                onDelete = onDeleteButtonClicked
+                onDelete = onDestinationDeleteButtonClicked
             )
         }
     }
@@ -193,7 +216,7 @@ fun TourPlanDetailSavedPreview() {
                 onDateSelected = {},
                 onDestinationClicked = {},
                 onStartTourButtonClicked = {},
-                onDeleteButtonClicked = {}
+                onDestinationDeleteButtonClicked = { }
             )
         }
     }

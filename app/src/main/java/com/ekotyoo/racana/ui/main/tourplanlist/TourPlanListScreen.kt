@@ -55,6 +55,9 @@ fun TourPlanListScreen(
                 TourPlanListEvent.DeleteTourPlanFailed -> {
                     snackbarHostState.showSnackbar("Gagal menghapus tour plan.")
                 }
+                TourPlanListEvent.GetTourPlanFailed -> {
+                    snackbarHostState.showSnackbar("Gagal mengambil data.")
+                }
             }
         }
     }

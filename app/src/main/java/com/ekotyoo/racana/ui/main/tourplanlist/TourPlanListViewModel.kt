@@ -50,7 +50,7 @@ class TourPlanListViewModel @Inject constructor(
                     _state.update { it.copy(tourPlanList = result.value) }
                 }
                 is Result.Error -> {
-                    // TODO: Handle error
+                    _eventChannel.send(TourPlanListEvent.GetTourPlanFailed)
                 }
             }
             _state.update { it.copy(isLoading = false) }
@@ -62,8 +62,8 @@ class TourPlanListViewModel @Inject constructor(
         viewModelScope.launch {
             when(tourPlanRepository.deleteTourPlan(id)) {
                 is Result.Success -> {
-                    _eventChannel.send(TourPlanListEvent.DeleteTourPlanSuccess)
                     getSavedTourPlan()
+                    _eventChannel.send(TourPlanListEvent.DeleteTourPlanSuccess)
                 }
                 is Result.Error -> {
                     _eventChannel.send(TourPlanListEvent.DeleteTourPlanFailed)

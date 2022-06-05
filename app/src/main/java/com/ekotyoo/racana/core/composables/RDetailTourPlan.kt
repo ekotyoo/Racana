@@ -41,7 +41,7 @@ fun RDetailTourPlan(
     state: TourPlanResultState,
     onDateSelected: (Int) -> Unit,
     onDestinationClicked: (Int) -> Unit,
-    onDeleteButtonClicked: () -> Unit,
+    onDestinationDeleteButtonClicked: (Int) -> Unit,
 ) {
     Column(modifier) {
         Spacer(Modifier.height(32.dp))
@@ -56,7 +56,7 @@ fun RDetailTourPlan(
             AttractionList(
                 destinationList = targetList,
                 onClick = onDestinationClicked,
-                onDelete = onDeleteButtonClicked
+                onDelete = onDestinationDeleteButtonClicked
             )
         }
     }
@@ -67,7 +67,7 @@ fun AttractionList(
     modifier: Modifier = Modifier,
     destinationList: List<TravelDestination>?,
     onClick: (Int) -> Unit,
-    onDelete: (() -> Unit)? = null,
+    onDelete: ((Int) -> Unit)? = null,
 ) {
     val items = destinationList ?: emptyList()
     LazyColumn(
@@ -83,7 +83,9 @@ fun AttractionList(
                 onClick = {
                     onClick(destination.id)
                 },
-                onDelete = onDelete
+                onDelete = if (onDelete != null) {
+                    { onDelete(destination.id) }
+                } else null
             )
         }
     }
@@ -197,7 +199,8 @@ fun AttractionCard(
                     Spacer(Modifier.width(8.dp))
                     Column(Modifier.weight(1f)) {
                         Text(text = title, style = MaterialTheme.typography.subtitle1)
-                        Text(text = currencyFormatter(expense), style = MaterialTheme.typography.caption)
+                        Text(text = currencyFormatter(expense),
+                            style = MaterialTheme.typography.caption)
                         Text(text = location, style = MaterialTheme.typography.caption)
                     }
                     if (onDelete != null) {
