@@ -42,6 +42,11 @@ router.post(
   tokenValidation,
   destinationController.insertFavoriteDestination
 );
+router.delete(
+  "/destination/:id/favorite",
+  tokenValidation,
+  destinationController.deleteFavoriteDestination
+);
 router.post("/destination", tokenValidation, destinationController.insertDestinationById);
 router.put("/destination/:id", tokenValidation, destinationController.updateDestinationById);
 router.delete("/destination/:id", tokenValidation, destinationController.deleteDestinationById);

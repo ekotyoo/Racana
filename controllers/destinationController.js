@@ -41,7 +41,29 @@ const insertFavoriteDestination = async (req, res) => {
     const data = await user.addDestination(destination);
 
     if (!data) return res.status(400).json(responseHelper.responseError("No data."));
-    res.json(responseHelper.responseSuccess(data, "Sucessfully get data."));
+    res.json(responseHelper.responseSuccess(data, "Sucessfully added to favorite."));
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(responseHelper.responseError("Internal server error."));
+  }
+};
+
+const deleteFavoriteDestination = async (req, res) => {
+  const userId = req.token.userId;
+  const destinationId = req.params.id;
+  try {
+    const user = await UserModel.findOne({
+      where: { id: userId },
+    });
+
+    const destination = await DestinationModel.findOne({
+      where: { id: destinationId },
+    });
+
+    const data = await user.removeDestination(destination);
+
+    if (!data) return res.status(400).json(responseHelper.responseError("No data."));
+    res.json(responseHelper.responseSuccess(data, "Sucessfully deleted from favorite."));
   } catch (error) {
     console.log(error);
     res.status(500).json(responseHelper.responseError("Internal server error."));
@@ -169,4 +191,5 @@ module.exports = {
   deleteDestinationById,
   getFavoriteDestinations,
   insertFavoriteDestination,
+  deleteFavoriteDestination,
 };
