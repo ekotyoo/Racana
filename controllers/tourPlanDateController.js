@@ -3,6 +3,7 @@ const responseHelper = require("../utils/responseHelper");
 const { Op } = require("sequelize");
 const TourPlanDateModel = require("../models/tourPlanDateModel");
 const DestinationModel = require("../models/destinationModel");
+const DateDestination = require("../models/dateDestinationModel");
 
 const getAllTourPlanDate = async (req, res) => {
   try {
@@ -16,6 +17,60 @@ const getAllTourPlanDate = async (req, res) => {
 
     if (!tourPlan)
       return res.status(400).json(responseHelper.responseError("Tour plan not found."));
+
+    const data = await TourPlanDateModel.findAll({ where: { tourplanId: tourPlan.id } });
+
+    if (!data) return res.status(400).json(responseHelper.responseError("Not found"));
+    res.json(responseHelper.responseSuccess(data, "Sucessfully get data."));
+  } catch (error) {
+    res.status(500).json(responseHelper.responseError("Internal server error."));
+  }
+};
+
+const markTourPlanDone = async (req, res) => {
+  try {
+    const dateId = req.params.dateId;
+    const destinationId = req.params.destinationId;
+
+    const result = await DateDestination.update(
+      {
+        isDone: True,
+      },
+      {
+        where: {
+          [Op.and]: [{ tourplandateId: dateId }, { destinationId: destinationId }],
+        },
+      }
+    );
+
+    if (!result) return res.status(400).json(responseHelper.responseError("Tour plan not found."));
+
+    const data = await TourPlanDateModel.findAll({ where: { tourplanId: tourPlan.id } });
+
+    if (!data) return res.status(400).json(responseHelper.responseError("Not found"));
+    res.json(responseHelper.responseSuccess(data, "Sucessfully get data."));
+  } catch (error) {
+    res.status(500).json(responseHelper.responseError("Internal server error."));
+  }
+};
+
+const markTourPlanNotDone = async (req, res) => {
+  try {
+    const dateId = req.params.dateId;
+    const destinationId = req.params.destinationId;
+
+    const result = await DateDestination.update(
+      {
+        isDone: False,
+      },
+      {
+        where: {
+          [Op.and]: [{ tourplandateId: dateId }, { destinationId: destinationId }],
+        },
+      }
+    );
+
+    if (!result) return res.status(400).json(responseHelper.responseError("Tour plan not found."));
 
     const data = await TourPlanDateModel.findAll({ where: { tourplanId: tourPlan.id } });
 
@@ -56,4 +111,9 @@ const deleteTourPlanDateDestination = async (req, res) => {
   }
 };
 
-module.exports = { getAllTourPlanDate, deleteTourPlanDateDestination };
+module.exports = {
+  getAllTourPlanDate,
+  deleteTourPlanDateDestination,
+  markTourPlanDone,
+  markTourPlanNotDone,
+};

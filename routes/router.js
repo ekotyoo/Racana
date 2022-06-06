@@ -25,11 +25,20 @@ router.delete("/tourplan/:id", tokenValidation, tourPlanController.deleteTourPla
 // Tour Plan Date
 router.get("/tourplan/:id/date", tokenValidation, tourPlanDateController.getAllTourPlanDate);
 router.post("/tourplan/:id/date", tokenValidation, tourPlanController.insertTourPlanDate);
-
 router.delete(
   "/tourplandate/:dateId/destination/:destinationId",
   tokenValidation,
   tourPlanDateController.deleteTourPlanDateDestination
+);
+router.update(
+  "/tourplandate/:dateId/destination/:destinationId/done",
+  tokenValidation,
+  tourPlanDateController.markTourPlanDone
+);
+router.update(
+  "/tourplandate/:dateId/destination/:destinationId/notdone",
+  tokenValidation,
+  tourPlanDateController.markTourPlanNotDone
 );
 
 // Destination
