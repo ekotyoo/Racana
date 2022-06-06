@@ -44,11 +44,7 @@ const markTourPlanDone = async (req, res) => {
     );
 
     if (!result) return res.status(400).json(responseHelper.responseError("Tour plan not found."));
-
-    const data = await TourPlanDateModel.findAll({ where: { tourplanId: tourPlan.id } });
-
-    if (!data) return res.status(400).json(responseHelper.responseError("Not found"));
-    res.json(responseHelper.responseSuccess(data, "Sucessfully get data."));
+    res.json(responseHelper.responseSuccess(result, "Sucessfully get data."));
   } catch (error) {
     res.status(500).json(responseHelper.responseError("Internal server error."));
   }
@@ -71,11 +67,7 @@ const markTourPlanNotDone = async (req, res) => {
     );
 
     if (!result) return res.status(400).json(responseHelper.responseError("Tour plan not found."));
-
-    const data = await TourPlanDateModel.findAll({ where: { tourplanId: tourPlan.id } });
-
-    if (!data) return res.status(400).json(responseHelper.responseError("Not found"));
-    res.json(responseHelper.responseSuccess(data, "Sucessfully get data."));
+    res.json(responseHelper.responseSuccess(result, "Sucessfully get data."));
   } catch (error) {
     res.status(500).json(responseHelper.responseError("Internal server error."));
   }
