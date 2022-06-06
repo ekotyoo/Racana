@@ -34,7 +34,7 @@ const markTourPlanDone = async (req, res) => {
 
     const result = await DateDestination.update(
       {
-        isDone: True,
+        isDone: true,
       },
       {
         where: {
@@ -58,7 +58,7 @@ const markTourPlanNotDone = async (req, res) => {
 
     const result = await DateDestination.update(
       {
-        isDone: False,
+        isDone: false,
       },
       {
         where: {
