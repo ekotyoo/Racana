@@ -16,6 +16,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.RemoveDone
+import androidx.compose.material.icons.filled.TaskAlt
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,9 +27,12 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.theme.RacanaGray
+import com.ekotyoo.racana.core.theme.RacanaGreen
 import com.ekotyoo.racana.core.utils.currencyFormatter
 import com.ekotyoo.racana.data.model.DailyItem
 import com.ekotyoo.racana.data.model.TravelDestination
@@ -68,6 +73,7 @@ fun AttractionList(
     destinationList: List<TravelDestination>?,
     onClick: (Int) -> Unit,
     onDelete: ((Int) -> Unit)? = null,
+    onToggleDone: ((Int) -> Unit)? = null,
 ) {
     val items = destinationList ?: emptyList()
     LazyColumn(
@@ -85,6 +91,9 @@ fun AttractionList(
                 },
                 onDelete = if (onDelete != null) {
                     { onDelete(destination.id) }
+                } else null,
+                onToggleDone = if (onToggleDone != null) {
+                    { onToggleDone(destination.id) }
                 } else null
             )
         }
@@ -163,6 +172,7 @@ fun AttractionCard(
     isDone: Boolean,
     onClick: () -> Unit,
     onDelete: (() -> Unit)? = null,
+    onToggleDone: (() -> Unit)? = null,
 ) {
     Row {
         ProgressLine(
@@ -198,19 +208,34 @@ fun AttractionCard(
                     )
                     Spacer(Modifier.width(8.dp))
                     Column(Modifier.weight(1f)) {
-                        Text(text = title, style = MaterialTheme.typography.subtitle1)
-                        Text(text = currencyFormatter(expense),
-                            style = MaterialTheme.typography.caption)
-                        Text(text = location, style = MaterialTheme.typography.caption)
-                    }
-                    if (onDelete != null) {
-                        RIconButton(
-                            imageVector = Icons.Default.Delete,
-                            contentDescription = null,
-                            onClick = onDelete,
-                            background = MaterialTheme.colors.surface,
-                            tint = MaterialTheme.colors.error
+                        Text(text = title,
+                            style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Bold),
+                            overflow = TextOverflow.Ellipsis,
+                            maxLines = 1
                         )
+                        Text(text = currencyFormatter(expense),
+                            style = MaterialTheme.typography.body2)
+                        Text(text = location, style = MaterialTheme.typography.body2)
+                    }
+                    Row {
+                        if (onToggleDone != null) {
+                            RIconButton(
+                                imageVector = if (isDone) Icons.Default.RemoveDone else Icons.Default.TaskAlt,
+                                contentDescription = null,
+                                onClick = onToggleDone,
+                                background = MaterialTheme.colors.surface,
+                                tint = MaterialTheme.colors.onSurface
+                            )
+                        }
+                        if (onDelete != null) {
+                            RIconButton(
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = null,
+                                onClick = onDelete,
+                                background = MaterialTheme.colors.surface,
+                                tint = MaterialTheme.colors.error
+                            )
+                        }
                     }
                 }
             }

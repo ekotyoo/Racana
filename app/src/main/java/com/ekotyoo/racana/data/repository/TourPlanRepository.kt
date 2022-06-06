@@ -2,7 +2,6 @@ package com.ekotyoo.racana.data.repository
 
 import com.ekotyoo.racana.core.utils.Result
 import com.ekotyoo.racana.data.datasource.local.UserPreferencesDataStore
-import com.ekotyoo.racana.data.datasource.local.database.TourPlanDao
 import com.ekotyoo.racana.data.datasource.remote.api.TourPlanApi
 import com.ekotyoo.racana.data.datasource.remote.request.TourPlanDateRequest
 import com.ekotyoo.racana.data.datasource.remote.request.TourPlanRequest
@@ -84,37 +83,38 @@ class TourPlanRepository @Inject constructor(
 
             if (response.isSuccessful && data != null) {
                 val tourPlans = TourPlan(
-                        id = data.id.toLong(),
-                        title = data.title,
-                        description = data.description,
-                        dailyList = data.tourPlanDates.mapIndexed { i, date ->
-                            DailyItem(
-                                id = date.id,
-                                number = i + 1,
-                                date = Instant.ofEpochMilli(date.dateMillis)
-                                    .atZone(ZoneId.systemDefault())
-                                    .toLocalDate(),
-                                destinationList = date.destinations.map { destination ->
-                                    TravelDestination(
-                                        id = destination.id,
-                                        name = destination.name,
-                                        description = destination.description,
-                                        city = destination.city,
-                                        address = destination.address,
-                                        rating = destination.rating,
-                                        imageUrl = destination.imageUrl,
-                                        weekdayPrice = destination.weekdayPrice,
-                                        weekendHolidayPrice = destination.weekendHolidayPrice,
-                                        lat = destination.lat ?: .0,
-                                        lon = destination.lon ?: .0,
-                                        categoryId = destination.categoryId ?: 0,
-                                    )
-                                }
-                            )
-                        }.sortedBy { item ->
-                            item.date
-                        }
-                    )
+                    id = data.id.toLong(),
+                    title = data.title,
+                    description = data.description,
+                    dailyList = data.tourPlanDates.mapIndexed { i, date ->
+                        DailyItem(
+                            id = date.id,
+                            number = i + 1,
+                            date = Instant.ofEpochMilli(date.dateMillis)
+                                .atZone(ZoneId.systemDefault())
+                                .toLocalDate(),
+                            destinationList = date.destinations.map { destination ->
+                                TravelDestination(
+                                    id = destination.id,
+                                    name = destination.name,
+                                    description = destination.description,
+                                    city = destination.city,
+                                    address = destination.address,
+                                    rating = destination.rating,
+                                    imageUrl = destination.imageUrl,
+                                    weekdayPrice = destination.weekdayPrice,
+                                    weekendHolidayPrice = destination.weekendHolidayPrice,
+                                    lat = destination.lat ?: .0,
+                                    lon = destination.lon ?: .0,
+                                    categoryId = destination.categoryId ?: 0,
+                                    isDone = destination.relation.isDone
+                                )
+                            }
+                        )
+                    }.sortedBy { item ->
+                        item.date
+                    }
+                )
                 return Result.Success(tourPlans)
             } else {
                 return Result.Error("Gagal mengambil data.", null)
@@ -134,7 +134,8 @@ class TourPlanRepository @Inject constructor(
                 description = description,
                 tourPlanDates = tourPlan.dailyList.map {
                     TourPlanDateRequest(
-                        dateMillis = it.date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli(),
+                        dateMillis = it.date.atStartOfDay(ZoneId.systemDefault()).toInstant()
+                            .toEpochMilli(),
                         destinations = it.destinationList.map { destination -> destination.id }
                     )
                 }
@@ -158,9 +159,9 @@ class TourPlanRepository @Inject constructor(
         return try {
             val token = userPreferencesDataStore.userData.first().token
             val response = tourPlanApi.deleteTourPlanById(token ?: "", id)
-            val data = response.body()?.data
+            val body = response.body()
 
-            if (response.isSuccessful && data != null) {
+            if (response.isSuccessful && body?.status == "Success") {
                 Result.Success(Unit)
             } else {
                 Result.Error(message = "Gagal menghapus data.", throwable = null)
@@ -240,14 +241,15 @@ class TourPlanRepository @Inject constructor(
 
     suspend fun deleteTourPlanDateDestination(
         dateId: Int,
-        destinationId: Int
+        destinationId: Int,
     ): Result<Unit> {
         return try {
             val token = userPreferencesDataStore.userData.first().token
-            val response = tourPlanApi.deleteTourPlanDateDestination(token ?: "", dateId, destinationId)
-            val data = response.body()?.data
+            val response =
+                tourPlanApi.deleteTourPlanDateDestination(token ?: "", dateId, destinationId)
+            val body = response.body()
 
-            if (response.isSuccessful && data != null) {
+            if (response.isSuccessful && body?.status == "Success") {
                 Result.Success(Unit)
             } else {
                 Result.Error(message = "Gagal menghapus data.", throwable = null)
@@ -258,6 +260,50 @@ class TourPlanRepository @Inject constructor(
         } catch (e: HttpException) {
             Timber.d(e.message)
             Result.Error(message = "Terjadi kesalahan, coba lagi nanti!", throwable = e)
+        }
+    }
+
+    suspend fun markDestinationDone(
+        dateId: Int,
+        destinationId: Int,
+    ): Result<Unit> {
+        return try {
+            val token = userPreferencesDataStore.userData.first().token
+            val response = tourPlanApi.markDestinationDone(token ?: "", dateId, destinationId)
+            val body = response.body()
+            if (response.isSuccessful && body?.status == "Success") {
+                Result.Success(Unit)
+            } else {
+                Result.Error("Gagal memperbarui destinasi.", null)
+            }
+        } catch (e: IOException) {
+            Timber.d(e)
+            Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        } catch (e: HttpException) {
+            Timber.d(e)
+            Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        }
+    }
+
+    suspend fun markDestinationNotDone(
+        dateId: Int,
+        destinationId: Int,
+    ): Result<Unit> {
+        return try {
+            val token = userPreferencesDataStore.userData.first().token
+            val response = tourPlanApi.markDestinationNotDone(token ?: "", dateId, destinationId)
+            val body = response.body()
+            if (response.isSuccessful && body?.status == "Success") {
+                Result.Success(Unit)
+            } else {
+                Result.Error("Gagal memperbarui destinasi.", null)
+            }
+        } catch (e: IOException) {
+            Timber.d(e)
+            Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        } catch (e: HttpException) {
+            Timber.d(e)
+            Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
         }
     }
 }
