@@ -21,13 +21,14 @@ import javax.inject.Inject
 @HiltViewModel
 class TourPlanDetailSavedViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val tourPlanRepository: TourPlanRepository
+    private val tourPlanRepository: TourPlanRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(TourPlanDetailSavedState())
     val state: StateFlow<TourPlanDetailSavedState> = _state
 
-    private val _eventChannel = Channel<TourPlanDetailSavedEvent>(onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    private val _eventChannel =
+        Channel<TourPlanDetailSavedEvent>(onBufferOverflow = BufferOverflow.DROP_OLDEST)
     val eventChannel = _eventChannel.receiveAsFlow()
 
     init {
@@ -54,17 +55,69 @@ class TourPlanDetailSavedViewModel @Inject constructor(
         }
     }
 
-    fun deleteDestinationButtonClicked(destinationId: Int) {
+    fun onDestinationDeleteButtonClicked(destinationId: Int) {
         deleteTourPlanDateDestination(destinationId)
+    }
+
+    fun onDestinationToggleDoneClicked(destinationId: Int) {
+        val destination = _state.value.tourPlan
+            .dailyList[_state.value.selectedDate]
+            .destinationList
+            .find { it.id == destinationId }
+
+        destination?.let {
+            if (destination.isDone) {
+                markDestinationNotDone(destinationId)
+            } else {
+                markDestinationDone(destinationId)
+            }
+        }
+    }
+
+    private fun markDestinationDone(destinationId: Int) {
+        viewModelScope.launch {
+            val dateId = _state.value.tourPlan.dailyList[_state.value.selectedDate].id
+            when (tourPlanRepository.markDestinationDone(dateId, destinationId)) {
+                is Result.Success -> {
+                    val id = _state.value.tourPlan.id?.toInt()
+                    id?.let {
+                        getTourPlanById(id)
+                    }
+                    _eventChannel.send(TourPlanDetailSavedEvent.MarkDestinationDoneSuccess)
+                }
+                is Result.Error -> {
+                    _eventChannel.send(TourPlanDetailSavedEvent.MarkDestinationDoneError)
+                }
+            }
+        }
+    }
+
+
+    private fun markDestinationNotDone(destinationId: Int) {
+        viewModelScope.launch {
+            val dateId = _state.value.tourPlan.dailyList[_state.value.selectedDate].id
+            when (tourPlanRepository.markDestinationNotDone(dateId, destinationId)) {
+                is Result.Success -> {
+                    val id = _state.value.tourPlan.id?.toInt()
+                    id?.let {
+                        getTourPlanById(id)
+                    }
+                    _eventChannel.send(TourPlanDetailSavedEvent.MarkDestinationNotDoneSuccess)
+                }
+                is Result.Error -> {
+                    _eventChannel.send(TourPlanDetailSavedEvent.MarkDestinationNotDoneError)
+                }
+            }
+        }
     }
 
     private fun deleteTourPlanDateDestination(destinationId: Int) {
         viewModelScope.launch {
             val dateId = _state.value.tourPlan.dailyList[_state.value.selectedDate].id
-            when(val result = tourPlanRepository.deleteTourPlanDateDestination(dateId, destinationId)) {
+            when (tourPlanRepository.deleteTourPlanDateDestination(dateId, destinationId)) {
                 is Result.Success -> {
                     val id = _state.value.tourPlan.id?.toInt()
-                    if (id != null) {
+                    id?.let {
                         getTourPlanById(id)
                     }
                     _eventChannel.send(TourPlanDetailSavedEvent.DeleteDestinationSuccess)
@@ -79,7 +132,7 @@ class TourPlanDetailSavedViewModel @Inject constructor(
     private fun getTourPlanById(id: Int) {
         _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-            when(val result = tourPlanRepository.getSavedTourPlanById(id)) {
+            when (val result = tourPlanRepository.getSavedTourPlanById(id)) {
                 is Result.Success -> {
                     _state.update { it.copy(tourPlan = result.value) }
                 }

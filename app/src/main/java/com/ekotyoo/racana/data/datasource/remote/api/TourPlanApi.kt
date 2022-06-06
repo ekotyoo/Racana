@@ -34,18 +34,32 @@ interface TourPlanApi {
     suspend fun saveTourPlan(
         @Header("Authorization") token: String,
         @Body requestBody: TourPlanRequest,
-    ): Response<SaveTourPlanResponse>
+    ): Response<BaseResponse>
 
     @DELETE("tourplan/{id}")
     suspend fun deleteTourPlanById(
         @Header("Authorization") token: String,
         @Path("id") id: Int,
-    ): Response<DeleteTourPlanResponse>
+    ): Response<BaseResponse>
 
     @DELETE("tourplandate/{dateId}/destination/{destinationId}")
     suspend fun deleteTourPlanDateDestination(
         @Header("Authorization") token: String,
         @Path("dateId") dateId: Int,
         @Path("destinationId") destinationId: Int,
-    ): Response<DeleteTourPlanResponse>
+    ): Response<BaseResponse>
+
+    @PUT("tourplandate/{dateId}/destination/{destinationId}/done")
+    suspend fun markDestinationDone(
+        @Header("Authorization") token: String,
+        @Path("dateId") dateId: Int,
+        @Path("destinationId") destinationId: Int,
+    ): Response<BaseResponse>
+
+    @PUT("tourplandate/{dateId}/destination/{destinationId}/notdone")
+    suspend fun markDestinationNotDone(
+        @Header("Authorization") token: String,
+        @Path("dateId") dateId: Int,
+        @Path("destinationId") destinationId: Int,
+    ): Response<BaseResponse>
 }

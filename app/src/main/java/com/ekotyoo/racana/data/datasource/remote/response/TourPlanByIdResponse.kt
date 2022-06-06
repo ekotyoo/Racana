@@ -11,19 +11,13 @@ data class TourPlanByIdResponse(
 	val message: String,
 
 	@field:SerializedName("status")
-	val status: String
+	val status: String,
 )
 
 data class DateDestination(
 
-	@field:SerializedName("tourplandateId")
-	val tourPlanDateId: Int,
-
-	@field:SerializedName("destinationId")
-	val destinationId: Int,
-
 	@field:SerializedName("isDone")
-	val isDone: Boolean
+	val isDone: Boolean,
 )
 
 data class TourPlanData(
@@ -38,7 +32,7 @@ data class TourPlanData(
 	val id: Int,
 
 	@field:SerializedName("tourplandates")
-	val tourPlanDates: List<TourPlanDatesItem>,
+	val tourPlanDates: List<TourPlanDatesDetailItem>,
 
 	@field:SerializedName("title")
 	val title: String,
@@ -50,5 +44,62 @@ data class TourPlanData(
 	val userId: Int,
 
 	@field:SerializedName("updatedAt")
-	val updatedAt: String
+	val updatedAt: String,
+)
+
+data class TourPlanDatesDetailItem(
+
+    @field:SerializedName("destinations")
+    val destinations: List<ListDestinationsDetailItem> = emptyList(),
+
+    @field:SerializedName("date_millis")
+    val dateMillis: Long,
+
+    @field:SerializedName("id")
+    val id: Int,
+
+    @field:SerializedName("tourplanId")
+    val tourplanId: Int,
+)
+
+data class ListDestinationsDetailItem(
+
+    @field:SerializedName("addresss")
+    val address: String,
+
+    @field:SerializedName("city")
+    val city: String,
+
+    @field:SerializedName("rating")
+    val rating: Float,
+
+    @field:SerializedName("description")
+    val description: String,
+
+    @field:SerializedName("lon")
+    val lon: Double? = null,
+
+    @field:SerializedName("weekdayPrice")
+    val weekdayPrice: Int = 0,
+
+    @field:SerializedName("imageUrl")
+    val imageUrl: String,
+
+    @field:SerializedName("name")
+    val name: String,
+
+    @field:SerializedName("weekendHolidayPrice")
+    val weekendHolidayPrice: Int = 0,
+
+    @field:SerializedName("id")
+    val id: Int,
+
+    @field:SerializedName("lat")
+    val lat: Double? = null,
+
+    @field:SerializedName("categoryId")
+    val categoryId: Int? = null,
+
+	@field:SerializedName("datedestination")
+	val relation: DateDestination,
 )

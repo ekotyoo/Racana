@@ -12,5 +12,5 @@ data class DestinationDetail(
     val description: String = "",
     val lat: Double = .0,
     val lon: Double = .0,
-    val rating: Double = .0
+    val rating: Float = 0f
 )

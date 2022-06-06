@@ -18,13 +18,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -36,7 +34,6 @@ import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.core.theme.RacanaYellow
 import com.ekotyoo.racana.core.utils.currencyFormatter
-import com.ekotyoo.racana.ui.main.createtourplan.Counter
 import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationArgument
 import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetail
 import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetailEvent
@@ -110,7 +107,8 @@ fun DestinationDetailContent(
     }
 
     LaunchedEffect(destination.lat, destination.lon) {
-        cameraPositionState.animate(CameraUpdateFactory.newLatLng(LatLng(destination.lat, destination.lon)))
+        cameraPositionState.animate(CameraUpdateFactory.newLatLng(LatLng(destination.lat,
+            destination.lon)))
     }
 
     Scaffold(
@@ -154,12 +152,13 @@ fun DestinationDetailContent(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Star,
-                            contentDescription = "",
+                            contentDescription = null,
                             tint = RacanaYellow
                         )
+                        Spacer(Modifier.width(4.dp))
                         Text(
                             text = destination.rating.toString(),
-                            style = MaterialTheme.typography.body2
+                            style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.SemiBold)
                         )
                     }
                     Text(
@@ -262,7 +261,7 @@ fun CounterPreview() {
             state = DestinationDetailState(
                 destination = DestinationDetail(
                     name = "Nama Tempat",
-                    rating = 4.5
+                    rating = 4.5f
                 )
             ),
             snackbarHostState = SnackbarHostState(),

@@ -6,4 +6,8 @@ sealed class TourPlanDetailSavedEvent {
     object StartTourButtonClicked : TourPlanDetailSavedEvent()
     object DeleteDestinationSuccess : TourPlanDetailSavedEvent()
     object DeleteDestinationError : TourPlanDetailSavedEvent()
+    object MarkDestinationDoneSuccess : TourPlanDetailSavedEvent()
+    object MarkDestinationNotDoneSuccess : TourPlanDetailSavedEvent()
+    object MarkDestinationDoneError : TourPlanDetailSavedEvent()
+    object MarkDestinationNotDoneError : TourPlanDetailSavedEvent()
 }

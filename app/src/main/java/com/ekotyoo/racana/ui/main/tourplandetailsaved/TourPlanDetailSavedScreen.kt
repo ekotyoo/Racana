@@ -60,11 +60,17 @@ fun TourPlanDetailSavedScreen(
                 }
                 is TourPlanDetailSavedEvent.NavigateBackWithMessage -> {}
                 is TourPlanDetailSavedEvent.StartTourButtonClicked -> {}
-                TourPlanDetailSavedEvent.DeleteDestinationSuccess -> {
+                is TourPlanDetailSavedEvent.DeleteDestinationSuccess -> {
                     snackbarHostState.showSnackbar("Berhasil menghapus destinasi.")
                 }
-                TourPlanDetailSavedEvent.DeleteDestinationError -> {
+                is TourPlanDetailSavedEvent.DeleteDestinationError -> {
                     snackbarHostState.showSnackbar("Gagal menghapus destinasi.")
+                }
+                is TourPlanDetailSavedEvent.MarkDestinationDoneSuccess, TourPlanDetailSavedEvent.MarkDestinationNotDoneSuccess -> {
+                    snackbarHostState.showSnackbar("Berhasil memperbaharui destinasi.")
+                }
+                is TourPlanDetailSavedEvent.MarkDestinationDoneError, TourPlanDetailSavedEvent.MarkDestinationNotDoneError -> {
+                    snackbarHostState.showSnackbar("Gagal memperbaharui destinasi.")
                 }
             }
         }
@@ -107,7 +113,8 @@ fun TourPlanDetailSavedScreen(
                     onDateSelected = viewModel::onDateSelected,
                     onDestinationClicked = viewModel::navigateToDestinationDetail,
                     onStartTourButtonClicked = viewModel::startTourButtonClicked,
-                    onDestinationDeleteButtonClicked = viewModel::deleteDestinationButtonClicked
+                    onDestinationDeleteButtonClicked = viewModel::onDestinationDeleteButtonClicked,
+                    onDestinationToggleDoneClicked = viewModel::onDestinationToggleDoneClicked
                 )
             }
         }
@@ -122,6 +129,7 @@ fun TourPlanDetailSavedContent(
     onDateSelected: (Int) -> Unit,
     onDestinationClicked: (Int) -> Unit,
     onDestinationDeleteButtonClicked: (Int) -> Unit,
+    onDestinationToggleDoneClicked: (Int) -> Unit,
     onStartTourButtonClicked: () -> Unit,
 ) {
     Column(
@@ -191,7 +199,8 @@ fun TourPlanDetailSavedContent(
             AttractionList(
                 destinationList = targetList,
                 onClick = onDestinationClicked,
-                onDelete = onDestinationDeleteButtonClicked
+                onDelete = onDestinationDeleteButtonClicked,
+                onToggleDone = onDestinationToggleDoneClicked,
             )
         }
     }
@@ -216,7 +225,8 @@ fun TourPlanDetailSavedPreview() {
                 onDateSelected = {},
                 onDestinationClicked = {},
                 onStartTourButtonClicked = {},
-                onDestinationDeleteButtonClicked = { }
+                onDestinationDeleteButtonClicked = { },
+                onDestinationToggleDoneClicked = {}
             )
         }
     }

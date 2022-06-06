@@ -101,6 +101,7 @@ class DestinationDetailViewModel @Inject constructor(
                             ticketPriceWeekend = result.value.weekendHolidayPrice.toLong(),
                             description = result.value.description,
                             isFavorite = isFavorite,
+                            rating = result.value.rating,
                             lat = result.value.lat,
                             lon = result.value.lon
                         ))

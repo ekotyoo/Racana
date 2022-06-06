@@ -24,7 +24,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.style.LineHeightStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -103,7 +102,10 @@ fun TourPlanMapContent(
                         points.add(position)
                         Marker(
                             state = MarkerState(position),
-                            icon = BitmapUtil.markerBitmapDescriptor(context = LocalContext.current,
+                            icon = if (destination.isDone) BitmapUtil.markerBitmapDescriptor(context = LocalContext.current,
+                                R.drawable.map_marker_done,
+                                null
+                            ) else BitmapUtil.markerBitmapDescriptor(context = LocalContext.current,
                                 R.drawable.map_marker,
                                 i + 1
                             ),
