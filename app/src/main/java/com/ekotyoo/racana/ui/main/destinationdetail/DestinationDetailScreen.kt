@@ -1,5 +1,6 @@
 package com.ekotyoo.racana.ui.main.destinationdetail
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -8,6 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -16,11 +18,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
@@ -28,8 +33,12 @@ import com.ekotyoo.racana.core.composables.RIconButton
 import com.ekotyoo.racana.core.composables.RLoadingOverlay
 import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.NavigationTransition
+import com.ekotyoo.racana.core.theme.RacanaTheme
+import com.ekotyoo.racana.core.theme.RacanaYellow
 import com.ekotyoo.racana.core.utils.currencyFormatter
+import com.ekotyoo.racana.ui.main.createtourplan.Counter
 import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationArgument
+import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetail
 import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetailEvent
 import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetailState
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -97,12 +106,11 @@ fun DestinationDetailContent(
     val destination = state.destination
 
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(LatLng(destination.lat, destination.lon), 10f)
+        position = CameraPosition.fromLatLngZoom(LatLng(destination.lat, destination.lon), 11f)
     }
 
     LaunchedEffect(destination.lat, destination.lon) {
-        cameraPositionState.animate(CameraUpdateFactory.newLatLng(LatLng(destination.lat,
-            destination.lon)))
+        cameraPositionState.animate(CameraUpdateFactory.newLatLng(LatLng(destination.lat, destination.lon)))
     }
 
     Scaffold(
@@ -141,6 +149,19 @@ fun DestinationDetailContent(
                         text = destination.name,
                         style = MaterialTheme.typography.subtitle1
                     )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Star,
+                            contentDescription = "",
+                            tint = RacanaYellow
+                        )
+                        Text(
+                            text = destination.rating.toString(),
+                            style = MaterialTheme.typography.body2
+                        )
+                    }
                     Text(
                         text = destination.openCloseTime,
                         style = MaterialTheme.typography.body2
@@ -221,5 +242,33 @@ fun DestinationDetailContent(
             }
             Spacer(modifier = Modifier.height(16.dp))
         }
+    }
+}
+
+@Preview(
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    name = "Light Mode Preview"
+)
+@Preview(
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    name = "Dark Mode Preview"
+)
+@Composable
+fun CounterPreview() {
+    RacanaTheme {
+        DestinationDetailContent(
+            state = DestinationDetailState(
+                destination = DestinationDetail(
+                    name = "Nama Tempat",
+                    rating = 4.5
+                )
+            ),
+            snackbarHostState = SnackbarHostState(),
+            onBackButtonClicked = { /*TODO*/ },
+            onFavoriteButtonClicked = {},
+            onUndoFavoriteButtonClicked = {}
+        )
     }
 }
