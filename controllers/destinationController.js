@@ -95,7 +95,7 @@ const getAllDestinations = async (req, res) => {
         name: {
           [Op.substring]: `${keyword}`,
         },
-        categoryId: categoryId,
+        categoryId: categoryId || null,
       },
     });
 
