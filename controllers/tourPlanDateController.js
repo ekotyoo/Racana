@@ -46,6 +46,7 @@ const markTourPlanDone = async (req, res) => {
     if (!result) return res.status(400).json(responseHelper.responseError("Tour plan not found."));
     res.json(responseHelper.responseSuccess(result, "Sucessfully get data."));
   } catch (error) {
+    console.log(error);
     res.status(500).json(responseHelper.responseError("Internal server error."));
   }
 };
@@ -69,6 +70,7 @@ const markTourPlanNotDone = async (req, res) => {
     if (!result) return res.status(400).json(responseHelper.responseError("Tour plan not found."));
     res.json(responseHelper.responseSuccess(result, "Sucessfully get data."));
   } catch (error) {
+    console.log(error);
     res.status(500).json(responseHelper.responseError("Internal server error."));
   }
 };
