@@ -30,12 +30,12 @@ router.delete(
   tokenValidation,
   tourPlanDateController.deleteTourPlanDateDestination
 );
-router.update(
+router.put(
   "/tourplandate/:dateId/destination/:destinationId/done",
   tokenValidation,
   tourPlanDateController.markTourPlanDone
 );
-router.update(
+router.put(
   "/tourplandate/:dateId/destination/:destinationId/notdone",
   tokenValidation,
   tourPlanDateController.markTourPlanNotDone
