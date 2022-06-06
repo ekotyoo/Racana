@@ -88,16 +88,25 @@ const getFavoriteDestinations = async (req, res) => {
 const getAllDestinations = async (req, res) => {
   try {
     const keyword = req.query.keyword;
-    const categoryId = req.query.category;
+    const categoryId = req.query.category || null;
 
-    const data = await DestinationModel.findAll({
-      where: {
-        name: {
-          [Op.substring]: `${keyword}`,
-        },
-        categoryId: categoryId || null,
-      },
-    });
+    const data =
+      categoryId != null
+        ? await DestinationModel.findAll({
+            where: {
+              name: {
+                [Op.substring]: `${keyword}`,
+              },
+              categoryId: categoryId,
+            },
+          })
+        : await DestinationModel.findAll({
+            where: {
+              name: {
+                [Op.substring]: `${keyword}`,
+              },
+            },
+          });
 
     if (!data) return res.json(responseHelper.responseError("No data."));
     res.json(responseHelper.responseSuccess(data, "Sucessfully get data."));
