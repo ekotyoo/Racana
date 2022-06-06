@@ -41,6 +41,7 @@ import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.navigation.RootNavigator
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.data.model.TravelDestination
+import com.ekotyoo.racana.ui.destinations.ArticleListScreenDestination
 import com.ekotyoo.racana.ui.destinations.DestinationDetailScreenDestination
 import com.ekotyoo.racana.ui.destinations.ListDestinationScreenDestination
 import com.ekotyoo.racana.ui.main.dashboard.model.DashboardEvent
@@ -71,6 +72,9 @@ fun DashboardScreen(
                 is DashboardEvent.allDestinationClicked -> {
                     rootNavigator.value.navigate(ListDestinationScreenDestination)
                 }
+                is DashboardEvent.allArticleClicked -> {
+                    rootNavigator.value.navigate(ArticleListScreenDestination)
+                }
             }
         }
     }
@@ -92,7 +96,8 @@ fun DashboardScreen(
             lazyListState = lazyListState,
             isLoading = state.isLoading,
             onDestinationClick = viewModel::onDestinationClicked,
-            onAllDestinationClicked = viewModel::allDestinationClicked
+            onAllDestinationClicked = viewModel::allDestinationClicked,
+            onAllArticleClicked = viewModel::allArticleCLicked
         )
     }
 }
@@ -103,7 +108,8 @@ fun DashboardContent(
     onDestinationClick: (Int) -> Unit = {},
     lazyListState: LazyListState,
     isLoading: Boolean,
-    onAllDestinationClicked: () -> Unit
+    onAllDestinationClicked: () -> Unit,
+    onAllArticleClicked: () -> Unit
 ) {
     LazyColumn(
         state = lazyListState,
@@ -128,6 +134,7 @@ fun DashboardContent(
         item {
             DashboardSection(
                 title = stringResource(id = R.string.traveler_stories),
+                onAllItemShowClicked = onAllArticleClicked
             ) {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
