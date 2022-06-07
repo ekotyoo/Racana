@@ -17,6 +17,7 @@ import com.ekotyoo.racana.core.composables.RImageCard
 import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.data.model.Article
+import com.ekotyoo.racana.ui.destinations.ArticleDetailScreenDestination
 import com.ekotyoo.racana.ui.main.articlelist.model.ArticleListEvent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -33,7 +34,7 @@ fun ArticleListScreen(
         viewModel.eventChannel.collect {event ->
             when(event) {
                 ArticleListEvent.NavigateToArticleDetail -> {
-
+                    navigator.navigate(ArticleDetailScreenDestination)
                 }
             }
         }
@@ -57,10 +58,9 @@ fun ArticleListScreen(
 
 @Composable
 fun ArticleListContent(
-    listArticle : List<Article>,
+    listArticle: List<Article>,
     onArticleClicked: () -> Unit
 ) {
-    
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
