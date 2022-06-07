@@ -5,7 +5,7 @@ const DestinationModel = require("./destinationModel");
 
 const UserModel = db.define("user", {
   name: { type: sequelize.STRING, allowNull: false },
-  email: { type: sequelize.STRING, allowNull: false, unique: true },
+  email: { type: sequelize.STRING, allowNull: false, unique: "email" },
   password: { type: sequelize.STRING, allowNull: false },
 });
 
