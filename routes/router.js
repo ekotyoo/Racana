@@ -61,6 +61,7 @@ router.put("/destination/:id", tokenValidation, destinationController.updateDest
 router.delete("/destination/:id", tokenValidation, destinationController.deleteDestinationById);
 
 router.get("/userdestinations", destinationController.getAllUserDestination);
+router.get("/alldestinations", destinationController.getAllDestinationsWithoutToken);
 
 router.post("/predict", tokenValidation, dummyController.predictDummyTourPlan);
 

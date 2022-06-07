@@ -117,6 +117,18 @@ const getAllDestinations = async (req, res) => {
   }
 };
 
+const getAllDestinationsWithoutToken = async (req, res) => {
+  try {
+    const data = await DestinationModel.findAll();
+
+    if (!data) return res.json(responseHelper.responseError("No data."));
+    res.json(responseHelper.responseSuccess(data, "Sucessfully get data."));
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(responseHelper.responseError("Internal server error."));
+  }
+};
+
 const getDestinationById = async (req, res) => {
   try {
     const id = req.params.id;
@@ -225,4 +237,5 @@ module.exports = {
   insertFavoriteDestination,
   deleteFavoriteDestination,
   getAllUserDestination,
+  getAllDestinationsWithoutToken,
 };
