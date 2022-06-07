@@ -2,6 +2,7 @@ const DestinationModel = require("../models/destinationModel");
 const responseHelper = require("../utils/responseHelper");
 const { Op } = require("sequelize");
 const UserModel = require("../models/userModel");
+const DateDestination = require("../models/dateDestinationModel");
 
 const getTopDestinations = async (req, res) => {
   const limit = req.query.limit;
@@ -192,6 +193,25 @@ const deleteDestinationById = async (req, res) => {
   }
 };
 
+const getAllUserDestination = async (req, res) => {
+  try {
+    const data = DateDestination.findAll();
+    const destinationIds = data.map((value) => {
+      value.destinationId;
+    });
+
+    console.log(destinationIds);
+
+    if (!destinationIds)
+      return res.status(400).json(responseHelper.responseError("Failed getting data."));
+
+    res.json(responseHelper.responseSuccess(destinationIds, "Successfully getting data."));
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(responseHelper.responseError("Internal server error."));
+  }
+};
+
 module.exports = {
   getTopDestinations,
   getAllDestinations,
@@ -202,4 +222,5 @@ module.exports = {
   getFavoriteDestinations,
   insertFavoriteDestination,
   deleteFavoriteDestination,
+  getAllUserDestination,
 };

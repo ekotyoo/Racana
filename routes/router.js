@@ -60,6 +60,8 @@ router.post("/destination", tokenValidation, destinationController.insertDestina
 router.put("/destination/:id", tokenValidation, destinationController.updateDestinationById);
 router.delete("/destination/:id", tokenValidation, destinationController.deleteDestinationById);
 
+router.get("/userdestinations", destinationController.getAllUserDestination);
+
 router.post("/predict", tokenValidation, dummyController.predictDummyTourPlan);
 
 module.exports = router;
