@@ -200,6 +200,7 @@ const getAllUserDestination = async (req, res) => {
       value.destinationId;
     });
 
+    console.log(data);
     console.log(destinationIds);
 
     if (!destinationIds)
