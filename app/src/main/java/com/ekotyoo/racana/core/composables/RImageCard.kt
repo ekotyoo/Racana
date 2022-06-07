@@ -83,12 +83,14 @@ fun RImageCard(
                     text = title,
                     style = MaterialTheme.typography.h6,
                     overflow = TextOverflow.Ellipsis,
+                    maxLines = 2,
                     color = MaterialTheme.colors.onPrimary
                 )
                 Text(
                     text = description,
                     style = MaterialTheme.typography.caption,
                     overflow = TextOverflow.Ellipsis,
+                    maxLines = 2,
                     color = MaterialTheme.colors.onPrimary.copy(.8f)
                 )
             }

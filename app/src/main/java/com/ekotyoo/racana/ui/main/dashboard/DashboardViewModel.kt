@@ -64,5 +64,11 @@ class DashboardViewModel @Inject constructor(
             _eventChannel.send(DashboardEvent.allDestinationClicked)
         }
     }
+
+    fun allArticleCLicked() {
+        viewModelScope.launch {
+            _eventChannel.send(DashboardEvent.allArticleClicked)
+        }
+    }
 }
 
