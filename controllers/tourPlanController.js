@@ -34,7 +34,7 @@ const getActiveTourPlan = async (req, res) => {
       limit: 1,
     });
 
-    if (!data) return res.status(400).json(responseHelper.responseError("No data."));
+    if (!data[0]) return res.status(400).json(responseHelper.responseError("No data."));
     res.json(responseHelper.responseSuccess(data[0], "Sucessfully get data."));
   } catch (error) {
     res.status(500).json(responseHelper.responseError("Internal server error."));
