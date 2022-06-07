@@ -200,12 +200,14 @@ const getAllUserDestination = async (req, res) => {
       return value.destinationId;
     });
 
-    console.log(destinationIds);
+    const destinationIdsUnique = [...new Set(destinationIds)];
 
-    if (!destinationIds)
+    console.log(destinationIdsUnique);
+
+    if (!destinationIdsUnique)
       return res.status(400).json(responseHelper.responseError("Failed getting data."));
 
-    res.json(responseHelper.responseSuccess(destinationIds, "Successfully getting data."));
+    res.json(responseHelper.responseSuccess(destinationIdsUnique, "Successfully getting data."));
   } catch (error) {
     console.log(error);
     res.status(500).json(responseHelper.responseError("Internal server error."));
