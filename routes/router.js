@@ -17,6 +17,7 @@ router.post("/auth/signup", authController.signup);
 
 // Tour Plan
 router.get("/tourplan", tokenValidation, tourPlanController.getAllTourPlan);
+router.get("/tourplan/active", tokenValidation, tourPlanController.getActiveTourPlan);
 router.get("/tourplan/:id", tokenValidation, tourPlanController.getTourPlanById);
 router.post("/tourplan", tokenValidation, tourPlanController.insertTourPlan);
 router.put("/tourplan/:id", tokenValidation, tourPlanController.updateTourPlanById);

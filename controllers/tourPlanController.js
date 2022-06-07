@@ -4,6 +4,7 @@ const TourPlanModel = require("../models/tourPlanModel");
 const responseHelper = require("../utils/responseHelper");
 const db = require("../config/db");
 const { Op } = require("sequelize");
+const UserModel = require("../models/userModel");
 
 const getAllTourPlan = async (req, res) => {
   try {
@@ -15,7 +16,24 @@ const getAllTourPlan = async (req, res) => {
       include: { model: TourPlanDateModel, include: [DestinationModel] },
     });
 
-    if (!data) return res.json(responseHelper.responseError("No data."));
+    if (!data) return res.status(400).json(responseHelper.responseError("No data."));
+    res.json(responseHelper.responseSuccess(data, "Sucessfully get data."));
+  } catch (error) {
+    res.status(500).json(responseHelper.responseError("Internal server error."));
+  }
+};
+
+const getActiveTourPlan = async (req, res) => {
+  try {
+    const userId = req.token.userId;
+    const user = await UserModel.findOne({ where: { id: userId } });
+
+    const data = await user.getTourplans({
+      order: [["updatedAt", "DESC"]],
+      limit: 1,
+    });
+
+    if (!data) return res.status(400).json(responseHelper.responseError("No data."));
     res.json(responseHelper.responseSuccess(data, "Sucessfully get data."));
   } catch (error) {
     res.status(500).json(responseHelper.responseError("Internal server error."));
@@ -147,4 +165,5 @@ module.exports = {
   updateTourPlanById,
   deleteTourPlanById,
   insertTourPlanDate,
+  getActiveTourPlan,
 };
