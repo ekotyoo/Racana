@@ -32,7 +32,7 @@
     <string name="favorite_destination">Destinasi Favorit</string>
     <string name="settings">Pengaturan</string>
     <string name="logout">Keluar</string>
-    <string name="current_tour">Tour Saat Ini</string>
+    <string name="current_tour">Tour Aktif Kamu Saat Ini</string>
     <string name="enjoy_your_tour">Nikmati Tour Kamu!</string>
     <string name="search_button">Tombol Cari</string>
     <string name="traveler_stories">Cerita Traveler</string>
@@ -71,4 +71,5 @@
     <string name="mark_as_inactive">Tandai sebagai tour tidak aktif</string>
     <string name="inactive">Tidak Aktif</string>
     <string name="active">Tour Aktif</string>
+    <string name="active_tour_plan_empty">Belum ada tour aktif.</string>
 </resources>

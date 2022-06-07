@@ -30,6 +30,11 @@ interface TourPlanApi {
         @Path("id") id: Int
     ): Response<TourPlanByIdResponse>
 
+    @GET("tourplan/active")
+    suspend fun getActiveTourPlan(
+        @Header("Authorization") token: String,
+    ): Response<TourPlanByIdResponse>
+
     @POST("tourplan")
     suspend fun saveTourPlan(
         @Header("Authorization") token: String,

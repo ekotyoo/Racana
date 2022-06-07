@@ -127,6 +127,58 @@ class TourPlanRepository @Inject constructor(
         }
     }
 
+    suspend fun getActiveTourPlan(): Result<TourPlan> {
+        try {
+            val token = userPreferencesDataStore.userData.first().token
+            val response = tourPlanApi.getActiveTourPlan(token ?: "")
+            val data = response.body()?.data
+
+            if (response.isSuccessful && data != null) {
+                val tourPlans = TourPlan(
+                    id = data.id.toLong(),
+                    title = data.title,
+                    description = data.description,
+                    isActive = data.isActive,
+                    dailyList = data.tourPlanDates.mapIndexed { i, date ->
+                        DailyItem(
+                            id = date.id,
+                            number = i + 1,
+                            date = Instant.ofEpochMilli(date.dateMillis)
+                                .atZone(ZoneId.systemDefault())
+                                .toLocalDate(),
+                            destinationList = date.destinations.map { destination ->
+                                TravelDestination(
+                                    id = destination.id,
+                                    name = destination.name,
+                                    description = destination.description,
+                                    city = destination.city,
+                                    address = destination.address,
+                                    rating = destination.rating,
+                                    imageUrl = destination.imageUrl,
+                                    weekdayPrice = destination.weekdayPrice,
+                                    weekendHolidayPrice = destination.weekendHolidayPrice,
+                                    lat = destination.lat ?: .0,
+                                    lon = destination.lon ?: .0,
+                                    categoryId = destination.categoryId ?: 0,
+                                    isDone = destination.relation.isDone
+                                )
+                            }
+                        )
+                    }.sortedBy { item ->
+                        item.date
+                    }
+                )
+                return Result.Success(tourPlans)
+            } else {
+                return Result.Error("Gagal mengambil data.", null)
+            }
+        } catch (e: IOException) {
+            return Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        } catch (e: HttpException) {
+            return Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        }
+    }
+
     suspend fun saveTourPlan(tourPlan: TourPlan, title: String, description: String): Result<Unit> {
         return try {
             val token = userPreferencesDataStore.userData.first().token

@@ -1,6 +1,5 @@
 package com.ekotyoo.racana.ui.main.dashboard
 
-import android.content.res.Configuration
 import android.widget.Toast
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -9,11 +8,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Notifications
-import androidx.compose.material.icons.rounded.Place
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,12 +26,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.ExperimentalTextApi
-import androidx.compose.ui.text.PlatformTextStyle
-import androidx.compose.ui.text.style.LineHeightStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.airbnb.lottie.compose.*
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.RDestinationCard
 import com.ekotyoo.racana.core.composables.RIconButton
@@ -39,7 +36,8 @@ import com.ekotyoo.racana.core.composables.RImageCard
 import com.ekotyoo.racana.core.navigation.BottomNavGraph
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.navigation.RootNavigator
-import com.ekotyoo.racana.core.theme.RacanaTheme
+import com.ekotyoo.racana.core.utils.currencyFormatter
+import com.ekotyoo.racana.data.model.TourPlan
 import com.ekotyoo.racana.data.model.TravelDestination
 import com.ekotyoo.racana.ui.destinations.ArticleListScreenDestination
 import com.ekotyoo.racana.ui.destinations.DestinationDetailScreenDestination
@@ -97,25 +95,27 @@ fun DashboardScreen(
             isLoading = state.isLoading,
             onDestinationClick = viewModel::onDestinationClicked,
             onAllDestinationClicked = viewModel::allDestinationClicked,
-            onAllArticleClicked = viewModel::allArticleCLicked
+            onAllArticleClicked = viewModel::allArticleCLicked,
+            tourPlan = state.activeTourPlan
         )
     }
 }
 
 @Composable
 fun DashboardContent(
+    tourPlan: TourPlan?,
     destinations: List<TravelDestination>,
     onDestinationClick: (Int) -> Unit = {},
     lazyListState: LazyListState,
     isLoading: Boolean,
     onAllDestinationClicked: () -> Unit,
-    onAllArticleClicked: () -> Unit
+    onAllArticleClicked: () -> Unit,
 ) {
     LazyColumn(
         state = lazyListState,
     ) {
         item {
-            DashboardHeader(isLoading = isLoading)
+            DashboardHeader(isLoading = isLoading, tourPlan)
             Spacer(Modifier.height(16.dp))
         }
         item {
@@ -219,6 +219,7 @@ fun DashboardAppBar(
 @Composable
 fun DashboardHeader(
     isLoading: Boolean,
+    tourPlan: TourPlan?,
 ) {
     Box(
         modifier = Modifier
@@ -236,10 +237,7 @@ fun DashboardHeader(
             Spacer(Modifier.height(16.dp))
             CurrentTourPlanCard(
                 modifier = Modifier.aspectRatio(1.58f),
-                imageUrl = "https://picsum.photos/200/300",
-                title = "Travel to Madura",
-                date = "16 Mei 2022 - 18 Mei 2022",
-                location = "Jawa Timur",
+                tourPlan = tourPlan,
                 isLoading = isLoading,
             )
         }
@@ -252,7 +250,7 @@ fun DashboardSection(
     title: String,
     seeAllVisible: Boolean = true,
     onAllItemShowClicked: () -> Unit = {},
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Column(modifier) {
         Row(
@@ -315,14 +313,10 @@ fun DestinationRow(
     }
 }
 
-@OptIn(ExperimentalTextApi::class)
 @Composable
 fun CurrentTourPlanCard(
     modifier: Modifier = Modifier,
-    imageUrl: String,
-    title: String,
-    date: String,
-    location: String,
+    tourPlan: TourPlan? = null,
     isLoading: Boolean = false,
 ) {
     val gradient = listOf(
@@ -348,104 +342,64 @@ fun CurrentTourPlanCard(
                 .background(brush)
                 .padding(8.dp))
         } else {
-            Column(modifier = Modifier.padding(8.dp)) {
-                CoilImage(
-                    modifier = Modifier
-                        .weight(1f)
-                        .clip(MaterialTheme.shapes.small)
-                        .fillMaxWidth(),
-                    imageModel = imageUrl,
-                    previewPlaceholder = R.drawable.ic_launcher_background,
-                    placeHolder = ImageBitmap.imageResource(id = R.drawable.image_placeholder),
-                    contentScale = ContentScale.Crop,
-                    contentDescription = null,
+            if (tourPlan == null) {
+                val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.location))
+                val progress by animateLottieCompositionAsState(
+                    composition,
+                    iterations = LottieConstants.IterateForever
                 )
-
-                Spacer(Modifier.height(8.dp))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                Column(
+                    modifier,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(
-                        text = title,
-                        style = MaterialTheme.typography.h6
+                    LottieAnimation(
+                        modifier = Modifier
+                            .size(160.dp)
+                            .align(Alignment.CenterHorizontally),
+                        composition = composition,
+                        progress = progress
                     )
-                    CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                modifier = Modifier.size(16.dp),
-                                imageVector = Icons.Rounded.Place,
-                                contentDescription = null,
-                                tint = MaterialTheme.colors.primary
-                            )
-                            Spacer(Modifier.width(4.dp))
-                            Text(
-                                text = location,
-                                style = MaterialTheme.typography.body2.copy(
-                                    platformStyle = PlatformTextStyle(
-                                        includeFontPadding = false
-                                    ),
-                                    lineHeightStyle = LineHeightStyle(
-                                        alignment = LineHeightStyle.Alignment.Center,
-                                        trim = LineHeightStyle.Trim.None
-                                    )
-                                ),
-                            )
-                        }
-                    }
+                    androidx.compose.material3.Text(text = stringResource(id = R.string.active_tour_plan_empty),
+                        style = MaterialTheme.typography.body1)
                 }
-                Text(
-                    modifier = Modifier.padding(horizontal = 8.dp),
-                    text = date,
-                    style = MaterialTheme.typography.body2
-                )
+            } else {
+                Column(modifier = Modifier.padding(8.dp)) {
+                    CoilImage(
+                        modifier = Modifier
+                            .weight(1f)
+                            .clip(MaterialTheme.shapes.small)
+                            .fillMaxWidth(),
+                        imageModel = tourPlan.imageUrl,
+                        previewPlaceholder = R.drawable.ic_launcher_background,
+                        placeHolder = ImageBitmap.imageResource(id = R.drawable.image_placeholder),
+                        contentScale = ContentScale.Crop,
+                        contentDescription = null,
+                    )
+
+                    Spacer(Modifier.height(8.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = tourPlan.title ?: "-",
+                            style = MaterialTheme.typography.h6
+                        )
+                        Text(
+                            text = currencyFormatter(tourPlan.totalExpense),
+                            style = MaterialTheme.typography.body2
+                        )
+                    }
+                    Text(
+                        modifier = Modifier.padding(horizontal = 8.dp),
+                        text = tourPlan.period,
+                        style = MaterialTheme.typography.body2
+                    )
+                }
             }
         }
     }
 }
-
-@Preview(
-    name = "Light Mode Preview",
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-    heightDp = 220
-)
-@Preview(
-    name = "Dark Mode Preview",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    heightDp = 220
-)
-@Composable
-fun CurrentTourPlanCardPreview() {
-    RacanaTheme {
-        CurrentTourPlanCard(
-            imageUrl = "",
-            title = "Travel to Madura",
-            location = "Jawa Timur",
-            date = "16 Mei 2022 - 18 Mei 2022"
-        )
-    }
-}
-
-//@Preview(
-//    name = "Light Mode Preview",
-//    showBackground = true,
-//    uiMode = Configuration.UI_MODE_NIGHT_NO
-//)
-//@Preview(
-//    name = "Dark Mode Preview",
-//    showBackground = true,
-//    uiMode = Configuration.UI_MODE_NIGHT_YES,
-//)
-//@Composable
-//fun MainScreenPreview() {
-//    RacanaTheme {
-//        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-//            DashboardContent(getDummyDestination(), rememberLazyListState())
-//        }
-//    }
-//}

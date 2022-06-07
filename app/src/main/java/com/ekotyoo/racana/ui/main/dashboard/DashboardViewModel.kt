@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.ekotyoo.racana.core.utils.Result
 import com.ekotyoo.racana.data.repository.AuthRepository
 import com.ekotyoo.racana.data.repository.DestinationRepository
+import com.ekotyoo.racana.data.repository.TourPlanRepository
 import com.ekotyoo.racana.ui.main.dashboard.model.DashboardEvent
 import com.ekotyoo.racana.ui.main.dashboard.model.DashboardState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
     authRepository: AuthRepository,
+    private val tourPlanRepository: TourPlanRepository,
     private val destinationRepository: DestinationRepository,
 ) : ViewModel() {
 
@@ -30,8 +32,11 @@ class DashboardViewModel @Inject constructor(
     val eventChannel = _eventChannel.receiveAsFlow()
 
     init {
-        getTopDestinations()
         viewModelScope.launch {
+            _state.update { it.copy(isLoading = true) }
+            getActiveTourPlan()
+            getTopDestinations()
+            _state.update { it.copy(isLoading = false) }
             authRepository.userData.collect { user ->
                 _state.update { it.copy(user = user) }
             }
@@ -44,18 +49,25 @@ class DashboardViewModel @Inject constructor(
         }
     }
 
-    private fun getTopDestinations() {
-        _state.update { it.copy(isLoading = true) }
-        viewModelScope.launch {
-            when (val result = destinationRepository.getTopDestinations(limit = 10)) {
-                is Result.Error -> {
-                    Timber.d("Error")
-                }
-                is Result.Success -> {
-                    _state.update { it.copy(destinations = result.value) }
-                }
+    private suspend fun getTopDestinations() {
+        when (val result = destinationRepository.getTopDestinations(limit = 10)) {
+            is Result.Error -> {
+                Timber.d("Error")
             }
-            _state.update { it.copy(isLoading = false) }
+            is Result.Success -> {
+                _state.update { it.copy(destinations = result.value) }
+            }
+        }
+    }
+
+    private suspend fun getActiveTourPlan() {
+        when (val result = tourPlanRepository.getActiveTourPlan()) {
+            is Result.Error -> {
+                Timber.d("Error")
+            }
+            is Result.Success -> {
+                _state.update { it.copy(activeTourPlan = result.value) }
+            }
         }
     }
 
