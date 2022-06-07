@@ -42,6 +42,14 @@ interface TourPlanApi {
         @Path("id") id: Int,
     ): Response<BaseResponse>
 
+    @FormUrlEncoded
+    @PUT("tourplan/{id}")
+    suspend fun updateTourPlanById(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int,
+        @Field("isActive") isActive: Boolean
+    ): Response<BaseResponse>
+
     @DELETE("tourplandate/{dateId}/destination/{destinationId}")
     suspend fun deleteTourPlanDateDestination(
         @Header("Authorization") token: String,

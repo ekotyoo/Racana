@@ -67,4 +67,8 @@
     <string name="item_option_button">Menu Item</string>
     <string name="delete_tour_plan">Hapus Tour Plan</string>
     <string name="popular_destination">Destinasi Populer</string>
+    <string name="mark_as_active">Tandai sebagai tour aktif</string>
+    <string name="mark_as_inactive">Tandai sebagai tour tidak aktif</string>
+    <string name="inactive">Tidak Aktif</string>
+    <string name="active">Tour Aktif</string>
 </resources>
