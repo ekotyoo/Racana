@@ -3,6 +3,7 @@ package com.ekotyoo.racana.ui.main.tourplandetailsaved
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -26,8 +27,11 @@ import com.airbnb.lottie.compose.*
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.AttractionList
 import com.ekotyoo.racana.core.composables.DayHeaderSection
+import com.ekotyoo.racana.core.composables.RFilledButton
 import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.NavigationTransition
+import com.ekotyoo.racana.core.theme.RacanaGray
+import com.ekotyoo.racana.core.theme.RacanaGreen
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.core.utils.currencyFormatter
 import com.ekotyoo.racana.ui.destinations.DestinationDetailScreenDestination
@@ -58,8 +62,6 @@ fun TourPlanDetailSavedScreen(
                 is TourPlanDetailSavedEvent.NavigateToDestinationDetail -> {
                     navigator.navigate(DestinationDetailScreenDestination(event.id))
                 }
-                is TourPlanDetailSavedEvent.NavigateBackWithMessage -> {}
-                is TourPlanDetailSavedEvent.StartTourButtonClicked -> {}
                 is TourPlanDetailSavedEvent.DeleteDestinationSuccess -> {
                     snackbarHostState.showSnackbar("Berhasil menghapus destinasi.")
                 }
@@ -71,6 +73,12 @@ fun TourPlanDetailSavedScreen(
                 }
                 is TourPlanDetailSavedEvent.MarkDestinationDoneError, TourPlanDetailSavedEvent.MarkDestinationNotDoneError -> {
                     snackbarHostState.showSnackbar("Gagal memperbaharui destinasi.")
+                }
+                is TourPlanDetailSavedEvent.UpdateTourPlanSuccess -> {
+                    snackbarHostState.showSnackbar("Berhasil memperbaharui tour plan.")
+                }
+                is TourPlanDetailSavedEvent.UpdateTourPlanError -> {
+                    snackbarHostState.showSnackbar("Gagal memperbaharui tour plan.")
                 }
             }
         }
@@ -108,14 +116,23 @@ fun TourPlanDetailSavedScreen(
                     )
                 }
             } else {
-                TourPlanDetailSavedContent(
-                    state = state,
-                    onDateSelected = viewModel::onDateSelected,
-                    onDestinationClicked = viewModel::navigateToDestinationDetail,
-                    onStartTourButtonClicked = viewModel::startTourButtonClicked,
-                    onDestinationDeleteButtonClicked = viewModel::onDestinationDeleteButtonClicked,
-                    onDestinationToggleDoneClicked = viewModel::onDestinationToggleDoneClicked
-                )
+                Box(Modifier.fillMaxSize()) {
+                    TourPlanDetailSavedContent(
+                        state = state,
+                        onDateSelected = viewModel::onDateSelected,
+                        onDestinationClicked = viewModel::navigateToDestinationDetail,
+                        onDestinationDeleteButtonClicked = viewModel::onDestinationDeleteButtonClicked,
+                        onDestinationToggleDoneClicked = viewModel::onDestinationToggleDoneClicked
+                    )
+
+                    RFilledButton(
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .padding(bottom = 32.dp, start = 16.dp, end = 16.dp),
+                        placeholderString = stringResource(id = if (state.tourPlan.isActive) R.string.mark_as_inactive else R.string.mark_as_active),
+                        onClick = viewModel::onToggleActive
+                    )
+                }
             }
         }
     }
@@ -130,7 +147,6 @@ fun TourPlanDetailSavedContent(
     onDestinationClicked: (Int) -> Unit,
     onDestinationDeleteButtonClicked: (Int) -> Unit,
     onDestinationToggleDoneClicked: (Int) -> Unit,
-    onStartTourButtonClicked: () -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -167,10 +183,26 @@ fun TourPlanDetailSavedContent(
                     style = MaterialTheme.typography.body2,
                 )
             }
-            Text(
-                text = currencyFormatter(state.tourPlan.totalExpense),
-                style = MaterialTheme.typography.subtitle1
-            )
+            Column(
+                horizontalAlignment = Alignment.End
+            ) {
+                val isActive = state.tourPlan.isActive
+                if (isActive) {
+                    Text(
+                        modifier = Modifier
+                            .clip(MaterialTheme.shapes.small)
+                            .background(color = RacanaGreen)
+                            .padding(horizontal = 8.dp, vertical = 4.dp),
+                        text = stringResource(id = R.string.active),
+                        style = MaterialTheme.typography.subtitle1,
+                        color = MaterialTheme.colors.onPrimary
+                    )
+                }
+                Text(
+                    text = currencyFormatter(state.tourPlan.totalExpense),
+                    style = MaterialTheme.typography.subtitle1
+                )
+            }
         }
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -224,7 +256,6 @@ fun TourPlanDetailSavedPreview() {
                 state = TourPlanDetailSavedState(),
                 onDateSelected = {},
                 onDestinationClicked = {},
-                onStartTourButtonClicked = {},
                 onDestinationDeleteButtonClicked = { },
                 onDestinationToggleDoneClicked = {}
             )

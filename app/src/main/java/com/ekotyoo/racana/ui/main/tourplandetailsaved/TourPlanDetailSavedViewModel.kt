@@ -34,7 +34,7 @@ class TourPlanDetailSavedViewModel @Inject constructor(
     init {
         val args = TourPlanDetailSavedScreenDestination.argsFrom(savedStateHandle)
         val tourPlan = args.tourPlan
-        if (tourPlan.id != null) {
+        tourPlan.id?.let {
             getTourPlanById(tourPlan.id.toInt())
         }
     }
@@ -46,12 +46,6 @@ class TourPlanDetailSavedViewModel @Inject constructor(
     fun navigateToDestinationDetail(id: Int) {
         viewModelScope.launch {
             _eventChannel.send(TourPlanDetailSavedEvent.NavigateToDestinationDetail(id))
-        }
-    }
-
-    fun startTourButtonClicked() {
-        viewModelScope.launch {
-            _eventChannel.send(TourPlanDetailSavedEvent.StartTourButtonClicked)
         }
     }
 
@@ -70,6 +64,27 @@ class TourPlanDetailSavedViewModel @Inject constructor(
                 markDestinationNotDone(destinationId)
             } else {
                 markDestinationDone(destinationId)
+            }
+        }
+    }
+
+    fun onToggleActive() {
+        _state.value.tourPlan.id?.let { updateTourPlan(it.toInt()) }
+    }
+
+    private fun updateTourPlan(id: Int) {
+        val newIsActive = !_state.value.tourPlan.isActive
+        viewModelScope.launch {
+            when (tourPlanRepository.updateTourPlan(id, newIsActive)) {
+                is Result.Success -> {
+                    _state.value.tourPlan.id?.toInt()?.let {
+                        getTourPlanById(it)
+                    }
+                    _eventChannel.send(TourPlanDetailSavedEvent.UpdateTourPlanSuccess)
+                }
+                is Result.Error -> {
+                    _eventChannel.send(TourPlanDetailSavedEvent.UpdateTourPlanError)
+                }
             }
         }
     }

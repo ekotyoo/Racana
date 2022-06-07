@@ -11,6 +11,7 @@ data class TourPlan(
     val title: String? = null,
     val description: String? = null,
     val dailyList: List<DailyItem>,
+    val isActive: Boolean = false,
 ) : Parcelable {
     val imageUrl: String
         get() = dailyList.firstOrNull()?.destinationList?.firstOrNull()?.imageUrl

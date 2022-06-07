@@ -86,6 +86,7 @@ class TourPlanRepository @Inject constructor(
                     id = data.id.toLong(),
                     title = data.title,
                     description = data.description,
+                    isActive = data.isActive,
                     dailyList = data.tourPlanDates.mapIndexed { i, date ->
                         DailyItem(
                             id = date.id,
@@ -165,6 +166,26 @@ class TourPlanRepository @Inject constructor(
                 Result.Success(Unit)
             } else {
                 Result.Error(message = "Gagal menghapus data.", throwable = null)
+            }
+        } catch (e: IOException) {
+            Timber.d(e.message)
+            Result.Error(message = "Terjadi kesalahan, coba lagi nanti!", throwable = e)
+        } catch (e: HttpException) {
+            Timber.d(e.message)
+            Result.Error(message = "Terjadi kesalahan, coba lagi nanti!", throwable = e)
+        }
+    }
+
+    suspend fun updateTourPlan(id: Int, isActive: Boolean): Result<Unit> {
+        return try {
+            val token = userPreferencesDataStore.userData.first().token
+            val response = tourPlanApi.updateTourPlanById(token ?: "", id, isActive)
+            val body = response.body()
+
+            if (response.isSuccessful && body?.status == "Success") {
+                Result.Success(Unit)
+            } else {
+                Result.Error(message = "Gagal memperbaharui data.", throwable = null)
             }
         } catch (e: IOException) {
             Timber.d(e.message)
