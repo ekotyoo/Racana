@@ -206,7 +206,7 @@ const getAllUserDestination = async (req, res) => {
     if (!destinationIds)
       return res.status(400).json(responseHelper.responseError("Failed getting data."));
 
-    res.json(responseHelper.responseSuccess(destinationIds, "Successfully getting data."));
+    res.json(responseHelper.responseSuccess(data, "Successfully getting data."));
   } catch (error) {
     console.log(error);
     res.status(500).json(responseHelper.responseError("Internal server error."));
