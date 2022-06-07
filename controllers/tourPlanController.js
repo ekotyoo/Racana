@@ -29,6 +29,7 @@ const getActiveTourPlan = async (req, res) => {
     const user = await UserModel.findOne({ where: { id: userId } });
 
     const data = await user.getTourplans({
+      where: { isActive: true },
       order: [["updatedAt", "DESC"]],
       limit: 1,
     });
