@@ -32,6 +32,7 @@ const getActiveTourPlan = async (req, res) => {
       where: { isActive: true },
       order: [["updatedAt", "DESC"]],
       limit: 1,
+      include: { model: TourPlanDateModel, include: [DestinationModel] },
     });
 
     if (!data[0]) return res.status(400).json(responseHelper.responseError("No data."));
