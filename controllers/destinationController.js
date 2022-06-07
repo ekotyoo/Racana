@@ -195,7 +195,7 @@ const deleteDestinationById = async (req, res) => {
 
 const getAllUserDestination = async (req, res) => {
   try {
-    const data = DateDestination.findAll();
+    const data = await DateDestination.findAll();
     const destinationIds = data.map((value) => {
       value.destinationId;
     });
