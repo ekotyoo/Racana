@@ -197,16 +197,15 @@ const getAllUserDestination = async (req, res) => {
   try {
     const data = await DateDestination.findAll({ attributes: ["destinationId"] });
     const destinationIds = data.map((value) => {
-      value.destinationId;
+      return value.destinationId;
     });
 
-    console.log(data);
     console.log(destinationIds);
 
     if (!destinationIds)
       return res.status(400).json(responseHelper.responseError("Failed getting data."));
 
-    res.json(responseHelper.responseSuccess(data, "Successfully getting data."));
+    res.json(responseHelper.responseSuccess(destinationIds, "Successfully getting data."));
   } catch (error) {
     console.log(error);
     res.status(500).json(responseHelper.responseError("Internal server error."));
