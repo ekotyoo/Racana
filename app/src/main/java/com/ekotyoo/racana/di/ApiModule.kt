@@ -61,4 +61,4 @@ object ApiModule {
         retrofit.create(DestinationApi::class.java)
 }
 
-private const val BASE_URL = "https://racana-test.herokuapp.com/api/"
+private const val BASE_URL = "https://racana-api-mg3l2wnsyq-et.a.run.app/api/"
