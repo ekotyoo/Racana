@@ -8,14 +8,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.RemoveDone
-import androidx.compose.material.icons.filled.TaskAlt
+import androidx.compose.material.icons.filled.Cancel
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.rounded.Cancel
+import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,6 +29,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.theme.RacanaGray
+import com.ekotyoo.racana.core.theme.RacanaRed
+import com.ekotyoo.racana.core.theme.RacanaWhite
 import com.ekotyoo.racana.core.utils.currencyFormatter
 import com.ekotyoo.racana.data.model.DailyItem
 import com.ekotyoo.racana.data.model.TravelDestination
@@ -150,59 +151,129 @@ fun AttractionCard(
         Column(
             modifier = Modifier.weight(0.8f)
         ) {
-            Card(
-                modifier = modifier
-                    .aspectRatio(3.4f),
-                onClick = onClick,
-                elevation = 8.dp,
-                shape = MaterialTheme.shapes.small
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    CoilImage(
-                        modifier = Modifier
-                            .aspectRatio(1f)
-                            .fillMaxHeight()
-                            .clip(MaterialTheme.shapes.small),
-                        imageModel = imageUrl,
-                        contentScale = ContentScale.Crop,
-                        placeHolder = ImageBitmap.imageResource(id = R.drawable.image_placeholder),
-                        previewPlaceholder = R.drawable.ic_launcher_background,
-                        contentDescription = null,
-                    )
-                    Spacer(Modifier.width(8.dp))
-                    Column(Modifier.weight(1f)) {
-                        Text(text = title,
-                            style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Bold),
-                            overflow = TextOverflow.Ellipsis,
-                            maxLines = 1
-                        )
-                        Text(text = currencyFormatter(expense),
-                            style = MaterialTheme.typography.body2)
-                        Text(text = location, style = MaterialTheme.typography.body2)
-                    }
-                    Row {
-                        if (onToggleDone != null) {
-                            RIconButton(
-                                imageVector = if (isDone) Icons.Default.RemoveDone else Icons.Default.TaskAlt,
-                                contentDescription = null,
-                                onClick = onToggleDone,
-                                background = MaterialTheme.colors.surface,
-                                tint = MaterialTheme.colors.onSurface
+            if (onDelete != null) {
+                SwipeToDismiss(
+                    directions = setOf(DismissDirection.EndToStart),
+                    state = rememberDismissState(
+                        confirmStateChange = {
+                            if (it == DismissValue.DismissedToStart) {
+                                onDelete.invoke()
+                            }
+                            true
+                        }
+                    ), background = {
+                        Box(
+                            modifier = Modifier
+                                .clip(MaterialTheme.shapes.small)
+                                .fillMaxSize()
+                                .background(RacanaRed)
+                        ) {
+                            Icon(
+                                modifier = Modifier
+                                    .align(Alignment.CenterEnd)
+                                    .padding(end = 16.dp),
+                                imageVector = Icons.Rounded.Delete,
+                                tint = RacanaWhite,
+                                contentDescription = null
                             )
                         }
-                        if (onDelete != null) {
-                            RIconButton(
-                                imageVector = Icons.Default.Delete,
+                    }
+                ) {
+                    Card(
+                        modifier = modifier
+                            .aspectRatio(3.4f),
+                        onClick = onClick,
+                        elevation = 8.dp,
+                        shape = MaterialTheme.shapes.small
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            CoilImage(
+                                modifier = Modifier
+                                    .aspectRatio(1f)
+                                    .fillMaxHeight()
+                                    .clip(MaterialTheme.shapes.small),
+                                imageModel = imageUrl,
+                                contentScale = ContentScale.Crop,
+                                placeHolder = ImageBitmap.imageResource(id = R.drawable.image_placeholder),
+                                previewPlaceholder = R.drawable.ic_launcher_background,
                                 contentDescription = null,
-                                onClick = onDelete,
-                                background = MaterialTheme.colors.surface,
-                                tint = MaterialTheme.colors.error
                             )
+                            Spacer(Modifier.width(8.dp))
+                            Column(Modifier.weight(1f)) {
+                                Text(text = title,
+                                    style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Bold),
+                                    overflow = TextOverflow.Ellipsis,
+                                    maxLines = 1
+                                )
+                                Text(text = currencyFormatter(expense),
+                                    style = MaterialTheme.typography.body2)
+                                Text(text = location, style = MaterialTheme.typography.body2)
+                            }
+                            Row {
+                                if (onToggleDone != null) {
+                                    RIconButton(
+                                        imageVector = if (isDone) Icons.Default.Cancel else Icons.Default.CheckCircle,
+                                        contentDescription = null,
+                                        onClick = onToggleDone,
+                                        background = MaterialTheme.colors.surface,
+                                        tint = MaterialTheme.colors.onSurface
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                Card(
+                    modifier = modifier
+                        .aspectRatio(3.4f),
+                    onClick = onClick,
+                    elevation = 8.dp,
+                    shape = MaterialTheme.shapes.small
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        CoilImage(
+                            modifier = Modifier
+                                .aspectRatio(1f)
+                                .fillMaxHeight()
+                                .clip(MaterialTheme.shapes.small),
+                            imageModel = imageUrl,
+                            contentScale = ContentScale.Crop,
+                            placeHolder = ImageBitmap.imageResource(id = R.drawable.image_placeholder),
+                            previewPlaceholder = R.drawable.ic_launcher_background,
+                            contentDescription = null,
+                        )
+                        Spacer(Modifier.width(8.dp))
+                        Column(Modifier.weight(1f)) {
+                            Text(text = title,
+                                style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Bold),
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 1
+                            )
+                            Text(text = currencyFormatter(expense),
+                                style = MaterialTheme.typography.body2)
+                            Text(text = location, style = MaterialTheme.typography.body2)
+                        }
+                        Row {
+                            if (onToggleDone != null) {
+                                RIconButton(
+                                    imageVector = if (isDone) Icons.Rounded.Cancel else Icons.Rounded.CheckCircle,
+                                    contentDescription = null,
+                                    onClick = onToggleDone,
+                                    background = MaterialTheme.colors.surface,
+                                    tint = MaterialTheme.colors.onSurface
+                                )
+                            }
                         }
                     }
                 }
