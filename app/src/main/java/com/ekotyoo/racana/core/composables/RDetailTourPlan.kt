@@ -1,7 +1,5 @@
 package com.ekotyoo.racana.core.composables
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -32,40 +30,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.theme.RacanaGray
-import com.ekotyoo.racana.core.theme.RacanaGreen
 import com.ekotyoo.racana.core.utils.currencyFormatter
 import com.ekotyoo.racana.data.model.DailyItem
 import com.ekotyoo.racana.data.model.TravelDestination
-import com.ekotyoo.racana.ui.main.tourplanresult.model.TourPlanResultState
 import com.skydoves.landscapist.coil.CoilImage
-
-@OptIn(ExperimentalAnimationApi::class)
-@Composable
-fun RDetailTourPlan(
-    modifier: Modifier = Modifier,
-    state: TourPlanResultState,
-    onDateSelected: (Int) -> Unit,
-    onDestinationClicked: (Int) -> Unit,
-    onDestinationDeleteButtonClicked: (Int) -> Unit,
-) {
-    Column(modifier) {
-        Spacer(Modifier.height(32.dp))
-        DayHeaderSection(
-            selectedDate = state.selectedDate,
-            dailyList = state.tourPlan?.dailyList,
-            onItemSelected = onDateSelected
-        )
-        Spacer(Modifier.height(16.dp))
-        AnimatedContent(modifier = Modifier.weight(1f),
-            targetState = state.selectedDestinationList) { targetList ->
-            AttractionList(
-                destinationList = targetList,
-                onClick = onDestinationClicked,
-                onDelete = onDestinationDeleteButtonClicked
-            )
-        }
-    }
-}
 
 @Composable
 fun AttractionList(

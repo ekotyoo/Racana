@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
+import com.ekotyoo.racana.core.composables.REmptyIndicator
 import com.ekotyoo.racana.core.composables.RListDestination
 import com.ekotyoo.racana.core.composables.RListLoadingIndicator
 import com.ekotyoo.racana.core.composables.RTopAppBar
@@ -21,7 +22,6 @@ import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.ui.destinations.DestinationDetailScreenDestination
 import com.ekotyoo.racana.ui.main.favoritedestination.model.FavoriteDestinationEvent
 import com.ekotyoo.racana.ui.main.favoritedestination.model.FavoriteDestinationState
-import com.ekotyoo.racana.ui.main.tourplanlist.TourPlanListEmpty
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -57,7 +57,8 @@ fun FavoriteDestinationScreen(
             onDestinationClicked = viewModel::onDestinationClicked
         )
         if (state.destinations.isEmpty() && !state.isLoading) {
-            TourPlanListEmpty(modifier = Modifier.align(Alignment.Center))
+            REmptyIndicator(modifier = Modifier.align(Alignment.Center),
+                text = stringResource(id = R.string.favorite_empty))
         }
         if (state.isLoading) {
             RListLoadingIndicator()

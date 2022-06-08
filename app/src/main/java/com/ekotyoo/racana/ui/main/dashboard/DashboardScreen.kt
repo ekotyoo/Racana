@@ -28,9 +28,9 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.airbnb.lottie.compose.*
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.RDestinationCard
+import com.ekotyoo.racana.core.composables.REmptyIndicator
 import com.ekotyoo.racana.core.composables.RIconButton
 import com.ekotyoo.racana.core.composables.RImageCard
 import com.ekotyoo.racana.core.navigation.BottomNavGraph
@@ -343,25 +343,8 @@ fun CurrentTourPlanCard(
                 .padding(8.dp))
         } else {
             if (tourPlan == null) {
-                val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.location))
-                val progress by animateLottieCompositionAsState(
-                    composition,
-                    iterations = LottieConstants.IterateForever
-                )
-                Column(
-                    modifier,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    LottieAnimation(
-                        modifier = Modifier
-                            .size(160.dp)
-                            .align(Alignment.CenterHorizontally),
-                        composition = composition,
-                        progress = progress
-                    )
-                    androidx.compose.material3.Text(text = stringResource(id = R.string.active_tour_plan_empty),
-                        style = MaterialTheme.typography.body1)
-                }
+                REmptyIndicator(modifier,
+                    text = stringResource(id = R.string.active_tour_plan_empty))
             } else {
                 Column(modifier = Modifier.padding(8.dp)) {
                     CoilImage(

@@ -56,7 +56,7 @@
     <string name="title">Judul</string>
     <string name="description">Deskripsi</string>
     <string name="save_tour_plan">Simpan Tour Plan</string>
-    <string name="tour_plan_empty">Tour Plan Anda Kosong</string>
+    <string name="tour_plan_empty">Belum ada Tour Plan Tersimpan</string>
     <string name="upgrade_premium">Upgrade Premium</string>
     <string name="trip_date">Tanggal Trip</string>
     <string name="search">Pencarian</string>
@@ -71,5 +71,6 @@
     <string name="mark_as_inactive">Tandai sebagai tour tidak aktif</string>
     <string name="inactive">Tidak Aktif</string>
     <string name="active">Tour Aktif</string>
-    <string name="active_tour_plan_empty">Belum ada tour aktif.</string>
+    <string name="active_tour_plan_empty">Belum ada Tour Aktif</string>
+    <string name="favorite_empty">Belum ada Destinasi Favorit</string>
 </resources>

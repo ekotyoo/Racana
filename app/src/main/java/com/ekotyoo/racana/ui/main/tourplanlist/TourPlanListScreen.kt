@@ -3,19 +3,17 @@ package com.ekotyoo.racana.ui.main.tourplanlist
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.airbnb.lottie.compose.*
 import com.ekotyoo.racana.R
+import com.ekotyoo.racana.core.composables.REmptyIndicator
 import com.ekotyoo.racana.core.composables.RListLoadingIndicator
 import com.ekotyoo.racana.core.composables.RPlanCard
 import com.ekotyoo.racana.core.composables.RTopAppBar
@@ -73,34 +71,12 @@ fun TourPlanListScreen(
             snackbarHostState = snackbarHostState
         )
         if (tourPlanEmpty && !state.isLoading) {
-            TourPlanListEmpty(modifier = Modifier.align(Alignment.Center))
+            REmptyIndicator(modifier = Modifier.align(Alignment.Center),
+                text = stringResource(id = R.string.tour_plan_empty))
         }
         if (state.isLoading) {
             RListLoadingIndicator()
         }
-    }
-}
-
-@Composable
-fun TourPlanListEmpty(modifier: Modifier = Modifier) {
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.location))
-    val progress by animateLottieCompositionAsState(
-        composition,
-        iterations = LottieConstants.IterateForever
-    )
-    Column(
-        modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        LottieAnimation(
-            modifier = Modifier
-                .size(160.dp)
-                .align(Alignment.CenterHorizontally),
-            composition = composition,
-            progress = progress
-        )
-        Text(text = stringResource(id = R.string.tour_plan_empty),
-            style = MaterialTheme.typography.body1)
     }
 }
 
