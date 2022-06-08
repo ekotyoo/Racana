@@ -1,4 +1,7 @@
 const dummyJson = require("../utils/dummyPredict.json");
+const { QueryTypes } = require("sequelize");
+const db = require("../config/db");
+const responseHelper = require("../utils/responseHelper");
 
 const predictDummyTourPlan = (req, res) => {
   res.json(dummyJson);
@@ -6,7 +9,7 @@ const predictDummyTourPlan = (req, res) => {
 
 const getDatasetRating = async (req, res) => {
   try {
-    const data = await sequelize.query("SELECT * FROM `dataset_rating`", {
+    const data = await db.query("SELECT * FROM `dataset_rating`", {
       type: QueryTypes.SELECT,
     });
     if (!data) return res.status(400).json(responseHelper.responseError("Not found"));
