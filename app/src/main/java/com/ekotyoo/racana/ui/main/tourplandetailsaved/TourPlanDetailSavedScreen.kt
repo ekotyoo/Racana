@@ -23,14 +23,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.airbnb.lottie.compose.*
 import com.ekotyoo.racana.R
-import com.ekotyoo.racana.core.composables.AttractionList
-import com.ekotyoo.racana.core.composables.DayHeaderSection
-import com.ekotyoo.racana.core.composables.RFilledButton
-import com.ekotyoo.racana.core.composables.RTopAppBar
+import com.ekotyoo.racana.core.composables.*
 import com.ekotyoo.racana.core.navigation.NavigationTransition
-import com.ekotyoo.racana.core.theme.RacanaGray
 import com.ekotyoo.racana.core.theme.RacanaGreen
 import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.core.utils.currencyFormatter
@@ -101,20 +96,7 @@ fun TourPlanDetailSavedScreen(
             }
         ) {
             if (state.isLoading) {
-                val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.location_loading))
-                val progress by animateLottieCompositionAsState(
-                    composition,
-                    iterations = LottieConstants.IterateForever
-                )
-                Box(Modifier.fillMaxSize()) {
-                    LottieAnimation(
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .size(160.dp),
-                        composition = composition,
-                        progress = progress
-                    )
-                }
+                RListLoadingIndicator()
             } else {
                 Box(Modifier.fillMaxSize()) {
                     TourPlanDetailSavedContent(

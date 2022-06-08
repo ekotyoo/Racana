@@ -19,7 +19,6 @@ val balooFamily = FontFamily(
     Font(R.font.baloo_bold, FontWeight.Bold)
 )
 
-// Set of Material typography styles to start with
 @JvmName("getTypography1")
 @Composable
 fun getTypography(): Typography {
@@ -37,7 +36,7 @@ fun getTypography(): Typography {
         caption = TextStyle(
             fontFamily = poppinsFamily,
             fontWeight = FontWeight.Normal,
-            fontSize = RacanaTheme.dimens.sp10
+            fontSize = RacanaTheme.dimens.sp12
         ),
         button = TextStyle(
             fontFamily = balooFamily,
@@ -66,45 +65,3 @@ fun getTypography(): Typography {
         ),
     )
 }
-val Typography = Typography(
-    body1 = TextStyle(
-        fontFamily = poppinsFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 14.sp
-    ),
-    body2 = TextStyle(
-        fontFamily = poppinsFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
-    ),
-    caption = TextStyle(
-        fontFamily = poppinsFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 10.sp
-    ),
-    button = TextStyle(
-        fontFamily = balooFamily,
-        fontWeight = FontWeight.Bold,
-        fontSize = 16.sp
-    ),
-    subtitle1 = TextStyle(
-        fontFamily = poppinsFamily,
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 16.sp
-    ),
-    subtitle2 = TextStyle(
-        fontFamily = poppinsFamily,
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 14.sp
-    ),
-    h5 = TextStyle(
-        fontFamily = balooFamily,
-        fontWeight = FontWeight.Bold,
-        fontSize = 24.sp
-    ),
-    h6 = TextStyle(
-        fontFamily = balooFamily,
-        fontWeight = FontWeight.Bold,
-        fontSize = 20.sp,
-    ),
-)
