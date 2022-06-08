@@ -74,7 +74,10 @@ fun DestinationDetailScreen(
                     snackbarHostState.showSnackbar("Destinasi berhasil dihapus dari favorit.")
                 }
                 DestinationDetailEvent.UndoFavoriteDestinationError -> {
-                    snackbarHostState.showSnackbar("Gagal menghapus destinasi favorit")
+                    snackbarHostState.showSnackbar("Gagal menghapus destinasi favorit.")
+                }
+                DestinationDetailEvent.GetDestinationDetailError -> {
+                    snackbarHostState.showSnackbar("Gagal mengambil data.")
                 }
             }
         }
@@ -265,7 +268,7 @@ fun CounterPreview() {
                 )
             ),
             snackbarHostState = SnackbarHostState(),
-            onBackButtonClicked = { /*TODO*/ },
+            onBackButtonClicked = {},
             onFavoriteButtonClicked = {},
             onUndoFavoriteButtonClicked = {}
         )

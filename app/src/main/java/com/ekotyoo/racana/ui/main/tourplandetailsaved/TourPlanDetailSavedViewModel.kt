@@ -152,7 +152,7 @@ class TourPlanDetailSavedViewModel @Inject constructor(
                     _state.update { it.copy(tourPlan = result.value) }
                 }
                 is Result.Error -> {
-                    // TODO: Handle error 
+                    _eventChannel.send(TourPlanDetailSavedEvent.GetTourPlanDetailError)
                 }
             }
             _state.update { it.copy(isLoading = false) }

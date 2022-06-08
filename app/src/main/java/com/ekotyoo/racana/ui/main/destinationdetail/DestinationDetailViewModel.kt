@@ -108,7 +108,7 @@ class DestinationDetailViewModel @Inject constructor(
                     }
                 }
                 is Result.Error -> {
-                    // TODO: Handle error
+                    _eventChannel.send(DestinationDetailEvent.GetDestinationDetailError)
                 }
             }
             _state.update { it.copy(isLoading = false) }

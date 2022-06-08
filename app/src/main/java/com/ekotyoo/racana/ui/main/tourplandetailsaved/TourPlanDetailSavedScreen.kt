@@ -75,6 +75,9 @@ fun TourPlanDetailSavedScreen(
                 is TourPlanDetailSavedEvent.UpdateTourPlanError -> {
                     snackbarHostState.showSnackbar("Gagal memperbaharui tour plan.")
                 }
+                is TourPlanDetailSavedEvent.GetTourPlanDetailError -> {
+                    snackbarHostState.showSnackbar("Gagal mengambil data.")
+                }
             }
         }
     }

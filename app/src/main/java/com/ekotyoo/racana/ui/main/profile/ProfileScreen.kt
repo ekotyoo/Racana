@@ -1,12 +1,16 @@
 package com.ekotyoo.racana.ui.main.profile
 
 import android.content.res.Configuration
+import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -15,7 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -33,7 +37,6 @@ import com.ekotyoo.racana.ui.destinations.LoginScreenDestination
 import com.ekotyoo.racana.ui.destinations.MainScreenDestination
 import com.ekotyoo.racana.ui.main.profile.model.ProfileEvent
 import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
 import com.skydoves.landscapist.coil.CoilImage
 
@@ -41,12 +44,12 @@ import com.skydoves.landscapist.coil.CoilImage
 @Destination(style = NavigationTransition::class)
 @Composable
 fun ProfileScreen(
-    navigator: DestinationsNavigator,
     rootNavigator: RootNavigator,
-    viewModel: ProfileViewModel = hiltViewModel()
+    viewModel: ProfileViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.eventChannel.collect { event ->
@@ -63,18 +66,21 @@ fun ProfileScreen(
                 ProfileEvent.NavigateToFavoriteDestination -> {
                     rootNavigator.value.navigate(FavoriteDestinationScreenDestination)
                 }
-                ProfileEvent.NavigateToMyPlan -> {}
-                ProfileEvent.NavigateToSettings -> {}
+                ProfileEvent.NavigateToMyPlan -> {
+                    Toast.makeText(context, "Fitur ini belum tersedia", Toast.LENGTH_SHORT).show()
+                }
+                ProfileEvent.NavigateToSettings -> {
+                    Toast.makeText(context, "Fitur ini belum tersedia", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
 
     Box(Modifier.fillMaxSize()) {
         ProfileContent(
-            profilePictureUrl = "https://picsum.photos/200/300",
+            profilePictureUrl = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png",
             nameTextFieldValue = state.user?.name ?: "Unknown",
             emailTextFieldValue = state.user?.email ?: "Unknown",
-            isPremium = state.isPremium,
             onMyPlanButtonCLicked = viewModel::onMyPlanButtonClicked,
             onFavoriteDestinationButtonCLicked = viewModel::onFavoriteDestinationButtonClicked,
             onSettingsButtonCLicked = viewModel::onSettingsButtonClicked,
@@ -89,11 +95,10 @@ fun ProfileContent(
     profilePictureUrl: String,
     nameTextFieldValue: String,
     emailTextFieldValue: String,
-    isPremium: Boolean,
     onMyPlanButtonCLicked: () -> Unit,
     onFavoriteDestinationButtonCLicked: () -> Unit,
     onSettingsButtonCLicked: () -> Unit,
-    onLogOutButtonClicked: () -> Unit
+    onLogOutButtonClicked: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -191,10 +196,12 @@ fun ProfileButton(
     text: String,
     icon: ImageVector,
     isWarning: Boolean = false,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
-    val textAndIconColor = if (isWarning) MaterialTheme.colors.error else MaterialTheme.colors.onBackground
-    val buttonColor = if (isWarning) MaterialTheme.colors.background else MaterialTheme.colors.secondary
+    val textAndIconColor =
+        if (isWarning) MaterialTheme.colors.error else MaterialTheme.colors.onBackground
+    val buttonColor =
+        if (isWarning) MaterialTheme.colors.background else MaterialTheme.colors.secondary
     val borderColor = if (isWarning) MaterialTheme.colors.error else MaterialTheme.colors.secondary
 
     Column(modifier) {
@@ -239,7 +246,7 @@ fun ProfileButton(
                         shape = MaterialTheme.shapes.small
                     )
                     .padding(4.dp),
-                tint = if(isWarning) MaterialTheme.colors.error else MaterialTheme.colors.onSecondary,
+                tint = if (isWarning) MaterialTheme.colors.error else MaterialTheme.colors.onSecondary,
             )
         }
         Spacer(Modifier.height(8.dp))
@@ -264,7 +271,6 @@ fun RegisterScreenPreview() {
                 profilePictureUrl = "",
                 nameTextFieldValue = "JohnDoe",
                 emailTextFieldValue = "john@mail.com",
-                isPremium = false,
                 {},
                 {},
                 {},
