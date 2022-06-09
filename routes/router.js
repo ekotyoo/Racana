@@ -31,6 +31,11 @@ router.delete(
   tokenValidation,
   tourPlanDateController.deleteTourPlanDateDestination
 );
+router.post(
+  "/tourplandate/:dateId/destination/:destinationId",
+  tokenValidation,
+  tourPlanDateController.insertTourPlanDateDestination
+);
 router.put(
   "/tourplandate/:dateId/destination/:destinationId/done",
   tokenValidation,

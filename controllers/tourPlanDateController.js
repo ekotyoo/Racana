@@ -103,9 +103,40 @@ const deleteTourPlanDateDestination = async (req, res) => {
   }
 };
 
+const insertTourPlanDateDestination = async (req, res) => {
+  try {
+    const dateId = req.params.dateId;
+    const destinationId = req.params.destinationId;
+
+    const date = await TourPlanDateModel.findOne({
+      where: {
+        id: dateId,
+      },
+    });
+
+    const destination = await DestinationModel.findOne({
+      where: {
+        id: destinationId,
+      },
+    });
+
+    const result = await date.addDestination(destination);
+    console.log(result);
+
+    if (!result)
+      return res.status(400).json(responseHelper.responseError("Failed deleting destination"));
+
+    res.json(responseHelper.responseSuccess(result, "Sucessfully deleting destination from date."));
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(responseHelper.responseError("Internal server error."));
+  }
+};
+
 module.exports = {
   getAllTourPlanDate,
   deleteTourPlanDateDestination,
+  insertTourPlanDateDestination,
   markTourPlanDone,
   markTourPlanNotDone,
 };
