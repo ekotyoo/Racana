@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# from gettext import find
-# from glob import glob
 from flask import Flask, request, jsonify
 import numpy as np
 import pandas as pd
