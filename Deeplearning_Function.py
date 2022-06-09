@@ -1,16 +1,18 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# from gettext import find
-# from glob import glob
+from gettext import find
+from http.client import responses
+import os
+from unittest import result
 from flask import Flask, request, jsonify
 import numpy as np
 import pandas as pd
-import requests 
+import requests
 import json
+from keras.models import load_model
 from pandas import json_normalize
 import pickle
-import re
 
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
@@ -31,27 +33,16 @@ place_df.columns = ['id','place_name','category','rating','price']
 api('https://racana-test.herokuapp.com/api/datasetrating')
 df = data.copy()
 
-# loadmodel tensorflow
+# loadmodel
 from tensorflow import keras
 new_model = keras.models.load_model('path_to_my_model')
-#loadmodel apriori
-model = pickle.load(open("apriori.pkl", "rb"))
-output = list(model)
-pd.set_option('max_colwidth', 1000)
-Result=pd.DataFrame(columns=['Rule'])
-for item in output:
-    pair = item[2]
-    for i in pair:
-        items = str([x for x in i[0]])
-        if i[3]!=1:
-            Result=Result.append({'Rule':str([x for x in i[0]])+ " -> " +str([x for x in i[1]])},ignore_index=True)
 
-#endcoding
 def dict_encoder(col, data=df):
   unique_val = data[col].unique().tolist()
   val_to_val_encoded = {x: i for i, x in enumerate(unique_val)}
   val_encoded_to_val = {i: x for i, x in enumerate(unique_val)}
   return val_to_val_encoded, val_encoded_to_val
+
 
 @app.route("/recomendation/predict/<int:id>", methods=["GET"])
 def predict(id):
@@ -102,58 +93,14 @@ def predict1():
             {
                 "status": "Success",
                 "message": "Successfully making prediction",
-                "data": datafinal
+                "data": {
+                    "input1": datafinal,
+                }
             }
         )
 
-def find1(item):
-    out = []
-    for x in range(len(Result)):
-        if item in Result["Rule"].iloc[x]:
-            out.append(re.sub('[^\w]', " ", Result["Rule"].iloc[x]).replace(item, "").strip())
-    for x in range(len(out)): #doubles
-        if out[x] != "":
-            return out[x]
 
-def find2(item1, item2):
-    out = []
-    for x in range(len(Result)):
-        if item2 in Result["Rule"].iloc[x]:
-            out.append(re.sub('[^\w]', " ", Result["Rule"].iloc[x]).replace(item1, "").replace(item2, "").strip())
-    for x in range(len(out)):
-        if out[x] != "":
-            return out[x]
 
-@app.route('/')
-def main():
-    return 'Hallow'
-
-data = None
-@app.route('/predict', methods = ['POST'])
-def predict2():
-    global data
-    if request.method == 'POST':
-        input1 = request.form['input1']
-        data = find1(input1)
-        return jsonify(
-            {
-                "status": "Success",
-                "message": "Successfully making prediction",
-                "data": data
-            }
-        )
-@app.route('/predict2', methods = ['POST'])
-def predict3():
-    if request.method == 'POST':
-        input1 = request.form['input1']
-        data1 = find2(data, input1)
-        return jsonify(
-            {
-                "status": "Success",
-                "message": "Successfully making prediction",
-                "data": data1
-            }
-        )
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0')
