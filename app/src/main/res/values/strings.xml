@@ -73,4 +73,5 @@
     <string name="active">Tour Aktif</string>
     <string name="active_tour_plan_empty">Belum ada Tour Aktif</string>
     <string name="favorite_empty">Belum ada Destinasi Favorit</string>
+    <string name="add_destination">Tambah Destinasi</string>
 </resources>

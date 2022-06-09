@@ -19,11 +19,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -43,10 +45,12 @@ fun AttractionList(
     onClick: (Int) -> Unit,
     onDelete: ((Int) -> Unit)? = null,
     onToggleDone: ((Int) -> Unit)? = null,
+    onAddDestinationClick: (() -> Unit)? = null,
 ) {
     val items = destinationList ?: emptyList()
     LazyColumn(
-        modifier = modifier.padding(horizontal = 16.dp)
+        modifier = modifier.padding(horizontal = 16.dp),
+        contentPadding = PaddingValues(vertical = 16.dp)
     ) {
         items(items) { destination ->
             AttractionCard(
@@ -64,6 +68,48 @@ fun AttractionList(
                 onToggleDone = if (onToggleDone != null) {
                     { onToggleDone(destination.id) }
                 } else null
+            )
+        }
+        onAddDestinationClick?.let {
+            item {
+                AddDestinationButton(onAddDestinationClick)
+            }
+        }
+    }
+}
+
+@Composable
+fun AddDestinationButton(
+    onClick: () -> Unit
+) {
+    Row(
+        Modifier
+            .clickable(onClick = onClick)
+            .fillMaxWidth()
+            .height(64.dp)) {
+        Spacer(Modifier
+            .weight(0.2f)
+            .aspectRatio(1f))
+        Box(
+            modifier = Modifier
+                .weight(0.8f),
+        ) {
+            val color = MaterialTheme.colors.primary
+            Canvas(modifier = Modifier.fillMaxSize()) {
+                drawRoundRect(
+                    color = color,
+                    style = Stroke(
+                        width = 1.5.dp.toPx(),
+                        pathEffect = PathEffect.dashPathEffect(floatArrayOf(16f, 16f), 16f)
+                    ),
+                    cornerRadius = CornerRadius(12.dp.toPx(), 12.dp.toPx())
+                )
+            }
+            Text(
+                modifier = Modifier.align(Alignment.Center),
+                text = stringResource(id = R.string.add_destination),
+                style = MaterialTheme.typography.button,
+                color = MaterialTheme.colors.primary,
             )
         }
     }
@@ -154,6 +200,7 @@ fun AttractionCard(
             if (onDelete != null) {
                 SwipeToDismiss(
                     directions = setOf(DismissDirection.EndToStart),
+                    dismissThresholds = {FractionalThreshold(0.8f)},
                     state = rememberDismissState(
                         confirmStateChange = {
                             if (it == DismissValue.DismissedToStart) {

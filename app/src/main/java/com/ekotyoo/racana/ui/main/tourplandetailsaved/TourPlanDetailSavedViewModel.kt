@@ -72,6 +72,33 @@ class TourPlanDetailSavedViewModel @Inject constructor(
         _state.value.tourPlan.id?.let { updateTourPlan(it.toInt()) }
     }
 
+    fun onAddDestinationClicked() {
+        viewModelScope.launch { _eventChannel.send(TourPlanDetailSavedEvent.OpenSearchSheet) }
+    }
+
+    fun onSearchResultClick(destinationId: Int) {
+        viewModelScope.launch { _eventChannel.send(TourPlanDetailSavedEvent.CloseSearchSheet) }
+        addDestination(destinationId)
+    }
+
+    private fun addDestination(destinationId: Int) {
+        viewModelScope.launch {
+            val dateId = _state.value.tourPlan.dailyList[_state.value.selectedDate].id
+            when (tourPlanRepository.addTourPlanDateDestination(dateId, destinationId)) {
+                is Result.Success -> {
+                    val id = _state.value.tourPlan.id?.toInt()
+                    id?.let {
+                        getTourPlanById(id)
+                    }
+                    _eventChannel.send(TourPlanDetailSavedEvent.AddDestinationSuccess)
+                }
+                is Result.Error -> {
+                    _eventChannel.send(TourPlanDetailSavedEvent.AddDestinationError)
+                }
+            }
+        }
+    }
+
     private fun updateTourPlan(id: Int) {
         val newIsActive = !_state.value.tourPlan.isActive
         viewModelScope.launch {

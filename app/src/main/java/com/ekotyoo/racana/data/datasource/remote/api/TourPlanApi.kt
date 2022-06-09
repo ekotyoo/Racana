@@ -62,6 +62,13 @@ interface TourPlanApi {
         @Path("destinationId") destinationId: Int,
     ): Response<BaseResponse>
 
+    @POST("tourplandate/{dateId}/destination/{destinationId}")
+    suspend fun addTourPlanDateDestination(
+        @Header("Authorization") token: String,
+        @Path("dateId") dateId: Int,
+        @Path("destinationId") destinationId: Int,
+    ): Response<BaseResponse>
+
     @PUT("tourplandate/{dateId}/destination/{destinationId}/done")
     suspend fun markDestinationDone(
         @Header("Authorization") token: String,

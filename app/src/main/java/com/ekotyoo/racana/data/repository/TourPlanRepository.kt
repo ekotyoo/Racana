@@ -336,6 +336,30 @@ class TourPlanRepository @Inject constructor(
         }
     }
 
+    suspend fun addTourPlanDateDestination(
+        dateId: Int,
+        destinationId: Int,
+    ): Result<Unit> {
+        return try {
+            val token = userPreferencesDataStore.userData.first().token
+            val response =
+                tourPlanApi.addTourPlanDateDestination(token ?: "", dateId, destinationId)
+            val body = response.body()
+
+            if (response.isSuccessful && body?.status == "Success") {
+                Result.Success(Unit)
+            } else {
+                Result.Error(message = "Gagal menambahkan data.", throwable = null)
+            }
+        } catch (e: IOException) {
+            Timber.d(e.message)
+            Result.Error(message = "Terjadi kesalahan, coba lagi nanti!", throwable = e)
+        } catch (e: HttpException) {
+            Timber.d(e.message)
+            Result.Error(message = "Terjadi kesalahan, coba lagi nanti!", throwable = e)
+        }
+    }
+
     suspend fun markDestinationDone(
         dateId: Int,
         destinationId: Int,
