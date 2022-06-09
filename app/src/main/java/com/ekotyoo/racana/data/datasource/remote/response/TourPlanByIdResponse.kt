@@ -19,8 +19,8 @@ data class DateDestination(
 	@field:SerializedName("isDone")
 	val isDone: Boolean,
 
-    @field:SerializedName("updatedAt")
-    val updatedAt: String
+    @field:SerializedName("createdAt")
+    val createdAt: String
 )
 
 data class TourPlanData(

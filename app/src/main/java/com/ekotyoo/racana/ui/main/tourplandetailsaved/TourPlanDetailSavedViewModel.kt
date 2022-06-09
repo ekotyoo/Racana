@@ -72,10 +72,6 @@ class TourPlanDetailSavedViewModel @Inject constructor(
         _state.value.tourPlan.id?.let { updateTourPlan(it.toInt()) }
     }
 
-    fun onAddDestinationClicked() {
-        viewModelScope.launch { _eventChannel.send(TourPlanDetailSavedEvent.OpenSearchSheet) }
-    }
-
     fun onSearchResultClick(destinationId: Int) {
         viewModelScope.launch { _eventChannel.send(TourPlanDetailSavedEvent.CloseSearchSheet) }
         addDestination(destinationId)

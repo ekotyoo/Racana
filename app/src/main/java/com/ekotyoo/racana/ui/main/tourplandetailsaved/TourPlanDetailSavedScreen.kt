@@ -15,10 +15,7 @@ import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,6 +44,7 @@ import com.ekotyoo.racana.ui.main.tourplanmap.model.TourPlanMapArgument
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Destination(
@@ -91,9 +89,6 @@ fun TourPlanDetailSavedScreen(
                 }
                 is TourPlanDetailSavedEvent.GetTourPlanDetailError -> {
                     snackbarHostState.showSnackbar("Gagal mengambil data.")
-                }
-                is TourPlanDetailSavedEvent.OpenSearchSheet -> {
-                    modalBottomSheetState.show()
                 }
                 is TourPlanDetailSavedEvent.CloseSearchSheet -> {
                     modalBottomSheetState.hide()
@@ -183,12 +178,17 @@ fun TourPlanDetailSavedScreen(
                 if (state.isLoading) {
                     RListLoadingIndicator()
                 } else {
+                    val scope = rememberCoroutineScope()
                     Box(Modifier.fillMaxSize()) {
                         TourPlanDetailSavedContent(
                             state = state,
                             onDateSelected = viewModel::onDateSelected,
                             onDestinationClicked = viewModel::navigateToDestinationDetail,
-                            onAddDestinationClicked = viewModel::onAddDestinationClicked,
+                            onAddDestinationClicked = {
+                                scope.launch {
+                                    modalBottomSheetState.show()
+                                }
+                            },
                             onDestinationDeleteButtonClicked = viewModel::onDestinationDeleteButtonClicked,
                             onDestinationToggleDoneClicked = viewModel::onDestinationToggleDoneClicked
                         )

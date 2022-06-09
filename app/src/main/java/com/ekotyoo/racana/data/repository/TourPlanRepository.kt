@@ -96,7 +96,7 @@ class TourPlanRepository @Inject constructor(
                                 .atZone(ZoneId.systemDefault())
                                 .toLocalDate(),
                             destinationList = date.destinations.sortedBy {
-                                formatDate(it.relation.updatedAt)
+                                formatDate(it.relation.createdAt)
                             }.map { destination ->
                                 TravelDestination(
                                     id = destination.id,
