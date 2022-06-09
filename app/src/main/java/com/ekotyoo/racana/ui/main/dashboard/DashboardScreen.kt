@@ -42,6 +42,7 @@ import com.ekotyoo.racana.data.model.TravelDestination
 import com.ekotyoo.racana.ui.destinations.ArticleListScreenDestination
 import com.ekotyoo.racana.ui.destinations.DestinationDetailScreenDestination
 import com.ekotyoo.racana.ui.destinations.ListDestinationScreenDestination
+import com.ekotyoo.racana.ui.destinations.TourPlanDetailSavedScreenDestination
 import com.ekotyoo.racana.ui.main.dashboard.model.DashboardEvent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.skydoves.landscapist.coil.CoilImage
@@ -67,11 +68,16 @@ fun DashboardScreen(
                         launchSingleTop = true
                     }
                 }
-                is DashboardEvent.allDestinationClicked -> {
+                is DashboardEvent.AllDestinationClicked -> {
                     rootNavigator.value.navigate(ListDestinationScreenDestination)
                 }
-                is DashboardEvent.allArticleClicked -> {
+                is DashboardEvent.AllArticleClicked -> {
                     rootNavigator.value.navigate(ArticleListScreenDestination)
+                }
+                is DashboardEvent.NavigateToTourPlanDetail -> {
+                    rootNavigator.value.navigate(TourPlanDetailSavedScreenDestination(event.tourPlan)) {
+                        launchSingleTop = true
+                    }
                 }
             }
         }
@@ -94,6 +100,7 @@ fun DashboardScreen(
             lazyListState = lazyListState,
             isLoading = state.isLoading,
             onDestinationClick = viewModel::onDestinationClicked,
+            onTourPlanClick = viewModel::onTourPlanClicked,
             onAllDestinationClicked = viewModel::allDestinationClicked,
             onAllArticleClicked = viewModel::allArticleCLicked,
             tourPlan = state.activeTourPlan
@@ -106,6 +113,7 @@ fun DashboardContent(
     tourPlan: TourPlan?,
     destinations: List<TravelDestination>,
     onDestinationClick: (Int) -> Unit = {},
+    onTourPlanClick: () -> Unit = {},
     lazyListState: LazyListState,
     isLoading: Boolean,
     onAllDestinationClicked: () -> Unit,
@@ -115,7 +123,11 @@ fun DashboardContent(
         state = lazyListState,
     ) {
         item {
-            DashboardHeader(isLoading = isLoading, tourPlan)
+            DashboardHeader(isLoading = isLoading, tourPlan, onClick = {
+                tourPlan?.id?.let {
+                    onTourPlanClick()
+                }
+            })
             Spacer(Modifier.height(16.dp))
         }
         item {
@@ -220,6 +232,7 @@ fun DashboardAppBar(
 fun DashboardHeader(
     isLoading: Boolean,
     tourPlan: TourPlan?,
+    onClick: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -239,6 +252,7 @@ fun DashboardHeader(
                 modifier = Modifier.aspectRatio(1.58f),
                 tourPlan = tourPlan,
                 isLoading = isLoading,
+                onClick = onClick
             )
         }
     }
@@ -318,6 +332,7 @@ fun CurrentTourPlanCard(
     modifier: Modifier = Modifier,
     tourPlan: TourPlan? = null,
     isLoading: Boolean = false,
+    onClick: () -> Unit = {},
 ) {
     val gradient = listOf(
         Color.LightGray.copy(alpha = 0.9f),
@@ -335,7 +350,7 @@ fun CurrentTourPlanCard(
         end = Offset(x = translateX.value, y = 0f)
     )
 
-    Card(modifier) {
+    Card(modifier.clickable(onClick = onClick)) {
         if (isLoading) {
             Spacer(modifier = Modifier
                 .clip(MaterialTheme.shapes.small)

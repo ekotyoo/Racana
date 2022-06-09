@@ -42,7 +42,9 @@ class TourPlanRepository @Inject constructor(
                                 date = Instant.ofEpochMilli(date.dateMillis)
                                     .atZone(ZoneId.systemDefault())
                                     .toLocalDate(),
-                                destinationList = date.destinations.map { destination ->
+                                destinationList = date.destinations.sortedBy { destination ->
+                                    formatDate(destination.relation.createdAt)
+                                }.map { destination ->
                                     TravelDestination(
                                         id = destination.id,
                                         name = destination.name,
@@ -149,7 +151,9 @@ class TourPlanRepository @Inject constructor(
                             date = Instant.ofEpochMilli(date.dateMillis)
                                 .atZone(ZoneId.systemDefault())
                                 .toLocalDate(),
-                            destinationList = date.destinations.map { destination ->
+                            destinationList = date.destinations.sortedBy {
+                                formatDate(it.relation.createdAt)
+                            }.map { destination ->
                                 TravelDestination(
                                     id = destination.id,
                                     name = destination.name,

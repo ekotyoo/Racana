@@ -93,4 +93,7 @@ data class ListDestinationsItem(
 
 	@field:SerializedName("categoryId")
 	val categoryId: Int? = null,
+
+	@field:SerializedName("datedestination")
+	val relation: DateDestination,
 )

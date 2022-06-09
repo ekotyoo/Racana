@@ -99,7 +99,7 @@ class CreateTourPlanViewModel @Inject constructor(
         val stateValue = _state.value
         if (stateValue.selectedStartDate == null || stateValue.selectedEndDate == null ||
             stateValue.selectedCity.isEmpty() || stateValue.totalDestinationValue <= 0 ||
-            stateValue.totalBudgetTextFieldValue < 100000) {
+            stateValue.totalBudgetTextFieldValue < 10000) {
             viewModelScope.launch {
                 _eventChannel.send(CreateTourPlanEvent.SomeFieldsAreEmpty)
             }

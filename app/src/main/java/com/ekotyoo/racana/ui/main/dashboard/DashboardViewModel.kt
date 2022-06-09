@@ -49,6 +49,14 @@ class DashboardViewModel @Inject constructor(
         }
     }
 
+    fun onTourPlanClicked() {
+        viewModelScope.launch {
+            _state.value.activeTourPlan?.let {
+                _eventChannel.send(DashboardEvent.NavigateToTourPlanDetail(it))
+            }
+        }
+    }
+
     private suspend fun getTopDestinations() {
         when (val result = destinationRepository.getTopDestinations(limit = 10)) {
             is Result.Error -> {
@@ -73,13 +81,13 @@ class DashboardViewModel @Inject constructor(
 
     fun allDestinationClicked() {
         viewModelScope.launch {
-            _eventChannel.send(DashboardEvent.allDestinationClicked)
+            _eventChannel.send(DashboardEvent.AllDestinationClicked)
         }
     }
 
     fun allArticleCLicked() {
         viewModelScope.launch {
-            _eventChannel.send(DashboardEvent.allArticleClicked)
+            _eventChannel.send(DashboardEvent.AllArticleClicked)
         }
     }
 }
