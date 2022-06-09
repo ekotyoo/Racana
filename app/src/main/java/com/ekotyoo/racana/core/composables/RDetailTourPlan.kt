@@ -8,10 +8,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Cancel
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.Delete
@@ -80,7 +82,7 @@ fun AttractionList(
 
 @Composable
 fun AddDestinationButton(
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Row(
         Modifier
@@ -200,7 +202,7 @@ fun AttractionCard(
             if (onDelete != null) {
                 SwipeToDismiss(
                     directions = setOf(DismissDirection.EndToStart),
-                    dismissThresholds = {FractionalThreshold(0.8f)},
+                    dismissThresholds = { FractionalThreshold(0.8f) },
                     state = rememberDismissState(
                         confirmStateChange = {
                             if (it == DismissValue.DismissedToStart) {
@@ -335,10 +337,12 @@ fun DayHeaderSection(
     dailyList: List<DailyItem>?,
     selectedDate: Int,
     onItemSelected: (Int) -> Unit,
+    onAddDateButtonClicked: (() -> Unit)? = null,
 ) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         val items = dailyList ?: emptyList()
@@ -353,6 +357,15 @@ fun DayHeaderSection(
                 dayTitle = "Hari-${i + 1}",
                 date = item.dateFormatted
             )
+        }
+        onAddDateButtonClicked?.let {
+            item {
+                IconButton(onClick = it,
+                    modifier = Modifier.background(MaterialTheme.colors.secondary,
+                        shape = CircleShape)) {
+                    Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
+                }
+            }
         }
     }
 }

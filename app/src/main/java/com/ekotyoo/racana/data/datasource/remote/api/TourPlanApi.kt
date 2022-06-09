@@ -82,4 +82,12 @@ interface TourPlanApi {
         @Path("dateId") dateId: Int,
         @Path("destinationId") destinationId: Int,
     ): Response<BaseResponse>
+
+    @FormUrlEncoded
+    @POST("tourplan/{tourPlanId}/date")
+    suspend fun addNewDate(
+        @Header("Authorization") token: String,
+        @Path("tourPlanId") tourPlanId: Int,
+        @Field("date_millis") dateMillis: Long,
+    ): Response<BaseResponse>
 }

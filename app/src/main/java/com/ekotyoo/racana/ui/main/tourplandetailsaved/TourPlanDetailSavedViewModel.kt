@@ -16,6 +16,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.ZoneId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -75,6 +77,35 @@ class TourPlanDetailSavedViewModel @Inject constructor(
     fun onSearchResultClick(destinationId: Int) {
         viewModelScope.launch { _eventChannel.send(TourPlanDetailSavedEvent.CloseSearchSheet) }
         addDestination(destinationId)
+    }
+
+    fun onDateSelected(dates: List<LocalDate>) {
+        viewModelScope.launch { _eventChannel.send(TourPlanDetailSavedEvent.DismissDateDialog) }
+        if (dates.isNotEmpty()) {
+            val date = dates.first()
+            val dateMillis = date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+            addNewDate(dateMillis)
+        }
+    }
+
+    private fun addNewDate(dateMillis: Long) {
+        viewModelScope.launch {
+            val tourPlanId = _state.value.tourPlan.id
+            tourPlanId?.let {
+                when (tourPlanRepository.addNewDate(tourPlanId.toInt(), dateMillis)) {
+                    is Result.Success -> {
+                        val id = _state.value.tourPlan.id?.toInt()
+                        id?.let {
+                            getTourPlanById(id)
+                        }
+                        _eventChannel.send(TourPlanDetailSavedEvent.AddDestinationSuccess)
+                    }
+                    is Result.Error -> {
+                        _eventChannel.send(TourPlanDetailSavedEvent.AddDestinationError)
+                    }
+                }
+            }
+        }
     }
 
     private fun addDestination(destinationId: Int) {

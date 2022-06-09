@@ -410,4 +410,23 @@ class TourPlanRepository @Inject constructor(
             Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
         }
     }
+
+    suspend fun addNewDate(tourPlanId: Int, dateMillis: Long): Result<Unit> {
+        return try {
+            val token = userPreferencesDataStore.userData.first().token
+            val response = tourPlanApi.addNewDate(token ?: "", tourPlanId, dateMillis)
+            val body = response.body()
+            if (response.isSuccessful && body?.status == "Success") {
+                Result.Success(Unit)
+            } else {
+                Result.Error("Gagal menambahkan hari.", null)
+            }
+        } catch (e: IOException) {
+            Timber.d(e)
+            Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        } catch (e: HttpException) {
+            Timber.d(e)
+            Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        }
+    }
 }

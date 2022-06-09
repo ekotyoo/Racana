@@ -34,18 +34,22 @@ import java.util.*
 
 @Composable
 fun CalendarPicker(
-    onDateSelected: (List<LocalDate>) -> Unit
+    modifier: Modifier = Modifier,
+    onDateSelected: (List<LocalDate>) -> Unit,
+    selectionMode: SelectionMode = SelectionMode.Period,
 ) {
     val calendarState = rememberSelectableCalendarState(
-        initialSelectionMode = SelectionMode.Period
+        initialSelectionMode = selectionMode
     )
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = stringResource(id = R.string.pick_a_date), style = MaterialTheme.typography.h5)
+        Text(text = stringResource(id = R.string.pick_a_date),
+            style = MaterialTheme.typography.h5,
+            color = MaterialTheme.colors.onPrimary)
         Spacer(Modifier.height(16.dp))
         Surface(Modifier.clip(MaterialTheme.shapes.large)) {
             SelectableCalendar(

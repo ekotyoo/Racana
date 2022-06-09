@@ -2,6 +2,7 @@ package com.ekotyoo.racana.ui.main.tourplandetailsaved
 
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -26,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
 import com.ekotyoo.racana.core.composables.*
@@ -44,6 +46,7 @@ import com.ekotyoo.racana.ui.main.tourplanmap.model.TourPlanMapArgument
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
+import io.github.boguszpawlowski.composecalendar.selection.SelectionMode
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -62,6 +65,7 @@ fun TourPlanDetailSavedScreen(
     val snackbarHostState = SnackbarHostState()
     val modalBottomSheetState =
         rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+    var showDatePicker by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         viewModel.eventChannel.collect { event ->
@@ -93,11 +97,14 @@ fun TourPlanDetailSavedScreen(
                 is TourPlanDetailSavedEvent.CloseSearchSheet -> {
                     modalBottomSheetState.hide()
                 }
-                TourPlanDetailSavedEvent.AddDestinationError -> {
+                is TourPlanDetailSavedEvent.AddDestinationError -> {
                     snackbarHostState.showSnackbar("Gagal menambahkan destinasi.")
                 }
-                TourPlanDetailSavedEvent.AddDestinationSuccess -> {
+                is TourPlanDetailSavedEvent.AddDestinationSuccess -> {
                     snackbarHostState.showSnackbar("Berhasil menambahkan destinasi.")
+                }
+                is TourPlanDetailSavedEvent.DismissDateDialog -> {
+                    showDatePicker = false
                 }
             }
         }
@@ -189,6 +196,9 @@ fun TourPlanDetailSavedScreen(
                                     modalBottomSheetState.show()
                                 }
                             },
+                            onAddDateClicked = {
+                                showDatePicker = true
+                            },
                             onDestinationDeleteButtonClicked = viewModel::onDestinationDeleteButtonClicked,
                             onDestinationToggleDoneClicked = viewModel::onDestinationToggleDoneClicked
                         )
@@ -201,6 +211,21 @@ fun TourPlanDetailSavedScreen(
                             onClick = viewModel::onToggleActive
                         )
                     }
+                }
+            }
+            AnimatedVisibility(
+                visible = showDatePicker,
+                modifier = Modifier.align(Alignment.Center)
+            ) {
+                Dialog(onDismissRequest = { showDatePicker = false }) {
+                    CalendarPicker(
+                        onDateSelected = viewModel::onDateSelected,
+                        selectionMode = SelectionMode.Single,
+                        modifier = Modifier
+                            .background(MaterialTheme.colors.primary,
+                                shape = MaterialTheme.shapes.large)
+                            .padding(horizontal = 8.dp)
+                    )
                 }
             }
         }
@@ -217,6 +242,7 @@ fun TourPlanDetailSavedContent(
     onAddDestinationClicked: () -> Unit,
     onDestinationDeleteButtonClicked: (Int) -> Unit,
     onDestinationToggleDoneClicked: (Int) -> Unit,
+    onAddDateClicked: () -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -293,7 +319,8 @@ fun TourPlanDetailSavedContent(
         DayHeaderSection(
             selectedDate = state.selectedDate,
             dailyList = state.tourPlan.dailyList,
-            onItemSelected = onDateSelected
+            onItemSelected = onDateSelected,
+            onAddDateButtonClicked = onAddDateClicked
         )
         AnimatedContent(modifier = Modifier.weight(1f),
             targetState = state.selectedDestinationList) { targetList ->
@@ -329,7 +356,8 @@ fun TourPlanDetailSavedPreview() {
                 onDestinationClicked = {},
                 onAddDestinationClicked = {},
                 onDestinationDeleteButtonClicked = { },
-                onDestinationToggleDoneClicked = {}
+                onDestinationToggleDoneClicked = {},
+                onAddDateClicked = {}
             )
         }
     }

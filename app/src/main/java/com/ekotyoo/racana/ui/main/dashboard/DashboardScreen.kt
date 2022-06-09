@@ -132,6 +132,7 @@ fun DashboardContent(
                     onTourPlanClick()
                 }
             })
+            Spacer(Modifier.height(16.dp))
         }
         item {
             DashboardSection(

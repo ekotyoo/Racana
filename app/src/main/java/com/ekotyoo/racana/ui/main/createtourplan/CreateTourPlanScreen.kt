@@ -138,7 +138,7 @@ fun CreateTourPlanContent(
     Box(Modifier.fillMaxSize()) {
         ModalBottomSheetLayout(
             sheetState = modalBottomSheetState,
-            sheetContent = { CalendarPicker(onDateSelected) },
+            sheetContent = { CalendarPicker(onDateSelected = onDateSelected) },
             sheetBackgroundColor = MaterialTheme.colors.primary,
         ) {
             Scaffold(
