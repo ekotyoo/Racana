@@ -49,6 +49,12 @@ class DashboardViewModel @Inject constructor(
         }
     }
 
+    fun onArticleClicked(id: Int) {
+        viewModelScope.launch {
+            _eventChannel.send(DashboardEvent.NavigateToDetailArticle(id))
+        }
+    }
+
     fun onTourPlanClicked() {
         viewModelScope.launch {
             _state.value.activeTourPlan?.let {

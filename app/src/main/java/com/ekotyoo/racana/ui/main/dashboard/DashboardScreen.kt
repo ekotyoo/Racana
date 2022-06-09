@@ -39,10 +39,7 @@ import com.ekotyoo.racana.core.navigation.RootNavigator
 import com.ekotyoo.racana.core.utils.currencyFormatter
 import com.ekotyoo.racana.data.model.TourPlan
 import com.ekotyoo.racana.data.model.TravelDestination
-import com.ekotyoo.racana.ui.destinations.ArticleListScreenDestination
-import com.ekotyoo.racana.ui.destinations.DestinationDetailScreenDestination
-import com.ekotyoo.racana.ui.destinations.ListDestinationScreenDestination
-import com.ekotyoo.racana.ui.destinations.TourPlanDetailSavedScreenDestination
+import com.ekotyoo.racana.ui.destinations.*
 import com.ekotyoo.racana.ui.main.dashboard.model.DashboardEvent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.skydoves.landscapist.coil.CoilImage
@@ -68,16 +65,21 @@ fun DashboardScreen(
                         launchSingleTop = true
                     }
                 }
+                is DashboardEvent.NavigateToTourPlanDetail -> {
+                    rootNavigator.value.navigate(TourPlanDetailSavedScreenDestination(event.tourPlan)) {
+                        launchSingleTop = true
+                    }
+                }
+                is DashboardEvent.NavigateToDetailArticle -> {
+                    rootNavigator.value.navigate(ArticleDetailScreenDestination) {
+                        launchSingleTop = true
+                    }
+                }
                 is DashboardEvent.AllDestinationClicked -> {
                     rootNavigator.value.navigate(ListDestinationScreenDestination)
                 }
                 is DashboardEvent.AllArticleClicked -> {
                     rootNavigator.value.navigate(ArticleListScreenDestination)
-                }
-                is DashboardEvent.NavigateToTourPlanDetail -> {
-                    rootNavigator.value.navigate(TourPlanDetailSavedScreenDestination(event.tourPlan)) {
-                        launchSingleTop = true
-                    }
                 }
             }
         }
@@ -100,6 +102,7 @@ fun DashboardScreen(
             lazyListState = lazyListState,
             isLoading = state.isLoading,
             onDestinationClick = viewModel::onDestinationClicked,
+            onArticleClick = viewModel::onArticleClicked,
             onTourPlanClick = viewModel::onTourPlanClicked,
             onAllDestinationClicked = viewModel::allDestinationClicked,
             onAllArticleClicked = viewModel::allArticleCLicked,
@@ -113,6 +116,7 @@ fun DashboardContent(
     tourPlan: TourPlan?,
     destinations: List<TravelDestination>,
     onDestinationClick: (Int) -> Unit = {},
+    onArticleClick: (Int) -> Unit = {},
     onTourPlanClick: () -> Unit = {},
     lazyListState: LazyListState,
     isLoading: Boolean,
@@ -128,7 +132,6 @@ fun DashboardContent(
                     onTourPlanClick()
                 }
             })
-            Spacer(Modifier.height(16.dp))
         }
         item {
             DashboardSection(
@@ -166,7 +169,9 @@ fun DashboardContent(
                                 imageUrl = "https://picsum.photos/200/300",
                                 title = "Lorem Ipsum Dolor",
                                 description = "Lorem ipsum dolor dolr asdf das",
-                                onClick = {}
+                                onClick = {
+                                    onArticleClick(0)
+                                }
                             )
                         }
                     }
