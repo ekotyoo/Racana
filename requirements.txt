@@ -1,0 +1,8 @@
+flask
+numpy
+pandas
+requests
+tensorflow
+tf-nightly
+gunicorn
+apyori
