@@ -1,6 +1,7 @@
 package com.ekotyoo.racana.data.repository
 
 import com.ekotyoo.racana.core.utils.Result
+import com.ekotyoo.racana.core.utils.formatDate
 import com.ekotyoo.racana.data.datasource.local.UserPreferencesDataStore
 import com.ekotyoo.racana.data.datasource.remote.api.TourPlanApi
 import com.ekotyoo.racana.data.datasource.remote.request.TourPlanDateRequest
@@ -94,7 +95,9 @@ class TourPlanRepository @Inject constructor(
                             date = Instant.ofEpochMilli(date.dateMillis)
                                 .atZone(ZoneId.systemDefault())
                                 .toLocalDate(),
-                            destinationList = date.destinations.map { destination ->
+                            destinationList = date.destinations.sortedBy {
+                                formatDate(it.relation.updatedAt)
+                            }.map { destination ->
                                 TravelDestination(
                                     id = destination.id,
                                     name = destination.name,
