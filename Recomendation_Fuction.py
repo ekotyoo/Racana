@@ -31,8 +31,8 @@ df = data.copy()
 
 # loadmodel tensorflow
 from tensorflow import keras
-new_model = keras.models.load_model('path_to_my_model')
-#loadmodel apriori
+new_model = keras.models.load_model('model.h5')
+# #loadmodel apriori
 model = pickle.load(open("apriori.pkl", "rb"))
 output = list(model)
 pd.set_option('max_colwidth', 1000)
@@ -71,13 +71,18 @@ def predict(id):
     user_encoder = user_to_user_encoded.get(user_id)
     user_place_array = np.hstack(([[user_encoder]] * len(place_not_visited), place_not_visited))
 
-    ratings = new_model.predict(user_place_array,50).flatten()
-    top_ratings_indices = ratings.argsort()[:][::-1]
+    find = new_model.predict([user_place_array[:,0],user_place_array[:,1]])
+    rate =[]
+    for i in find:
+        rate.append(i[0])
+    rate = pd.Series(rate)
+
+    top_ratings_indices = rate.argsort()[:][::-1]
     global recommended_place_ids
     recommended_place_ids = [
-    place_encoded_to_place.get(place_not_visited[x][0]) for x in top_ratings_indices
-    ]
+    place_encoded_to_place.get(place_not_visited[x][0]) for x in top_ratings_indices]
     recommended_place_ids = list(recommended_place_ids)
+
     return jsonify(recommended_place_ids)
 
 def filter(input):
