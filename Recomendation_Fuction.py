@@ -51,7 +51,6 @@ def dict_encoder(col, data=df):
   val_encoded_to_val = {i: x for i, x in enumerate(unique_val)}
   return val_to_val_encoded, val_encoded_to_val
 
-@app.route("/recomendation/predict/<int:id>", methods=["GET"])
 def predict(id):
     user_id = id
     place_visited_by_user = df[df.User_Id == user_id]
@@ -76,29 +75,29 @@ def predict(id):
     for i in find:
         rate.append(i[0])
     rate = pd.Series(rate)
-
     top_ratings_indices = rate.argsort()[:][::-1]
-    global recommended_place_ids
     recommended_place_ids = [
     place_encoded_to_place.get(place_not_visited[x][0]) for x in top_ratings_indices]
     recommended_place_ids = list(recommended_place_ids)
 
-    return jsonify(recommended_place_ids)
+    return (recommended_place_ids)
 
-def filter(input):
+def filter(input,id):
+    recommended_place_ids1 = predict(id)
     Place_Upto_100 = place_df[(place_df['price'] >= 100000)]
     Place_Upto_100 = list(Place_Upto_100["id"])
     if input >= 100000:
-        data = [x for x in recommended_place_ids if x in Place_Upto_100]
+        data = [x for x in recommended_place_ids1 if x in Place_Upto_100]
     else:
-        data = [x for x in recommended_place_ids if x not in Place_Upto_100]
+        data = [x for x in recommended_place_ids1 if x not in Place_Upto_100]
     return(data)
 
 @app.route('/recomendation/predictfinal', methods = ['POST'])
 def predict1():
     if request.method == 'POST':
         budget = int(request.form['budget'])
-        data = filter(budget)
+        id = int(request.form['id'])
+        data = filter(budget,id)
         jumlah_destinasi = int(request.form['jumlah_destinasi'])
         datafinal = data[:jumlah_destinasi]
         return jsonify(
