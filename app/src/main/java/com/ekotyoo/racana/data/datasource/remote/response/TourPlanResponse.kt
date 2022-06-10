@@ -2,6 +2,10 @@ package com.ekotyoo.racana.data.datasource.remote.response
 
 import com.google.gson.annotations.SerializedName
 
+data class TourPlanBaseResponse(
+	val data: TourPlanResponse
+) : BaseResponse()
+
 data class TourPlanResponse(
 
     @field:SerializedName("tourplandates")

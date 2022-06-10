@@ -1,5 +1,6 @@
 package com.ekotyoo.racana.data.datasource.remote.api
 
+import com.ekotyoo.racana.data.datasource.remote.request.PredictRequest
 import com.ekotyoo.racana.data.datasource.remote.request.TourPlanRequest
 import com.ekotyoo.racana.data.datasource.remote.response.*
 import retrofit2.Response
@@ -7,17 +8,25 @@ import retrofit2.http.*
 
 interface TourPlanApi {
 
-    @FormUrlEncoded
-    @POST("predict")
+    @POST("recommendation/predictfinal")
     suspend fun getTourPlanPrediction(
         @Header("Authorization") token: String,
-        @Field("city") city: String,
-        @Field("budget") budget: Long,
-        @Field("start_date") startDateInMillis: Long?,
-        @Field("end_date") endDateInMillis: Long?,
-        @Field("total_destination") totalDestination: Int,
-        @Field("category_id") category: Int,
-    ): Response<TourPlanResponse>
+        @Body requestBody: PredictRequest
+    ): Response<TourPlanBaseResponse>
+
+    @FormUrlEncoded
+    @POST("predict")
+    suspend fun getDestinationPredictionOne(
+        @Header("Authorization") token: String,
+        @Field("input") destinationName: String
+    ): Response<DestinationResponse>
+
+    @FormUrlEncoded
+    @POST("predict2")
+    suspend fun getDestinationPredictionTwo(
+        @Header("Authorization") token: String,
+        @Field("input") destinationName: String
+    ): Response<DestinationResponse>
 
     @GET("tourplan")
     suspend fun getAllTourPlan(

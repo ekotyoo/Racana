@@ -4,6 +4,7 @@ import com.ekotyoo.racana.core.utils.Result
 import com.ekotyoo.racana.core.utils.formatDate
 import com.ekotyoo.racana.data.datasource.local.UserPreferencesDataStore
 import com.ekotyoo.racana.data.datasource.remote.api.TourPlanApi
+import com.ekotyoo.racana.data.datasource.remote.request.PredictRequest
 import com.ekotyoo.racana.data.datasource.remote.request.TourPlanDateRequest
 import com.ekotyoo.racana.data.datasource.remote.request.TourPlanRequest
 import com.ekotyoo.racana.data.model.DailyItem
@@ -59,7 +60,7 @@ class TourPlanRepository @Inject constructor(
                                         lon = destination.lon ?: .0,
                                         categoryId = destination.categoryId ?: 0,
                                     )
-                                }
+                                }.toMutableList()
                             )
                         }.sortedBy { item ->
                             item.date
@@ -115,7 +116,7 @@ class TourPlanRepository @Inject constructor(
                                     categoryId = destination.categoryId ?: 0,
                                     isDone = destination.relation.isDone
                                 )
-                            }
+                            }.toMutableList()
                         )
                     }.sortedBy { item ->
                         item.date
@@ -169,7 +170,7 @@ class TourPlanRepository @Inject constructor(
                                     categoryId = destination.categoryId ?: 0,
                                     isDone = destination.relation.isDone
                                 )
-                            }
+                            }.toMutableList()
                         )
                     }.sortedBy { item ->
                         item.date
@@ -255,30 +256,65 @@ class TourPlanRepository @Inject constructor(
         }
     }
 
+    suspend fun predictDestination(flag: Int, destinationName: String): Result<TravelDestination> {
+        return try {
+            val token = userPreferencesDataStore.userData.first().token
+            val response = when (flag) {
+                0 -> tourPlanApi.getDestinationPredictionOne(token ?: "", destinationName)
+                1 -> tourPlanApi.getDestinationPredictionTwo(token ?: "", destinationName)
+                else -> return Result.Error(message = "Gagal menambahkan data.", throwable = null)
+            }
+            val data = response.body()?.data
+
+            if (response.isSuccessful && data != null) {
+                Result.Success(
+                    TravelDestination(
+                        id = data.id,
+                        name = data.name,
+                        description = data.description,
+                        city = data.city,
+                        address = data.address,
+                        rating = data.rating,
+                        imageUrl = data.imageUrl,
+                        weekdayPrice = data.weekdayPrice,
+                        weekendHolidayPrice = data.weekendHolidayPrice,
+                        lon = data.lon,
+                        lat = data.lat,
+                        categoryId = data.categoryId
+                    )
+                )
+            } else {
+                Result.Error(message = "Gagal menambahkan data.", throwable = null)
+            }
+        } catch (e: IOException) {
+            Timber.d(e.message)
+            Result.Error(message = "Terjadi kesalahan, coba lagi nanti!", throwable = e)
+        } catch (e: HttpException) {
+            Timber.d(e.message)
+            Result.Error(message = "Terjadi kesalahan, coba lagi nanti!", throwable = e)
+        }
+    }
+
     suspend fun getTourPlan(
-        city: String,
         budget: Long,
-        startDateInMillis: Long?,
-        endDateInMillis: Long?,
+        startDateInMillis: Long,
         totalDestination: Int,
-        category: Int,
     ): Result<TourPlan> {
         try {
             val token = userPreferencesDataStore.userData.first().token
             val response = tourPlanApi.getTourPlanPrediction(
-                token ?: "",
-                city,
-                budget,
-                startDateInMillis,
-                endDateInMillis,
-                totalDestination,
-                category
+                token = token ?: "",
+                requestBody = PredictRequest(
+                    budget = budget,
+                    startDateMillis = startDateInMillis,
+                    totalDestination = totalDestination,
+                )
             )
 
-            val body = response.body()
-            return if (response.isSuccessful && body != null) {
+            val data = response.body()?.data
+            return if (response.isSuccessful && data != null) {
                 val dailyList = mutableListOf<DailyItem>()
-                body.dailyList.forEachIndexed { i, item ->
+                data.dailyList.forEachIndexed { i, item ->
                     val date =
                         Instant.ofEpochMilli(item.dateMillis).atZone(ZoneId.systemDefault())
                             .toLocalDate()
@@ -302,7 +338,7 @@ class TourPlanRepository @Inject constructor(
                         DailyItem(
                             number = i + 1,
                             date = date,
-                            destinationList = destinationList
+                            destinationList = destinationList.toMutableList()
                         )
                     )
                 }

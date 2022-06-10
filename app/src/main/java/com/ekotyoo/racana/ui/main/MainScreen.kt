@@ -31,6 +31,7 @@ import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.dependency
 import com.ramcosta.composedestinations.navigation.navigate
+import com.ramcosta.composedestinations.navigation.popUpTo
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialNavigationApi::class)
 @RootNavGraph(start = true)
@@ -48,7 +49,6 @@ fun MainScreen(
         if (action != null) {
             when (action) {
                 Action.SAVE_TOUR_PLAN_SUCCESS -> {
-                    bottomAppBarNavController.navigate(TourPlanListScreenDestination)
                 }
             }
         }

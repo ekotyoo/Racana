@@ -47,7 +47,7 @@
     <string name="start">Mulai</string>
     <string name="end">Berakhir</string>
     <string name="total_budget">Total Budget</string>
-    <string name="total_destination">Total Destinasi</string>
+    <string name="total_destination">Maksimal Destinasi</string>
     <string name="destination_category">Kategori Destinasi</string>
     <string name="save">Simpan</string>
     <string name="detail_tour_plan">Detail Tour Plan</string>

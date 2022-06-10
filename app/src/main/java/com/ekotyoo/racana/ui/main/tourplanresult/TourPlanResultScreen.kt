@@ -76,7 +76,7 @@ fun TourPlanScreen(
                 is TourPlanResultEvent.NavigateToDestinationDetail -> {
                     navigator.navigate(DestinationDetailScreenDestination(event.id))
                 }
-                TourPlanResultEvent.DeleteDestinationButtonClicked -> {}
+                TourPlanResultEvent.PredictDestinationError -> {}
             }
         }
     }
@@ -120,7 +120,7 @@ fun TourPlanScreen(
                             TourPlanMapScreenDestination(TourPlanMapArgument(tourPlan))
                         navigator.navigate(destination)
                     },
-                    onChangePlanButtonClicked = viewModel::onChangePlanButtonClicked,
+                    onAddDestinationClick = if(state.predictCounter < 2) viewModel::onAddDestinationClick else null,
                     onDestinationClicked = viewModel::navigateToDestinationDetail,
                 )
             }
@@ -140,7 +140,7 @@ fun TourPlanContent(
     state: TourPlanResultState,
     onDateSelected: (Int) -> Unit,
     onOpenMapButtonClicked: () -> Unit,
-    onChangePlanButtonClicked: () -> Unit,
+    onAddDestinationClick: (() -> Unit)?,
     onDestinationClicked: (Int) -> Unit,
 ) {
     Column(modifier.fillMaxSize()) {
@@ -156,14 +156,9 @@ fun TourPlanContent(
             AttractionList(
                 destinationList = targetList,
                 onClick = onDestinationClicked,
+                onAddDestinationClick = onAddDestinationClick
             )
         }
-        Spacer(Modifier.height(16.dp))
-        RFilledButton(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            placeholderString = stringResource(id = R.string.change_tour_plan),
-            onClick = onChangePlanButtonClicked,
-        )
         Spacer(Modifier.height(16.dp))
         RFilledButton(
             modifier = Modifier.padding(horizontal = 16.dp),

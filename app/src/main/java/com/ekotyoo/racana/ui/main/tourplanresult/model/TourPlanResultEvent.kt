@@ -5,5 +5,5 @@ sealed class TourPlanResultEvent {
     object SaveTourPlanSuccess : TourPlanResultEvent()
     object SaveTourPlanError : TourPlanResultEvent()
     data class NavigateToDestinationDetail(val id: Int) : TourPlanResultEvent()
-    object DeleteDestinationButtonClicked : TourPlanResultEvent()
+    object PredictDestinationError : TourPlanResultEvent()
 }

@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.time.ZoneId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,32 +36,24 @@ class TourPlanResultViewModel @Inject constructor(
         _state.update { it.copy(tourPlanResultArgs = args) }
         viewModelScope.launch {
             getTourPlan(
-                city = args.city,
                 budget = args.totalBudget,
-                startDateInMillis = args.startDate?.toEpochDay(),
-                endDateInMillis = args.endDate?.toEpochDay(),
+                startDateInMillis = args.startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()
+                    .toEpochMilli(),
                 totalDestination = args.totalDestination,
-                category = args.category
             )
         }
     }
 
     private suspend fun getTourPlan(
-        city: String,
         budget: Long,
-        startDateInMillis: Long?,
-        endDateInMillis: Long?,
+        startDateInMillis: Long,
         totalDestination: Int,
-        category: Int,
     ) {
         _state.update { it.copy(isLoading = true) }
         val result = tourPlanRepository.getTourPlan(
-            city = city,
             budget = budget,
             startDateInMillis = startDateInMillis,
-            endDateInMillis = endDateInMillis,
             totalDestination = totalDestination,
-            category = category
         )
 
         when (result) {
@@ -104,18 +97,10 @@ class TourPlanResultViewModel @Inject constructor(
         _state.update { it.copy(selectedDate = value) }
     }
 
-    fun onChangePlanButtonClicked() {
-        _state.value.tourPlanResultArgs?.let { args ->
-            viewModelScope.launch {
-                getTourPlan(
-                    city = args.city,
-                    budget = args.totalBudget,
-                    startDateInMillis = args.startDate?.toEpochDay(),
-                    endDateInMillis = args.endDate?.toEpochDay(),
-                    totalDestination = args.totalDestination,
-                    category = args.category
-                )
-            }
+    fun onAddDestinationClick() {
+        when (_state.value.predictCounter) {
+            0 -> predictDestination(0)
+            1 -> predictDestination(1)
         }
     }
 
@@ -126,6 +111,28 @@ class TourPlanResultViewModel @Inject constructor(
     fun navigateToDestinationDetail(id: Int) {
         viewModelScope.launch {
             _eventChannel.send(TourPlanResultEvent.NavigateToDestinationDetail(id))
+        }
+    }
+
+    private fun predictDestination(flag: Int) {
+        _state.value.tourPlan?.dailyList?.first()?.destinationList?.last()?.name?.let {
+            viewModelScope.launch {
+                when (val result =
+                    tourPlanRepository.predictDestination(flag, destinationName = it)) {
+                    is Result.Success -> {
+                        val newDestination = result.value
+                        val tourPlan = _state.value.tourPlan
+                        if (tourPlan != null) {
+                            tourPlan.dailyList[_state.value.selectedDate].destinationList.add(
+                                newDestination)
+                            _state.update { it.copy(predictCounter = _state.value.predictCounter + 1) }
+                        }
+                    }
+                    is Result.Error -> {
+                        _eventChannel.send(TourPlanResultEvent.PredictDestinationError)
+                    }
+                }
+            }
         }
     }
 

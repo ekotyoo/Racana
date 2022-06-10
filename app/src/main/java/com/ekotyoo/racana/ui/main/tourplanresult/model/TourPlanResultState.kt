@@ -7,6 +7,7 @@ data class TourPlanResultState(
     val isLoading: Boolean = false,
     val tourPlan: TourPlan? = null,
     val selectedDate: Int = 0,
+    var predictCounter: Int = 0,
     val tourPlanResultArgs: TourPlanResultArgument? = null,
     val titleTextFieldValue: String = "",
     val titleTextFieldErrorValue: String? = null,

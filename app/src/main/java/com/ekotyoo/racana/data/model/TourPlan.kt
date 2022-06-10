@@ -33,7 +33,7 @@ data class DailyItem(
     val id: Int = 0,
     val number: Int,
     val date: LocalDate,
-    val destinationList: List<TravelDestination>,
+    val destinationList: MutableList<TravelDestination>,
 ) : Parcelable {
     val dateFormatted: String
         get() = date.format(DATE_FORMAT)
