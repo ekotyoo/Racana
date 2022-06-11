@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/ekotyoo/Racana">
-    <img src="https://media.discordapp.net/attachments/976103200073588831/985180062603161620/text_side_color.png" alt="Logo" width="953" height="477">
+    <img src="hero.jpg" alt="Logo">
   </a>
 
 <h3 align="center">Racana</h3>
