@@ -1,8 +1,6 @@
 package com.ekotyoo.racana.core.composables
 
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -332,12 +330,14 @@ fun AttractionCard(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DayHeaderSection(
     dailyList: List<DailyItem>?,
     selectedDate: Int,
     onItemSelected: (Int) -> Unit,
     onAddDateButtonClicked: (() -> Unit)? = null,
+    onDeleteDateButtonClicked: ((Int) -> Unit)? = null,
 ) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
@@ -350,9 +350,11 @@ fun DayHeaderSection(
             DayHeaderContainer(
                 modifier = Modifier
                     .clip(MaterialTheme.shapes.small)
-                    .clickable {
+                    .combinedClickable(onClick = {
                         onItemSelected(i)
-                    },
+                    }, onLongClick = {
+                        onDeleteDateButtonClicked?.invoke(item.id)
+                    }),
                 isSelected = i == selectedDate,
                 dayTitle = "Hari-${i + 1}",
                 date = item.dateFormatted

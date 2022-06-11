@@ -99,4 +99,11 @@ interface TourPlanApi {
         @Path("tourPlanId") tourPlanId: Int,
         @Field("date_millis") dateMillis: Long,
     ): Response<BaseResponse>
+
+    @DELETE("tourplan/{tourPlanId}/date/{dateId}")
+    suspend fun deleteDate(
+        @Header("Authorization") token: String,
+        @Path("tourPlanId") tourPlanId: Int,
+        @Path("dateId") dateId: Int,
+    ): Response<BaseResponse>
 }

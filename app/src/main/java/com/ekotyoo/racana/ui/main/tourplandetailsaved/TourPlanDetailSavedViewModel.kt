@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.time.LocalDate
 import java.time.ZoneId
 import javax.inject.Inject
@@ -43,6 +44,10 @@ class TourPlanDetailSavedViewModel @Inject constructor(
 
     fun onDateSelected(value: Int) {
         _state.update { it.copy(selectedDate = value) }
+    }
+
+    fun onDeleteDateClicked(id: Int) {
+        deleteDate(id)
     }
 
     fun navigateToDestinationDetail(id: Int) {
@@ -88,6 +93,26 @@ class TourPlanDetailSavedViewModel @Inject constructor(
         }
     }
 
+    private fun deleteDate(dateId: Int) {
+        viewModelScope.launch {
+            val tourPlanId = _state.value.tourPlan.id
+            tourPlanId?.let {
+                when (tourPlanRepository.deleteDate(tourPlanId.toInt(), dateId)) {
+                    is Result.Success -> {
+                        val id = _state.value.tourPlan.id?.toInt()
+                        id?.let {
+                            getTourPlanById(id)
+                        }
+                        _eventChannel.send(TourPlanDetailSavedEvent.DeleteDateSuccess)
+                    }
+                    is Result.Error -> {
+                        _eventChannel.send(TourPlanDetailSavedEvent.DeleteDateError)
+                    }
+                }
+            }
+        }
+    }
+
     private fun addNewDate(dateMillis: Long) {
         viewModelScope.launch {
             val tourPlanId = _state.value.tourPlan.id
@@ -98,10 +123,10 @@ class TourPlanDetailSavedViewModel @Inject constructor(
                         id?.let {
                             getTourPlanById(id)
                         }
-                        _eventChannel.send(TourPlanDetailSavedEvent.AddDestinationSuccess)
+                        _eventChannel.send(TourPlanDetailSavedEvent.AddDateSuccess)
                     }
                     is Result.Error -> {
-                        _eventChannel.send(TourPlanDetailSavedEvent.AddDestinationError)
+                        _eventChannel.send(TourPlanDetailSavedEvent.AddDateError)
                     }
                 }
             }

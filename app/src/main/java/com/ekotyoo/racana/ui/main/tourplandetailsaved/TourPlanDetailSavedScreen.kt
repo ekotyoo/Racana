@@ -106,6 +106,18 @@ fun TourPlanDetailSavedScreen(
                 is TourPlanDetailSavedEvent.DismissDateDialog -> {
                     showDatePicker = false
                 }
+                is TourPlanDetailSavedEvent.AddDateError -> {
+                    snackbarHostState.showSnackbar("Gagal menambahkan hari.")
+                }
+                is TourPlanDetailSavedEvent.AddDateSuccess -> {
+                    snackbarHostState.showSnackbar("Berhasil menambahkan hari.")
+                }
+                is TourPlanDetailSavedEvent.DeleteDateError -> {
+                    snackbarHostState.showSnackbar("Gagal menghapus hari.")
+                }
+                is TourPlanDetailSavedEvent.DeleteDateSuccess -> {
+                    snackbarHostState.showSnackbar("Berhasil menghapus hari.")
+                }
             }
         }
     }
@@ -200,7 +212,8 @@ fun TourPlanDetailSavedScreen(
                                 showDatePicker = true
                             },
                             onDestinationDeleteButtonClicked = viewModel::onDestinationDeleteButtonClicked,
-                            onDestinationToggleDoneClicked = viewModel::onDestinationToggleDoneClicked
+                            onDestinationToggleDoneClicked = viewModel::onDestinationToggleDoneClicked,
+                            onDeleteDateClicked = viewModel::onDeleteDateClicked
                         )
 
                         RFilledButton(
@@ -243,6 +256,7 @@ fun TourPlanDetailSavedContent(
     onDestinationDeleteButtonClicked: (Int) -> Unit,
     onDestinationToggleDoneClicked: (Int) -> Unit,
     onAddDateClicked: () -> Unit,
+    onDeleteDateClicked: (Int) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -320,7 +334,8 @@ fun TourPlanDetailSavedContent(
             selectedDate = state.selectedDate,
             dailyList = state.tourPlan.dailyList,
             onItemSelected = onDateSelected,
-            onAddDateButtonClicked = onAddDateClicked
+            onAddDateButtonClicked = onAddDateClicked,
+            onDeleteDateButtonClicked = onDeleteDateClicked
         )
         AnimatedContent(modifier = Modifier.weight(1f),
             targetState = state.selectedDestinationList) { targetList ->
@@ -357,7 +372,7 @@ fun TourPlanDetailSavedPreview() {
                 onAddDestinationClicked = {},
                 onDestinationDeleteButtonClicked = { },
                 onDestinationToggleDoneClicked = {},
-                onAddDateClicked = {}
+                onAddDateClicked = {}, onDeleteDateClicked = {}
             )
         }
     }

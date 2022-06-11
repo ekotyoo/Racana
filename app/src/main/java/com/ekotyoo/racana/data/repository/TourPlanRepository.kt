@@ -465,4 +465,23 @@ class TourPlanRepository @Inject constructor(
             Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
         }
     }
+
+    suspend fun deleteDate(tourPlanId: Int, dateId: Int): Result<Unit> {
+        return try {
+            val token = userPreferencesDataStore.userData.first().token
+            val response = tourPlanApi.deleteDate(token ?: "", tourPlanId, dateId)
+            val body = response.body()
+            if (response.isSuccessful && body?.status == "Success") {
+                Result.Success(Unit)
+            } else {
+                Result.Error("Gagal menghapus hari.", null)
+            }
+        } catch (e: IOException) {
+            Timber.d(e)
+            Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        } catch (e: HttpException) {
+            Timber.d(e)
+            Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
+        }
+    }
 }
