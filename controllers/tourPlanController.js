@@ -145,17 +145,37 @@ const insertTourPlanDate = async (req, res) => {
         [Op.and]: [{ id: tourPlanId }, { userId: userId }],
       },
     });
-    if (!tourPlan) return res.json(responseHelper.responseError("Tour plan not found."));
+    if (!tourPlan)
+      return res.status(400).json(responseHelper.responseError("Tour plan not found."));
 
     const dateMillis = req.body.date_millis;
 
-    const date = tourPlan.createTourplandate({
+    const date = await tourPlan.createTourplandate({
       date_millis: dateMillis,
     });
 
-    if (!date) return res.json(responseHelper.responseError("Failed inserting data."));
+    if (!date) return res.status(400).json(responseHelper.responseError("Failed inserting data."));
     res.json(responseHelper.responseSuccess(date, "Sucessfully inserting data."));
   } catch (error) {
+    res.status(500).json(responseHelper.responseError("Internal server error."));
+  }
+};
+
+const deleteTourPlanDateById = async (req, res) => {
+  try {
+    const dateId = req.params.dateId;
+
+    const tourPlanDate = await TourPlanDateModel.destroy({
+      where: {
+        id: dateId,
+      },
+    });
+
+    if (!tourPlanDate)
+      return res.status(400).json(responseHelper.responseError("Failed deleting data."));
+    res.json(responseHelper.responseSuccess(tourPlanDate, "Sucessfully deleting data."));
+  } catch (error) {
+    console.log(error);
     res.status(500).json(responseHelper.responseError("Internal server error."));
   }
 };
@@ -168,4 +188,5 @@ module.exports = {
   deleteTourPlanById,
   insertTourPlanDate,
   getActiveTourPlan,
+  deleteTourPlanDateById,
 };

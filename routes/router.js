@@ -4,7 +4,8 @@ const authController = require("../controllers/authController");
 const tourPlanController = require("../controllers/tourPlanController");
 const destinationController = require("../controllers/destinationController");
 const tourPlanDateController = require("../controllers/tourPlanDateController");
-const dummyController = require("../controllers/dummyController");
+const articleController = require("../controllers/articleController");
+const predictController = require("../controllers/predictController");
 const tokenValidation = require("../middleware/tokenValidation");
 
 router.get("/", (req, res) => {
@@ -26,6 +27,11 @@ router.delete("/tourplan/:id", tokenValidation, tourPlanController.deleteTourPla
 // Tour Plan Date
 router.get("/tourplan/:id/date", tokenValidation, tourPlanDateController.getAllTourPlanDate);
 router.post("/tourplan/:id/date", tokenValidation, tourPlanController.insertTourPlanDate);
+router.delete(
+  "/tourplan/:id/date/:dateId",
+  tokenValidation,
+  tourPlanController.deleteTourPlanDateById
+);
 router.delete(
   "/tourplandate/:dateId/destination/:destinationId",
   tokenValidation,
@@ -66,9 +72,18 @@ router.post("/destination", tokenValidation, destinationController.insertDestina
 router.put("/destination/:id", tokenValidation, destinationController.updateDestinationById);
 router.delete("/destination/:id", tokenValidation, destinationController.deleteDestinationById);
 
-router.get("/datasetrating", dummyController.getDatasetRating);
+// Article
+router.get("/article", tokenValidation, articleController.getAllArticles);
+router.get("/article/dashboard", tokenValidation, articleController.getDashboardArticles);
+router.get("/article/:id", tokenValidation, articleController.getArticleById);
+
+// Flask Backend purpose
 router.get("/userdestinations", destinationController.getAllUserDestination);
 router.get("/alldestinations", destinationController.getAllDestinationsWithoutToken);
-router.post("/predict", tokenValidation, dummyController.predictDummyTourPlan);
+
+// Predict
+router.post("/recommendation/predictfinal", tokenValidation, predictController.predictFinal);
+router.post("/predict", tokenValidation, predictController.predictByDestinaion1);
+router.post("/predict2", tokenValidation, predictController.predictByDestinaion2);
 
 module.exports = router;
