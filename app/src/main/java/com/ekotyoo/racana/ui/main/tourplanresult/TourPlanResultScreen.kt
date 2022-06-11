@@ -76,7 +76,9 @@ fun TourPlanScreen(
                 is TourPlanResultEvent.NavigateToDestinationDetail -> {
                     navigator.navigate(DestinationDetailScreenDestination(event.id))
                 }
-                TourPlanResultEvent.PredictDestinationError -> {}
+                is TourPlanResultEvent.PredictDestinationError -> {
+                    snackbarHostState.showSnackbar("Gagal mendapatkan tour plan")
+                }
             }
         }
     }
@@ -120,7 +122,7 @@ fun TourPlanScreen(
                             TourPlanMapScreenDestination(TourPlanMapArgument(tourPlan))
                         navigator.navigate(destination)
                     },
-                    onAddDestinationClick = if(state.predictCounter < 2) viewModel::onAddDestinationClick else null,
+                    onAddDestinationClick = if (state.predictCounter < 2) viewModel::onAddDestinationClick else null,
                     onDestinationClicked = viewModel::navigateToDestinationDetail,
                 )
             }

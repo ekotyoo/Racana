@@ -11,6 +11,9 @@ data class TourPlanDetailSavedState(
 ) {
     val selectedDestinationList: List<TravelDestination>
         get() {
-            return tourPlan.dailyList[selectedDate].destinationList
+            if (tourPlan.dailyList.isNotEmpty()) {
+                return tourPlan.dailyList[selectedDate].destinationList
+            }
+            return emptyList()
         }
 }

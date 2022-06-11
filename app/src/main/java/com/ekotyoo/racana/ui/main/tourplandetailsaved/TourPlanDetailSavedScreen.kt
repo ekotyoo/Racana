@@ -329,7 +329,7 @@ fun TourPlanDetailSavedContent(
                 onClick = onDestinationClicked,
                 onDelete = onDestinationDeleteButtonClicked,
                 onToggleDone = onDestinationToggleDoneClicked,
-                onAddDestinationClick = onAddDestinationClicked,
+                onAddDestinationClick = if (state.tourPlan.dailyList.isEmpty()) null else onAddDestinationClicked,
             )
         }
         Spacer(Modifier.height(100.dp))
