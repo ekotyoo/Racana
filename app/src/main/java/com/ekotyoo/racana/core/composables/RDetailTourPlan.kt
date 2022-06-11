@@ -365,7 +365,9 @@ fun DayHeaderSection(
                 IconButton(onClick = it,
                     modifier = Modifier.background(MaterialTheme.colors.secondary,
                         shape = CircleShape)) {
-                    Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
+                    Icon(imageVector = Icons.Rounded.Add,
+                        tint = MaterialTheme.colors.onSecondary,
+                        contentDescription = null)
                 }
             }
         }

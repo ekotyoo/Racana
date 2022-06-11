@@ -4,51 +4,51 @@ import com.google.gson.annotations.SerializedName
 
 data class DestinationResponse(
 
-	@field:SerializedName("data")
+	@SerializedName("data")
 	val data: DestinationData,
 
-	@field:SerializedName("message")
+	@SerializedName("message")
 	val message: String,
 
-	@field:SerializedName("status")
+	@SerializedName("status")
 	val status: String
 )
 
 data class DestinationData(
 
-	@field:SerializedName("addresss")
+	@SerializedName("addresss")
 	val address: String,
 
-	@field:SerializedName("imageUrl")
+	@SerializedName("imageUrl")
 	val imageUrl: String,
 
-	@field:SerializedName("name")
+	@SerializedName("name")
 	val name: String,
 
-	@field:SerializedName("weekendHolidayPrice")
+	@SerializedName("weekendHolidayPrice")
 	val weekendHolidayPrice: Int,
 
-	@field:SerializedName("rating")
+	@SerializedName("rating")
 	val rating: Float,
 
-	@field:SerializedName("city")
+	@SerializedName("city")
 	val city: String,
 
-	@field:SerializedName("description")
+	@SerializedName("description")
 	val description: String,
 
-	@field:SerializedName("lon")
+	@SerializedName("lon")
 	val lon: Double,
 
-	@field:SerializedName("weekdayPrice")
+	@SerializedName("weekdayPrice")
 	val weekdayPrice: Int,
 
-	@field:SerializedName("id")
+	@SerializedName("id")
 	val id: Int,
 
-	@field:SerializedName("lat")
+	@SerializedName("lat")
 	val lat: Double,
 
-	@field:SerializedName("categoryId")
+	@SerializedName("categoryId")
 	val categoryId: Int
 )

@@ -13,11 +13,15 @@ import androidx.compose.ui.res.dimensionResource
 
 private val DarkColorPalette = darkColors(
     primary = RacanaViolet,
-    secondary = RacanaGray,
+    secondary = RacanaYellow,
+    onSecondary = RacanaBlack,
+    onPrimary = RacanaWhite,
     background = RacanaBlack,
+    onBackground = RacanaWhite,
+    onSurface = RacanaWhite,
     surface = RacanaBlack,
     error = RacanaRed,
-    onPrimary = RacanaWhite
+    onError = RacanaWhite,
 )
 
 private val LightColorPalette = lightColors(

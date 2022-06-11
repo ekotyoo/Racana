@@ -165,10 +165,6 @@ fun DestinationDetailContent(
                         )
                     }
                     Text(
-                        text = destination.openCloseTime,
-                        style = MaterialTheme.typography.body2
-                    )
-                    Text(
                         text = destination.address,
                         style = MaterialTheme.typography.body2
                     )

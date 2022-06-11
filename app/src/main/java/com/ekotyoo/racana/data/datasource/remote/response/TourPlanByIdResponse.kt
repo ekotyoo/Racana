@@ -4,105 +4,105 @@ import com.google.gson.annotations.SerializedName
 
 data class TourPlanByIdResponse(
 
-	@field:SerializedName("data")
+	@SerializedName("data")
 	val data: TourPlanData,
 
-	@field:SerializedName("message")
+	@SerializedName("message")
 	val message: String,
 
-	@field:SerializedName("status")
+	@SerializedName("status")
 	val status: String,
 )
 
 data class DateDestination(
 
-	@field:SerializedName("isDone")
+	@SerializedName("isDone")
 	val isDone: Boolean,
 
-    @field:SerializedName("createdAt")
+    @SerializedName("createdAt")
     val createdAt: String
 )
 
 data class TourPlanData(
 
-	@field:SerializedName("createdAt")
+	@SerializedName("createdAt")
 	val createdAt: String,
 
-	@field:SerializedName("description")
+	@SerializedName("description")
 	val description: String,
 
-	@field:SerializedName("id")
+	@SerializedName("id")
 	val id: Int,
 
-	@field:SerializedName("tourplandates")
+	@SerializedName("tourplandates")
 	val tourPlanDates: List<TourPlanDatesDetailItem>,
 
-	@field:SerializedName("title")
+	@SerializedName("title")
 	val title: String,
 
-	@field:SerializedName("isActive")
+	@SerializedName("isActive")
 	val isActive: Boolean,
 
-	@field:SerializedName("userId")
+	@SerializedName("userId")
 	val userId: Int,
 
-	@field:SerializedName("updatedAt")
+	@SerializedName("updatedAt")
 	val updatedAt: String,
 )
 
 data class TourPlanDatesDetailItem(
 
-    @field:SerializedName("destinations")
+    @SerializedName("destinations")
     val destinations: List<ListDestinationsDetailItem> = emptyList(),
 
-    @field:SerializedName("date_millis")
+    @SerializedName("date_millis")
     val dateMillis: Long,
 
-    @field:SerializedName("id")
+    @SerializedName("id")
     val id: Int,
 
-    @field:SerializedName("tourplanId")
+    @SerializedName("tourplanId")
     val tourplanId: Int,
 )
 
 data class ListDestinationsDetailItem(
 
-    @field:SerializedName("addresss")
+    @SerializedName("addresss")
     val address: String,
 
-    @field:SerializedName("city")
+    @SerializedName("city")
     val city: String,
 
-    @field:SerializedName("rating")
+    @SerializedName("rating")
     val rating: Float,
 
-    @field:SerializedName("description")
+    @SerializedName("description")
     val description: String,
 
-    @field:SerializedName("lon")
+    @SerializedName("lon")
     val lon: Double? = null,
 
-    @field:SerializedName("weekdayPrice")
+    @SerializedName("weekdayPrice")
     val weekdayPrice: Int = 0,
 
-    @field:SerializedName("imageUrl")
+    @SerializedName("imageUrl")
     val imageUrl: String,
 
-    @field:SerializedName("name")
+    @SerializedName("name")
     val name: String,
 
-    @field:SerializedName("weekendHolidayPrice")
+    @SerializedName("weekendHolidayPrice")
     val weekendHolidayPrice: Int = 0,
 
-    @field:SerializedName("id")
+    @SerializedName("id")
     val id: Int,
 
-    @field:SerializedName("lat")
+    @SerializedName("lat")
     val lat: Double? = null,
 
-    @field:SerializedName("categoryId")
+    @SerializedName("categoryId")
     val categoryId: Int? = null,
 
-	@field:SerializedName("datedestination")
+	@SerializedName("datedestination")
 	val relation: DateDestination,
 )

@@ -3,56 +3,57 @@ package com.ekotyoo.racana.data.datasource.remote.response
 import com.google.gson.annotations.SerializedName
 
 data class TourPlanBaseResponse(
+	@SerializedName("data")
 	val data: TourPlanResponse
 ) : BaseResponse()
 
 data class TourPlanResponse(
 
-    @field:SerializedName("tourplandates")
+    @SerializedName("tourplandates")
     val dailyList: List<DailyListItem>,
 )
 
 data class DailyListItem(
 
-	@field:SerializedName("date_millis")
+	@SerializedName("date_millis")
 	val dateMillis: Long,
 
-	@field:SerializedName("destinations")
+	@SerializedName("destinations")
 	val destinations: List<DestinationsItem>,
 )
 
 data class DestinationsItem(
 
-	@field:SerializedName("addresss")
+	@SerializedName("addresss")
 	val address: String,
 
-	@field:SerializedName("imageUrl")
+	@SerializedName("imageUrl")
 	val imageUrl: String,
 
-	@field:SerializedName("name")
+	@SerializedName("name")
 	val name: String,
 
-	@field:SerializedName("weekendHolidayPrice")
+	@SerializedName("weekendHolidayPrice")
 	val weekendHolidayPrice: Int,
 
-	@field:SerializedName("rating")
+	@SerializedName("rating")
 	val rating: Float,
 
-	@field:SerializedName("description")
+	@SerializedName("description")
 	val description: String,
 
-	@field:SerializedName("lon")
+	@SerializedName("lon")
 	val lon: Double,
 
-	@field:SerializedName("weekdayPrice")
+	@SerializedName("weekdayPrice")
 	val weekdayPrice: Int,
 
-	@field:SerializedName("id")
+	@SerializedName("id")
 	val id: Int,
 
-	@field:SerializedName("lat")
+	@SerializedName("lat")
 	val lat: Double,
 
-	@field:SerializedName("categoryId")
+	@SerializedName("categoryId")
 	val categoryId: Int,
 )

@@ -79,7 +79,6 @@ class TourPlanDetailSavedViewModel @Inject constructor(
     }
 
     fun onSearchResultClick(destinationId: Int) {
-        viewModelScope.launch { _eventChannel.send(TourPlanDetailSavedEvent.CloseSearchSheet) }
         addDestination(destinationId)
     }
 
@@ -150,6 +149,7 @@ class TourPlanDetailSavedViewModel @Inject constructor(
                     _eventChannel.send(TourPlanDetailSavedEvent.AddDestinationError)
                 }
             }
+            _eventChannel.send(TourPlanDetailSavedEvent.CloseSearchSheet)
         }
     }
 
