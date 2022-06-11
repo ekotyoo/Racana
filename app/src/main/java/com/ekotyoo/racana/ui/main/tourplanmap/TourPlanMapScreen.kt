@@ -77,14 +77,14 @@ fun TourPlanMapContent(
     val scope = rememberCoroutineScope()
 
     val cameraPositionState = rememberCameraPositionState {
-        destinationList.first().let {
+        destinationList.firstOrNull()?.let {
             position = CameraPosition.fromLatLngZoom(LatLng(it.lat, it.lon), 10f)
         }
     }
 
     LaunchedEffect(state.selectedDate) {
-        scrollState.scrollToItem(0)
-        destinationList.first().let {
+        destinationList.firstOrNull()?.let {
+            scrollState.scrollToItem(0)
             cameraPositionState.animate(CameraUpdateFactory.newLatLng(LatLng(it.lat, it.lon)))
         }
     }
