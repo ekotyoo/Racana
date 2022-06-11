@@ -13,8 +13,6 @@ sealed class TourPlanDetailSavedEvent {
     object MarkDestinationNotDoneError : TourPlanDetailSavedEvent()
     object UpdateTourPlanSuccess : TourPlanDetailSavedEvent()
     object UpdateTourPlanError : TourPlanDetailSavedEvent()
-    object CloseSearchSheet : TourPlanDetailSavedEvent()
-    object DismissDateDialog : TourPlanDetailSavedEvent()
     object AddDateError : TourPlanDetailSavedEvent()
     object AddDateSuccess : TourPlanDetailSavedEvent()
     object DeleteDateSuccess : TourPlanDetailSavedEvent()

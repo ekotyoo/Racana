@@ -83,7 +83,6 @@ class TourPlanDetailSavedViewModel @Inject constructor(
     }
 
     fun onDateSelected(dates: List<LocalDate>) {
-        viewModelScope.launch { _eventChannel.send(TourPlanDetailSavedEvent.DismissDateDialog) }
         if (dates.isNotEmpty()) {
             val date = dates.first()
             val dateMillis = date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
@@ -136,7 +135,6 @@ class TourPlanDetailSavedViewModel @Inject constructor(
 
     private fun addDestination(destinationId: Int) {
         viewModelScope.launch {
-            _eventChannel.send(TourPlanDetailSavedEvent.CloseSearchSheet)
             val dateId = _state.value.tourPlan.dailyList[_state.value.selectedDate].id
             when (tourPlanRepository.addTourPlanDateDestination(dateId, destinationId)) {
                 is Result.Success -> {

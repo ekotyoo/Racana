@@ -94,17 +94,13 @@ fun TourPlanDetailSavedScreen(
                 is TourPlanDetailSavedEvent.GetTourPlanDetailError -> {
                     snackbarHostState.showSnackbar("Gagal mengambil data.")
                 }
-                is TourPlanDetailSavedEvent.CloseSearchSheet -> {
-                    modalBottomSheetState.hide()
-                }
                 is TourPlanDetailSavedEvent.AddDestinationError -> {
+                    modalBottomSheetState.hide()
                     snackbarHostState.showSnackbar("Gagal menambahkan destinasi.")
                 }
                 is TourPlanDetailSavedEvent.AddDestinationSuccess -> {
+                    modalBottomSheetState.hide()
                     snackbarHostState.showSnackbar("Berhasil menambahkan destinasi.")
-                }
-                is TourPlanDetailSavedEvent.DismissDateDialog -> {
-                    showDatePicker = false
                 }
                 is TourPlanDetailSavedEvent.AddDateError -> {
                     snackbarHostState.showSnackbar("Gagal menambahkan hari.")
@@ -182,7 +178,8 @@ fun TourPlanDetailSavedScreen(
                 scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState),
                 topBar = {
                     RTopAppBar(
-                        title = state.tourPlan.title ?: stringResource(id = R.string.detail_tour_plan),
+                        title = state.tourPlan.title
+                            ?: stringResource(id = R.string.detail_tour_plan),
                         isBackButtonAvailable = true,
                         onBackButtonCLicked = { navigator.popBackStack() },
                         actionIcon = Icons.Default.LocationOn,
@@ -194,35 +191,38 @@ fun TourPlanDetailSavedScreen(
                     )
                 }
             ) {
-                if (state.isLoading) {
-                    RListLoadingIndicator()
-                } else {
-                    val scope = rememberCoroutineScope()
-                    Box(Modifier.fillMaxSize()) {
-                        TourPlanDetailSavedContent(
-                            state = state,
-                            onDateSelected = viewModel::onDateSelected,
-                            onDestinationClicked = viewModel::navigateToDestinationDetail,
-                            onAddDestinationClicked = {
-                                scope.launch {
-                                    modalBottomSheetState.show()
-                                }
-                            },
-                            onAddDateClicked = {
-                                showDatePicker = true
-                            },
-                            onDestinationDeleteButtonClicked = viewModel::onDestinationDeleteButtonClicked,
-                            onDestinationToggleDoneClicked = viewModel::onDestinationToggleDoneClicked,
-                            onDeleteDateClicked = viewModel::onDeleteDateClicked
-                        )
+                val scope = rememberCoroutineScope()
+                Box(Modifier.fillMaxSize()) {
+                    TourPlanDetailSavedContent(
+                        state = state,
+                        onDateSelected = {
+                            showDatePicker = false
+                            viewModel.onDateSelected(it)
+                        },
+                        onDestinationClicked = viewModel::navigateToDestinationDetail,
+                        onAddDestinationClicked = {
+                            scope.launch {
+                                modalBottomSheetState.show()
+                            }
+                        },
+                        onAddDateClicked = {
+                            showDatePicker = true
+                        },
+                        onDestinationDeleteButtonClicked = viewModel::onDestinationDeleteButtonClicked,
+                        onDestinationToggleDoneClicked = viewModel::onDestinationToggleDoneClicked,
+                        onDeleteDateClicked = viewModel::onDeleteDateClicked
+                    )
 
-                        RFilledButton(
-                            modifier = Modifier
-                                .align(Alignment.BottomCenter)
-                                .padding(bottom = 32.dp, start = 16.dp, end = 16.dp),
-                            placeholderString = stringResource(id = if (state.tourPlan.isActive) R.string.mark_as_inactive else R.string.mark_as_active),
-                            onClick = viewModel::onToggleActive
-                        )
+                    RFilledButton(
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .padding(bottom = 32.dp, start = 16.dp, end = 16.dp),
+                        placeholderString = stringResource(id = if (state.tourPlan.isActive) R.string.mark_as_inactive else R.string.mark_as_active),
+                        onClick = viewModel::onToggleActive
+                    )
+
+                    if (state.isLoading) {
+                        RListLoadingIndicator()
                     }
                 }
             }
