@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.time.LocalDate
 import java.time.ZoneId
 import javax.inject.Inject
@@ -99,6 +98,9 @@ class TourPlanDetailSavedViewModel @Inject constructor(
             tourPlanId?.let {
                 when (tourPlanRepository.deleteDate(tourPlanId.toInt(), dateId)) {
                     is Result.Success -> {
+                        if (_state.value.selectedDate > 0) {
+                            _state.update { it.copy(selectedDate = _state.value.selectedDate - 1) }
+                        }
                         val id = _state.value.tourPlan.id?.toInt()
                         id?.let {
                             getTourPlanById(id)
