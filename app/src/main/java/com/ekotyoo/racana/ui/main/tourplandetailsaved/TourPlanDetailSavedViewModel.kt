@@ -41,7 +41,7 @@ class TourPlanDetailSavedViewModel @Inject constructor(
         }
     }
 
-    fun onDateSelected(value: Int) {
+    fun onDateHeaderChange(value: Int) {
         _state.update { it.copy(selectedDate = value) }
     }
 

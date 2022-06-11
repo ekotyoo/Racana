@@ -66,6 +66,7 @@ fun TourPlanDetailSavedScreen(
     val modalBottomSheetState =
         rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     var showDatePicker by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         viewModel.eventChannel.collect { event ->
@@ -95,11 +96,15 @@ fun TourPlanDetailSavedScreen(
                     snackbarHostState.showSnackbar("Gagal mengambil data.")
                 }
                 is TourPlanDetailSavedEvent.AddDestinationError -> {
-                    modalBottomSheetState.hide()
+                    scope.launch {
+                        modalBottomSheetState.hide()
+                    }
                     snackbarHostState.showSnackbar("Gagal menambahkan destinasi.")
                 }
                 is TourPlanDetailSavedEvent.AddDestinationSuccess -> {
-                    modalBottomSheetState.hide()
+                    scope.launch {
+                        modalBottomSheetState.hide()
+                    }
                     snackbarHostState.showSnackbar("Berhasil menambahkan destinasi.")
                 }
                 is TourPlanDetailSavedEvent.AddDateError -> {
@@ -195,10 +200,7 @@ fun TourPlanDetailSavedScreen(
                 Box(Modifier.fillMaxSize()) {
                     TourPlanDetailSavedContent(
                         state = state,
-                        onDateSelected = {
-                            showDatePicker = false
-                            viewModel.onDateSelected(it)
-                        },
+                        onDateHeaderChange = viewModel::onDateHeaderChange,
                         onDestinationClicked = viewModel::navigateToDestinationDetail,
                         onAddDestinationClicked = {
                             scope.launch {
@@ -232,7 +234,10 @@ fun TourPlanDetailSavedScreen(
             ) {
                 Dialog(onDismissRequest = { showDatePicker = false }) {
                     CalendarPicker(
-                        onDateSelected = viewModel::onDateSelected,
+                        onDateSelected = {
+                            showDatePicker =false
+                            viewModel.onDateSelected(it)
+                        },
                         selectionMode = SelectionMode.Single,
                         modifier = Modifier
                             .background(MaterialTheme.colors.primary,
@@ -250,7 +255,7 @@ fun TourPlanDetailSavedScreen(
 fun TourPlanDetailSavedContent(
     modifier: Modifier = Modifier,
     state: TourPlanDetailSavedState,
-    onDateSelected: (Int) -> Unit,
+    onDateHeaderChange: (Int) -> Unit,
     onDestinationClicked: (Int) -> Unit,
     onAddDestinationClicked: () -> Unit,
     onDestinationDeleteButtonClicked: (Int) -> Unit,
@@ -333,7 +338,7 @@ fun TourPlanDetailSavedContent(
         DayHeaderSection(
             selectedDate = state.selectedDate,
             dailyList = state.tourPlan.dailyList,
-            onItemSelected = onDateSelected,
+            onItemSelected = onDateHeaderChange,
             onAddDateButtonClicked = onAddDateClicked,
             onDeleteDateButtonClicked = onDeleteDateClicked
         )
@@ -367,7 +372,7 @@ fun TourPlanDetailSavedPreview() {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
             TourPlanDetailSavedContent(
                 state = TourPlanDetailSavedState(),
-                onDateSelected = {},
+                onDateHeaderChange = {},
                 onDestinationClicked = {},
                 onAddDestinationClicked = {},
                 onDestinationDeleteButtonClicked = { },
