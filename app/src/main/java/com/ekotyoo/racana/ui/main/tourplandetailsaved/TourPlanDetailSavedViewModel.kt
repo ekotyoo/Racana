@@ -136,6 +136,7 @@ class TourPlanDetailSavedViewModel @Inject constructor(
 
     private fun addDestination(destinationId: Int) {
         viewModelScope.launch {
+            _eventChannel.send(TourPlanDetailSavedEvent.CloseSearchSheet)
             val dateId = _state.value.tourPlan.dailyList[_state.value.selectedDate].id
             when (tourPlanRepository.addTourPlanDateDestination(dateId, destinationId)) {
                 is Result.Success -> {
@@ -149,7 +150,6 @@ class TourPlanDetailSavedViewModel @Inject constructor(
                     _eventChannel.send(TourPlanDetailSavedEvent.AddDestinationError)
                 }
             }
-            _eventChannel.send(TourPlanDetailSavedEvent.CloseSearchSheet)
         }
     }
 
