@@ -37,6 +37,7 @@ import com.ekotyoo.racana.core.navigation.BottomNavGraph
 import com.ekotyoo.racana.core.navigation.NavigationTransition
 import com.ekotyoo.racana.core.navigation.RootNavigator
 import com.ekotyoo.racana.core.utils.currencyFormatter
+import com.ekotyoo.racana.data.model.ArticlePreview
 import com.ekotyoo.racana.data.model.TourPlan
 import com.ekotyoo.racana.data.model.TravelDestination
 import com.ekotyoo.racana.ui.destinations.*
@@ -71,15 +72,19 @@ fun DashboardScreen(
                     }
                 }
                 is DashboardEvent.NavigateToDetailArticle -> {
-                    rootNavigator.value.navigate(ArticleDetailScreenDestination) {
+                    rootNavigator.value.navigate(ArticleDetailScreenDestination(event.id)) {
                         launchSingleTop = true
                     }
                 }
                 is DashboardEvent.AllDestinationClicked -> {
-                    rootNavigator.value.navigate(ListDestinationScreenDestination)
+                    rootNavigator.value.navigate(ListDestinationScreenDestination) {
+                        launchSingleTop = true
+                    }
                 }
                 is DashboardEvent.AllArticleClicked -> {
-                    rootNavigator.value.navigate(ArticleListScreenDestination)
+                    rootNavigator.value.navigate(ArticleListScreenDestination) {
+                        launchSingleTop = true
+                    }
                 }
             }
         }
@@ -99,6 +104,7 @@ fun DashboardScreen(
     ) {
         DashboardContent(
             destinations = state.destinations,
+            articles = state.articles,
             lazyListState = lazyListState,
             isLoading = state.isLoading,
             onDestinationClick = viewModel::onDestinationClicked,
@@ -115,6 +121,7 @@ fun DashboardScreen(
 fun DashboardContent(
     tourPlan: TourPlan?,
     destinations: List<TravelDestination>,
+    articles: List<ArticlePreview>,
     onDestinationClick: (Int) -> Unit = {},
     onArticleClick: (Int) -> Unit = {},
     onTourPlanClick: () -> Unit = {},
@@ -152,32 +159,9 @@ fun DashboardContent(
                 title = stringResource(id = R.string.traveler_stories),
                 onAllItemShowClicked = onAllArticleClicked
             ) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                ) {
-                    if (isLoading) {
-                        RImageCard(
-                            imageUrl = "",
-                            title = "",
-                            description = "",
-                            isLoading = isLoading,
-                            onClick = {}
-                        )
-                    } else {
-                        repeat(4) {
-                            RImageCard(
-                                imageUrl = "https://picsum.photos/200/300",
-                                title = "Lorem Ipsum Dolor",
-                                description = "Lorem ipsum dolor dolr asdf das",
-                                onClick = {
-                                    onArticleClick(0)
-                                }
-                            )
-                        }
-                    }
-                }
+                ArticleRow(articles = articles, onItemClick = onArticleClick, isLoading = isLoading)
             }
+            Spacer(Modifier.height(16.dp))
         }
     }
 }
@@ -327,6 +311,44 @@ fun DestinationRow(
                     imageUrl = destination.imageUrl,
                     isLoading = isLoading,
                     onClick = { onItemClick(destination.id) }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun ArticleRow(
+    modifier: Modifier = Modifier,
+    articles: List<ArticlePreview>,
+    isLoading: Boolean = false,
+    onItemClick: (Int) -> Unit,
+) {
+    LazyRow(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp)
+    ) {
+        if (isLoading) {
+            items(4) {
+                RImageCard(
+                    modifier = Modifier.aspectRatio(4/2f).width(300.dp),
+                    imageUrl = "",
+                    title = "",
+                    description = "",
+                    onClick = {},
+                    isLoading = true)
+            }
+        } else {
+            items(articles, key = { it.id }) { article ->
+                RImageCard(
+                    modifier = Modifier.aspectRatio(4/2f).width(300.dp),
+                    imageUrl = article.imageUrl,
+                    title = article.title,
+                    description = article.author,
+                    onClick = {
+                        onItemClick(article.id)
+                    },
                 )
             }
         }

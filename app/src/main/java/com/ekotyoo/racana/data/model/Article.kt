@@ -12,3 +12,11 @@ data class Article(
     val author: String = "",
     val source: String = ""
 ) : Parcelable
+
+@Parcelize
+data class ArticlePreview(
+    val id: Int = 0,
+    val title: String = "",
+    val imageUrl: String = "",
+    val author: String = "",
+) : Parcelable

@@ -1,63 +1,75 @@
 package com.ekotyoo.racana.ui.main.articledetail
 
-import android.content.res.Configuration
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
+import com.ekotyoo.racana.core.composables.RLoadingOverlay
 import com.ekotyoo.racana.core.composables.RTopAppBar
 import com.ekotyoo.racana.core.navigation.NavigationTransition
-import com.ekotyoo.racana.core.theme.RacanaTheme
 import com.ekotyoo.racana.data.model.Article
-import com.ekotyoo.racana.ui.main.articlelist.getDummyArticle
-import com.ekotyoo.racana.ui.main.destinationdetail.DestinationDetailContent
-import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetail
-import com.ekotyoo.racana.ui.main.destinationdetail.model.DestinationDetailState
+import com.ekotyoo.racana.ui.main.articledetail.model.ArticleDetailArgument
+import com.ekotyoo.racana.ui.main.articledetail.model.ArticleDetailEvent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.coil.CoilImage
 
-@Destination(style = NavigationTransition::class)
+@Destination(
+    style = NavigationTransition::class,
+    navArgsDelegate = ArticleDetailArgument::class
+)
 @Composable
 fun ArticleDetailScreen(
     navigator: DestinationsNavigator,
-    viewModel: ArticleDetailViewModel = hiltViewModel()
+    viewModel: ArticleDetailViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
 
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        topBar = {
-            RTopAppBar(
-                title = stringResource(id = R.string.traveler_stories),
-                isBackButtonAvailable = true,
-                onBackButtonCLicked = { navigator.popBackStack() }
-            )
+    LaunchedEffect(Unit) {
+        viewModel.eventChannel.collect { event ->
+            when (event) {
+                ArticleDetailEvent.GetArticleDetailError -> {
+                    navigator.navigateUp()
+                }
+            }
         }
-    ) {
-        ArticleDetailContent(article = state.article)
+    }
+
+    Box(Modifier.fillMaxSize()) {
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            topBar = {
+                RTopAppBar(
+                    title = stringResource(id = R.string.traveler_stories),
+                    isBackButtonAvailable = true,
+                    onBackButtonCLicked = { navigator.popBackStack() }
+                )
+            }
+        ) {
+            ArticleDetailContent(article = state.article)
+        }
+        RLoadingOverlay(modifier = Modifier.align(Alignment.Center), visible = state.isLoading)
     }
 }
 
 @Composable
 fun ArticleDetailContent(
-    article: Article
+    article: Article,
 ) {
     Column(
         modifier = Modifier
@@ -93,22 +105,5 @@ fun ArticleDetailContent(
             text = "Sumber : ${article.source}",
             style = MaterialTheme.typography.caption
         )
-    }
-}
-
-@Preview(
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-    name = "Light Mode Preview"
-)
-@Preview(
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    name = "Dark Mode Preview"
-)
-@Composable
-fun CounterPreview() {
-    RacanaTheme {
-        ArticleDetailContent(getDummyArticle()[0])
     }
 }

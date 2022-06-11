@@ -3,6 +3,7 @@ package com.ekotyoo.racana.ui.main.dashboard
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ekotyoo.racana.core.utils.Result
+import com.ekotyoo.racana.data.repository.ArticleRepository
 import com.ekotyoo.racana.data.repository.AuthRepository
 import com.ekotyoo.racana.data.repository.DestinationRepository
 import com.ekotyoo.racana.data.repository.TourPlanRepository
@@ -23,6 +24,7 @@ class DashboardViewModel @Inject constructor(
     authRepository: AuthRepository,
     private val tourPlanRepository: TourPlanRepository,
     private val destinationRepository: DestinationRepository,
+    private val articleRepository: ArticleRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(DashboardState())
@@ -36,6 +38,7 @@ class DashboardViewModel @Inject constructor(
             _state.update { it.copy(isLoading = true) }
             getActiveTourPlan()
             getTopDestinations()
+            getDashboardArticles()
             _state.update { it.copy(isLoading = false) }
             authRepository.userData.collect { user ->
                 _state.update { it.copy(user = user) }
@@ -70,6 +73,17 @@ class DashboardViewModel @Inject constructor(
             }
             is Result.Success -> {
                 _state.update { it.copy(destinations = result.value) }
+            }
+        }
+    }
+
+    private suspend fun getDashboardArticles() {
+        when (val result = articleRepository.getDashboardArticles()) {
+            is Result.Error -> {
+                Timber.d("Error")
+            }
+            is Result.Success -> {
+                _state.update { it.copy(articles = result.value) }
             }
         }
     }

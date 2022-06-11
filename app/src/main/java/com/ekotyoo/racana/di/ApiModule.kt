@@ -1,5 +1,6 @@
 package com.ekotyoo.racana.di
 
+import com.ekotyoo.racana.data.datasource.remote.api.ArticleApi
 import com.ekotyoo.racana.data.datasource.remote.api.AuthApi
 import com.ekotyoo.racana.data.datasource.remote.api.DestinationApi
 import com.ekotyoo.racana.data.datasource.remote.api.TourPlanApi
@@ -59,6 +60,11 @@ object ApiModule {
     @Provides
     fun provideDestinationApi(retrofit: Retrofit): DestinationApi =
         retrofit.create(DestinationApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideArticleApi(retrofit: Retrofit): ArticleApi =
+        retrofit.create(ArticleApi::class.java)
 }
 
 private const val BASE_URL = "https://racana-api-mg3l2wnsyq-et.a.run.app/api/"
