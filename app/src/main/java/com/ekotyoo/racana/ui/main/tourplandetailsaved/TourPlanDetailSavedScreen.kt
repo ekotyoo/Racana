@@ -182,7 +182,7 @@ fun TourPlanDetailSavedScreen(
                 scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState),
                 topBar = {
                     RTopAppBar(
-                        title = state.tourPlan.title ?: "",
+                        title = state.tourPlan.title ?: stringResource(id = R.string.detail_tour_plan),
                         isBackButtonAvailable = true,
                         onBackButtonCLicked = { navigator.popBackStack() },
                         actionIcon = Icons.Default.LocationOn,

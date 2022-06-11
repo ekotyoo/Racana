@@ -17,7 +17,15 @@ data class TourPlan(
         get() = dailyList.firstOrNull()?.destinationList?.firstOrNull()?.imageUrl
             ?: "https://icon-library.com/images/image-placeholder-icon/image-placeholder-icon-6.jpg"
     val period: String
-        get() = dailyList.firstOrNull()?.dateFormatted + " - " + dailyList.lastOrNull()?.dateFormatted
+        get() {
+            return if (dailyList.size == 1) {
+                dailyList.first().dateFormatted
+            } else if (dailyList.size > 1) {
+                dailyList.first().dateFormatted + " - " + dailyList.last().dateFormatted
+            } else {
+                "Belum ada tanggal terpilih."
+            }
+        }
     val totalExpense: Long
         get() = dailyList
             .map {
