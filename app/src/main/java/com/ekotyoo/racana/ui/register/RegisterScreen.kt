@@ -49,7 +49,7 @@ fun RegisterScreen(
         viewModel.eventChannel.collect { event ->
             when (event) {
                 is RegisterEvent.RegisterSuccess -> {
-                    snackbarHostState.showSnackbar("Akun berhasil dibuat!")
+                    snackbarHostState.showSnackbar("Akun berhasil dibuat, silahkan login!")
                     navigator.navigate(LoginScreenDestination) {
                         popUpTo(LoginScreenDestination) {
                             inclusive = true

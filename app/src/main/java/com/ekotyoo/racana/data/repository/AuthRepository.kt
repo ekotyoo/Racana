@@ -30,15 +30,17 @@ class AuthRepository @Inject constructor(
                 )
                 userPreferencesDataStore.saveUserData(user)
                 Result.Success(user)
+            } else if(response.code() == 401) {
+                Result.Error("Email atau Password harus sesuai.", null)
             } else {
-                Result.Error("Login Failed", null)
+                Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
             }
         } catch (e: IOException) {
             Timber.d("IOException: " + e.message)
             return Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
         } catch (e: HttpException) {
             Timber.d("HttpException: " + e.message)
-            return Result.Error("Email atau Password harus sesuai.", null)
+            return Result.Error("Terjadi kesalahan, coba lagi nanti.", null)
         }
     }
 
@@ -54,7 +56,9 @@ class AuthRepository @Inject constructor(
                     ""
                 )
                 Result.Success(user)
-            } else {
+            }  else if(response.code() == 400) {
+                Result.Error("Email sudah terdaftar, silahkan login.", null)
+            }else {
                 Result.Error("Register Failed", null)
             }
         } catch (e: IOException) {
