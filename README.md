@@ -1,4 +1,7 @@
-# Racana Express.js API
+<div align="center">
+   <h3 align="center">Racana Express.js API</h3>
+  <p>An backend service for Racana project built with Express.Js, Sequelize ORM, and MySQL</p>
+</div>
 
 ### Built With
 
