@@ -24,7 +24,7 @@
 
 <a href="https://github.com/ekotyoo/Racana">
     <img src="ezgif.com-gif-maker.gif" alt="Logo" width="25%" height="25%">
-  </a>
+ </a>
 
 A friendly application for tourists in making their itinerary with a recommended destination on their preferences and budgets.
 
@@ -37,11 +37,17 @@ A friendly application for tourists in making their itinerary with a recommended
 * [Native Android](https://www.android.com/)
 * [Express.js](https://reactjs.org/)
 * [Flask](https://palletsprojects.com/)
+* [Google Cloud Platform](https://cloud.google.com/)
 * [Tensorflow](https://www.tensorflow.org/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+<!-- ARCHITECHTURE OVERVIEW-->
+## Architechture Overview
 
+We are connecting our Android App to remote services which are deployed on Google Cloud Platform. You can see how our app architecture diagram below.
+
+<img src="https://media.discordapp.net/attachments/976106946165895268/985391498520580157/BANGKIT.jpg" alt="Architechture" width="70%" height="70%">
 
 <!-- GETTING STARTED -->
 ## Getting Started
