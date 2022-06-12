@@ -38,6 +38,13 @@ To use this app follow these simple example steps.
 2. Copy the file to your Androi phone.
 3. Install the app and enjoy!
 
+or
+
+1. Clone `https://github.com/ekotyoo/Racana`.
+2. Checkout to `racana-mobile` branch.
+3. Git pull.
+4. Run the app.
+
 ## App Architechture
 Racana Android App built using MVVM Architecture and Repository Patten.
 ![racana-flow (1)](https://user-images.githubusercontent.com/70650963/173214848-4564c880-be0a-411f-a713-ea48d4364820.png)
