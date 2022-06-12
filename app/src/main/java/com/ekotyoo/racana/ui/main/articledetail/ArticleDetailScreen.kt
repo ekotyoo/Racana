@@ -1,5 +1,6 @@
 package com.ekotyoo.racana.ui.main.articledetail
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -16,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ekotyoo.racana.R
@@ -92,18 +94,24 @@ fun ArticleDetailContent(
             style = MaterialTheme.typography.h6
         )
         Text(
-            text = "Oleh ${article.author}",
-            style = MaterialTheme.typography.body2
+            modifier = Modifier
+                .clip(MaterialTheme.shapes.small)
+                .background(MaterialTheme.colors.secondary)
+                .padding(horizontal = 8.dp),
+            text = "Oleh : ${article.author}",
+            style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.SemiBold),
+            color = MaterialTheme.colors.onSecondary
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = article.content,
-            style = MaterialTheme.typography.caption
+            style = MaterialTheme.typography.body2
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "Sumber : ${article.source}",
-            style = MaterialTheme.typography.caption
+            style = MaterialTheme.typography.body2
+                .copy(fontWeight = FontWeight.SemiBold)
         )
     }
 }
