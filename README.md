@@ -25,7 +25,7 @@ This **RESTful API**s is used to convert the id from the **Machine Learning** mo
 
 **Base URL :**
 
-> http://34.101.178.213:5000/recomendation/predictfinal
+> http://34.101.77.167:5000/recomendation/predictfinal
 
 **Request :**
 
@@ -58,9 +58,9 @@ This **RESTful API**s is used to convert the id from the **Machine Learning** mo
 
 **Base URL :**
 
-> http://34.101.178.213:5000/predict
+> http://34.101.77.167:5000/predict
 > and
-> http://34.101.178.213:5000/predict2
+> http://34.101.77.167:5000/predict2
 
 **Request :**
 
